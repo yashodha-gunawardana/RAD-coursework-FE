@@ -1,6 +1,6 @@
 // stores logged-in user data, authenticate status, users info with all pages
 import { AuthProvider } from "./context/authContext";
-
+import Router from "./routes"
 
 // define the main App component
 export default function App() {
