@@ -26,7 +26,14 @@ export default function Login() {
             // send login request to backend
             const res = await loginUser(email, password)
 
+            // verify token received
             console.log(res.data.accessToken)
+
+            // check if token exists
+            if (!res.data.accessToken) {
+                alert("Login failed..")
+                return
+            }
 
         } catch (err) {
 
