@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { getMyDetails } from "../services/auth";
 
 // AuthContext will store auth data (user, setUser, loading)
@@ -49,6 +49,8 @@ export const AuthProvider = ({ children }: any) => {
     )
 }
 
+// create easy hook to access auth data
 export const useAuth = () => {
-    
+    const context = useContext(AuthContext)
+
 }
