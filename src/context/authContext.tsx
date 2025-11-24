@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { getMyDetails } from "../services/auth";
 
 // AuthContext will store auth data (user, setUser, loading)
 const AuthContext = createContext<any>(null)
@@ -18,7 +19,9 @@ export const AuthProvider = ({ children }: any) => {
         const token = localStorage.getItem("accessToken")
 
         if (token) {
-            
+            getMyDetails().then((res) => {
+                
+            })
         }
     })
 }
