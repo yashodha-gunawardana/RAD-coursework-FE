@@ -21,7 +21,13 @@ export const AuthProvider = ({ children }: any) => {
         if (token) {
             // if token exists, verify it by calling backend
             getMyDetails().then((res) => {
+                // save user details returned from backend
                 setUser(res.data)
+            })
+            .catch((err) => {
+                // if token expired or invalid, logout user
+                setUser(null)
+                console.error(err)
             })
         } 
     })
