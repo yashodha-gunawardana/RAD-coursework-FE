@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { getMyDetails, loginUser } from "../services/auth";
+import { getMyDetails, loginUser, registerUser } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
@@ -8,16 +8,21 @@ export default function LoginRegister() {
 
     // function to store logged-in user globally
     const { setUser } = useAuth()
-    const [isSignUp, setIsSignUp] = useState(true)
+    const [formType, setFormType] = useState<"signup" | "signin">("signup");
+    const [isLogin, setIsLogin] = useState(true)
+
+    const [fullname, setFullname] = useState("")
+    const [address, setAdress] = useState("")
+    const [phone, setPhone] = useState("")
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const [confirmPassword, setConfirmPassowrd] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [termsChecked, setTermsChecked] = useState(false);
 
-    const [bgImage, setBgImage] = useState("")
-
-    const handleLogin = async (e: FormEvent) => {
+    
+    const handleSubmit = async (e: FormEvent) => {
         // prevent default form refresh
         e.preventDefault()
 
@@ -26,31 +31,66 @@ export default function LoginRegister() {
             return
         }
 
+        
         try {
-            // send login request to backend
-            const res = await loginUser(email, password)
 
-            // verify token received
-            console.log(res.data.accessToken)
+            if (isLogin) {
+                 // send login request to backend
+                const res = await loginUser(email, password)
 
-            // check if token exists
-            if (!res.data.accessToken) {
-                alert("Login failed..")
-                return
+                // verify token received
+                console.log(res.data.accessToken)
+
+                // check if token exists
+                if (!res.data.accessToken) {
+                    alert("Login failed..")
+                    return
+                }
+
+                localStorage.setItem("accessToken", res.data.accessToken)
+
+                // fetch currently logged-in user details
+                const details = await getMyDetails()
+
+                // store user data in AuthContext
+                setUser(details.data)
+
+                navigate("/home")
+            
             }
+            else {
 
-            localStorage.setItem("accessToken", res.data.accessToken)
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match..")
+                    return
+                }
 
-            // fetch currently logged-in user details
-            const details = await getMyDetails()
+                if (!termsChecked) {
+                    alert("You must accept the terms..")
+                    return
+                }
 
-            // store user data in AuthContext
-            setUser(details.data)
+                await registerUser({
+                    fullname,
+                    email,
+                    password,
+                    address,
+                    phone
+                })
 
-            navigate("/home")
+                alert("Registration successful! Please login..")
+                setIsLogin(true)
+            }
 
         } catch (err) {
             console.error(err)
+            alert("Something went wrong..")
         }
     }
+
+    return (
+
+    )
+
+    
 }
