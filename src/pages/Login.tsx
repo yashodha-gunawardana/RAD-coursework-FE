@@ -14,6 +14,20 @@ export default function Login() {
 
 
     const handleLogin = async (e: FormEvent) => {
+        // prevent default form refresh
         e.preventDefault()
+
+        if (!email || !password) {
+            alert("All fields are required..")
+            return
+        }
+
+        try {
+            // send login request to backend
+            const res = await loginUser(email, password)
+
+        } catch (err) {
+
+        }
     }
 }
