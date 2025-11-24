@@ -37,6 +37,8 @@ export default function Login() {
 
             localStorage.setItem("accessToken", res.data.accessToken)
 
+            const details = await getMyDetails()
+
         } catch (err) {
 
         }
