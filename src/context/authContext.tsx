@@ -19,9 +19,10 @@ export const AuthProvider = ({ children }: any) => {
         const token = localStorage.getItem("accessToken")
 
         if (token) {
+            // if token exists, verify it by calling backend
             getMyDetails().then((res) => {
-                
+                setUser(res.data)
             })
-        }
+        } 
     })
 }
