@@ -26,6 +26,8 @@ export default function Login() {
             // send login request to backend
             const res = await loginUser(email, password)
 
+            console.log(res.data.accessToken)
+
         } catch (err) {
 
         }
