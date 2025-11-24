@@ -1,13 +1,14 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { getMyDetails, loginUser } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
-export default function Login() {
+export default function LoginRegister() {
     const navigate = useNavigate()
 
     // function to store logged-in user globally
     const { setUser } = useAuth()
+    const [isSignUp, setIsSignUp] = useState(true)
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -43,8 +44,10 @@ export default function Login() {
             // store user data in AuthContext
             setUser(details.data)
 
-        } catch (err) {
+            navigate("/home")
 
+        } catch (err) {
+            console.error(err)
         }
     }
 }
