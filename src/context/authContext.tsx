@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }: any) => {
     const [loading, setLoading] = useState(true)
 
 
+    // check login on app load
     useEffect(() => {
 
         // get token save after the login
@@ -41,8 +42,13 @@ export const AuthProvider = ({ children }: any) => {
     }, []) // empty array means this runs only once when app loads
 
     return (
+        // AuthContext.Provider makes user data available to all child components
         <AuthContext.Provider value={{ user, setUser, loading}}>
             {children}
         </AuthContext.Provider>
     )
+}
+
+export const useAuth = () => {
+    
 }
