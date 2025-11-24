@@ -7,4 +7,6 @@ const AuthContext = createContext<any>(null)
 export const AuthProvider = ({ children }: any) => {
     // store logged-in user details(null means not logged in)
     const [user, setUser] = useState<any>(null)
+
+    const [loading, setLoading] = useState(true)
 }
