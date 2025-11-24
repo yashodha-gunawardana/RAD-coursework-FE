@@ -38,5 +38,5 @@ export const AuthProvider = ({ children }: any) => {
             setUser(null)
             setLoading(false)
         }
-    })
+    }, [])
 }
