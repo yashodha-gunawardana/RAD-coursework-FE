@@ -20,5 +20,6 @@ export const registerUser = async (data: RegisterDataType) => {
 // login function
 export const loginUser = async (email: string, password: string) => {
     const res = await api.post("/auth/login", { email, password })
+    // returns backend response (token, user info, etc.)
     return res.data
 }
