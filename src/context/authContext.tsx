@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }: any) => {
 
 
     useEffect(() => {
-        
+
+        const token = localStorage.getItem("accessToken")
     })
 }
