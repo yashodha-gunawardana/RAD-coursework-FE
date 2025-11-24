@@ -35,6 +35,8 @@ export default function Login() {
                 return
             }
 
+            localStorage.setItem("accessToken", res.data.accessToken)
+
         } catch (err) {
 
         }
