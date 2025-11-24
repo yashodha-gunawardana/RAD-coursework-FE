@@ -38,5 +38,11 @@ export const AuthProvider = ({ children }: any) => {
             setUser(null)
             setLoading(false)
         }
-    }, [])
+    }, []) // empty array means this runs only once when app loads
+
+    return (
+        <AuthContext.Provider value={{ user, setUser, loading}}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
