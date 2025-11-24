@@ -13,6 +13,9 @@ export default function LoginRegister() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    const [confirmPassword, setConfirmPassowrd] = useState("")
+
+    const [bgImage, setBgImage] = useState("")
 
     const handleLogin = async (e: FormEvent) => {
         // prevent default form refresh
