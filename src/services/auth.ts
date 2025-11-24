@@ -12,5 +12,5 @@ type RegisterDataType = {
 
 // register function
 export const registerUser = async (data: RegisterDataType) => {
-
+    const res = await api.post("/auth/register", data)
 }
