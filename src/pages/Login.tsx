@@ -37,7 +37,11 @@ export default function Login() {
 
             localStorage.setItem("accessToken", res.data.accessToken)
 
+            // fetch currently logged-in user details
             const details = await getMyDetails()
+
+            // store user data in AuthContext
+            setUser(details.data)
 
         } catch (err) {
 
