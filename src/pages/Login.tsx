@@ -8,4 +8,7 @@ export default function Login() {
 
     // function to store logged-in user globally
     const { setUser } = useAuth()
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 }
