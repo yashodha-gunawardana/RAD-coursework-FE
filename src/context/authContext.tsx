@@ -33,6 +33,10 @@ export const AuthProvider = ({ children }: any) => {
                 // stop loading after check finishes
                 setLoading(false)
             })
-        } 
+        } else {
+            // no token means user not logged in
+            setUser(null)
+            setLoading(false)
+        }
     })
 }
