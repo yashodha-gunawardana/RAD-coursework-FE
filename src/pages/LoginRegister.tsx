@@ -34,7 +34,7 @@ export default function LoginRegister() {
         
         try {
 
-            if (isLogin) {
+            if (formType === "signin") {
                  // send login request to backend
                 const res = await loginUser(email, password)
 
@@ -58,7 +58,8 @@ export default function LoginRegister() {
                 navigate("/home")
             
             }
-            else {
+
+            if (formType === "signup") {
 
                 if (password !== confirmPassword) {
                     alert("Passwords do not match..")
@@ -89,6 +90,7 @@ export default function LoginRegister() {
     }
 
     return (
+        
 
     )
 
