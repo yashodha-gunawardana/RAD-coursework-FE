@@ -23,3 +23,9 @@ export const loginUser = async (email: string, password: string) => {
     // returns backend response (token, user info, etc.)
     return res.data
 }
+
+// get my details function
+export const getMyDetails = async () => {
+  const res = await api.get("/auth/me")
+  return res.data
+}

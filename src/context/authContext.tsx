@@ -14,6 +14,11 @@ export const AuthProvider = ({ children }: any) => {
 
     useEffect(() => {
 
+        // get token save after the login
         const token = localStorage.getItem("accessToken")
+
+        if (token) {
+            
+        }
     })
 }
