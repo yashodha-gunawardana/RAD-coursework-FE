@@ -29,6 +29,10 @@ export const AuthProvider = ({ children }: any) => {
                 setUser(null)
                 console.error(err)
             })
+            .finally(() => {
+                // stop loading after check finishes
+                setLoading(false)
+            })
         } 
     })
 }
