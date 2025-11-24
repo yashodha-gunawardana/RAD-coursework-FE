@@ -5,4 +5,7 @@ import { useAuth } from "../context/authContext";
 
 export default function Login() {
     const navigate = useNavigate()
+
+    // function to store logged-in user globally
+    const { setUser } = useAuth()
 }
