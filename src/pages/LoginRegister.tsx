@@ -37,10 +37,8 @@ export default function LoginRegister() {
     const [isLogin, setIsLogin] = useState(true)
 
     const [fullname, setFullname] = useState("")
-  
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-
     const [confirmPassword, setConfirmPassword] = useState("")
     const [termsChecked, setTermsChecked] = useState(false);
 
@@ -57,7 +55,6 @@ export default function LoginRegister() {
             return
         }
 
-        
         try {
 
             if (formType === "signin") {
@@ -112,6 +109,12 @@ export default function LoginRegister() {
             alert("Something went wrong..")
         }
     }
+
+    useEffect(() => {
+        const updateBackgroundByTime = () => {
+            
+        }
+    })
 
     
 
