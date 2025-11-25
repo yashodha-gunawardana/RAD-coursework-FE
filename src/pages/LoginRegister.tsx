@@ -305,13 +305,29 @@ export default function LoginRegister() {
                                 </div>
                             </>
                         )}
-
                     </form>
-
                 </div>
-            </div>    
+            </div> 
+
+            {/* footer with social links */}
+            <div className="flex justify-between items-end mt-auto pt-4">
+                <p className="text-gray-400"> Social networks</p>
+                <div className="flex gap-3">
+                    <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
+                        <i className="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
+                        <i className="fab fa-vimeo-v"></i>
+                    </a>
+                    <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
+                        <i className="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
+                        <i className="fab fa-google-plus-g"></i>
+                    </a>
+                </div>
+            </div>   
         </div>
-        
     </div>
 )
 
