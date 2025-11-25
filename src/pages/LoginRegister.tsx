@@ -128,13 +128,17 @@ export default function LoginRegister() {
     }, []); // runce once on mount
 
     return (
-        <div className="relative flex justify-center items-center min-h-screen bg-gray-100 overflow-hidden">
+    <div className="relative flex justify-center items-center min-h-screen bg-gray-100 overflow-hidden">
 
-            
-
+        {/* background waves */}
+        <div className="absolute -top-[10vh] -left-[10vw] w-[120vw] h-[120vh] 
+                    bg-gradient-to-br from-teal-800 to-sky-500 rotate-[-15deg] 
+                    origin-top-left rounded-[0_0_80%_0/0_0_10%_0] 
+                    shadow-[0_15px_45px_rgba(0,0,0,0.3)] z-0">
         </div>
-    )
-    
+
+    </div>
+)
 
     
 }
