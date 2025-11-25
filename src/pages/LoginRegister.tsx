@@ -220,6 +220,46 @@ export default function LoginRegister() {
                                     onChange={(e) => setFullname(e.target.value)}
                                     required
                                 />
+                                <input
+                                    type="text"
+                                    placeholder="Email"
+                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                    value={password}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    required
+                                />
+
+                                {/* terms checkbox */}
+                                <div className="flex items-center gap-3 mt-2 mb-6">
+                                    <input
+                                        type="checkbox"
+                                        id="terms"
+                                        className="w-4 h-4 border border-gray-500 rounded"
+                                        checked={termsChecked}
+                                        onChange={(e) => setTermsChecked(e.target.checked)}
+                                    />
+                                    <label htmlFor="terms" className="text-gray-400 text-sm">
+                                        I agree to the terms of service
+                                    </label>
+                                </div>
+
+                                        
                             </>
                         )}
 
