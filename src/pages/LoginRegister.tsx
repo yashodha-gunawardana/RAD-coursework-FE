@@ -209,6 +209,20 @@ export default function LoginRegister() {
                 <div className="flex-1 flex flex-col pt-0">
                     <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
 
+                        {/* sign up form */}
+                        {formType === "signup" && (
+                            <>
+                                <input
+                                    type="text"
+                                    placeholder="Full Name"
+                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                    value={fullname}
+                                    onChange={(e) => setFullname(e.target.value)}
+                                    required
+                                />
+                            </>
+                        )}
+
                     </form>
 
                 </div>
