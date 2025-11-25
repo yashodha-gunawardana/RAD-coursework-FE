@@ -3,24 +3,49 @@ import { getMyDetails, loginUser, registerUser } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
+const images = [
+    {
+        id: "morning",
+        src: "/images/loginImage.png",
+        heading: "Good morning! Let's start the day.."
+    },
+    {
+        id: "day",
+        src: "/images/loginImage1.png",
+        heading: "Hello! Achieve Your Midday Goals.." 
+    },
+    {
+        id: "evening",
+        src: "/images/loginImage3.png",
+        heading: "Wind Down. Prepare for Tomorrow.."
+    },
+    {
+        id: "night",
+        src: "/images/loginImage4.png",
+        heading: "Working late? Stay Focused.."
+    },
+];
+
 export default function LoginRegister() {
     const navigate = useNavigate()
 
     // function to store logged-in user globally
     const { setUser } = useAuth()
     const [formType, setFormType] = useState<"signup" | "signin">("signup");
+    
     const [isLogin, setIsLogin] = useState(true)
 
     const [fullname, setFullname] = useState("")
-    const [address, setAdress] = useState("")
-    const [phone, setPhone] = useState("")
-
+  
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const [confirmPassword, setConfirmPassword] = useState("")
     const [termsChecked, setTermsChecked] = useState(false);
 
+    const switchForm = (type: "signup" | "signin") => {
+    setFormType(type);
+  };
     
     const handleSubmit = async (e: FormEvent) => {
         // prevent default form refresh
@@ -74,9 +99,7 @@ export default function LoginRegister() {
                 await registerUser({
                     fullname,
                     email,
-                    password,
-                    address,
-                    phone
+                    password
                 })
 
                 alert("Registration successful! Please login..")
@@ -89,10 +112,7 @@ export default function LoginRegister() {
         }
     }
 
-    return (
-        
-
-    )
+    
 
     
 }
