@@ -2,26 +2,31 @@ import { useEffect, useState, type FormEvent } from "react";
 import { getMyDetails, loginUser, registerUser } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import morningImg from "../assets/images/loginImage.png";
+import dayImg from "../assets/images/loginimage2.png";
+import eveningImg from "../assets/images/loginImage3.png";
+import nightImg from "../assets/images/loginImage4.png";
+
 
 const images = [
     {
         id: "morning",
-        src: "/images/loginImage.png",
+        src: morningImg,
         heading: "Good morning! Let's start the day.."
     },
     {
         id: "day",
-        src: "/images/loginImage1.png",
+        src: dayImg,
         heading: "Hello! Achieve Your Midday Goals.." 
     },
     {
         id: "evening",
-        src: "/images/loginImage3.png",
+        src: eveningImg,
         heading: "Wind Down. Prepare for Tomorrow.."
     },
     {
         id: "night",
-        src: "/images/loginImage4.png",
+        src: nightImg,
         heading: "Working late? Stay Focused.."
     },
 ];
@@ -156,6 +161,9 @@ export default function LoginRegister() {
                     alt={timeImages.id}
                     className="absolute top-0 left-0 w-full h-full object-cover"
                 />
+
+                {/* vertical divider */}
+                <div className="absolute top-0 right-8 w-[3px] h-full bg-yellow-50 opacity-80"></div>
             </div>  
         </div>
 
