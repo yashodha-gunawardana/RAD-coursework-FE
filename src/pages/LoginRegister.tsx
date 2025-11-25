@@ -178,11 +178,22 @@ export default function LoginRegister() {
         </div>
 
         {/* right panel */}
-        <div className="flex-1 bg-gray-900 text-white p-12 flex flex-col rounded-lg"></div>
+        <div className="flex-1 bg-gray-900 text-white p-12 flex flex-col rounded-lg">
 
             {/* header: sign up / sign in buttons */}
-            <div className="flex justify-between mb-8"></div>
-
+            <div className="flex justify-between mb-8">
+                <button className={`font-semibold ${formType === "signup" ? "opacity-100 border-b-white" : "opacity-50"}`}
+                        onClick={() => switchForm("signup")}
+                >Sign Up
+                </button>
+                <button className={`font-semibold ${formType === "signin" ? "opacity-100 border-b-white" : "opacity-50"}`}
+                        onClick={() => switchForm("signin")}
+                >Sign In
+                </button>
+            </div>
+            
+                
+        </div>
         
     </div>
 )
