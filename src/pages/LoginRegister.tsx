@@ -167,9 +167,17 @@ export default function LoginRegister() {
 
                 {/* text overlay on image */}
                 <div className="relative z-20 p-5 text-left text-white bg-black/20 rounded-lg backdrop-blur-sm"></div>
+                    <h2 className="text-3xl font-extrabold uppercase leading-none">Visionary</h2>
+                    <h2 className="text-3xl font-extrabold uppercase leading-none">Digital</h2>
+                    <h2 className="text-3xl font-extrabold uppercase leading-none">Spaces</h2>
+                    <h3 className="text-xl font-normal text-yellow-50 mt-2">{timeImages.heading}</h3>
+                    <p className="text-gray-300 text-sm mt-5 border-l-2 border-yellow-50 pl-2">
+                        Curating experiences that defy expectations and redefine posibility.
+                    </p>
             </div>  
         </div>
-
+        
+        
     </div>
 )
 
