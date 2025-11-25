@@ -124,8 +124,16 @@ export default function LoginRegister() {
         
         // cleanup interval on component unmount to prevent memory leaks and stop repeated background updates
         return () => clearInterval(interval)
-    })
 
+    }, []); // runce once on mount
+
+    return (
+        <div className="relative flex justify-center items-center min-h-screen bg-gray-100 overflow-hidden">
+
+            
+
+        </div>
+    )
     
 
     
