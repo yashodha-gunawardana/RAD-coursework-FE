@@ -191,8 +191,10 @@ export default function LoginRegister() {
                 >Sign In
                 </button>
             </div>
-            
-                
+
+            {/* content section */}
+            <div className="felx flex-1 gap-10">
+            </div>    
         </div>
         
     </div>
