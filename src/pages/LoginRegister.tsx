@@ -164,6 +164,9 @@ export default function LoginRegister() {
 
                 {/* vertical divider */}
                 <div className="absolute top-0 right-8 w-[3px] h-full bg-yellow-50 opacity-80"></div>
+
+                {/* text overlay on image */}
+                <div className="relative z-20 p-5 text-left text-white bg-black/20 rounded-lg backdrop-blur-sm"></div>
             </div>  
         </div>
 
