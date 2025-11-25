@@ -113,7 +113,13 @@ export default function LoginRegister() {
     useEffect(() => {
         const updateBackgroundByTime = () => {
             const hour = new Date().getHours() // get current hour
-        }
+            if (hour >= 6 && hour < 12) setTimeImages(images[0]) // morning
+            else if (hour >= 12 && hour < 18) setTimeImages(images[1]) // day
+            else if (hour >= 18 && hour < 21) setTimeImages(images[2]) // evening
+            else setTimeImages(images[3]) // night
+        };
+
+        
     })
 
     
