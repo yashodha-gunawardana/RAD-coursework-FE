@@ -137,6 +137,9 @@ export default function LoginRegister() {
 
         {/* background waves */}
         <div className="absolute inset-0 bg-[#EEE9DF] z-0"></div>
+        <div className="absolute top-1/3 -left-20 w-[120%] h-8
+                        bg-gradient-to-r from-[#2C3B4D] to-[#1B2632]
+                        rounded-full opacity-90 z-10 transform -rotate-3"></div>
         
 
         {/* card container */}
