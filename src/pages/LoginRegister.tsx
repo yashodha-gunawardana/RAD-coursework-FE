@@ -139,7 +139,13 @@ export default function LoginRegister() {
         <div className="absolute inset-0 bg-[#EEE9DF] z-0"></div>
         <div className="absolute top-1/3 -left-20 w-[120%] h-8
                         bg-gradient-to-r from-[#2C3B4D] to-[#1B2632]
-                        rounded-full opacity-90 z-10 transform -rotate-3"></div>
+                        rounded-full opacity-90 z-10 transform -rotate-3">
+        </div>
+        <div className="absolute top-1/2 -right-10 w-[110%] h-6
+                        bg-gradient-to-r from-[#C9C1B1] to-[#A35139]
+                        rounded-full opacity-80 z-20 transform rotate-2">
+        </div>
+        
         
 
         {/* card container */}
