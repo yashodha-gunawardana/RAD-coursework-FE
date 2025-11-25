@@ -259,6 +259,13 @@ export default function LoginRegister() {
                                     </label>
                                 </div>
 
+                                <div className="flex items-center gap-5">
+                                    <button type="submit" className="bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
+                                            Go
+                                    </button>
+
+                                </div>
+
                                         
                             </>
                         )}
