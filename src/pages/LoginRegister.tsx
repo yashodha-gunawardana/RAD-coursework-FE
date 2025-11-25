@@ -120,7 +120,10 @@ export default function LoginRegister() {
         };
 
         updateBackgroundByTime()
-        const interval = setInterval(updateBackgroundByTime, 60000);        
+        const interval = setInterval(updateBackgroundByTime, 60000); // update every minutes
+        
+        // cleanup interval on component unmount to prevent memory leaks and stop repeated background updates
+        return () => clearInterval(interval)
     })
 
     
