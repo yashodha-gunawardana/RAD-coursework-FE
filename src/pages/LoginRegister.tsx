@@ -263,10 +263,13 @@ export default function LoginRegister() {
                                     <button type="submit" className="bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
                                             Go
                                     </button>
-
+                                    <p className="text-gray-400 text-sm">
+                                        Already have a password? Use the{" "}
+                                        <button type="button" onClick={() => switchForm("signin")} className="text-yellow-50 font-bold">
+                                            login form
+                                        </button>
+                                    </p>
                                 </div>
-
-                                        
                             </>
                         )}
 
