@@ -194,6 +194,11 @@ export default function LoginRegister() {
 
             {/* content section */}
             <div className="felx flex-1 gap-10">
+
+                {/* left text section */}
+                <div className="flex-1 flex flex-col justify-between pt-7 pb-7">
+
+                </div>
             </div>    
         </div>
         
