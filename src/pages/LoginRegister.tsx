@@ -176,7 +176,10 @@ export default function LoginRegister() {
                     </p>
             </div>  
         </div>
-        
+
+        {/* right panel */}
+        <div className="flex-1 bg-gray-900 text-white p-12 flex flex-col rounded-lg"></div>
+
         
     </div>
 )
