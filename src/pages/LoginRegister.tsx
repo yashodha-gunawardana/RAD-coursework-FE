@@ -141,6 +141,13 @@ export default function LoginRegister() {
                         rounded-[0_0_70%_0/0_0_20%-0] opacity-80 z-1">
         </div>
 
+        {/* card container */}
+        <div className="relative flex w-[1050px] h-[680px]
+                        shadow-[0_15px_45px_rgba(0,0,0,0,3)]
+                        rounded-x1 overflow-hidden bg-yellow-50 p-10 z-10">
+
+        </div>
+
     </div>
 )
 
