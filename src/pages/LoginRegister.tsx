@@ -136,23 +136,16 @@ export default function LoginRegister() {
     <div className="relative flex justify-center items-center min-h-screen bg-gray-100 overflow-hidden">
 
         {/* background waves */}
-        <div className="absolute -top-[10vh] -left-[10vw] w-[120vw] h-[120vh] 
-                    bg-gradient-to-br from-teal-800 to-sky-500 rotate-[-15deg] 
-                    origin-top-left rounded-[0_0_80%_0/0_0_10%_0] 
-                    shadow-[0_15px_45px_rgba(0,0,0,0.3)] z-0">
-        </div>
-        <div className="absolute -top-[12vh] -left-[8vw] w-[120vw] h-[120vh]
-                        bg-sky-300 rotate-[17deg] origin-top-left
-                        rounded-[0_0_70%_0/0_0_20%-0] opacity-80 z-1">
-        </div>
+        <div className="absolute inset-0 bg-[#EEE9DF] z-0"></div>
+        
 
         {/* card container */}
         <div className="relative flex w-[1050px] h-[680px]
-                        shadow-[0_15px_45px_rgba(0,0,0,0,3)]
-                        rounded-x1 overflow-hidden bg-yellow-50 p-10 z-10">
+                        shadow-[0_15px_45px_rgba(0,0,0,0.3)]
+                        rounded-xl overflow-hidden bg-yellow-50 border-2 border-black z-10">
 
             {/* left panel */}
-            <div className="flex-none w-[400px] relative mr-4 rounded-lg
+            <div className="flex-none w-[320px] relative  
                             overflow-hidden bg-blue-900 flex justify-center items-center">
 
                 {/* background image (change with time) */}
@@ -166,170 +159,178 @@ export default function LoginRegister() {
                 <div className="absolute top-0 right-8 w-[3px] h-full bg-yellow-50 opacity-80"></div>
 
                 {/* text overlay on image */}
-                <div className="relative z-20 p-5 text-left text-white bg-black/20 rounded-lg backdrop-blur-sm"></div>
-                    <h2 className="text-3xl font-extrabold uppercase leading-none">Visionary</h2>
-                    <h2 className="text-3xl font-extrabold uppercase leading-none">Digital</h2>
-                    <h2 className="text-3xl font-extrabold uppercase leading-none">Spaces</h2>
+                <div className="relative z-20 p-5 text-left text-white bg-black/20 rounded-lg backdrop-blur-sm">
+                    <h2 className="text-3xl font-extrabold uppercase leading-none">Unforgettable</h2>
+                    <h2 className="text-3xl font-extrabold uppercase leading-none">Event</h2>
+                    <h2 className="text-3xl font-extrabold uppercase leading-none">Experiences</h2>
                     <h3 className="text-xl font-normal text-yellow-50 mt-2">{timeImages.heading}</h3>
                     <p className="text-gray-300 text-sm mt-5 border-l-2 border-yellow-50 pl-2">
-                        Curating experiences that defy expectations and redefine posibility.
+                        Curating experiences that defy expectations and redefine possibility.
                     </p>
+                </div>
             </div>  
-        </div>
 
-        {/* right panel */}
-        <div className="flex-1 bg-gray-900 text-white p-12 flex flex-col rounded-lg">
+            {/* right panel */}
+            <div className="flex-1 bg-gray-900 text-white p-12 flex flex-col rounded-lg">
 
-            {/* header: sign up / sign in buttons */}
-            <div className="flex justify-between mb-8">
-                <button className={`font-semibold ${formType === "signup" ? "opacity-100 border-b-white" : "opacity-50"}`}
-                        onClick={() => switchForm("signup")}
-                >Sign Up
-                </button>
-                <button className={`font-semibold ${formType === "signin" ? "opacity-100 border-b-white" : "opacity-50"}`}
-                        onClick={() => switchForm("signin")}
-                >Sign In
-                </button>
-            </div>
-
-            {/* content section */}
-            <div className="felx flex-1 gap-10">
-
-                {/* left text section */}
-                <div className="flex-1 flex flex-col justify-between pt-7 pb-7">
-                    <p className="uppercase text-gray-400 text-sm tracking-wide">welcome</p>
-                    <h1 className="text-3xl font-extrabold leading-snug">
-                        {formType === "signup"
-                            ? "Fill the form to become part of team"
-                            : "Log in to access your dashboard"}
-                    </h1>
+                {/* header: sign up / sign in buttons */}
+                <div className="flex justify-between mb-8">
+                    <button className={`font-semibold ${formType === "signup" ? "opacity-100 border-b-2 border-white" : "opacity-50"}`}
+                            onClick={() => switchForm("signup")}
+                    >Sign Up
+                    </button>
+                    <button className={`font-semibold ${formType === "signin" ? "opacity-100 border-b-2 border-white" : "opacity-50"}`}
+                            onClick={() => switchForm("signin")}
+                    >Sign In
+                    </button>
                 </div>
 
-                {/* right form section */}
-                <div className="flex-1 flex flex-col pt-0">
-                    <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+                {/* content section */}
+                <div className="flex flex-1 gap-10">
 
-                        {/* sign up form */}
-                        {formType === "signup" && (
-                            <>
-                                <input
-                                    type="text"
-                                    placeholder="Full Name"
-                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                    value={fullname}
-                                    onChange={(e) => setFullname(e.target.value)}
-                                    required
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Email"
-                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                                <input
-                                    type="password"
-                                    placeholder="Password"
-                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
-                                <input
-                                    type="password"
-                                    placeholder="Password"
-                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                    value={password}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    required
-                                />
+                    {/* left text section */}
+                    <div className="flex-1 flex flex-col pt-7 pb-7">
+                        <p className="uppercase text-gray-400 text-sm tracking-wide">welcome</p>
+                        <h1 className="text-3xl font-extrabold mt-4">
+                            {formType === "signup"
+                                ? "Fill the form to become part of team"
+                                : "Log in to access your dashboard"}
+                        </h1>
+                    </div>
 
-                                {/* terms checkbox */}
-                                <div className="flex items-center gap-3 mt-2 mb-6">
+                    {/* right form section */}
+                    <div className="flex-1 flex flex-col pt-0">
+                        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+
+                            {/* sign up form */}
+                            {formType === "signup" && (
+                                <>
                                     <input
-                                        type="checkbox"
-                                        id="terms"
-                                        className="w-4 h-4 border border-gray-500 rounded"
-                                        checked={termsChecked}
-                                        onChange={(e) => setTermsChecked(e.target.checked)}
+                                        type="text"
+                                        placeholder="Full Name"
+                                        className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                        value={fullname}
+                                        onChange={(e) => setFullname(e.target.value)}
+                                        required
                                     />
-                                    <label htmlFor="terms" className="text-gray-400 text-sm">
-                                        I agree to the terms of service
-                                    </label>
-                                </div>
+                                    <input
+                                        type="email"
+                                        placeholder="Email"
+                                        className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                    <input
+                                        type="password"
+                                        placeholder="Password"
+                                        className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                    />
+                                    <input
+                                        type="password"
+                                        placeholder="Confirm Password"
+                                        className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        required
+                                    />
 
-                                <div className="flex items-center gap-5">
-                                    <button type="submit" className="bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
-                                            Go
-                                    </button>
-                                    <p className="text-gray-400 text-sm">
-                                        Already have a password? Use the{" "}
-                                        <button type="button" onClick={() => switchForm("signin")} className="text-yellow-50 font-bold">
-                                            login form
+                                    {/* terms checkbox */}
+                                    <div className="flex items-center gap-3 mt-2 mb-6">
+                                        <input
+                                            type="checkbox"
+                                            id="terms"
+                                            className="w-4 h-4 border border-gray-500 rounded"
+                                            checked={termsChecked}
+                                            onChange={(e) => setTermsChecked(e.target.checked)}
+                                        />
+                                        <label htmlFor="terms" className="text-gray-400 text-sm">
+                                            I agree to the terms of service
+                                        </label>
+                                    </div>
+
+                                    <div className="flex items-center gap-5">
+                                        <button type="submit" className="bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
+                                                Go
                                         </button>
-                                    </p>
-                                </div>
-                            </>
-                        )}
+                                        <div className="flex-1 text-right">
+                                            <p className="text-gray-400 text-sm">
+                                                Already have an account? Please use the{" "}
+                                                <button type="button" onClick={() => switchForm("signin")} className="text-yellow-50 font-bold">
+                                                    login form
+                                                </button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
 
-                        {/* sign in form */}
-                        {formType === "signin" && (
-                            <>
-                                <input
-                                    type="text"
-                                    placeholder="Email"
-                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                                <input
-                                    type="password"
-                                    placeholder="Password"
-                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
-                                <div className="flex items-center gap-5 mt-5">
-                                    <button type="submit" className="bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
-                                        Sign In
-                                    </button>
-                                    <p className="text-gray-400 text-sm">
-                                        Forgot password?{" "}
-                                        <a href="#" className="text-yellow-50 font-bold">
-                                            Recover it here
-                                        </a>
-                                    </p>
-                                </div>
-                            </>
-                        )}
-                    </form>
-                </div>
-            </div> 
+                            {/* sign in form */}
+                            {formType === "signin" && (
+                                <>
+                                    <input
+                                        type="email"
+                                        placeholder="Email"
+                                        className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                    <input
+                                        type="password"
+                                        placeholder="Password"
+                                        className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                    />
+                                    <div className="flex items-center gap-5 mt-5">
+                                        <button type="submit" className="bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
+                                            Sign In
+                                        </button>
+                                        <div className="flex-1 text-right">
+                                            <p className="text-gray-400 text-sm">
+                                                Forgot password?{" "}
+                                                <a href="#" className="text-yellow-50 font-bold">
+                                                    Can recover it here
+                                                </a>
+                                            </p>
+                                        </div>    
+                                    </div>
+                                </>
+                            )}
+                        </form>
+                    </div>
+                </div> 
 
-            {/* footer with social links */}
-            <div className="flex justify-between items-end mt-auto pt-4">
-                <p className="text-gray-400"> Social networks</p>
-                <div className="flex gap-3">
-                    <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
-                        <i className="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
-                        <i className="fab fa-vimeo-v"></i>
-                    </a>
-                    <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
-                        <i className="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
-                        <i className="fab fa-google-plus-g"></i>
-                    </a>
-                </div>
-            </div>   
+                {/* horizontal divider */}
+                <div className="absolute bottom-28 right-13 h-[1px] w-[300px] bg-yellow-50 opacity-80"></div>
+
+                {/* footer with social links */}
+                <div className="flex justify-between items-end mt-auto pt-4">
+                    <p className="text-gray-400"> Social networks</p>
+                    <div className="flex gap-3 mr-25">
+                        <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
+                            <i className="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
+                            <i className="fab fa-vimeo-v"></i>
+                        </a>
+                        <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
+                            <i className="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white">
+                            <i className="fab fa-google-plus-g"></i>
+                        </a>
+                    </div>
+                </div>   
+            </div>
         </div>
     </div>
-)
+);
 
     
 }
