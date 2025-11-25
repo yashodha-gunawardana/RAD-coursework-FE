@@ -149,6 +149,13 @@ export default function LoginRegister() {
             {/* left panel */}
             <div className="flex-none w-[400px] relative mr-4 rounded-lg
                             overflow-hidden bg-blue-900 flex justify-center items-center">
+
+                {/* background image (change with time) */}
+                <img 
+                    src={timeImages.src}
+                    alt={timeImages.id}
+                    className="absolute top-0 left-0 w-full h-full object-cover"
+                />
             </div>  
         </div>
 
