@@ -146,6 +146,10 @@ export default function LoginRegister() {
                         shadow-[0_15px_45px_rgba(0,0,0,0,3)]
                         rounded-x1 overflow-hidden bg-yellow-50 p-10 z-10">
 
+            {/* left panel */}
+            <div className="flex-none w-[400px] relative mr-4 rounded-lg
+                            overflow-hidden bg-blue-900 flex justify-center items-center">
+            </div>  
         </div>
 
     </div>
