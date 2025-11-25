@@ -207,6 +207,9 @@ export default function LoginRegister() {
 
                 {/* right form section */}
                 <div className="flex-1 flex flex-col pt-0">
+                    <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+
+                    </form>
 
                 </div>
             </div>    
