@@ -119,7 +119,8 @@ export default function LoginRegister() {
             else setTimeImages(images[3]) // night
         };
 
-        
+        updateBackgroundByTime()
+        const interval = setInterval(updateBackgroundByTime, 60000);        
     })
 
     
