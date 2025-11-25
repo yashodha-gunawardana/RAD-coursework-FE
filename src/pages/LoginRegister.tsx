@@ -273,6 +273,39 @@ export default function LoginRegister() {
                             </>
                         )}
 
+                        {/* sign in form */}
+                        {formType === "signin" && (
+                            <>
+                                <input
+                                    type="text"
+                                    placeholder="Email"
+                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    className="px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <div className="flex items-center gap-5 mt-5">
+                                    <button type="submit" className="bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
+                                        Sign In
+                                    </button>
+                                    <p className="text-gray-400 text-sm">
+                                        Forgot password?{" "}
+                                        <a href="#" className="text-yellow-50 font-bold">
+                                            Recover it here
+                                        </a>
+                                    </p>
+                                </div>
+                            </>
+                        )}
+
                     </form>
 
                 </div>
