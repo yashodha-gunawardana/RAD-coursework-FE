@@ -112,7 +112,7 @@ export default function LoginRegister() {
 
     useEffect(() => {
         const updateBackgroundByTime = () => {
-            
+            const hour = new Date().getHours() // get current hour
         }
     })
 
