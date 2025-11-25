@@ -145,9 +145,12 @@ export default function LoginRegister() {
                         bg-gradient-to-r from-[#C9C1B1] to-[#A35139]
                         rounded-full opacity-80 z-20 transform rotate-2">
         </div>
+        <div className="absolute top-2/3 -left-10 w-[115%] h-4
+                        bg-gradient-to-r from-[#FFB162] to-[#A35139]
+                        rounded-full opacity-85 z-30 transform -rotate-1">
+        </div>
         
         
-
         {/* card container */}
         <div className="relative flex w-[1050px] h-[680px]
                         shadow-[0_15px_45px_rgba(0,0,0,0.3)]
