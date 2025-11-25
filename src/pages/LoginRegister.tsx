@@ -136,6 +136,10 @@ export default function LoginRegister() {
                     origin-top-left rounded-[0_0_80%_0/0_0_10%_0] 
                     shadow-[0_15px_45px_rgba(0,0,0,0.3)] z-0">
         </div>
+        <div className="absolute -top-[12vh] -left-[8vw] w-[120vw] h-[120vh]
+                        bg-sky-300 rotate-[17deg] origin-top-left
+                        rounded-[0_0_70%_0/0_0_20%-0] opacity-80 z-1">
+        </div>
 
     </div>
 )
