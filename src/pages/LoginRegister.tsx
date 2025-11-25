@@ -180,6 +180,9 @@ export default function LoginRegister() {
         {/* right panel */}
         <div className="flex-1 bg-gray-900 text-white p-12 flex flex-col rounded-lg"></div>
 
+            {/* header: sign up / sign in buttons */}
+            <div className="flex justify-between mb-8"></div>
+
         
     </div>
 )
