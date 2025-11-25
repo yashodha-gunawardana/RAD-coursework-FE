@@ -32,6 +32,7 @@ export default function LoginRegister() {
     // function to store logged-in user globally
     const { setUser } = useAuth()
     const [formType, setFormType] = useState<"signup" | "signin">("signup");
+    const [timeImages, setTimeImages] = useState(images[0])
     
     const [isLogin, setIsLogin] = useState(true)
 
