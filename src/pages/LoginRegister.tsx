@@ -197,8 +197,15 @@ export default function LoginRegister() {
 
                 {/* left text section */}
                 <div className="flex-1 flex flex-col justify-between pt-7 pb-7">
-
+                    <p className="uppercase text-gray-400 text-sm tracking-wide">welcome</p>
+                    <h1 className="text-3xl font-extrabold leading-snug">
+                        {formType === "signup"
+                            ? "Fill the form to become part of team"
+                            : "Log in to access your dashboard"}
+                    </h1>
                 </div>
+
+                {/* right form section */}
             </div>    
         </div>
         
