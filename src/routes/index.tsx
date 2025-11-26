@@ -11,9 +11,9 @@ export default function Router() {
         <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-                
+
             <Route path="/" element={<LandingPage />} />   
-            <Route path="/" element={<LoginRegister />} />
+            <Route path="/auth" element={<LoginRegister />} />
            
             </Routes>
         </Suspense>
