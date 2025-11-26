@@ -33,9 +33,14 @@ api.interceptors.response.use(
         // save original request config
         const originalRequest: any = err.config
 
+        // check if original request is public
         const isPublic = PUBLIC_ENDPOINTS.some((url) => 
             originalRequest.url?.includes(url)
         )
+
+        if (err.response?.status === 401 && !isPublic && !originalRequest._retry) {
+            originalRequest._retry = true // mark request as retried
+        }
     }
 )
 
