@@ -40,7 +40,7 @@ export default function LoginRegister() {
     const [formType, setFormType] = useState<"signup" | "signin">("signup");
     const [timeImages, setTimeImages] = useState(images[0])
     
-    const [isLogin, setIsLogin] = useState(true)
+    // const [isLogin, setIsLogin] = useState(true)
 
     const [fullname, setFullname] = useState("")
     const [email, setEmail] = useState("")
@@ -110,13 +110,14 @@ export default function LoginRegister() {
 
                 alert("Registration successful! Please login..")
 
+                // reset fields
                 setFullname("")
                 setEmail("")
                 setPassword("")
                 setConfirmPassword("")
                 setTermsChecked(false)
-                
-                setIsLogin(true)
+
+                setFormType("signin")
             }
 
         } catch (err) {
