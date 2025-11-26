@@ -20,6 +20,7 @@ api.interceptors.request.use((config) => {
     if (token && !isPublic) {
         config.headers.Authorization = `Bearer ${token}`
     }
+    return config
 })
 
 export default api
