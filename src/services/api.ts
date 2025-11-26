@@ -47,8 +47,14 @@ api.interceptors.response.use(
                 if (!refreshToken) {
                     throw new Error("No refresh token available")
                 }
+
+                const res = await refreshTokens(refreshToken)
+                localStorage.setItem("accessToken", res.accessToken)
+
+            } catch (err) {
+
             }
-        }
+        } 
     }
 )
 
