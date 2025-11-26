@@ -15,6 +15,11 @@ api.interceptors.request.use((config) => {
 
     // check if current request is to a public endpoint
     const isPublic = PUBLIC_ENDPOINTS.some((url) => config.url?.includes(url))
+
+    // if token exists and endpoint is NOT public, add Authorization header
+    if (token && !isPublic) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
 })
 
 export default api
