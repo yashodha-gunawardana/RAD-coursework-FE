@@ -30,7 +30,12 @@ api.interceptors.response.use(
     },
 
     async (err: AxiosError) => {
+        // save original request config
         const originalRequest: any = err.config
+
+        const isPublic = PUBLIC_ENDPOINTS.some((url) => 
+            originalRequest.url?.includes(url)
+        )
     }
 )
 
