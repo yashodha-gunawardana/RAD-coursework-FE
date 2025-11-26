@@ -54,10 +54,13 @@ api.interceptors.response.use(
                 // update original request Authorization header
                 originalRequest.headers.Authorization = `Bearer ${res.accessToken}`
 
+                // retry original request with new token
                 return axios(originalRequest)
 
             } catch (err) {
-
+                localStorage.removeItem("accessToken")
+                localStorage.removeItem("refreshToken")
+                window.location.href = "/login"
             }
         } 
     }
