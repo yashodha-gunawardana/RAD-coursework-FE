@@ -51,6 +51,9 @@ api.interceptors.response.use(
                 const res = await refreshTokens(refreshToken)
                 localStorage.setItem("accessToken", res.accessToken)
 
+                // update original request Authorization header
+                originalRequest.headers.Authorization = `Bearer ${res.accessToken}`
+
             } catch (err) {
 
             }
