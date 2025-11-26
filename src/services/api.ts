@@ -6,6 +6,11 @@ const api = axios.create({
   withCredentials: true,
 })
 
+// define endpoints that do NOT require authentication
 const PUBLIC_ENDPOINTS = ["/auth/login", "/auth/register"]
+
+api.interceptors.request.use((config) => {
+    
+})
 
 export default api
