@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 
+
 const api = axios.create({
   baseURL: "http://localhost:5000/api/v1",
   withCredentials: true,
@@ -25,7 +26,7 @@ api.interceptors.request.use((config) => {
 
 // response interceptor: runs on every response/error
 api.interceptors.response.use(
-    (Response) => {
+    (response) => {
         return response
     },
 
@@ -40,6 +41,13 @@ api.interceptors.response.use(
 
         if (err.response?.status === 401 && !isPublic && !originalRequest._retry) {
             originalRequest._retry = true // mark request as retried
+
+            try {
+                const refreshToken = localStorage.getItem("refreshToken")
+                if (!refreshToken) {
+                    throw new Error("No refresh token available")
+                }
+            }
         }
     }
 )
