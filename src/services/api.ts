@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 
 const api = axios.create({
@@ -28,6 +28,10 @@ api.interceptors.response.use(
     (Response) => {
         return response
     },
+
+    async (err: AxiosError) => {
+        const originalRequest: any = err.config
+    }
 )
 
 export default api
