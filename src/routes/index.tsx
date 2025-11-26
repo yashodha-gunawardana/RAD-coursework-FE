@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
 
+const LandingPage = lazy(() => import("../pages/LandingPage"))
 const LoginRegister = lazy(() => import("../pages/LoginRegister"))
 
 export default function Router() {
@@ -10,8 +11,10 @@ export default function Router() {
         <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
             <Routes>
+                
+            <Route path="/" element={<LandingPage />} />   
             <Route path="/" element={<LoginRegister />} />
-           {/*} <Route path="/home" element={<Home />} /> */}
+           
             </Routes>
         </Suspense>
         </BrowserRouter>

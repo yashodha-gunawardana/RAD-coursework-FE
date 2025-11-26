@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { getMyDetails, loginUser, registerUser } from "../services/auth";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import morningImg from "../assets/images/loginImage.png";
 import dayImg from "../assets/images/loginimage2.png";
@@ -57,9 +57,14 @@ export default function LoginRegister() {
         // prevent default form refresh
         e.preventDefault()
 
-        if (!fullname || !email || !password || !confirmPassword) {
+        if (formType === "signup" && (!fullname || !email || !password || !confirmPassword)) {
             alert("All fields are required..")
             return
+        }
+
+        if (formType == "signin" && (!email || !password)) {
+            alert("All fields are required..")
+                return
         }
 
         try {
@@ -117,6 +122,7 @@ export default function LoginRegister() {
                 setConfirmPassword("")
                 setTermsChecked(false)
 
+                // auto switch to login page
                 setFormType("signin")
             }
 
