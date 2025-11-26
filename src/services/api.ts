@@ -9,7 +9,7 @@ const api = axios.create({
 // define endpoints that do NOT require authentication
 const PUBLIC_ENDPOINTS = ["/auth/login", "/auth/register"]
 
-// request interceptor run before every request
+// request interceptor: run before every request
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem("accessToken")
 
@@ -22,5 +22,12 @@ api.interceptors.request.use((config) => {
     }
     return config
 })
+
+// response interceptor: runs on every response/error
+api.interceptors.response.use(
+    (Response) => {
+        return response
+    },
+)
 
 export default api
