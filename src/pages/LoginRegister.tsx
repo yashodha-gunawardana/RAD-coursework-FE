@@ -46,6 +46,7 @@ export default function LoginRegister() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const [role, setRole] = useState("USER")
     const [termsChecked, setTermsChecked] = useState(false);
 
     const switchForm = (type: "signup" | "signin") => {
@@ -56,7 +57,7 @@ export default function LoginRegister() {
         // prevent default form refresh
         e.preventDefault()
 
-        if (!email || !password) {
+        if (!fullname || !email || !password || !confirmPassword) {
             alert("All fields are required..")
             return
         }
@@ -103,10 +104,18 @@ export default function LoginRegister() {
                 await registerUser({
                     fullname,
                     email,
-                    password
+                    password,
+                    role
                 })
 
                 alert("Registration successful! Please login..")
+
+                setFullname("")
+                setEmail("")
+                setPassword("")
+                setConfirmPassword("")
+                setTermsChecked(false)
+                
                 setIsLogin(true)
             }
 
@@ -317,7 +326,7 @@ export default function LoginRegister() {
                                             required
                                         />
                                     </div>
-                                    
+
                                     <div className="flex items-center gap-5 mt-5">
                                         <button type="submit" className="flex items-center justify-center gap-2 bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
                                             Sign In

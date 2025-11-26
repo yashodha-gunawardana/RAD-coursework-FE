@@ -6,8 +6,9 @@ type RegisterDataType = {
     fullname: string
     email: string
     password: string
-    address?: string
-    phone?: string
+    // address?: string
+    // phone?: string
+    role: string
 }
 
 // register function
