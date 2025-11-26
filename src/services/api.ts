@@ -66,6 +66,8 @@ api.interceptors.response.use(
                 return Promise.reject(err)
             }
         } 
+        // if error is not handled above, reject promise
+        return Promise.reject(err)
     }
 )
 
