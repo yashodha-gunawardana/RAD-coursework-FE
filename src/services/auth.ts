@@ -29,3 +29,10 @@ export const getMyDetails = async () => {
   const res = await api.get("/auth/me")
   return res.data
 }
+
+// refresh access token using refresh token
+export const refreshTokens = async (refreshToken: string) => {
+  const res = await api.post("/auth/refresh", { token: refreshToken })
+  // return the response data, which contains the new access token
+  return res.data
+}
