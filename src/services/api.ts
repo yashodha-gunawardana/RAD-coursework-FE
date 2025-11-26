@@ -54,6 +54,8 @@ api.interceptors.response.use(
                 // update original request Authorization header
                 originalRequest.headers.Authorization = `Bearer ${res.accessToken}`
 
+                return axios(originalRequest)
+
             } catch (err) {
 
             }
