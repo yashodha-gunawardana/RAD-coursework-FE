@@ -9,6 +9,10 @@ export default function LandingPage() {
     ]
 
     const [currentIndex, setCurrentIndex] = useState(0)
+
+    const changeSlide = (direction: number) => {
+        
+    }
     return (
         <div>
 
