@@ -12,7 +12,7 @@ export default function LandingPage() {
 
     const changeSlide = (direction: number) => {
         let newIndex = currentIndex + direction;
-        
+        if (newIndex < 0) newIndex = images.length - 1;
     }
     return (
         <div>
