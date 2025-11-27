@@ -31,6 +31,10 @@ export default function LandingPage() {
 
     }, [currentIndex]);
 
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 50);
+    })
+
     return (
         <div className="relative h-screen text-white bg-cover- bg-center transition-all duration-1000"
                         style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url(${images[currentIndex]})`,
