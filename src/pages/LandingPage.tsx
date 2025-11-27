@@ -9,6 +9,7 @@ export default function LandingPage() {
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0)
+    const [scrolled, setScrolled] = useState(false)
 
     const changeSlide = (direction: number) => {
 
@@ -34,6 +35,14 @@ export default function LandingPage() {
         <div className="relative h-screen text-white bg-cover- bg-center transition-all duration-1000"
                         style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url(${images[currentIndex]})`,
                         }}>
+
+            {/* header */}
+            <header className="absolute top-0 left-0 w-full flex justify-between items-center px-8 py-5 z-50">
+                <div className="text-2xl font-bold uppercase tracking-widest">
+                    <span className="text-orange-400"> Eventora</span> Event Management
+                </div>
+                    
+            </header>
 
         </div>
     )
