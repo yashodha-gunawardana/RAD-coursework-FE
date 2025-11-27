@@ -14,6 +14,7 @@ export default function LandingPage() {
         let newIndex = currentIndex + direction;
         if (newIndex < 0) newIndex = images.length - 1;
         if (newIndex >= images.length) newIndex = 0;
+        setCurrentIndex(newIndex);
     }
     return (
         <div>
