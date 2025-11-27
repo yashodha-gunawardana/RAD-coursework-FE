@@ -12,13 +12,13 @@ export default function LandingPage() {
 
     const changeSlide = (direction: number) => {
 
-        // calculate the new slide index based on current index and direction (1 = next, -1 = previous)
+        // new slide index based on current index and direction (1 = next, -1 = previous)
         let newIndex = currentIndex + direction;
 
-         // if the new index is less than 0, wrap around to the last slide
+         // wrap to the last slide
         if (newIndex < 0) newIndex = images.length - 1;
 
-        // if the new index is greater than or equal to the number of slides, wrap around to the first slide
+        // wrap to the first slide
         if (newIndex >= images.length) newIndex = 0;
         
         setCurrentIndex(newIndex);
@@ -27,11 +27,11 @@ export default function LandingPage() {
     useEffect(() => {
         const interval = setInterval(() => changeSlide(1), 7000);
         return() => clearInterval(interval);
-        
+
     }, [currentIndex]);
 
     return (
-        <div>
+        <div className="relative h-screen text-white bg-cover- bg-center transition-all duration-1000">
 
         </div>
     )
