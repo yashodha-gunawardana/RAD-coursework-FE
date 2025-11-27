@@ -32,8 +32,17 @@ export default function LandingPage() {
     }, [currentIndex]);
 
     useEffect(() => {
+        
+        // check scroll position
         const handleScroll = () => setScrolled(window.scrollY > 50);
-    })
+
+        // listen to scroll event
+        window.addEventListener("scroll", handleScroll);
+        
+        // remove listener on unmount
+        return () => window.removeEventListener("scroll", handleScroll);
+
+    }, []);
 
     return (
         <div className="relative h-screen text-white bg-cover- bg-center transition-all duration-1000"
