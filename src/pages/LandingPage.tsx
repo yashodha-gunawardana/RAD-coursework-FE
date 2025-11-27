@@ -26,8 +26,9 @@ export default function LandingPage() {
 
     useEffect(() => {
         const interval = setInterval(() => changeSlide(1), 7000);
-       
-    })
+        return() => clearInterval(interval);
+        
+    }, [currentIndex]);
 
     return (
         <div>
