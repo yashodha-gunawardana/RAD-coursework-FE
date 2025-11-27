@@ -1,4 +1,4 @@
-import { useEffec, useState } from "react"
+import { useEffect, useState } from "react"
 
 
 export default function LandingPage() {
@@ -11,6 +11,7 @@ export default function LandingPage() {
     const [currentIndex, setCurrentIndex] = useState(0)
 
     const changeSlide = (direction: number) => {
+        let newIndex = currentIndex + direction;
         
     }
     return (
