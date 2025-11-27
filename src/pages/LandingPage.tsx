@@ -38,7 +38,7 @@ export default function LandingPage() {
 
         // listen to scroll event
         window.addEventListener("scroll", handleScroll);
-        
+
         // remove listener on unmount
         return () => window.removeEventListener("scroll", handleScroll);
 
@@ -50,10 +50,17 @@ export default function LandingPage() {
                         }}>
 
             {/* header */}
-            <header className="absolute top-0 left-0 w-full flex justify-between items-center px-8 py-5 z-50">
-                <div className="text-2xl font-bold uppercase tracking-widest">
+            <header className={`fixed left-1/2 transform -translate-x-1/2 w-[95%] max-w-[1400px] rounded-[60px] flex justify-between items-center transition-all duration-400 z-50
+                                ${scrolled ? "top-3 p-4" : "top-5 p-5"}`}>
+                <div className="text-2xl font-bold font-playfair uppercase tracking-widest">
                     <span className="text-orange-400"> Eventora</span> Event Management
                 </div>
+
+                    <nav className={`flex items-center gap-20 p-5 rounded-[60px] bg-white/10 backdrop-blur-[24px]
+                                        border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.18)] 
+                                        transition-all duration-300`}>
+
+                    </nav>
                     
             </header>
 
