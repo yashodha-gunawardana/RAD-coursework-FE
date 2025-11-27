@@ -31,7 +31,9 @@ export default function LandingPage() {
     }, [currentIndex]);
 
     return (
-        <div className="relative h-screen text-white bg-cover- bg-center transition-all duration-1000">
+        <div className="relative h-screen text-white bg-cover- bg-center transition-all duration-1000"
+                        style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url(${images[currentIndex]})`,
+                        }}>
 
         </div>
     )
