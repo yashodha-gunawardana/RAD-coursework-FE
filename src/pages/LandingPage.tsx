@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-
+import { useEffect, useState } from "react";
+import {Home, Info, Heart, Image, Mail } from "react-feather";
 
 export default function LandingPage() {
     const images = [
@@ -60,7 +60,45 @@ export default function LandingPage() {
                                         border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.18)] 
                                         transition-all duration-300`}>
 
+                        {/* nav icon link */}
+                        <a href="/" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                            <Home size={28}  />
+                            <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                            px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                Home
+                            </span>
+                        </a>
+                        <a href="/about" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                            <Home size={28}  />
+                            <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                            px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                About Us
+                            </span>
+                        </a>
+                        <a href="/services" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                            <Home size={28}  />
+                            <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                            px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                Service
+                            </span>
+                        </a>
+                        <a href="/gallery" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                            <Home size={28}  />
+                            <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                            px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                Gallery
+                            </span>
+                        </a>
+                        <a href="/contact" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                            <Home size={28}  />
+                            <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                            px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                Contact Us
+                            </span>
+                        </a> 
+
                     </nav>
+                    
                     
             </header>
 
