@@ -49,67 +49,68 @@ export default function LandingPage() {
         <div className="bg-[#0A0A0A] text-[#F5F5F5] min-h-screen overflow-x-hidden">
 
             {/* hero section */}
-            <div className="relative h-screen text-white bg-cover- bg-center transition-all duration-1000"
-                            style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url(${images[currentIndex]})`,
+            <div className="relative h-screen bg-cover- bg-center flex items-center justify-center text-center transition-all duration-1000 ease-in-out"
+                            style={{backgroundImage: `linear-gradient(rgba(10,10,10,0.7), rgba(10,10,10,0.7)), url(${images[currentIndex]})`,
                             }}>
 
                 {/* header */}
-                <header className={`fixed left-1/2 transform -translate-x-1/2 w-[95%] max-w-[1400px] rounded-[60px] flex justify-between items-center transition-all duration-400 z-50
-                                    ${scrolled ? "top-3 p-4" : "top-5 p-5"}`}>
-                    <div className="text-2xl font-bold font-playfair uppercase tracking-widest">
-                        <span className="text-orange-400"> Eventora</span> Event Management
-                    </div>
+                <header className="fixed top-0 left-0 w-full z-50">
+                    <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-10">
+                        <div className="flex justify-between items-center py-8">
 
-                        <nav className={`flex items-center gap-20 p-5 rounded-[60px] bg-white/10 backdrop-blur-[24px]
+                            <nav className={`flex items-center gap-20 p-5 rounded-[60px] bg-white/10 backdrop-blur-[24px]
                                             border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.18)] 
                                             transition-all duration-300`}>
 
-                            {/* nav icon link */}
-                            <a href="/" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                <Home size={28}  />
-                                <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                    Home
-                                </span>
-                            </a>
-                            <a href="/about" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                <Info size={28}  />
-                                <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                    About Us
-                                </span>
-                            </a>
-                            <a href="/services" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                <Heart size={28}  />
-                                <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                    Service
-                                </span>
-                            </a>
-                            <a href="/gallery" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                <Image size={28}  />
-                                <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                    Gallery
-                                </span>
-                            </a>
-                            <a href="/contact" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                <Mail size={28}  />
-                                <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                    Contact Us
-                                </span>
-                            </a> 
-                        </nav>
+                                {/* nav icon link */}
+                                <a href="/" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                                    <Home size={28}  />
+                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                        Home
+                                    </span>
+                                </a>
+                                <a href="/about" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                                    <Info size={28}  />
+                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                        About Us
+                                    </span>
+                                </a>
+                                <a href="/services" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                                    <Heart size={28}  />
+                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                        Service
+                                    </span>
+                                </a>
+                                <a href="/gallery" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                                    <Image size={28}  />
+                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                        Gallery
+                                    </span>
+                                </a>
+                                <a href="/contact" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
+                                    <Mail size={28}  />
+                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
+                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
+                                        Contact Us
+                                    </span>
+                                </a> 
+                            </nav>
 
-                        {/* signup button */}
-                        <div className="flex items-center gap-4">
-                            <a href="#" className="hidden md:inline-block px-10 py-3 bg-[#d4e157] text-black
-                                                    font-semibold rounded-full shadow-lg hover:bg-[#e8f56a]
-                                                    hover:-translate-y-1 transition-all">
-                                    Sign Up Now
-                            </a>
+                            {/* signup button */}
+                            <div className="flex items-center gap-4">
+                                <a href="#" className="hidden md:inline-block px-10 py-3 bg-[#d4e157] text-black
+                                                        font-semibold rounded-full shadow-lg hover:bg-[#e8f56a]
+                                                        hover:-translate-y-1 transition-all">
+                                        Sign Up Now
+                                </a>
+                            </div>
+                            
                         </div>
+                    </div>   
                 </header>
 
             </div>
