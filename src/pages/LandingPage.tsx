@@ -58,6 +58,11 @@ export default function LandingPage() {
                     <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-10">
                         <div className="flex justify-between items-center py-8">
 
+                            {/* logo */}
+                            <div className="flex items-center gap-4 cursor-pointer">
+                                
+                            </div>
+
                             <nav className={`flex items-center gap-20 p-5 rounded-[60px] bg-white/10 backdrop-blur-[24px]
                                             border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.18)] 
                                             transition-all duration-300`}>
@@ -108,7 +113,7 @@ export default function LandingPage() {
                                         Sign Up Now
                                 </a>
                             </div>
-                            
+
                         </div>
                     </div>   
                 </header>
