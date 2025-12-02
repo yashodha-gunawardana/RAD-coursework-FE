@@ -63,10 +63,13 @@ export default function LandingPage() {
                                 <div className="relative w-12 h-12 flex items-center justify-center">
                                     <div className="absolute w-full h-full border-2 boreder-[#E6B17E] rounded-xl rotate-45"></div>
                                     <div className="absolute w-full h-full top-1 left-1 border-[1.5px] border-[#8B0000] rounded-lg"></div>
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-45 text-xl font-serif font-bold">
+                                        E
+                                    </div>
 
-                                    
+                                </div>    
 
-                                </div>
+                                
                                 
                             </div>
 
