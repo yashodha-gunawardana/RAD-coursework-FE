@@ -183,6 +183,8 @@ export default function LandingPage() {
                                                     shadow-[#8B0000]/20 hover:-translate-y-0.5 hover:shadow-3xl hover:shadow-[#8B0000]/30 hover:from-[#7A0000]
                                                     hover:to-[#9B0000] flex items-center gap-2.5 group">
 
+                                    <UserPlus className="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                                
                                 </button>    
                             </div>
 
