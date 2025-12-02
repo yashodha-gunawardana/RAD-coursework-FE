@@ -50,6 +50,8 @@ export default function LandingPage() {
             }
         }
         document.addEventListener('mousedown', handleClickOutSide)
+
+        return () => document.removeEventListener('mousedown', handleClickOutSide)
     })
 
     return (
