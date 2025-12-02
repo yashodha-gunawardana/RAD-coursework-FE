@@ -177,7 +177,13 @@ export default function LandingPage() {
                                     </div>
                                 </div>
 
-                                
+                                {/* sign up button */}
+                                <button className="px-8 py-3 bg-gradient-to-br from-[#8B0000] via-[#A52A2A] to-[#8B0000] text-[#F5F5F5]
+                                                    border border-[#8B0000]/30 rounded-2xl font-bold text-sm cursor-pointer transition-all duration-300 shadow-2xl
+                                                    shadow-[#8B0000]/20 hover:-translate-y-0.5 hover:shadow-3xl hover:shadow-[#8B0000]/30 hover:from-[#7A0000]
+                                                    hover:to-[#9B0000] flex items-center gap-2.5 group">
+
+                                </button>    
                             </div>
 
                            
