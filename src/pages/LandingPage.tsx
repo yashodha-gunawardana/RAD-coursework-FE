@@ -153,7 +153,14 @@ export default function LandingPage() {
                                                     className={`flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-[#E6B17E]/15 to-[#8B0000]/15 border 
                                                                     border-[#F5F5F5]/20 flex items-center justify-center text-[#F5F5F5] cursor-pointer transition-all
                                                                     duration-300 hover:from-[#E6B17E]/25 hover:to-[#8B0000]/25 hover:text-[#E6B17E] hover:border-[#E6B17E]/50
-                                                                    hover:scale-105 hover:shadow-lg hover:shadow-[#E6B17E]/20`}></button>
+                                                                    hover:scale-105 hover:shadow-lg hover:shadow-[#E6B17E]/20`}>
+
+                                                {isSearchOpen ? (
+                                                    <X className="w-5 h-5 transition-all duration-300" />
+                                                ) : (
+                                                    <Search className="w-5 h-5 transition-all duration-300" />
+                                                )}                       
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
