@@ -18,6 +18,15 @@ export default function LandingPage() {
     const searchRef = useRef(null)
 
 
+    const navItems = [
+        'HOME',
+        'ABOUT US',
+        'SERVICE',
+        'GALLERY',
+        'CONTACT US'
+    ];
+
+
     // background image change
     const changeSlide = (direction: number) => {
 
@@ -114,6 +123,11 @@ export default function LandingPage() {
                                 <nav className="hidden lg:flex items-center gap-3.5 p-5 rounded-[30px] bg-[#0A0A0A]/35
                                                 backdrop-blur-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25">
 
+                                    {navItems.map((item, index) => (
+                                        <div key={index} className="relative group">
+                                            
+                                        </div>
+                                    ))}
                                 </nav>
                             </div>
                                 
