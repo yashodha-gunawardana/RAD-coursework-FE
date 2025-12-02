@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Search, UserPlus, ChevronRight, ChevronLeft, X } from "react-feather";
 
 
@@ -13,6 +13,8 @@ export default function LandingPage() {
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+    const searchRef = useRef(null)
 
     const changeSlide = (direction: number) => {
 
