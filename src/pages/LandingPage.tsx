@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import {Home, Info, Heart, Image, Mail } from "react-feather";
+import { Search, UserPlus, ChevronRight, ChevronLeft, X } from "react-feather";
 
 
 export default function LandingPage() {
     const images = [
-        'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2940&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2940&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2938&auto=format&fit=crop'
+        'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2940&auto=format&fit=crop', 
+        'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2940&auto=format&fit=crop', 
+        'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2938&auto=format&fit=crop', 
+        'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2938&auto=format&fit=crop', 
+        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2940&auto=format&fit=crop', 
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0)
-    const [scrolled, setScrolled] = useState(false)
+    const [isSearchOpen, setIsSearchOpen] = useState(false)
 
     const changeSlide = (direction: number) => {
 
@@ -59,26 +61,27 @@ export default function LandingPage() {
                         <div className="flex justify-between items-center py-8">
 
                             {/* logo */}
-                            <div className="flex items-center gap-4 cursor-pointer">
+                            <div className="flex items-center gap-4 shrink-0 cursor-pointer">
                                 <div className="relative w-12 h-12 flex items-center justify-center">
-                                    <div className="absolute w-full h-full border-2 boreder-[#E6B17E] rounded-xl rotate-45"></div>
-                                    <div className="absolute w-full h-full top-1 left-1 border-[1.5px] border-[#8B0000] rounded-lg"></div>
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-45 text-xl font-serif font-bold">
+                                    <div className="absolute w-full h-full border-2 boreder-[#E6B17E] rounded-xl rotate-45 transitional-all duration-500"></div>
+                                    <div className="absolute w-full h-full top-1 left-1 right-1 bottom-1 border-[1.5px] border-[#8B0000] rounded-lg"></div>
+                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-45 text-xl font-serif font-bold 
+                                                    text-[#F5F5F5] z-10 transition-all duration-500">
                                         E
                                     </div>
-
-                                    {/* logo text */}
-                                    <div className="hidden sm:flex flex-col">
-                                        <div className="text-[#F5F5F5] font-serif text-xl">
-                                            <span className="text-[#E6B17E] font-bold">Event</span>ora
-                                        </div>
-                                    </div>
-
                                 </div>    
 
-                                
-                                
+                                {/* logo text */}
+                                <div className="hidden sm:flex flex-col items-start">
+                                    <div className="text-[#F5F5F5] font-serif text-xl font-semibold leading-none tracking-wide">
+                                        <span className="text-[#E6B17E] font-bold uppercase">Event</span>ORA
+                                    </div>
+                                    <div className="text-[9px] text-[#F5F5F5]/70 tracking-[1.5px] mt-0.5 font-lih uppercase">Event Management</div>
+                                </div>
                             </div>
+                                    
+
+                                
 
                             <nav className={`flex items-center gap-20 p-5 rounded-[60px] bg-white/10 backdrop-blur-[24px]
                                             border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.18)] 
