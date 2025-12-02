@@ -143,6 +143,14 @@ export default function LandingPage() {
                             </div>
                                 
                         
+                            {/* search and signup */}
+                            <div className="flex items-center gap-5 flex-shrink-0">
+                                <div className="relative" ref={searchRef}>
+                                    <div className="flex items-center">
+                                        
+                                    </div>
+                                </div>
+                            </div>
 
                             {/* signup button */}
                             <div className="flex items-center gap-4">
