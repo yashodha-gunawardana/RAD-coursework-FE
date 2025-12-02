@@ -108,7 +108,14 @@ export default function LandingPage() {
                             </div>
                                     
 
+                            {/* navigation menu */}
+                            <div className="absolute left-1/2 transform -translate-x-1/2">
                             
+                                <nav className="hidden lg:flex items-center gap-3.5 p-5 rounded-[30px] bg-[#0A0A0A]/35
+                                                backdrop-blur-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25">
+
+                                </nav>
+                            </div>
                                 
                         
 
