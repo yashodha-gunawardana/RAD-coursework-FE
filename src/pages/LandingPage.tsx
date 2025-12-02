@@ -49,6 +49,7 @@ export default function LandingPage() {
                 setIsSearchOpen(false)
             }
         }
+        document.addEventListener('mousedown', handleClickOutSide)
     })
 
     return (
