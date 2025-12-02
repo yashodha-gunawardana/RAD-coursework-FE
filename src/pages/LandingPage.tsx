@@ -60,6 +60,9 @@ export default function LandingPage() {
 
                             {/* logo */}
                             <div className="flex items-center gap-4 cursor-pointer">
+                                <div className="relative w-12 h-12 flex items-center justify-center">
+
+                                </div>
                                 
                             </div>
 
