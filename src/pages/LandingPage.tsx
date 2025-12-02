@@ -147,7 +147,9 @@ export default function LandingPage() {
                             <div className="flex items-center gap-5 flex-shrink-0">
                                 <div className="relative" ref={searchRef}>
                                     <div className="flex items-center">
-                                        
+                                        <div className={`flex items-center transition-all duration-400 ${isSearchOpen ? 'w-72' : 'w-12'} overflow-hidden`}>
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>
