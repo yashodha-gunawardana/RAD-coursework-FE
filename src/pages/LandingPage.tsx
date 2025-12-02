@@ -45,7 +45,9 @@ export default function LandingPage() {
     
     useEffect(() => {
         const handleClickOutSide = (event: MouseEvent) => {
-            
+            if (searchRef.current && !(searchRef.current as any).contains(event.target)) {
+                setIsSearchOpen(false)
+            }
         }
     })
 
