@@ -165,7 +165,8 @@ export default function LandingPage() {
                                             {/* search input field */}
                                             <div className={`flex-1 ml-3 transition-all duration-400 ${isSearchOpen ? 'opacity-100 visible' : 'opacity-0 invisible w-0'}`}>
                                                 <div className="relative">
-                                                    
+
+                                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#F5F5F5]/50" />
                                                 </div>
                                             </div>
                                         </div>
