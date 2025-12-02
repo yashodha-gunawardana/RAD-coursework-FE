@@ -17,6 +17,8 @@ export default function LandingPage() {
     // ref for search container to detect clicks outside
     const searchRef = useRef(null)
 
+
+    // background image change
     const changeSlide = (direction: number) => {
 
         // new slide index based on current index and direction (1 = next, -1 = previous)
@@ -31,6 +33,7 @@ export default function LandingPage() {
         setCurrentIndex(newIndex);
     };
 
+
     // directly jump to a specific slide by index
     const goToSlide = (index: number) => {
         setCurrentIndex(index)
@@ -43,6 +46,7 @@ export default function LandingPage() {
     }, [currentIndex]);
 
     
+    // search box
     useEffect(() => {
         const handleClickOutSide = (event: MouseEvent) => {
             if (searchRef.current && !(searchRef.current as any).contains(event.target)) {
@@ -52,7 +56,10 @@ export default function LandingPage() {
         document.addEventListener('mousedown', handleClickOutSide)
 
         return () => document.removeEventListener('mousedown', handleClickOutSide)
-    })
+
+    }, []);
+
+    
 
     return (
         <div className="bg-[#0A0A0A] text-[#F5F5F5] min-h-screen overflow-x-hidden">
