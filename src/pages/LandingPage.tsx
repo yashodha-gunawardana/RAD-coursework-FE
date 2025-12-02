@@ -67,6 +67,13 @@ export default function LandingPage() {
                                         E
                                     </div>
 
+                                    {/* logo text */}
+                                    <div className="hidden sm:flex flex-col">
+                                        <div className="text-[#F5F5F5] font-serif text-xl">
+                                            <span className="text-[#E6B17E] font-bold">Event</span>ora
+                                        </div>
+                                    </div>
+
                                 </div>    
 
                                 
