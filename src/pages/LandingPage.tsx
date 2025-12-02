@@ -161,6 +161,13 @@ export default function LandingPage() {
                                                     <Search className="w-5 h-5 transition-all duration-300" />
                                                 )}                       
                                             </button>
+
+                                            {/* search input field */}
+                                            <div className={`flex-1 ml-3 transition-all duration-400 ${isSearchOpen ? 'opacity-100 visible' : 'opacity-0 invisible w-0'}`}>
+                                                <div className="relative">
+                                                    
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
