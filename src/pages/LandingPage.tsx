@@ -125,7 +125,10 @@ export default function LandingPage() {
 
                                     {navItems.map((item, index) => (
                                         <div key={index} className="relative group">
-                                            
+                                            <a href="#" className="relative text-[#F5F5F5]/90 hover:text-[#E6B17E] transition-all duration-300 font-semibold 
+                                                                    text-sm tracking-wider uppercase px-4 py-2 group">
+
+                                            </a>
                                         </div>
                                     ))}
                                 </nav>
