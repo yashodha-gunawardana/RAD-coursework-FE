@@ -14,6 +14,7 @@ export default function LandingPage() {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isSearchOpen, setIsSearchOpen] = useState(false)
 
+    // ref for search container to detect clicks outside
     const searchRef = useRef(null)
 
     const changeSlide = (direction: number) => {
@@ -30,24 +31,17 @@ export default function LandingPage() {
         setCurrentIndex(newIndex);
     };
 
+    const goToSlide = (index: number) => {
+        setCurrentIndex(index)
+    }
+
     useEffect(() => {
         const interval = setInterval(() => changeSlide(1), 7000);
         return() => clearInterval(interval);
 
     }, [currentIndex]);
 
-    useEffect(() => {
-        
-        // check scroll position
-        const handleScroll = () => setScrolled(window.scrollY > 50);
-
-        // listen to scroll event
-        window.addEventListener("scroll", handleScroll);
-
-        // remove listener on unmount
-        return () => window.removeEventListener("scroll", handleScroll);
-
-    }, []);
+    
 
     return (
         <div className="bg-[#0A0A0A] text-[#F5F5F5] min-h-screen overflow-x-hidden">
