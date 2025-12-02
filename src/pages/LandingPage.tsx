@@ -131,6 +131,11 @@ export default function LandingPage() {
                                                 <span className="relative z-10 inline-block transition-all duration-300 group-hover:scale-105 group-hover:font-bold">
                                                     {item}
                                                 </span>
+
+                                                <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#e6B17E] via-[#8B0000] to-[#E6B17E]
+                                                                    transition-all duration-500 group-hover:w-full">
+
+                                                </div>
                                             </a>
                                         </div>
                                     ))}
