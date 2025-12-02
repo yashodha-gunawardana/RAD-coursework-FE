@@ -59,7 +59,7 @@ export default function LandingPage() {
 
     }, []);
 
-    
+
 
     return (
         <div className="bg-[#0A0A0A] text-[#F5F5F5] min-h-screen overflow-x-hidden">
@@ -70,74 +70,47 @@ export default function LandingPage() {
                             }}>
 
                 {/* header */}
-                <header className="fixed top-0 left-0 w-full z-50">
-                    <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-10">
-                        <div className="flex justify-between items-center py-8">
+                <header className="fixed top-0 left-0 w-full z-50 py-6">
+                    <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
+                        <div className="flex justify-between items-center">
 
                             {/* logo */}
-                            <div className="flex items-center gap-4 shrink-0 cursor-pointer">
-                                <div className="relative w-12 h-12 flex items-center justify-center">
-                                    <div className="absolute w-full h-full border-2 boreder-[#E6B17E] rounded-xl rotate-45 transitional-all duration-500"></div>
-                                    <div className="absolute w-full h-full top-1 left-1 right-1 bottom-1 border-[1.5px] border-[#8B0000] rounded-lg"></div>
-                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-45 text-xl font-serif font-bold 
-                                                    text-[#F5F5F5] z-10 transition-all duration-500">
+                            <div className="flex items-center gap-4 flex-shrink-0 cursor-pointer">
+                                <div className="relative w-14 h-14 flex items-center justify-center">
+
+                                    {/* outer gradient circle */}
+                                    <div className="absolute w-full h-full bg-gradient-to-br from-[#8B0000] via-[#A52A2A] to-[#8b0000] rounded-full shadow-x1 shadow-[#8B0000]/30"></div>
+
+                                    {/* inner dark circle */}
+                                    <div className="absolute w-[90%] h-[90%] bg-[#0A0A0A] rounded-full"></div>
+
+                                    {/* border circle */}
+                                    <div className="absolute w-[85%] h-[85%] border-2 border-[#E6B17E] rounded-full"></div>
+
+                                    <div className="relative z-10 font-serif text-xl font-bold text-[#E6B17E]">
                                         E
                                     </div>
+
+                                    {/* small decorative dot */}
+                                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#E6B17E] rounded-full"></div>
                                 </div>    
 
+
                                 {/* logo text */}
-                                <div className="hidden sm:flex flex-col items-start">
-                                    <div className="text-[#F5F5F5] font-serif text-xl font-semibold leading-none tracking-wide">
-                                        <span className="text-[#E6B17E] font-bold uppercase">Event</span>ORA
+                                <div className="flex flex-col items-start">
+                                    <div className="font-serif text-2xl font-bold text-[#F5F5F5] leading-none tracking-wider">
+                                        <span className="text-[#E6B17E]">EVENT</span>ORA
                                     </div>
-                                    <div className="text-[9px] text-[#F5F5F5]/70 tracking-[1.5px] mt-0.5 font-lih uppercase">Event Management</div>
+                                    <div className="text-[10px] text-[#F5F5F5]/70 tracking-[2.5px] mt-1 font-medium uppercase">
+                                        Event Management
+                                    </div>
                                 </div>
                             </div>
                                     
 
+                            
                                 
-
-                            <nav className={`flex items-center gap-20 p-5 rounded-[60px] bg-white/10 backdrop-blur-[24px]
-                                            border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.18)] 
-                                            transition-all duration-300`}>
-
-                                {/* nav icon link */}
-                                <a href="/" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                    <Home size={28}  />
-                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                        Home
-                                    </span>
-                                </a>
-                                <a href="/about" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                    <Info size={28}  />
-                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                        About Us
-                                    </span>
-                                </a>
-                                <a href="/services" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                    <Heart size={28}  />
-                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                        Service
-                                    </span>
-                                </a>
-                                <a href="/gallery" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                    <Image size={28}  />
-                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                        Gallery
-                                    </span>
-                                </a>
-                                <a href="/contact" className="group relative text-white text-xl md:text-2xl hover:text-[#d4e157] transition transform hover:-translate-y hover:scale-110">
-                                    <Mail size={28}  />
-                                    <span className="absolute top-full left-1/2 transform -translate-x-1 text-sm bg-black/70
-                                                    px-3 py-1.5 rounded opacity-0 pointer-events-none transition-all group-hover:opacity-100 mt-1">
-                                        Contact Us
-                                    </span>
-                                </a> 
-                            </nav>
+                        
 
                             {/* signup button */}
                             <div className="flex items-center gap-4">
