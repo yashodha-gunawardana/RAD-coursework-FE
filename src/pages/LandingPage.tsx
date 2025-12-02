@@ -128,6 +128,9 @@ export default function LandingPage() {
                                             <a href="#" className="relative text-[#F5F5F5]/90 hover:text-[#E6B17E] transition-all duration-300 font-semibold 
                                                                     text-sm tracking-wider uppercase px-4 py-2 group">
 
+                                                <span className="relative z-10 inline-block transition-all duration-300 group-hover:scale-105 group-hover:font-bold">
+                                                    {item}
+                                                </span>
                                             </a>
                                         </div>
                                     ))}
