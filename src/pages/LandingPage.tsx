@@ -167,22 +167,20 @@ export default function LandingPage() {
                                                 <div className="relative">
 
                                                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#F5F5F5]/50" />
+                                                    <input type="text" className="w-full pl-10 pr-4 py-3 rounded-2xl border border-[#F5F5F5]/20 bg-[#0A0A0A]/70
+                                                                                    backdrop-blur-xl text-[#F5F5F5] text-sm outline-none transition-all duration-300 focus:border-[#E6B17E]
+                                                                                    placeholder:text-[#F5F5F5]/50" placeholder="Search events.." autoFocus={isSearchOpen}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                
                             </div>
 
-                            {/* signup button */}
-                            <div className="flex items-center gap-4">
-                                <a href="#" className="hidden md:inline-block px-10 py-3 bg-[#d4e157] text-black
-                                                        font-semibold rounded-full shadow-lg hover:bg-[#e8f56a]
-                                                        hover:-translate-y-1 transition-all">
-                                        Sign Up Now
-                                </a>
-                            </div>
-
+                           
                         </div>
                     </div>   
                 </header>
