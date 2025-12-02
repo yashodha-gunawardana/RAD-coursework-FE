@@ -31,6 +31,7 @@ export default function LandingPage() {
         setCurrentIndex(newIndex);
     };
 
+    // directly jump to a specific slide by index
     const goToSlide = (index: number) => {
         setCurrentIndex(index)
     }
@@ -42,6 +43,11 @@ export default function LandingPage() {
     }, [currentIndex]);
 
     
+    useEffect(() => {
+        const handleClickOutSide = (event: MouseEvent) => {
+            
+        }
+    })
 
     return (
         <div className="bg-[#0A0A0A] text-[#F5F5F5] min-h-screen overflow-x-hidden">
