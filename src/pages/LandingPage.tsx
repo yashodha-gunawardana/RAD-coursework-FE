@@ -233,6 +233,18 @@ export default function LandingPage() {
 
                             EVERY EVENT S O U L D B E P E R F E C T
                         </p>
+
+                        {/* buttons */}
+                        <div className="flex justify-center gap-5 flex-wrap">
+                            <a href="#" className="px-10 py-3.5 rounded-full font-bold tracking-wider cursor-pointer transition-all
+                                                    duration-400 border-none text-base inline-flex items-center justify-center
+                                                    bg-gradient-to-br from-[#8B0000] to-[#A52A2A] text-[#F5F5F5] shadow-lg
+                                                    shadow-[#8B0000]/30 hover:-translate-y-1 hover:bg-gradient-to-br 
+                                                    hover:from-[#7A0000] hover:to-[#8B1A1A] hover:shadow-xl hover:shadow-[#8B0000]/40">
+
+                                ABOUT US
+                            </a>
+                        </div>
                     </div>
                 </div>
 
