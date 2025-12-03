@@ -264,7 +264,11 @@ export default function LandingPage() {
                         <button 
                             key={index}
                             onClick={() => goToSlide(index)}
-                            >
+                            className={`w-2.5 h-2.5 rounded-full cursor-pointer transition-all duration-500
+                                        ${index === currentIndex
+                                            ? 'bg-[#E6B17E] scale-125 shadow-lg shadow-[#E6B17E]/30'
+                                            : 'bg-[#F5F5F5]/30 hover:bg-[#E6B17E] hover:scale-110'
+                                        }`}>
 
                         </button>
                     ))}
