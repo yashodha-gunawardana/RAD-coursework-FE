@@ -197,6 +197,16 @@ export default function LandingPage() {
                 {/* hero contect */}
                 <div className="max-w-[1000px] w-full z-10 px-8 relative">
                     
+                    {/* left arrow */}
+                    <button onClick={() => changeSlide(-1)}
+                            className="absolute left-0 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-gradient-to-br from-[#E6B17E]/15
+                                        to-[#8B0000]/15 backdrop-blur-lg rounded-full flex items-center justify-center cursor-pointer z-10 transition-all duration-300
+                                        border border-[#F5F5F5]/20 hover:from-[#E6B17E]/25 hover:to-[#8B0000]/25 hover:scale-110
+                                        hover:shadow-xl hover:shadow-[#E6B17E]/20 group">
+
+                        <ChevronLeft className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1" />
+
+                    </button>
                 </div>
 
             </div>
