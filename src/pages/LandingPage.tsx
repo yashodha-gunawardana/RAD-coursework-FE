@@ -266,7 +266,9 @@ export default function LandingPage() {
                             onClick={() => goToSlide(index)}
                             className={`w-2.5 h-2.5 rounded-full cursor-pointer transition-all duration-500
                                         ${index === currentIndex
+                                            // active dots
                                             ? 'bg-[#E6B17E] scale-125 shadow-lg shadow-[#E6B17E]/30'
+                                            // inactive dots
                                             : 'bg-[#F5F5F5]/30 hover:bg-[#E6B17E] hover:scale-110'
                                         }`}>
 
@@ -274,10 +276,15 @@ export default function LandingPage() {
                     ))}
                 </div>
 
+                <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#0A0A0A]
+                                    to-transparent pointer-events-none">
+
+                </div>
+
             </div>
 
         </div>
 
-    )
+    );
 }
 
