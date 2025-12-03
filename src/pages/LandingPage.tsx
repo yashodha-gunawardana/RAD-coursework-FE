@@ -261,7 +261,11 @@ export default function LandingPage() {
                 <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex gap-3">
                                                 
                     {images.map((_, index) => (
-                        
+                        <button 
+                            key={index}
+                            >
+
+                        </button>
                     ))}
                 </div>
 
