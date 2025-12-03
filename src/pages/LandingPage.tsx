@@ -263,6 +263,7 @@ export default function LandingPage() {
                     {images.map((_, index) => (
                         <button 
                             key={index}
+                            onClick={() => goToSlide(index)}
                             >
 
                         </button>
