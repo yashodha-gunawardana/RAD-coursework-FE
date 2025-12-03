@@ -221,7 +221,12 @@ export default function LandingPage() {
 
                     {/* main content */}
                     <div className="mx-auto max-w-[800px]">
-                        
+                        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight
+                                        text-[#F5F5F5] font-serif leading-none">
+
+                            <span className="block">One Stop</span>
+                            <span className="block text-[#E6B17E] mt-2">Event Planner</span>
+                        </h1>
                     </div>
                 </div>
 
