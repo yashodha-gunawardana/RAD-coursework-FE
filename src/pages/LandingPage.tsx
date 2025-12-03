@@ -244,6 +244,15 @@ export default function LandingPage() {
 
                                 ABOUT US
                             </a>
+
+                            <a href="#" className="px-10 py-3.5 rounded-full font-bold tracking-wider cursor-pointer transition-all
+                                                    duration-400 border-2 border-[#E6B17E] text-base inline-flex items-center
+                                                    justify-center bg-transparent text-[#F5F5F5] shadow-lg shadow-[#E6B17E]/10
+                                                    hover:-translate-y-1 hover:bg-[#E6B17E] hover:text-[#0A0A0A] hover:shadow-xl
+                                                    hover:shadow-[#E6B17E]/20">
+
+                                GET STARTED
+                            </a>
                         </div>
                     </div>
                 </div>
