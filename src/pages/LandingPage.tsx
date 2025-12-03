@@ -218,6 +218,11 @@ export default function LandingPage() {
                         <ChevronRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
 
                     </button>
+
+                    {/* main content */}
+                    <div className="mx-auto max-w-[800px]">
+                        
+                    </div>
                 </div>
 
             </div>
