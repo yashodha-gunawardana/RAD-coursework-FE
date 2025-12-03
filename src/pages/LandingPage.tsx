@@ -184,14 +184,20 @@ export default function LandingPage() {
                                                     hover:to-[#9B0000] flex items-center gap-2.5 group">
 
                                     <UserPlus className="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                                        <span className="hidden sm:inline tracking-wider text:sm">
+                                            SIGN UP
+                                        </span>
                                 
                                 </button>    
                             </div>
-
-                           
                         </div>
                     </div>   
                 </header>
+
+                {/* hero contect */}
+                <div className="max-w-[1000px] w-full z-10 px-8 relative">
+                    
+                </div>
 
             </div>
 
