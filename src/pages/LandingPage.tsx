@@ -227,6 +227,12 @@ export default function LandingPage() {
                             <span className="block">One Stop</span>
                             <span className="block text-[#E6B17E] mt-2">Event Planner</span>
                         </h1>
+
+                        <p className="text-lg sm:text-xl lg:text-2xl tracking-[0.3em] mb-10
+                                        text-[#F5F5F5]/80 uppercase font-light">
+
+                            EVERY EVENT S O U L D B E P E R F E C T
+                        </p>
                     </div>
                 </div>
 
