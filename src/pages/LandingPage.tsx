@@ -257,6 +257,14 @@ export default function LandingPage() {
                     </div>
                 </div>
 
+                {/* slide indicator dots */}
+                <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex gap-3">
+                                                
+                    {images.map((_, index) => (
+                        
+                    ))}
+                </div>
+
             </div>
 
         </div>
