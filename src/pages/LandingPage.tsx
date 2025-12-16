@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Search, UserPlus, ChevronRight, ChevronLeft, X } from "react-feather";
+import { Search, UserPlus, ChevronRight, ChevronLeft, X, MessageCircle, ArrowRight, Award, Heart, Star, Globe, Check, Users, Clock, Shield } from "react-feather";
 
 
 export default function LandingPage() {
@@ -8,7 +8,7 @@ export default function LandingPage() {
         'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2940&auto=format&fit=crop', 
         'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2938&auto=format&fit=crop', 
         'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2938&auto=format&fit=crop', 
-        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2940&auto=format&fit=crop', 
+        'https://images.unsplash.com/photo-1558618666-?q=80&w=2940&auto=format&fit=crop', 
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -229,9 +229,9 @@ export default function LandingPage() {
                         </h1>
 
                         <p className="text-lg sm:text-xl lg:text-2xl tracking-[0.3em] mb-10
-                                        text-[#F5F5F5]/80 uppercase font-light">
+                                        text-[#F5F5F5]/80 uppercase font-semibold">
 
-                            EVERY EVENT S O U L D B E P E R F E C T
+                            every  event  sould  be  perfect
                         </p>
 
                         {/* buttons */}
@@ -283,8 +283,15 @@ export default function LandingPage() {
 
             </div>
 
+
+            {/* about section */}
+            <section id="about" className="min-h-screen flex items-center py-24 px-6 md:px-12 lg:px-24 
+                                            bg-gradient-to-b from-[#F8F5F0] to-[#E8E3D8]">
+                
+            </section>
         </div>
 
+        
     );
 }
 
