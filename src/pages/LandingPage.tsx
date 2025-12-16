@@ -304,7 +304,12 @@ export default function LandingPage() {
                                     <div className="w-122 h-[1px] bg-gradient-to-l from-[#8B0000] to-[#E6B17E]"></div>
                                 </div>
 
-                                
+                                <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-[#0F0F0F]">
+
+                                    Where <span className="text-[#8B0000]">Vision</span> Meets<br />
+                                    <span className="text-[#E6B17E]">Prefection</span> in Every<br />
+                                    <span className="text-[#0F0F0F]">Detail</span>
+                                </h2>  
                             </div>
 
                         </div>
