@@ -431,7 +431,7 @@ export default function LandingPage() {
                                         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#E6B17E]/10 to-[#E6B17E]/5 flex items-center
                                                         justify-center">
 
-                                            <Award className="text-2xl text-[#E6B17E]" />
+                                            <Globe className="text-2xl text-[#E6B17E]" />
                                         </div>
                                     </div>
 
@@ -447,6 +447,12 @@ export default function LandingPage() {
                                 </div>
                             </div>
 
+                            {/* credentials row */}
+                            <div className="bg-white p-6 rounded-2xl border border-[#E6B17E]/20 shadow-lg">
+                                <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+                                    
+                                </div>
+                            </div>
                         </div>
 
                     </div>
