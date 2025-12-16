@@ -288,6 +288,12 @@ export default function LandingPage() {
             <section id="about" className="min-h-screen flex items-center py-24 px-6 md:px-12 lg:px-24 
                                             bg-gradient-to-b from-[#F8F5F0] to-[#E8E3D8]">
                 
+                <div className="max-w-7xl mx-auto w-full">
+                    <div className="grid lg:grid-cols-2 gap-16 items-start">
+
+                    </div>
+
+                </div>
             </section>
         </div>
 
