@@ -344,7 +344,12 @@ export default function LandingPage() {
                                 </div>
                             </div>
 
-                            
+                            {/* button */}
+                            <div>
+                                <a href="#" className="bg-gradient-to-br from-[#8B0000] via-[#A52A2A] to-[#8B0000] text-white
+                                                        px-10 py-4 rounded-full font-semibold tracking-wide transition-all duration-300
+                                                        relative overflow-hiddden group hover:-translate-y-1 hover:shadow-xl hover:shadow-[#8B0000]/40"></a>
+                            </div>
                         </div>
                     </div>
 
