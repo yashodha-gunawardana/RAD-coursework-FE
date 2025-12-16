@@ -390,6 +390,31 @@ export default function LandingPage() {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* card 2 */}
+                            <div className="bg-white p-8 rounded-3xl border border-[#E8E3D8] hover:border-[#E6B17E]/50 transition-all
+                                            duration-500 hover:-translate-y-2 hover:shadow-xl shadow-lg">
+
+                                <div className="flex items-start gap-6">
+                                    <div className="flex-shrink-0">
+                                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#8B0000]/10 to-[#8B0000]/5 flex items-center
+                                                        justify-center">
+
+                                            <Heart className="text-2xl text-[#8B0000]" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-[#0F0F0F] mb-3">
+                                            Client-Centric Approach
+                                        </h3>
+
+                                        <p className="text-[#0F0F0F]/70">
+                                            1,847+ personalized celebrations with a 98.7% satisfaction rate. Your vision is our mission.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
