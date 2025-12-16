@@ -499,10 +499,17 @@ export default function LandingPage() {
 
                                             <div className="w-8 h-1 bg-gradient-to-r from-[#8B0000] to-transparent mx-auto mt-2 group-hover:w-12 
                                                             transition-all duration-300">
-                                                            
+
                                             </div>
+
                                         </div>
-                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* review rating */}
+                                <div className="mt-6 pt-6 border-t border-[#E8E3D8]">
+                                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                        
                                     </div>
                                 </div>
                             </div>
