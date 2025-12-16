@@ -489,6 +489,8 @@ export default function LandingPage() {
 
                                             </div>
                                         </div>
+
+                                        <div className="w-px h-8 bg-[#E8E3D8] hidden md:block"></div>
                                     </div>
                                 </div>
                             </div>
