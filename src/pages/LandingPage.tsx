@@ -450,7 +450,17 @@ export default function LandingPage() {
                             {/* credentials row */}
                             <div className="bg-white p-6 rounded-2xl border border-[#E6B17E]/20 shadow-lg">
                                 <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-                                    
+
+                                    <div className="flex items-center ga[-4">
+                                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#8B0000]/10 to-[#E6B17E]/10 flex items-center justofy-center">
+                                            <Shield className="w-6 h-6 text-[#8B0000]" />
+                                        </div>
+
+                                        <div>
+                                            <div className="text-lg font-bold text-[#0F0F0F]">Trusted Since 2008</div>
+                                            <div className="text-sm text-[#0F0F0F]/70">15 Years of Excellence</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
