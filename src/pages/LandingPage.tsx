@@ -318,6 +318,11 @@ export default function LandingPage() {
                                 </p>
                             </div>
 
+                            <div className="bg-white p-8 rounded-3xl border border-[#E6B17E]/20 shadow-lg">
+                                <div className="flex items-start gap-6">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
