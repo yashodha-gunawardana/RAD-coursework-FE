@@ -320,7 +320,11 @@ export default function LandingPage() {
 
                             <div className="bg-white p-8 rounded-3xl border border-[#E6B17E]/20 shadow-lg">
                                 <div className="flex items-start gap-6">
+                                    
+                                    <div className="text-5xl text-[#E6B17E] opacity-50">
+                                        <MessageCircle />
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
