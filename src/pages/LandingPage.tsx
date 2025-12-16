@@ -451,6 +451,7 @@ export default function LandingPage() {
                             <div className="bg-white p-6 rounded-2xl border border-[#E6B17E]/20 shadow-lg">
                                 <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
 
+                                    {/* trust badge */}
                                     <div className="flex items-center ga[-4">
                                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#8B0000]/10 to-[#E6B17E]/10 flex items-center justofy-center">
                                             <Shield className="w-6 h-6 text-[#8B0000]" />
@@ -460,6 +461,22 @@ export default function LandingPage() {
                                             <div className="text-lg font-bold text-[#0F0F0F]">Trusted Since 2008</div>
                                             <div className="text-sm text-[#0F0F0F]/70">15 Years of Excellence</div>
                                         </div>
+                                    </div>
+
+                                    {/* credentials row */}
+                                    <div className="flex items-center gap-8">
+                                        <div className="text-center group">
+
+                                            <div className="text-2xl font-bold text-[#0F0F0F] mb-1">100%</div>
+                                            <div className="text-xs text-[#0F0F0F]/70">Custom Solutions</div>
+                                            
+                                            <div className="w-8 h-1 bg-gradient-to-r from-[#8B0000] to-transparent mx-auto mt-2 froup-hover:w-12 
+                                                            transition-all duration-300">
+                                                            
+                                            </div>
+                                        </div>
+
+                                        
                                     </div>
                                 </div>
                             </div>
