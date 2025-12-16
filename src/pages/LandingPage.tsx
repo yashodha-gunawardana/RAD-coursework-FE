@@ -325,6 +325,15 @@ export default function LandingPage() {
                                         <MessageCircle />
 
                                     </div>
+
+                                    <div>
+                                        <p className="text-lg text-[#0F0F0F]/80 italic mb-4">
+
+                                            "We don't just plan events; we choreograph memories that last a lifetime.
+                                            Every detail is a brushstroke in the masterpiece of your celebration. "
+                                        </p>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
