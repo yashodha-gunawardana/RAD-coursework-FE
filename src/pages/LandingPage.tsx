@@ -291,6 +291,17 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto w-full">
                     <div className="grid lg:grid-cols-2 gap-16 items-start">
 
+                        {/* left colum */}
+                        <div className="space-y-10">
+
+                            {/* header section */}
+                            <div className="space-y-8">
+                                <div className="flex items-center gap-4">
+
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>
