@@ -298,8 +298,13 @@ export default function LandingPage() {
                             <div className="space-y-8">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-[1px] bg-gradient-to-r from-[#8B0000] to-[#E6B17E]"></div>
-                                    
+                                    <span className="text-sm uppercase tracking-[0.3em] font-semibold text-[#8B0000]">
+                                        The Art of Celebration
+                                    </span>
+                                    <div className="w-122 h-[1px] bg-gradient-to-l from-[#8B0000] to-[#E6B17E]"></div>
                                 </div>
+
+                                
                             </div>
 
                         </div>
