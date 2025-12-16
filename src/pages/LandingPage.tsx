@@ -310,6 +310,12 @@ export default function LandingPage() {
                                     <span className="text-[#E6B17E]">Prefection</span> in Every<br />
                                     <span className="text-[#0F0F0F]">Detail</span>
                                 </h2>  
+
+                                <p className="text-xl text-[#0F0F0F]/80 leading-relaxed max-w-xl">
+
+                                    At <span className="font-semibold text-[#0F0F0F]">Eventora</span>, we transform your dreams into breathtaking
+                                    realities. With 15 years of excellence, we craft events that resonate with elegance, emotion, and unforgettable moments.
+                                </p>
                             </div>
 
                         </div>
