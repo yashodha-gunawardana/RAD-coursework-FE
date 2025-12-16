@@ -515,6 +515,14 @@ export default function LandingPage() {
                                                 <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
                                             ))}
                                         </div>
+
+                                        <div className="text-[#0F0F0F]">
+                                            <span className="font-bold">4.9/5</span> from 847+ reviews
+                                        </div>
+
+                                        <div className="text-[#8B0000] font-medium">
+                                            • 98.7% satisfaction rate
+                                        </div>
                                     </div>
                                 </div>
                             </div>
