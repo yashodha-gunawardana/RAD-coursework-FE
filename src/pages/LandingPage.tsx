@@ -378,7 +378,16 @@ export default function LandingPage() {
                                         </div>
                                     </div>
 
-                                    
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-[#0F0F0F] mb-3">
+                                            Award-Winning Excellence
+                                        </h3>
+
+                                        <p className="text-[#0F0F0F]/70">
+                                            24 international accolades for exceptional event design and execution, recognized globally for our 
+                                            innovative approach.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
