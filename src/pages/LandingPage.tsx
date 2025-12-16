@@ -369,8 +369,17 @@ export default function LandingPage() {
                             <div className="bg-white p-8 rounded-3xl border border-[#E8E3D8] hover:border-[#E6B17E]/50 transition-all
                                             duration-500 hover:-translate-y-2 hover:shadow-xl shadow-lg">
 
-                                                
-                                <div className="flex items-start gap-6"></div>
+                                <div className="flex items-start gap-6">
+                                    <div className="flex-shrink-0">
+                                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#E6B17E]/10 to-[#E6B17E]/5 flex items-center
+                                                        justify-center">
+
+                                            <Award className="text-2xl text-[#E6B17E]" />
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
                             </div>
                         </div>
 
