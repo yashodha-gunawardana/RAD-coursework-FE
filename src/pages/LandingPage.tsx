@@ -333,9 +333,18 @@ export default function LandingPage() {
                                             Every detail is a brushstroke in the masterpiece of your celebration. "
                                         </p>
 
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-px bg-[#E6B17E]/30"></div>
+                                            
+                                            <span className="text-sm font-medium text-[#8B0000]"> 
+                                                - Isabella Rossi, Creative Director
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            
                         </div>
                     </div>
 
