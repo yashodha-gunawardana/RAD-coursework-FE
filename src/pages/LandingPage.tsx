@@ -297,7 +297,8 @@ export default function LandingPage() {
                             {/* header section */}
                             <div className="space-y-8">
                                 <div className="flex items-center gap-4">
-
+                                    <div className="w-12 h-[1px] bg-gradient-to-r from-[#8B0000] to-[#E6B17E]"></div>
+                                    
                                 </div>
                             </div>
 
