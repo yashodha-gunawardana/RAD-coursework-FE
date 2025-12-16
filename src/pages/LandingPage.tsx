@@ -476,7 +476,19 @@ export default function LandingPage() {
                                             </div>
                                         </div>
 
+                                        {/* vertical divider */}
                                         <div className="w-px h-8 bg-[#E8E3D8]"></div>
+
+                                        <div className="text-center group">
+
+                                            <div className="text-2xl font-bold text-[#0F0F0F] mb-1">24/7</div>
+                                            <div className="text-xs text-[#0F0F0F]/70">Support</div>
+
+                                            <div className="w-8 h-1 bg-gradient-to-r from-[#E6B17E] to-transparent mx-auto mt-2 group-hover:w-12
+                                                            transition-all duration-300">
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
