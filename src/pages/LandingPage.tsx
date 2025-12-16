@@ -412,6 +412,12 @@ export default function LandingPage() {
                                         <p className="text-[#0F0F0F]/70">
                                             1,847+ personalized celebrations with a 98.7% satisfaction rate. Your vision is our mission.
                                         </p>
+
+                                        <div className="mt-4 text-2xl space-x-1">
+                                            {[...Array(5)].map((_, i) => (
+                                                <Star key={i} className="inline text-yellow-500" />
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
