@@ -345,12 +345,12 @@ export default function LandingPage() {
                             </div>
 
                             {/* button */}
-                            <div>
+                            <div className="flex flex-wrap">
                                 <a href="#" className="bg-gradient-to-br from-[#8B0000] via-[#A52A2A] to-[#8B0000] text-white
                                                         px-10 py-4 rounded-full font-semibold tracking-wide transition-all duration-300
                                                         relative overflow-hiddden group hover:-translate-y-1 hover:shadow-xl hover:shadow-[#8B0000]/40">
 
-                                    <span className="absolute top-0 left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all
+                                    <span className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all
                                                         duration-600 group-hover:left-[100%]">
 
                                     </span>
@@ -362,7 +362,18 @@ export default function LandingPage() {
                             </div>
                         </div>
 
-                        
+                        {/* right colum */}
+                        <div className="space-y-6">
+
+                            {/* card 1 */}
+                            <div className="bg-white p-8 rounded-3xl border border-[#E8E3D8] hover:border-[#E6B17E]/50 transition-all
+                                            duration-500 hover:-translate-y-2 hover:shadow-xl shadow-lg">
+
+                                                
+                                <div className="flex items-start gap-6"></div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
