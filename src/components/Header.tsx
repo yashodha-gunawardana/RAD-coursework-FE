@@ -37,4 +37,18 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
         setIsMobileMenuOpen(false);
     };
 
+
+    useEffect(() => {
+
+      const handleClickOutside = (event: MouseEvent) => {
+        if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+          setIsSearchOpen(false);
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+      
+    }, []);
+
 }  
