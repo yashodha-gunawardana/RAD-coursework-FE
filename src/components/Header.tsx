@@ -34,10 +34,12 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
 
+    // close mobile menu if open
     setIsMobileMenuOpen(false);
   };
 
 
+  // search box handling
   useEffect(() => {
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -50,6 +52,7 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
 
   }, []);
+
 
   return (
     <header className={`fixed top-0 left-0 w-full z-50 py-6 transition-all duration-300 

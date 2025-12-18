@@ -18,13 +18,8 @@ const LandingPage: React.FC = () => {
 
     return (
         <div className="bg-[#0A0A0A] text-[#F5F5F5] min-h-screen overflow-x-hidden">
-            {/* COMMIT: pass scroll state to header */}
             <Header isScrolled={isScrolled} />
-
-            {/* COMMIT: add hero section to landing page */}
             <HeroSection />
-
-            {/* COMMIT: add about section to landing page */}
             <AboutSection />
         </div>
     );
