@@ -19,7 +19,22 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
       { name: 'SERVICE', sectionId: 'services' },
       { name: 'GALLERY', sectionId: 'gallery' },
       { name: 'CONTACT US', sectionId: 'contact' },
-      
+
     ];
+
+
+    const scrollToSection = (sectionId: string) => {
+
+      const element = document.getElementById(sectionId);
+
+        if (element) {
+          const headerHeight = 96;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+
+        setIsMobileMenuOpen(false);
+    };
 
 }  
