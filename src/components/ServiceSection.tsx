@@ -3,8 +3,12 @@ import { ChevronLeft, ChevronRight } from 'react-feather';
 import '../App.css';
 
 interface Service {
-  id: number;
-  name: string;
-  price: string;
-  img: string;
+    id: number;
+    name: string;
+    price: string;
+    img: string;
+}
+
+const ServiceSection: React.FC = () => {
+    
 }
