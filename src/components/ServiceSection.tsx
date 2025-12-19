@@ -12,5 +12,6 @@ interface Service {
 const ServiceSection: React.FC = () => {
 
     const [currentPage, setCurrentPage] = useState<number>(0);
-    
+    const containerRef = useRef<HTMLDivElement>(null);
+    const dotsRef = useRef<HTMLButtonElement[]>([]);
 }
