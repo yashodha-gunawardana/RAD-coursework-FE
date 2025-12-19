@@ -118,6 +118,15 @@ const ServiceSection: React.FC = () => {
                                 transform: 'rotate(-5deg)'
                             }}>
                 </div>
+
+                {/* wave 2 */}
+                <div className='absolute top-3/4 -right-28 w-[125%] h-60 opacity-30'
+                            style={{
+                                background: 'linear-gradient(90deg, transparent 0%, #8B0000 60%, #D4B483 70%, transparent 100%)',
+                                borderRadius: '50%',
+                                transform: 'rotate(5deg)'
+                            }}>
+                </div>
             </div>
 
         </div>
