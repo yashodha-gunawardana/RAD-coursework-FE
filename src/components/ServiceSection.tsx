@@ -93,4 +93,9 @@ const ServiceSection: React.FC = () => {
         if (currentPage > 0)
             updateUI(currentPage - 1)
     }
+
+
+    useEffect(() => {
+        
+    })
 }
