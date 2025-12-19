@@ -50,5 +50,10 @@ const ServiceSection: React.FC = () => {
                 behavior: "smooth"
             })
         }
+
+        // update active pagination dots
+        dotsRef.current.forEach((dot, i) => {
+            
+        })
     }
 }
