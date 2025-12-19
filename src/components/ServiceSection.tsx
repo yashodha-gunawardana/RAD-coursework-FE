@@ -87,4 +87,10 @@ const ServiceSection: React.FC = () => {
             // move to next page
             updateUI(currentPage + 1)
     }
+
+    // navigate  to previous page
+    const prevPage = (): void => {
+        if (currentPage > 0)
+            updateUI(currentPage - 1)
+    }
 }
