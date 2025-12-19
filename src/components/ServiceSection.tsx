@@ -165,7 +165,26 @@ const ServiceSection: React.FC = () => {
                                 }}
                                 aria-hidden='true'>
                 </div>
-                                        
+
+                {/* header */}
+                <div className='expertise-header mb-20 flex flex-col items-center pt-10 text-center'>
+                    <div className='header-top-row mb-3 flex items-center justify-center gap-6'>
+                        <div className='w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]'></div>
+
+                        <span className='text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]'>
+                            The Art of Celebration
+                        </span>
+
+                        <div className='w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]'></div>
+
+                        <h1 className='text-5xl md:text-6xl leading[1.1] font-semibold text-[#0F0F0F]'>
+                            Transform your<span className='text-[#9B2D2D]'> Vision</span> Into <br />
+                            <span className='text-[#D4B483]'>Reality</span>
+                        </h1>
+                    </div>
+
+                </div>
+
             </section>
         </div>
     )
