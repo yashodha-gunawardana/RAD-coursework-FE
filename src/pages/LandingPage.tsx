@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
+import AboutSection from '../components/AboutSection';
+
 
 
 const LandingPage: React.FC = () => {
@@ -22,6 +24,7 @@ const LandingPage: React.FC = () => {
         <div className="bg-[#0A0A0A] text-[#F5F5F5] min-h-screen overflow-x-hidden">
             <Header isScrolled={isScrolled} />
             <HeroSection />
+            <AboutSection />
             
         </div>
     );

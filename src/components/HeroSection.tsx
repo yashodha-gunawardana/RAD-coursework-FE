@@ -36,6 +36,7 @@ const HeroSection: React.FC = () => {
         return () => clearInterval(interval);
     }, [currentIndex]);
 
+
     return (
         <div id="hero" className="relative h-screen bg-cover bg-center flex items-center justify-center text-center transition-all duration-1000 ease-in-out"
             style={{

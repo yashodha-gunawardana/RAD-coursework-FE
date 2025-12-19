@@ -55,10 +55,10 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
 
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 py-6 transition-all duration-300 
+    <header className={`fixed top-0 left-0 w-full z-50 py-3 transition-all duration-300 
                         ${isScrolled ? 'bg-[#0A0A0A]/90 backdrop-blur-lg' : 'bg-transparent'}`}>
 
-      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-8">
         <div className="flex justify-between items-center">
 
           {/* Logo */}
@@ -113,7 +113,7 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
           <div className={`absolute lg:static left-1/2 lg:left-auto transform lg:transform-none -translate-x-1/2 lg:translate-x-0 
                             ${isMobileMenuOpen ? 'top-full mt-4' : 'hidden'} lg:block`}>
 
-            <nav className={`hidden lg:flex items-center gap-3.5 p-5 rounded-[30px] 
+            <nav className={`hidden lg:flex items-center gap-4 p-4 rounded-[30px] 
                                   ${isScrolled ? 'bg-[#0A0A0A]/35 backdrop-blur-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25'
                 : 'bg-[#0A0A0A]/35 backdrop-blur-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25'} 
                                   ${isMobileMenuOpen ? 'flex flex-col bg-[#0A0A0A] p-4 rounded-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25 min-w-[200px]'
