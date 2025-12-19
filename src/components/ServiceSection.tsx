@@ -39,7 +39,7 @@ const ServiceSection: React.FC = () => {
     ];
 
 
-    // update ui when page changes
+    // update ui when page changes (active dots)
     const updateUI = (index: number): void => {
         setCurrentPage(index)
 
@@ -57,5 +57,11 @@ const ServiceSection: React.FC = () => {
                 dot.classList.toggle("active", i === index)
             }
         })
+    }
+
+
+    // handle scroll events to update current page
+    const handleScroll = (): void => {
+        
     }
 }
