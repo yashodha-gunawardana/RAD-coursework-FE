@@ -71,6 +71,12 @@ const ServiceSection: React.FC = () => {
 
             if (index !== currentPage) {
                 setCurrentPage(index)
+
+                dotsRef.current.forEach((dot, i) => {
+                    if (dot) {
+                        dot.classList.toggle("active", i === index)
+                    }
+                })
             }
         }
     }
