@@ -183,6 +183,42 @@ const ServiceSection: React.FC = () => {
                         </h1>
                     </div>
 
+                    {/* cards wrapper */}
+                    <div className='cards-wrapper relative overflow-hidden'>
+                        <div className='nav-arrows pointer-events-none absolute left-0 right-0 top-[45%] z-20 flex -translate-y-1/2
+                                        justify-between px-1'>
+                            
+                            <button 
+                                onClick={prevPage}
+                                className='arrow pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center
+                                            rounded-full border border-[rgba(212, 180, 131, 0.3)] bg-white text-2xl shadow-[0_4px_15px_rgba(0,0,0,0.5)]
+                                            transition-all duration-300 hover:border-[#8B0000] hover:bg-[#8B0000] hover:!text-white hover:shadow-[0_4px_20px_rgba(139,0,0,0.2)]'
+
+                                            style={{ color: '#1C1C1C'}}
+                                            aria-label='Previous page'>
+                            
+                                <ChevronLeft className='w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1' />
+
+                            </button>
+
+                            <button
+                                onClick={nextPage}
+                                className='arrow pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center 
+                                            rounded-full border border-[rgba(212,180,131,0.3)] bg-white text-2xl shadow-[0_4px_15px_rgba(0,0,0,0.05)] 
+                                            transition-all duration-300 hover:border-[#8B0000] hover:bg-[#8B0000] hover:!text-white hover:shadow-[0_4px_20px_rgba(139,0,0,0.2)]'
+              
+                                            style={{ color: '#1C1C1C' }}
+                                            aria-label='Next page'>
+            
+                                <ChevronRight className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1" />
+              
+                            </button>
+                        </div>
+
+                        
+
+                    </div>
+
                 </div>
 
             </section>
