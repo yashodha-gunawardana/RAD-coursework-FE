@@ -304,7 +304,7 @@ const ServiceSection: React.FC = () => {
                                             backgroundColor: currentPage === index ? '#8B0000' : '#E0E0E0'
                                         }}
                                         data-page={index}
-                                       >
+                                        aria-label={`Go to page ${index + 1}`}>
 
                                 
                             </button>
