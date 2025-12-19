@@ -37,4 +37,10 @@ const ServiceSection: React.FC = () => {
           { id: 12, name: "Product Launch", price: "$5,000 – $25,000", img: "https://i.pinimg.com/1200x/a2/bc/7a/a2bc7a79d3b8dc57fc436aef34a79792.jpg" },
         ],
     ];
+
+
+    // update ui when page changes
+    const updateUI = (index: number): void => {
+        
+    }
 }
