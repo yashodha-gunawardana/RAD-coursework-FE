@@ -96,6 +96,6 @@ const ServiceSection: React.FC = () => {
 
 
     useEffect(() => {
-        
+        const container = containerRef.current
     })
 }
