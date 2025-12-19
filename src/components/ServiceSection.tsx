@@ -290,6 +290,14 @@ const ServiceSection: React.FC = () => {
 
                         {services.map((_, index) => (
 
+                            <button
+                                key={index}
+                                ref={(el) => {
+                                    if (el) dotsRef.current[index] = el;
+                                }}>
+
+                                
+                            </button>
                         ))}                
                     </div>
                 </div>
