@@ -225,6 +225,11 @@ const ServiceSection: React.FC = () => {
                                         display: 'flex'
                                     }}>
 
+                            {services.map((pageServices, pageIndex) => (
+                                <div className='page flex w-full flex-shrink-0 snap-start gap-16 px-20'
+                                            
+                                            style={{ flex: '0 0 100%' }}>
+                            ))}
                         </div>
 
                     </div>
