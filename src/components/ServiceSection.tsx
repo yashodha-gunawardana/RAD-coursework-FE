@@ -53,7 +53,9 @@ const ServiceSection: React.FC = () => {
 
         // update active pagination dots
         dotsRef.current.forEach((dot, i) => {
-            
+            if (dot) {
+                dot.classList.toggle("active", i === index)
+            }
         })
     }
 }
