@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
+import ServiceSection from '../components/ServiceSection';
+
 
 
 
@@ -25,6 +27,7 @@ const LandingPage: React.FC = () => {
             <Header isScrolled={isScrolled} />
             <HeroSection />
             <AboutSection />
+            <ServiceSection />
             
         </div>
     );

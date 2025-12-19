@@ -1,0 +1,23 @@
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .page { 
+    padding: 0 20px !important; 
+    gap: 30px !important; 
+  }
+  
+  .expertise-card { 
+    flex: 0 0 85% !important; 
+  }
+  
+  .nav-arrows { 
+    display: none !important; 
+  }
+}

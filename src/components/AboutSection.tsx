@@ -26,14 +26,14 @@ const AboutSection: React.FC = () => {
               <div className="flex items-center gap-4">
                 <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
                 
-                <span className="text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
+                <span className="font-[Poppins] text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
                   The Art of Celebration
                 </span>
 
                 <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
               </div>
 
-              <h1 className="font-cormorant text-5xl md:text-7xl leading-[1.1] font-semibold">
+              <h1 className="font-[Poppins] text-5xl md:text-7xl leading-[1.1] font-semibold">
                 Where <span className="text-[#9B2D2D]">Vision</span> Meets<br />
                 <span className="text-[#D4B483]">Perfection</span> in Every<br />
                 <span className="text-[#0F0F0F]">Detail</span>
@@ -171,7 +171,7 @@ const AboutSection: React.FC = () => {
         </div>
 
         {/* Bottom Credentials */}
-        <div className="pt-10 border-t border-[#D4B483]/10">
+       {/* <div className="pt-10 border-t border-[#D4B483]/10">
           <div className="flex flex-wrap justify-center gap-12">
             <div className="flex items-center gap-4">
               
@@ -225,12 +225,12 @@ const AboutSection: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
 
   );
-  
+
 };
 
 export default AboutSection;
