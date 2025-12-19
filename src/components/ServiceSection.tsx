@@ -294,7 +294,13 @@ const ServiceSection: React.FC = () => {
                                 key={index}
                                 ref={(el) => {
                                     if (el) dotsRef.current[index] = el;
-                                }}>
+                                }}
+                                onClick={() => updateUI(index)}
+                                className={`dot h-2 w-2 cursor-pointer rounded-full border-none transition-all duration-300 
+                                            ${currentPage === index ? 'active scale-125 shadow-[0_0_10px_rgba(139,0,0,0.3)]' : ''}`
+                                        }
+
+                                        >
 
                                 
                             </button>
