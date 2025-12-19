@@ -100,6 +100,7 @@ const ServiceSection: React.FC = () => {
 
         if (container) {
             container.addEventListener("scroll", handleScroll)
+            return () => container.removeEventListener("scroll", handleScroll)
         }
     })
 }
