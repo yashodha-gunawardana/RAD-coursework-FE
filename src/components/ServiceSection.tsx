@@ -103,4 +103,14 @@ const ServiceSection: React.FC = () => {
             return () => container.removeEventListener("scroll", handleScroll)
         }
     },[currentPage]);
+
+
+    return (
+        <div id='services' className='relative min-h-screen overflow-x-hidden bg-[#FDFCFB] py-10 font-[Poppins]'>
+            <div className='absolute inset-0 z-0 overflow-hidden'>
+
+            </div>
+
+        </div>
+    )
 }
