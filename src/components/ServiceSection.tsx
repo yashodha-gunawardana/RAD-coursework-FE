@@ -148,6 +148,24 @@ const ServiceSection: React.FC = () => {
                                 backdropFilter: 'blur(10px)'
                             }}>
 
+                {/* lines */}
+                <div className='absolute left-1/2 top-0 h-full w-[3px] z-0 pointer-events-none'
+                            style={{
+                                background: 'linear-gardient(to bottom, transparent, #D4B483 50%, transparent)',
+                                opacity: 0.2,
+                            }}
+                            aria-hidden='true'>
+                                
+                </div>
+
+                <div className='absolute left-0 top-1/2 h-[2px] w-full z-0 pointer-events-none'
+                            style={{
+                                background: 'linear-gradient(to right, transparent, #8B0000 50%, transparent)',
+                                opacity: 0.15
+                                }}
+                                aria-hidden='true'>
+                </div>
+                                        
             </section>
         </div>
     )
