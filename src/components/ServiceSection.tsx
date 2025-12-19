@@ -63,9 +63,15 @@ const ServiceSection: React.FC = () => {
     // handle scroll events to update current page
     const handleScroll = (): void => {
         if (containerRef.current) {
+
+            // calculate current page index from scroll position
             const index = Math.round(
                 containerRef.current.scrollLeft / containerRef.current.clientWidth
             )
+
+            if (index !== currentPage) {
+                setCurrentPage(index)
+            }
         }
     }
 }
