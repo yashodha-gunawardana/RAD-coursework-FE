@@ -46,7 +46,8 @@ const ServiceSection: React.FC = () => {
         // check scroll conatiner exists
         if (containerRef.current) {
             containerRef.current.scrollTo({
-                
+                left: index * containerRef.current.clientWidth,
+                behavior: "smooth"
             })
         }
     }
