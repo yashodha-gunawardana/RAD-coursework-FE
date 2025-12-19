@@ -225,10 +225,18 @@ const ServiceSection: React.FC = () => {
                                         display: 'flex'
                                     }}>
 
+                            {/* map through services pages */}
                             {services.map((pageServices, pageIndex) => (
                                 <div className='page flex w-full flex-shrink-0 snap-start gap-16 px-20'
                                             
                                             style={{ flex: '0 0 100%' }}>
+
+                                {/* map through services in current page */}
+                                {pageServices.map((service) => (
+                                    <div
+                                        key={service.id}
+                                        className='expertise-card group relative min-w-0 flex-1 transition-all duration-500 hover:-translate-y-3'>
+                                ))}
                             ))}
                         </div>
 
