@@ -80,4 +80,9 @@ const ServiceSection: React.FC = () => {
             }
         }
     }
+
+    // navigate to next page
+    const nextPage = (): void => {
+        
+    }
 }
