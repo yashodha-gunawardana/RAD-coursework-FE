@@ -43,6 +43,9 @@ const ServiceSection: React.FC = () => {
     ],
   ];
 
-  
+  // update ui when page change
+  const updateUI = (index: number): void => {
+
+  }
 }
 
