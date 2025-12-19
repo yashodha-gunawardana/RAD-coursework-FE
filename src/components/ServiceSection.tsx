@@ -10,5 +10,7 @@ interface Service {
 }
 
 const ServiceSection: React.FC = () => {
+
+    const [currentPage, setCurrentPage] = useState<number>(0);
     
 }
