@@ -41,6 +41,10 @@ const ServiceSection: React.FC = () => {
 
     // update ui when page changes
     const updateUI = (index: number): void => {
-        
+        setCurrentPage(index)
+
+        if (containerRef.current) {
+            
+        }
     }
 }
