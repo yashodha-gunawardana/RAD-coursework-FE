@@ -43,8 +43,11 @@ const ServiceSection: React.FC = () => {
     const updateUI = (index: number): void => {
         setCurrentPage(index)
 
+        // check scroll conatiner exists
         if (containerRef.current) {
-            
+            containerRef.current.scrollTo({
+                
+            })
         }
     }
 }
