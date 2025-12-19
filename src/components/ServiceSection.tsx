@@ -231,40 +231,68 @@ const ServiceSection: React.FC = () => {
                                             
                                             style={{ flex: '0 0 100%' }}>
 
-                                {/* map through services in current page */}
-                                {pageServices.map((service) => (
-                                    <div
-                                        key={service.id}
-                                        className='expertise-card group relative min-w-0 flex-1 transition-all duration-500 hover:-translate-y-3'>
+                                    {/* map through services in current page */}
+                                    {pageServices.map((service) => (
+                                        <div
+                                            key={service.id}
+                                            className='expertise-card group relative min-w-0 flex-1 transition-all duration-500 hover:-translate-y-3'>
 
-                                        <div className='vertical-text absolute -left-3 bottom-6 z-10 -rotate-90 origin-bottom-left text-[13px]
-                                                        font-semibold uppercase tracking-[7px] text-[#D4B4]/90 opacity-90'>
-                                            
-                                            Eventora Events
+                                            <div className='vertical-text absolute -left-3 bottom-6 z-10 -rotate-90 origin-bottom-left text-[13px]
+                                                            font-semibold uppercase tracking-[7px] text-[#D4B4]/90 opacity-90'>
+                                                
+                                                Eventora Events
+                                            </div>
+
+                                            {/* card image container */}
+                                            <div className='card-image-wrapper relative h-[480px] overflow-hidden rounded-[2px] 
+                                                            shadow-[0_20px_40px_rgba(28,28,28,0.15)] transition-shadow duration-500 
+                                                            group-hover:shadow-[0_25px_50px_rgba(28,28,28,0.2)]'>
+                        
+                                                <img
+                                                    src={service.img}
+                                                    alt={service.name}
+                                                    className='h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110'
+                                                />
+
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                            </div>
+
+                                            {/* card info */}
+                                            <div className='card-info-floating absolute -bottom-7 left-1/2 z-20 w-[85%] -translate-x-1/2 bg-white px-4 py-6 text-center shadow-[0_10px_30px_rgba(139,0,0,0.08)] transition-all 
+                                                            duration-500 group-hover:shadow-[0_15px_35px_rgba(139,0,0,0.15)] group-hover:-bottom-6'
+                                                            
+                                                        style={{
+                                                            borderBottom: '3px solid #D4B483',
+                                                        }}>
+
+                                                <h3 className="mb-1 text-xl font-bold text-[#1C1C1C]">
+                                                    
+                                                    {service.name}
+                                                
+                                                </h3>   
+
+                                                <p className="text-sm font-semibold text-[#8B0000]">
+                            
+                                                    {service.price}
+                        
+                                                </p>    
+
+                                            </div>
                                         </div>
-
-                                        {/* card image container */}
-                                        <div className='card-image-wrapper relative h-[480px] overflow-hidden rounded-[2px] 
-                                                        shadow-[0_20px_40px_rgba(28,28,28,0.15)] transition-shadow duration-500 
-                                                        group-hover:shadow-[0_25px_50px_rgba(28,28,28,0.2)]'>
-                      
-                                            <img
-                                                src={service.img}
-                                                alt={service.name}
-                                                className='h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110'
-                                            />
-
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                        </div>
-                                ))}
+                                    ))}
                                 </div>
                             ))}
                         </div>
-
                     </div>
 
-                </div>
+                    {/* pagination dots */}
+                    <div className='pagination-dots mt-5 flex justify-center gap-4 pb-10'>
 
+                        {services.map((_, index) => (
+
+                        ))}                
+                    </div>
+                </div>
             </section>
         </div>
     )
