@@ -215,7 +215,17 @@ const ServiceSection: React.FC = () => {
                             </button>
                         </div>
 
-                        
+                        {/* card scroll */}
+                        <div 
+                            ref={containerRef}
+                            className='cards-container snap-x snap-mandatory overflow-x-auto pb-20 pt-0 scrollbar-hide'
+                                
+                                    style={{
+                                        scrollBehavior: 'smooth',
+                                        display: 'flex'
+                                    }}>
+
+                        </div>
 
                     </div>
 
