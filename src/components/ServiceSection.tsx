@@ -108,9 +108,20 @@ const ServiceSection: React.FC = () => {
     return (
         <div id='services' className='relative min-h-screen overflow-x-hidden bg-[#FDFCFB] py-10 font-[Poppins]'>
             <div className='absolute inset-0 z-0 overflow-hidden'>
+                <div className='absolute inset-0 bg-gradient-to-br from-[#FDFCFB] via-[#F9F5F0] to-[#F5F1EA]'></div>
 
+                {/* wave 1 */}
+                <div className='absolute -top-24 -left-16 w-[140%] h-64 opacity-20'
+                            style={{
+                                background: 'linear-gradient(90deg, transparent 0%, #8B0000 50%, transparent 100%)',
+                                borderRadius: '50%',
+                                transform: 'rotate(-5deg)'
+                            }}>
+                </div>
             </div>
 
         </div>
     )
 }
+
+export default ServiceSection
