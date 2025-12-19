@@ -236,6 +236,12 @@ const ServiceSection: React.FC = () => {
                                     <div
                                         key={service.id}
                                         className='expertise-card group relative min-w-0 flex-1 transition-all duration-500 hover:-translate-y-3'>
+
+                                        <div className='vertical-text absolute -left-3 bottom-6 z-10 -rotate-90 origin-bottom-left text-[13px]
+                                                        font-semibold uppercase tracking-[7px] text-[#D4B4]/90 opacity-90'>
+                                            
+                                            Eventora Events
+                                        </div>
                                 ))}
                             ))}
                         </div>
