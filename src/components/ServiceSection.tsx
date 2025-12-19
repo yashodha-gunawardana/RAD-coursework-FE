@@ -300,7 +300,11 @@ const ServiceSection: React.FC = () => {
                                             ${currentPage === index ? 'active scale-125 shadow-[0_0_10px_rgba(139,0,0,0.3)]' : ''}`
                                         }
 
-                                        >
+                                        style={{
+                                            backgroundColor: currentPage === index ? '#8B0000' : '#E0E0E0'
+                                        }}
+                                        data-page={index}
+                                       >
 
                                 
                             </button>
