@@ -44,7 +44,9 @@ const StatsSection: React.FC = () => {
 
             {/* main container */}
             <div className="relative z-10 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
 
+                </div>
             </div>
         </div>
     )
