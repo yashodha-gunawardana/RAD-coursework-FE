@@ -10,9 +10,34 @@ const StatsSection: React.FC = () => {
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(195,153,83,0.1)_0%,transparent_50%]"></div>
 
-                <div >
+                <div className="bokeh-orb absolute w-[300px] h-[300px] rounded-full blur-[60px] opacity-20
+                                bg-[#950740] top-[15%] left-[10%]"
+                                
+                                aria-hidden="true">
 
                 </div>
+
+                <div className="bokeh-orb absolute w-[250px] h-[250px] rounded-full blur-[60px] opacity-25 
+                                bg-[#C39953] bottom-[15%] right-[15%]"
+                                
+                                aria-hidden="true">
+
+                </div>
+
+                <div className="bokeh-orb absolute w-[180px] h-[180px] rounded-full blur-[50px] opacity-15 
+                                bg-[#950740] top-[60%] left-[70%]"
+            
+                                aria-hidden="true">
+                    
+                </div>
+
+                <div  className="bokeh-orb absolute w-[150px] h-[150px] rounded-full blur-[40px] opacity-20 
+                                bg-[#C39953] top-[20%] right-[25%]"
+          
+                                aria-hidden="true">
+
+                </div>
+        
             </div>
         </div>
     )
