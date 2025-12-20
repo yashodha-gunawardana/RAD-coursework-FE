@@ -21,17 +21,3 @@
     display: none !important; 
   }
 }
-
-
-/* circle background design */
-.background-circles {
-  display: none;
-  position: fixed;
-  z-index: 0;
-  pointer-events: none;
-}
-
-#about .background-circles,
-#contact .background-circles {
-  display: block;
-}

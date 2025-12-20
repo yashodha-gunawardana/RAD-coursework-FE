@@ -14,7 +14,19 @@ import {
 
 const AboutSection: React.FC = () => {
   return (
-    <section id="about" className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0F0F0F] py-20">
+    <section id="about" className="relative min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0F0F0F] py-20">
+      
+      {/* circle */}
+      <div className='absolute -top-[200px] -left-[200px] h-[600px] w-[600px] rounded-full border-[120px]
+                            border-[rgba(139,0,0,0.04)] pointer-events-none z-0'
+        aria-hidden='true'>
+      </div>
+
+      <div className='absolute -bottom-[200px] -right-[200px] h-[700px] w-[700px] rounded-full border-[140px] 
+                            border-[rgba(120,0,0,0.04)] pointer-events-none z-0'
+        aria-hidden='true'>
+      </div>
+
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
 
@@ -25,7 +37,7 @@ const AboutSection: React.FC = () => {
             <div className="space-y-8">
               <div className="flex items-center gap-4">
                 <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
-                
+
                 <span className="font-[Poppins] text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
                   The Art of Celebration
                 </span>
@@ -76,7 +88,7 @@ const AboutSection: React.FC = () => {
               <button className="relative bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white px-10 py-4 rounded-[50px] 
                                 font-semibold tracking-wide overflow-hidden group transition-all duration-400 hover:-translate-y-1 
                                 hover:shadow-xl hover:shadow-[#9B2D2D]/20">
-                
+
                 <span className="flex items-center gap-3">
                   Begin Your Journey
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
@@ -84,7 +96,7 @@ const AboutSection: React.FC = () => {
 
                 <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent 
                                 group-hover:translate-x-full transition-transform duration-600" />
-              
+
               </button>
             </div>
           </div>
@@ -101,7 +113,7 @@ const AboutSection: React.FC = () => {
 
               <div className="flex items-start gap-6">
                 <div className="flex-shrink-0">
-                  
+
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#D4B483]/20 to-[#E8D0AD]/20 flex items-center justify-center">
                     <Award className="w-8 h-8 text-[#D4B483]" />
                   </div>
@@ -123,7 +135,7 @@ const AboutSection: React.FC = () => {
                               opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="flex items-start gap-6">
                 <div className="flex-shrink-0">
-                  
+
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#9B2D2D]/20 to-[#B64545]/20 flex items-center justify-center">
                     <Heart className="w-8 h-8 text-[#9B2D2D]" />
                   </div>
@@ -133,7 +145,7 @@ const AboutSection: React.FC = () => {
                 <div>
                   <h3 className="text-2xl font-bold text-[#0F0F0F] mb-3">Client-Centric Approach</h3>
                   <p className="text-[#0F0F0F]/70">1,847+ personalized celebrations with a 98.7% satisfaction rate. Your vision is our mission.</p>
-                 
+
                   <div className="flex gap-1 mt-4">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-5 h-5 fill-amber-500 text-amber-500" />
@@ -153,7 +165,7 @@ const AboutSection: React.FC = () => {
 
               <div className="flex items-start gap-6">
                 <div className="flex-shrink-0">
-                  
+
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#D4B483]/20 to-[#E8D0AD]/20 flex 
                                   items-center justify-center">
                     <Globe className="w-8 h-8 text-[#D4B483]" />

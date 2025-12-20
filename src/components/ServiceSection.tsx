@@ -129,6 +129,17 @@ const ServiceSection: React.FC = () => {
                 </div>
             </div>
 
+            {/* circle
+            <div className='fixed -top-[200px] -left-[200px] h-[600px] w-[600px] rounded-full border-[120px]
+                            border-[rgba(139,0,0,0.04)] pointer-events-none z-0'
+                aria-hidden='true'>
+            </div>
+
+            <div className='fixed -bottom-[200px] -right-[200px] h-[700px] w-[700px] rounded-full border-[140px] 
+                            border-[rgba(212,180,131,0.05)] pointer-events-none z-0'
+                aria-hidden='true'>
+            </div> */}
+
             {/* main content */}
             <section className='relative mx-auto max-w-[1400px] px-10 z-10'
                 style={{
