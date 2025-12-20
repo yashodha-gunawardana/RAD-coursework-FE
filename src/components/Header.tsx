@@ -9,7 +9,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
@@ -24,7 +23,6 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
 
 
   const scrollToSection = (sectionId: string) => {
-
     const element = document.getElementById(sectionId);
 
     if (element) {
@@ -33,9 +31,6 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
       const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
-
-    // close mobile menu if open
-    setIsMobileMenuOpen(false);
   };
 
 
@@ -55,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
 
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 py-3 transition-all duration-300 
+    <header className={`fixed top-0 left-0 w-full z-50 py-4 transition-all duration-300 
                         ${isScrolled ? 'bg-[#0A0A0A]/90 backdrop-blur-lg' : 'bg-transparent'}`}>
 
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-8">
@@ -98,27 +93,12 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden w-12 h-12 rounded-full bg-gradient-to-br from-[#E6B17E]/15 to-[#8B0000]/15 
-                            border border-[#F5F5F5]/20 flex items-center justify-center text-[#F5F5F5] cursor-pointer transition-all 
-                            duration-300 hover:from-[#E6B17E]/25 hover:to-[#8B0000]/25 hover:text-[#E6B17E] hover:border-[#E6B17E]/50 
-                            hover:scale-105 hover:shadow-lg hover:shadow-[#E6B17E]/20"
-          >
-            {isMobileMenuOpen ? <XIcon className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-
           {/* Navigation Menu */}
-          <div className={`absolute lg:static left-1/2 lg:left-auto transform lg:transform-none -translate-x-1/2 lg:translate-x-0 
-                            ${isMobileMenuOpen ? 'top-full mt-4' : 'hidden'} lg:block`}>
+          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2">
 
-            <nav className={`hidden lg:flex items-center gap-4 p-4 rounded-[30px] 
-                                  ${isScrolled ? 'bg-[#0A0A0A]/35 backdrop-blur-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25'
-                : 'bg-[#0A0A0A]/35 backdrop-blur-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25'} 
-                                  ${isMobileMenuOpen ? 'flex flex-col bg-[#0A0A0A] p-4 rounded-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25 min-w-[200px]'
-                : ''}`
-            }>
+            <nav className={`flex items-center gap-4 p-4 rounded-[30px] 
+                            ${isScrolled ? 'bg-[#0A0A0A]/35 backdrop-blur-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25'
+                                : 'bg-[#0A0A0A]/35 backdrop-blur-2xl border border-[#F5F5F5]/10 shadow-2xl shadow-black/25'}`}>
 
               {navItems.map((item, index) => (
 
@@ -200,7 +180,7 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
     </header>
   );
 
-}   
+}
 
 
 export default Header

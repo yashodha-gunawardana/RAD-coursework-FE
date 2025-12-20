@@ -1,9 +1,9 @@
-// App.tsx
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
 import ServiceSection from '../components/ServiceSection';
+import StatsSection from '../components/StatsSection';
 
 const LandingPage: React.FC = () => {
 
@@ -25,6 +25,7 @@ const LandingPage: React.FC = () => {
             <HeroSection />
             <AboutSection />
             <ServiceSection />
+            <StatsSection />
             
         </div>
     );

@@ -169,63 +169,6 @@ const AboutSection: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {/* Bottom Credentials */}
-       {/* <div className="pt-10 border-t border-[#D4B483]/10">
-          <div className="flex flex-wrap justify-center gap-12">
-            <div className="flex items-center gap-4">
-              
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#9B2D2D]/20 to-[#B64545]/20 flex 
-                              items-center justify-center">
-                <Check className="w-4 h-4 text-[#9B2D2D]" />
-              </div>
-
-              <div>
-                <div className="text-2xl font-bold text-[#0F0F0F]">100%</div>
-                <p className="text-sm text-[#0F0F0F]/60">Custom Solutions</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D4B483]/20 to-[#E8D0AD]/20 flex 
-                              items-center justify-center">
-                <Clock className="w-4 h-4 text-[#D4B483]" />
-              </div>
-
-              <div>
-                <div className="text-2xl font-bold text-[#0F0F0F]">24/7</div>
-                <p className="text-sm text-[#0F0F0F]/60">Dedicated Support</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#9B2D2D]/20 to-[#B64545]/20 
-                              flex items-center justify-center">
-                <Users className="w-4 h-4 text-[#9B2D2D]" />
-              </div>
-
-              <div>
-                <div className="text-2xl font-bold text-[#0F0F0F]">50+</div>
-                <p className="text-sm text-[#0F0F0F]/60">Expert Team</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#D4B483]/20 to-[#E8D0AD]/20 flex 
-                              items-center justify-center">
-                <Shield className="w-4 h-4 text-[#D4B483]" />
-              </div>
-
-              <div>
-                <div className="text-2xl font-bold text-[#0F0F0F]">Premium</div>
-                <p className="text-sm text-[#0F0F0F]/60">Quality Guarantee</p>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     </section>
 
