@@ -4,7 +4,7 @@ import React from "react";
 const StatsSection: React.FC = () => {
 
     return (
-        <div className="relative py-16 px-4 md:px-8 bg-[#0F0F0F]/80 overflow-hidden font-[Poppins, serif] min-h-[250px]">
+        <div className="relative py-10 px-4 md:px-8 bg-[#0F0F0F]/80 overflow-hidden font-[Poppins, serif] min-h-[200px]">
 
             {/* background */}
             <div className="absolute inset-0 z-0">
@@ -171,7 +171,7 @@ const StatsSection: React.FC = () => {
 
                 {/* line */}
                 <div className="mt-12 relative">
-                    
+
                     <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C39953]/30 to-transparent"></div>
                     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rotate-45 border border-[#C39953]/50"></div>
 
