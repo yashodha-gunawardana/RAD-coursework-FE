@@ -46,6 +46,18 @@ const StatsSection: React.FC = () => {
             <div className="relative z-10 max-w-6xl mx-auto">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
 
+                    {/* card 1 */}
+                    <div className="group h-[140px] md:h-[160px] flex flex-col justify-center items-center text-center relative
+                                    bg-white/3 backdrop-blur-[15px] border border-[#C39953]/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] 
+                                    transition-all duration-500 ease-out hover:border-[#C39953] hover:bg-white/6 hover:transform 
+                                    hover:-translate-y-[8px] hover:shadow-[0_12px_40px_rgba(0,0,0,0.9)] rounded-xl">
+
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#950740]/0 via-[#950740]/5 to-[#C39953]/0 
+                                        opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                        
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
