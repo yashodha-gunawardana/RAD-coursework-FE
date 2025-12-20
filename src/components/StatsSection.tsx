@@ -42,7 +42,10 @@ const StatsSection: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/30 via-transparent to-[#050505]/30"></div>
             </div>
 
-            
+            {/* main container */}
+            <div className="relative z-10 max-w-6xl mx-auto">
+
+            </div>
         </div>
     )
 }
