@@ -168,6 +168,14 @@ const StatsSection: React.FC = () => {
                         </p>
                     </div>
                 </div>
+
+                {/* line */}
+                <div className="mt-12 relative">
+                    
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C39953]/30 to-transparent"></div>
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rotate-45 border border-[#C39953]/50"></div>
+
+                </div>
             </div>
         </div>
     )
