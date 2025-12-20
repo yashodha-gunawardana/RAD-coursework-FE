@@ -57,6 +57,115 @@ const StatsSection: React.FC = () => {
                                         
                         </div>
 
+                        <div className="number-group flex items-start mb-2 relative z-10">
+                            <span className="number text-[2.5rem] md:text-[3rem] font-[800] leading-[1] text-[#950740]
+                                                text-shadow-[0_0_20px_rgba(149,7,64,0.3)]">
+
+                                    172
+                            </span>
+
+                            <span className="symbol text-[0.9rem] text-[#E3E2DF] ml-1.5 mt-3">
+                                    n
+                            </span>
+
+                        </div>
+
+                        <p className="label text-[0.85rem] text-[#E3E2DF] uppercase tracking-[0.25em] font-[400] relative z-10">
+                            Event Done
+                        </p>
+                    </div>
+                
+                    
+                    {/* card 2 */}
+                    <div className="group h-[140px] md:h-[160px] flex flex-col justify-center items-center text-center relative
+                                    bg-white/3 backdrop-blur-[15px] border border-[#C39953]/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)]
+                                    transition-all duration-500 ease-out hover:border-[#C39953] hover:bg-white/6 hover:transform 
+                                    hover:-translate-y-[8px] hover:shadow-[0_12px_40px_rgba(0,0,0,0.9)] rounded-xl">
+
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#950740]/0 via-[#950740]/5 to-[#C39953]/0 
+                                        opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+
+                        </div>
+            
+                        <div className="number-group flex items-start mb-2 relative z-10">
+                            <span className="number text-[2.5rem] md:text-[3rem] font-[800] leading-[1] text-[#950740] 
+                                                text-shadow-[0_0_20px_rgba(149,7,64,0.3)]">
+                
+                                15
+                    
+                            </span>
+              
+                            <span className="symbol text-[0.9rem] text-[#E3E2DF] ml-1.5 mt-3">
+                                TM
+                            </span>
+
+                        </div>
+                        
+                        <p className="label text-[0.85rem] text-[#E3E2DF] uppercase tracking-[0.25em] font-[400] relative z-10">
+                            Years of Experience
+                        </p>
+                    </div>
+
+
+                    {/* card 3 */}
+                    <div className="group h-[140px] md:h-[160px] flex flex-col justify-center items-center text-center relative
+                                    bg-white/3 backdrop-blur-[15px] border border-[#C39953]/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)]
+                                    transition-all duration-500 ease-out hover:border-[#C39953] hover:bg-white/6 hover:transform 
+                                    hover:-translate-y-[8px] hover:shadow-[0_12px_40px_rgba(0,0,0,0.9)] rounded-xl">
+
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#950740]/0 via-[#950740]/5 to-[#C39953]/0 
+                                        opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                        
+                        </div>
+            
+                        <div className="number-group flex items-start mb-2 relative z-10">
+                            <span className="number text-[2.5rem] md:text-[3rem] font-[800] leading-[1] text-[#950740] 
+                                                text-shadow-[0_0_20px_rgba(149,7,64,0.3)]">
+                
+                                250
+
+                            </span>
+              
+                            <span className="symbol text-[0.9rem] text-[#E3E2DF] ml-1.5 mt-3">
+                                n
+                            </span>
+
+                        </div>
+
+                        <p className="label text-[0.85rem] text-[#E3E2DF] uppercase tracking-[0.25em] font-[400] relative z-10">
+                            Happy Client
+                        </p>
+                    </div>
+
+
+                    {/* card 4 */}
+                    <div className="group h-[140px] md:h-[160px] flex flex-col justify-center items-center text-center relative
+                                    bg-white/3 backdrop-blur-[15px] border border-[#C39953]/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)]
+                                    transition-all duration-500 ease-out hover:border-[#C39953] hover:bg-white/6 hover:transform 
+                                    hover:-translate-y-[8px] hover:shadow-[0_12px_40px_rgba(0,0,0,0.9)] rounded-xl">
+
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#950740]/0 via-[#950740]/5 to-[#C39953]/0 
+                                        opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+
+                        </div>
+            
+                        <div className="number-group flex items-start mb-2 relative z-10">
+                            <span className="number text-[2.5rem] md:text-[3rem] font-[800] leading-[1] text-[#950740] 
+                                                text-shadow-[0_0_20px_rgba(149,7,64,0.3)]">
+                
+                                80
+              
+                            </span>
+
+                            <span className="symbol text-[0.9rem] text-[#E3E2DF] ml-1.5 mt-3">
+                                n
+                            </span>
+
+                        </div>
+
+                        <p className="label text-[0.85rem] text-[#E3E2DF] uppercase tracking-[0.25em] font-[400] relative z-10">
+                            Trusted Vendor
+                        </p>
                     </div>
                 </div>
             </div>
