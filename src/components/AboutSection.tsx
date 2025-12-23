@@ -15,7 +15,7 @@ import {
 const AboutSection: React.FC = () => {
   return (
     <section id="about" className="relative min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0F0F0F] py-20">
-      
+
       {/* circle */}
       <div className='absolute -top-[200px] -left-[200px] h-[600px] w-[600px] rounded-full border-[120px]
                             border-[rgba(139,0,0,0.04)] pointer-events-none z-0'
@@ -23,7 +23,7 @@ const AboutSection: React.FC = () => {
       </div>
 
       <div className='absolute -bottom-[200px] -right-[200px] h-[700px] w-[700px] rounded-full border-[140px] 
-                            border-[rgba(120,0,0,0.04)] pointer-events-none z-0'
+                            border-[rgba(139,0,0,0.03)] pointer-events-none z-0'
         aria-hidden='true'>
       </div>
 

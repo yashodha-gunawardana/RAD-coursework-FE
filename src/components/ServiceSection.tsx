@@ -111,9 +111,9 @@ const ServiceSection: React.FC = () => {
                 <div className='absolute inset-0 bg-gradient-to-br from-[#FDFCFB] via-[#F9F5F0] to-[#F5F1EA]'></div>
 
                 {/* wave 1 */}
-                <div className='absolute -top-24 -left-16 w-[140%] h-64 opacity-20'
+                <div className='absolute -top-40 -left-16 w-[150%] h-60 opacity-20'
                     style={{
-                        background: 'linear-gradient(90deg, transparent 0%, #8B0000 50%, transparent 100%)',
+                        background: 'linear-gradient(90deg, transparent 0%, #D4B483 30%,  #8B0000 40%,  transparent 100%)',
                         borderRadius: '50%',
                         transform: 'rotate(-5deg)'
                     }}>
@@ -128,17 +128,6 @@ const ServiceSection: React.FC = () => {
                     }}>
                 </div>
             </div>
-
-            {/* circle
-            <div className='fixed -top-[200px] -left-[200px] h-[600px] w-[600px] rounded-full border-[120px]
-                            border-[rgba(139,0,0,0.04)] pointer-events-none z-0'
-                aria-hidden='true'>
-            </div>
-
-            <div className='fixed -bottom-[200px] -right-[200px] h-[700px] w-[700px] rounded-full border-[140px] 
-                            border-[rgba(212,180,131,0.05)] pointer-events-none z-0'
-                aria-hidden='true'>
-            </div> */}
 
             {/* main content */}
             <section className='relative mx-auto max-w-[1400px] px-10 z-10'
