@@ -193,5 +193,8 @@ const GallerySection: React.FC = () => {
         { id: 9, category: 'video', image: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=800&auto=format&fit=crop', title: 'Stage Performance', date: 'Video • 22 Feb 2025' },
         { id: 10, category: 'photo', image: 'https://images.unsplash.com/photo-1452623668442-c69b8f635e0a?q=80&w=800&auto=format&fit=crop', title: 'Grand Opening Crowd', date: 'Event • 30 Mar 2025' },
     ];
+
+
+    const
     
 }
