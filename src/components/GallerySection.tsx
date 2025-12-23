@@ -211,10 +211,11 @@ const GallerySection: React.FC = () => {
 
     
     return (
-        <section id="gallery" className="w-full min-h-screen py-20">
+        <section id="gallery" className="w-full min-h-screen py-20 bg-[#F4F4F2]">
             <div className="w-full mx-auto text-center">
 
-                <div className="gallery-header mb-12">
+                {/* header */}
+                <div className="flex justify-center items-center gap-4 mb-3">
                     <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
 
                         <span className="font-[Poppins] text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
@@ -224,13 +225,24 @@ const GallerySection: React.FC = () => {
                     <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
                 </div>
 
-                <h1 className="font-[Poppins] text-5xl md:text-7xl leading-[1.1] font-semibold">
-                    Beautiful & <span className="text-[#9B2D2D]">Unforgettable</span> Times<br />
+                <h1 className="font-[Poppins] text-5xl md:text-6xl leading-[1.1] font-semibold">
+                    <span className="text-[#9B2D2D]"> Beautiful</span> 
+                    <span className="text-[#0F0F0F]"> & </span> 
+                    <span className="text-[#D4B483]"> Unforgettable </span><br />
+                    <span className="text-[#0F0F0F]"> Times</span>
                 </h1>
-
             </div>
 
+            {/* filter button */}
+            <GalleryFilter
+                activeFilter={activeFilter}
+                onFilterChange={handleFilterChange}
+            />
+
+            
         </section>
     )
     
 }
+
+export default GallerySection
