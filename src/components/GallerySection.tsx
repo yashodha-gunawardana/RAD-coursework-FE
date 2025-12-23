@@ -16,10 +16,18 @@ interface GalleryItemType {
     date: string
 }
 
-// gallery filter component
+// --------------- gallery filter component ------------------
+
 interface GalleryFilterProps {
 
     // current active filter
     activeFilter: FilterType
     onFilterChange: (filter: FilterType) => void
+}
+
+const GalleryFilter: React.FC <GalleryFilterProps> = ({
+    activeFilter,
+    onFilterChange
+}) => {
+    
 }
