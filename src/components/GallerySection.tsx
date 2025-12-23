@@ -176,5 +176,5 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
 // ------------------ gallery section component ------------------
 
 const GallerySection: React.FC = () => {
-    
+    const [activeFilter, setActiveFilter] = useState<FilterType>("all")
 }
