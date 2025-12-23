@@ -7,7 +7,7 @@ type GalleryCategory = "photo" | "video"
 type FilterType = "all" | GalleryCategory
 
 
-// gallery item structure
+// gallery item structure (single)
 interface GalleryItemType {
     id: number
     category: GalleryCategory
@@ -85,4 +85,8 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
 
 interface GalleryItemProps {
     item: GalleryItemType
+}
+
+const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
+    
 }
