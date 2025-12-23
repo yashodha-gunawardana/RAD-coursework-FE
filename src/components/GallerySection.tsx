@@ -37,7 +37,7 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
     ];
 
     return (
-        <div className="flex hustify-center gap-8 mb-12 pb-4 border-b"
+        <div className="flex justify-center gap-12 mb-12 pb-0 border-b"
                     style={{
                         borderColor: "rgba(11, 11, 11, 0.1)"
                     }}>
@@ -49,7 +49,7 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
                 return (
                     <div
                         key={filter.id}
-                        className={`flex items-center gap-2 px-5 py-3 font-medium cursor-pointer
+                        className={`flex items-center gap-2 px-5 py-10 font-medium cursor-pointer
                                     transition-all duration-300 relative select-none
                                     ${isActive ? " " : "text-[#C2B49A] hover:text-[#0B0B0B]"}
                                 `}
@@ -63,7 +63,7 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
                         <span className="text-sm md:text-base">{filter.label}</span>
 
                         {isActive && (
-                            <div className="absolute bottom-[-16px] left-1/2 transform 
+                            <div className="absolute bottom-[10px] left-1/2 transform 
                                             -translate-x-1/2 w-10 h-1 rounded"
                                         
                                         style={{
@@ -90,6 +90,8 @@ interface GalleryItemProps {
 // individual gallery item card
 const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
     const [isHovered, setIsHovered] = useState(false)
+
+    const isVideo = item.category === "video" || item.image.endsWith(".mp4")
 
     const getGridClass = (): string => {
         switch(item.id) {
@@ -136,7 +138,7 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
 
                 <Search className="w-14 h-14"
                                 style={{
-                                    color: "#8B0000"
+                                    color: "#D4B483"
                                 }}
                 />
 
@@ -182,10 +184,10 @@ const GallerySection: React.FC = () => {
 
 
     const galleryItems: GalleryItemType[] = [
-        { id: 1, category: 'photo', image: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800&auto=format&fit=crop', title: 'John & Sarah Wedding', date: 'Wedding • 12 Oct 2024' },
-        { id: 2, category: 'photo', image: 'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?q=80&w=800&auto=format&fit=crop', title: 'Corporate Gala Dubai', date: 'Corporate • 5 Nov 2024' },
-        { id: 3, category: 'photo', image: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?q=80&w=800&auto=format&fit=crop', title: 'Annual Awards Night', date: 'Event • 20 Dec 2024' },
-        { id: 4, category: 'video', image: 'https://images.unsplash.com/photo-1498931299472-f7a63a5a1cfa?q=80&w=800&auto=format&fit=crop', title: 'Event Highlight Reel', date: 'Video • 8 Sep 2024' },
+        { id: 1, category: 'photo', image: 'https://i.pinimg.com/736x/02/b2/82/02b28276f08e31c440e05dad99854db4.jpg', title: 'John & Sarah Wedding', date: 'Wedding • 12 Oct 2024' },
+        { id: 2, category: 'photo', image: 'https://i.pinimg.com/1200x/39/1f/52/391f520e652a821484f4e94fd0c4e07f.jpg', title: 'Corporate Gala Dubai', date: 'Corporate • 5 Nov 2024' },
+        { id: 3, category: 'photo', image: 'https://i.pinimg.com/736x/6c/b4/4e/6cb44e54c96383e2d0c7ec687a4afc60.jpg', title: 'Annual Awards Night', date: 'Event • 20 Dec 2024' },
+        { id: 4, category: 'video', image: '/videoevent1.mp4', title: 'Event Highlight Reel', date: 'Video • 8 Sep 2024' },
         { id: 5, category: 'photo', image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop', title: 'Birthday Celebration', date: 'Birthday • 15 Jul 2024' },
         { id: 6, category: 'video', image: 'https://images.unsplash.com/photo-1533230393025-56220df6e84d?q=80&w=800&auto=format&fit=crop', title: 'Product Launch Film', date: 'Video • 22 Aug 2024' },
         { id: 7, category: 'photo', image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop', title: 'Charity Gala Night', date: 'Charity • 1 Dec 2024' },
@@ -211,7 +213,7 @@ const GallerySection: React.FC = () => {
 
     
     return (
-        <section id="gallery" className="w-full min-h-screen py-20 bg-[#F4F4F2]">
+        <section id="gallery" className="w-full min-h-screen py-20 bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8]">
             <div className="w-full mx-auto text-center">
 
                 {/* header */}
@@ -250,7 +252,7 @@ const GallerySection: React.FC = () => {
 
             </div>
 
-            <div className="gallery-footer mt-5">
+            <div className="gallery-footer mt-5 flex justify-center items-center">
                 <button className="relative bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white px-10 py-4 rounded-[50px] 
                                                 font-semibold tracking-wide overflow-hidden group transition-all duration-400 hover:-translate-y-1 
                                                 hover:shadow-xl hover:shadow-[#9B2D2D]/20">
@@ -270,6 +272,6 @@ const GallerySection: React.FC = () => {
         </section>
     )
     
-}
+};
 
 export default GallerySection
