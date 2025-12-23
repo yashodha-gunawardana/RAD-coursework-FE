@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layers, PlayCircle, Camera, Search } from "react-feather";
+import { Layers, PlayCircle, Camera, Search, ArrowRight } from "react-feather";
 
 
 // type defenitions
@@ -247,6 +247,24 @@ const GallerySection: React.FC = () => {
                 {filteredItems.map((item) => (
                     <GalleryItem key={item.id} item={item} />
                 ))}
+
+            </div>
+
+            <div className="gallery-footer mt-5">
+                <button className="relative bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white px-10 py-4 rounded-[50px] 
+                                                font-semibold tracking-wide overflow-hidden group transition-all duration-400 hover:-translate-y-1 
+                                                hover:shadow-xl hover:shadow-[#9B2D2D]/20">
+                
+                    <span className="flex items-center gap-3">
+                        View All Gallery
+                        
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                    </span>
+                
+                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                                                group-hover:translate-x-full transition-transform duration-600" />
+                
+                </button>
 
             </div>
         </section>
