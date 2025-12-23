@@ -111,6 +111,20 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
                         }}>
             </div>
 
+            {/* background image */}
+            <img
+                src={item.image}
+                alt={item.title}
+                className={`absolute inset-0 w-full h-full object-cover transition-all diuration-500
+                            ${isHovered ? "scale-110" : " "
+
+                        }`}
+                        
+                        style={{
+                            filter: isHovered ? "brightness(0.6)" : "brightness(0.9)"
+                        }}>
+            </img>
+
         </div>
     )
 }
