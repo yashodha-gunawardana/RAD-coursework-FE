@@ -239,7 +239,16 @@ const GallerySection: React.FC = () => {
                 onFilterChange={handleFilterChange}
             />
 
-            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-16 transition-opacity duration-300"
+                        style={{
+                            opacity: gridOpacity
+                        }}>
+
+                {filteredItems.map((item) => (
+                    <GalleryItem key={item.id} item={item} />
+                ))}
+
+            </div>
         </section>
     )
     
