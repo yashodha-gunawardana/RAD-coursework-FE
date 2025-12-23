@@ -7,10 +7,16 @@ type GalleryCategory = "photo" | "video"
 type FilterType = "all" | GalleryCategory
 
 
+// gallery item structure
 interface GalleryItemType {
     id: number
     category: GalleryCategory
     image: string
     title: string
     date: string
+}
+
+// gallery filter component
+interface GalleryFilterProps {
+    
 }
