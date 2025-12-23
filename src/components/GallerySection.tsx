@@ -63,10 +63,20 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
                         <Icon className="w-4 h-4" />
                         <span className="text-sm md:text-base">{filter.label}</span>
 
+                        {isActive && (
+                            <div className="absolute bottom-[-16px] left-1/2 transform 
+                                            -translate-x-1/2 w-10 h-1 rounded"
+                                        
+                                        style={{
+                                            backgroundColor: "#8B0000"
+                                        }}>
+                            </div>
+                        )}
+
                     </div>
                 )
             })}
 
         </div>
     )
-}
+};
