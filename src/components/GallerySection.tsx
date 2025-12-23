@@ -204,8 +204,33 @@ const GallerySection: React.FC = () => {
         }, 300)
     }
 
+    // filter gallery items
     const filteredItems = activeFilter === "all"
         ? galleryItems
         : galleryItems.filter(item => item.category === activeFilter)
+
+    
+    return (
+        <section id="gallery" className="w-full min-h-screen py-20">
+            <div className="w-full mx-auto text-center">
+
+                <div className="gallery-header mb-12">
+                    <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
+
+                        <span className="font-[Poppins] text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
+                        The Art of Celebration
+                        </span>
+
+                    <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
+                </div>
+
+                <h1 className="font-[Poppins] text-5xl md:text-7xl leading-[1.1] font-semibold">
+                    Beautiful & <span className="text-[#9B2D2D]">Unforgettable</span> Times<br />
+                </h1>
+
+            </div>
+
+        </section>
+    )
     
 }
