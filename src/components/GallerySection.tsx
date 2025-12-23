@@ -177,4 +177,6 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
 
 const GallerySection: React.FC = () => {
     const [activeFilter, setActiveFilter] = useState<FilterType>("all")
+
+    const [gridOpacity, setGridOpacity] = useState<number>(1)
 }
