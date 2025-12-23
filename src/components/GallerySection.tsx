@@ -43,6 +43,10 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
                         borderColor: "rgba(11, 11, 11, 0.1)"
                     }}>
 
+            {filters.map((filter) => {
+                const Icon = filter.icon
+            })}
+
         </div>
     )
 }
