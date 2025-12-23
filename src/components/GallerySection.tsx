@@ -197,6 +197,15 @@ const GallerySection: React.FC = () => {
 
     const handleFilterChange = (filter: FilterType) => {
         setGridOpacity(0.5) // fade out
+
+        setTimeout(() => {
+            setActiveFilter(filter) // update filter
+            setGridOpacity(1)
+        }, 300)
     }
+
+    const filteredItems = activeFilter === "all"
+        ? galleryItems
+        : galleryItems.filter(item => item.category === activeFilter)
     
 }
