@@ -18,5 +18,5 @@ interface GalleryItemType {
 
 // gallery filter component
 interface GalleryFilterProps {
-    
+    activeFilter: FilterType
 }
