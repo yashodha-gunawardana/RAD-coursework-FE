@@ -113,20 +113,38 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
                         }}>
             </div>
 
-            {/* background image */}
-            <img
-                src={item.image}
-                alt={item.title}
-                className={`absolute inset-0 w-full h-full object-cover transition-all diuration-500
-                            ${isHovered ? "scale-110" : " "
+            {/* background image & video */}
+            {isVideo ? (
+                <video
+                    src={item.image}
+                    muted
+                    loop
+                    playsInline
+                    onMouseEnter={(e) => e.currentTarget.play()}
+                    onMouseLeave={(e) => e.currentTarget.pause}
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-500
+                            ${isHovered ? "scale-110" : " "}`}
+                            
+                            style={{
+                                filter: isHovered ? "brightness(0.6)" : "brightness(0.9)"
+                            }}>
 
-                        }`}
-                        
-                        style={{
-                            filter: isHovered ? "brightness(0.6)" : "brightness(0.9)"
-                        }}>
-            </img>
+                </video>
+            ) : (
+                <img
+                    src={item.image}
+                    alt={item.title}
+                    className={`absolute inset-0 w-full h-full object-cover transition-all diuration-500
+                                ${isHovered ? "scale-110" : " "
 
+                            }`}
+                            
+                            style={{
+                                filter: isHovered ? "brightness(0.6)" : "brightness(0.9)"
+                            }}>
+                </img>
+            )}
+            
             {/* search icon */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 duration-400"
                         style={{
