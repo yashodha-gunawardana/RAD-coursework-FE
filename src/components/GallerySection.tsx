@@ -93,9 +93,17 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
 
     const getGridClass = (): string => {
         switch(item.id) {
-            case 1: return "md:row-span-2 md:h-[800px]"
-            case 8: return "md:col-span-2"
+            case 1: return "md:row-span-2 md:h-[800px]" // first item
+            case 8: return "md:col-span-2" // wide item
             default: return " "
         }
-    }
+    };
+
+    return (
+        <div className={`relative overflow-hidden h-[400px] ${getGridClass()} group`}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}>
+
+        </div>
+    )
 }
