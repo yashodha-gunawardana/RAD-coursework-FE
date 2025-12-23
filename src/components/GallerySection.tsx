@@ -195,6 +195,8 @@ const GallerySection: React.FC = () => {
     ];
 
 
-    const
+    const handleFilterChange = (filter: FilterType) => {
+        setGridOpacity(0.5) // fade out
+    }
     
 }
