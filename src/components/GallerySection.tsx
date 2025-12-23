@@ -87,6 +87,7 @@ interface GalleryItemProps {
     item: GalleryItemType
 }
 
+// individual gallery item card
 const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
-    
+    const [isHovered, setIsHovered] = useState(false)
 }
