@@ -61,6 +61,7 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
                                 }}>
 
                         <Icon className="w-4 h-4" />
+                        <span className="text-sm md:text-base">{filter.label}</span>
 
                     </div>
                 )
