@@ -125,6 +125,21 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
                         }}>
             </img>
 
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 duration-400"
+                        style={{
+                            opacity: isHovered ? 1 : 0,
+                            transform: isHovered
+                                ? "translate(-50%, -50%) scale(1)"
+                                : "translate(-50%, -50%) scale(0)"
+                        }}>
+
+                <Search className="w-14 h-14"
+                                style={{
+                                    color: "#8B0000"
+                                }}
+                />
+            </div>
+
         </div>
     )
 }
