@@ -125,6 +125,7 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
                         }}>
             </img>
 
+            {/* search icon */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 duration-400"
                         style={{
                             opacity: isHovered ? 1 : 0,
@@ -138,8 +139,35 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
                                     color: "#8B0000"
                                 }}
                 />
+
+            </div>
+
+            <div className="absolute bottom-6 left-6 z-20 text-left transition-all duration-400"
+                        style={{
+                            transform: isHovered ? "translateY(0)" : "translateY(20px)",
+                            opacity: isHovered ? 1 : 0
+                        }}>
+
+                <h3 className="text-xl font-semibold"
+                            style={{
+                                color: "#F4F4F2"
+                            }}>
+                                
+                    {item.title}
+
+                </h3>
+
+                <p className="text-sm mt-1" 
+                            style={{
+                                color: "#C2B49A"
+                            }}>
+
+                    {item.date}            
+
+                </p>
+
             </div>
 
         </div>
     )
-}
+};
