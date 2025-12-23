@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Layers, PlayCircle, Camera, Search } from "react-feather";
-import { isContext } from "vm";
 
 
 // type defenitions
@@ -80,3 +79,10 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
         </div>
     )
 };
+
+
+// -------------------- gallery item component -------------------
+
+interface GalleryItemProps {
+    item: GalleryItemType
+}
