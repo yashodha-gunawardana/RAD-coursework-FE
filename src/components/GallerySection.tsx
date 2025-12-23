@@ -37,5 +37,12 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
         { id: "photo" as const, label: "Photo Gallery", icon: Camera }
     ];
 
-    
+    return (
+        <div className="flex hustify-center gap-8 mb-12 pb-4 border-b"
+                    style={{
+                        borderColor: "rgba(11, 11, 11, 0.1)"
+                    }}>
+
+        </div>
+    )
 }
