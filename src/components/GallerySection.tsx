@@ -46,6 +46,22 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
             {filters.map((filter) => {
                 const Icon = filter.icon
                 const isActive = activeFilter === filter.id
+
+                return (
+                    <div
+                        key={filter.id}
+                        className={`flex items-center gap-2 px-5 py-3 font-medium cursor-pointer
+                                    transition-all duration-300 relative select-none
+                                    ${isActive ? " " : "text-[#C2B49A] hover:text-[#0B0B0B]"}
+                                `}
+                                  
+                                onClick={() => onFilterChange(filter.id)}
+                                style={{
+                                    color: isActive ? "#8B0000" : "#D4B483"
+                                }}>
+
+                    </div>
+                )
             })}
 
         </div>
