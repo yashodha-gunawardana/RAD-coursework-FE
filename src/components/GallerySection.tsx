@@ -60,6 +60,8 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
                                     color: isActive ? "#8B0000" : "#D4B483"
                                 }}>
 
+                        <Icon className="w-4 h-4" />
+
                     </div>
                 )
             })}
