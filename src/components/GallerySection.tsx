@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Layers, PlayCircle, Camera, Search } from "react-feather";
+import { isContext } from "vm";
 
 
 // type defenitions
@@ -29,5 +30,12 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
     activeFilter,
     onFilterChange
 }) => {
+
+    const filters = [
+        { id: "all" as const, label: "All Gallery", icon: Layers },
+        { id: "video" as const, label: "Video Gallery", icon: PlayCircle },
+        { id: "photo" as const, label: "Photo Gallery", icon: Camera }
+    ];
+
     
 }
