@@ -171,3 +171,10 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
         </div>
     )
 };
+
+
+// ------------------ gallery section component ------------------
+
+const GallerySection: React.FC = () => {
+    
+}
