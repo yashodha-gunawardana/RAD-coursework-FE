@@ -176,7 +176,22 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
 // ------------------ gallery section component ------------------
 
 const GallerySection: React.FC = () => {
-    const [activeFilter, setActiveFilter] = useState<FilterType>("all")
 
+    const [activeFilter, setActiveFilter] = useState<FilterType>("all")
     const [gridOpacity, setGridOpacity] = useState<number>(1)
+
+
+    const galleryItems: GalleryItemType[] = [
+        { id: 1, category: 'photo', image: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800&auto=format&fit=crop', title: 'John & Sarah Wedding', date: 'Wedding • 12 Oct 2024' },
+        { id: 2, category: 'photo', image: 'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?q=80&w=800&auto=format&fit=crop', title: 'Corporate Gala Dubai', date: 'Corporate • 5 Nov 2024' },
+        { id: 3, category: 'photo', image: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?q=80&w=800&auto=format&fit=crop', title: 'Annual Awards Night', date: 'Event • 20 Dec 2024' },
+        { id: 4, category: 'video', image: 'https://images.unsplash.com/photo-1498931299472-f7a63a5a1cfa?q=80&w=800&auto=format&fit=crop', title: 'Event Highlight Reel', date: 'Video • 8 Sep 2024' },
+        { id: 5, category: 'photo', image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop', title: 'Birthday Celebration', date: 'Birthday • 15 Jul 2024' },
+        { id: 6, category: 'video', image: 'https://images.unsplash.com/photo-1533230393025-56220df6e84d?q=80&w=800&auto=format&fit=crop', title: 'Product Launch Film', date: 'Video • 22 Aug 2024' },
+        { id: 7, category: 'photo', image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop', title: 'Charity Gala Night', date: 'Charity • 1 Dec 2024' },
+        { id: 8, category: 'photo', image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1200&auto=format&fit=crop', title: 'Live Music Festival', date: 'Music • 15 Jan 2025' },
+        { id: 9, category: 'video', image: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=800&auto=format&fit=crop', title: 'Stage Performance', date: 'Video • 22 Feb 2025' },
+        { id: 10, category: 'photo', image: 'https://images.unsplash.com/photo-1452623668442-c69b8f635e0a?q=80&w=800&auto=format&fit=crop', title: 'Grand Opening Crowd', date: 'Event • 30 Mar 2025' },
+    ];
+    
 }
