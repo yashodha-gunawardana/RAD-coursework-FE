@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Layers, PlayCircle, Camera, Search, ArrowRight } from "react-feather";
 
 
@@ -90,6 +90,8 @@ interface GalleryItemProps {
 // individual gallery item card
 const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
     const [isHovered, setIsHovered] = useState(false)
+        const videoRef = useRef<HTMLVideoElement>(null);
+
 
     const isVideo = item.category === "video" || item.image.endsWith(".mp4")
 
@@ -103,8 +105,14 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
 
     return (
         <div className={`relative overflow-hidden h-[400px] ${getGridClass()} group`}
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}>
+                    onMouseEnter={() => {
+      setIsHovered(true);
+      if (isVideo) videoRef.current?.play();
+  }}
+  onMouseLeave={() => {
+      setIsHovered(false);
+      if (isVideo) videoRef.current?.pause();
+  }}>
                     
             <div className="absolute inset-0 z-10 transition-opacity duration-400"
                         style={{
@@ -116,12 +124,13 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
             {/* background image & video */}
             {isVideo ? (
                 <video
+                    ref={videoRef}
                     src={item.image}
                     muted
                     loop
                     playsInline
                     onMouseEnter={(e) => e.currentTarget.play()}
-                    onMouseLeave={(e) => e.currentTarget.pause}
+                    onMouseLeave={(e) => e.currentTarget.pause()}
                     className={`absolute inset-0 w-full h-full object-cover transition-all duration-500
                             ${isHovered ? "scale-110" : " "}`}
                             
@@ -144,7 +153,7 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
                             }}>
                 </img>
             )}
-            
+
             {/* search icon */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 duration-400"
                         style={{
@@ -205,7 +214,7 @@ const GallerySection: React.FC = () => {
         { id: 1, category: 'photo', image: 'https://i.pinimg.com/736x/02/b2/82/02b28276f08e31c440e05dad99854db4.jpg', title: 'John & Sarah Wedding', date: 'Wedding • 12 Oct 2024' },
         { id: 2, category: 'photo', image: 'https://i.pinimg.com/1200x/39/1f/52/391f520e652a821484f4e94fd0c4e07f.jpg', title: 'Corporate Gala Dubai', date: 'Corporate • 5 Nov 2024' },
         { id: 3, category: 'photo', image: 'https://i.pinimg.com/736x/6c/b4/4e/6cb44e54c96383e2d0c7ec687a4afc60.jpg', title: 'Annual Awards Night', date: 'Event • 20 Dec 2024' },
-        { id: 4, category: 'video', image: '/videoevent1.mp4', title: 'Event Highlight Reel', date: 'Video • 8 Sep 2024' },
+        { id: 4, category: 'video', image:  '/videos/event1.mp4', title: 'Event Highlight Reel', date: 'Video • 8 Sep 2024' },
         { id: 5, category: 'photo', image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop', title: 'Birthday Celebration', date: 'Birthday • 15 Jul 2024' },
         { id: 6, category: 'video', image: 'https://images.unsplash.com/photo-1533230393025-56220df6e84d?q=80&w=800&auto=format&fit=crop', title: 'Product Launch Film', date: 'Video • 22 Aug 2024' },
         { id: 7, category: 'photo', image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop', title: 'Charity Gala Night', date: 'Charity • 1 Dec 2024' },
