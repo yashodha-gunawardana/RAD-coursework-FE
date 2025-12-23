@@ -90,4 +90,12 @@ interface GalleryItemProps {
 // individual gallery item card
 const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
     const [isHovered, setIsHovered] = useState(false)
+
+    const getGridClass = (): string => {
+        switch(item.id) {
+            case 1: return "md:row-span-2 md:h-[800px]"
+            case 8: return "md:col-span-2"
+            default: return " "
+        }
+    }
 }
