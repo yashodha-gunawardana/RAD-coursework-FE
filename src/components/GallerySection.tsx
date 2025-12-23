@@ -103,6 +103,13 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
         <div className={`relative overflow-hidden h-[400px] ${getGridClass()} group`}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}>
+                    
+            <div className="absolute inset-0 z-10 transition-opacity duration-400"
+                        style={{
+                            backgroundColor: "rgba(11, 11, 11, 0.8)",
+                            opacity: isHovered ? 1 : 0
+                        }}>
+            </div>
 
         </div>
     )
