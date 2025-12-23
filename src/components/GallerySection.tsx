@@ -45,6 +45,7 @@ const GalleryFilter: React.FC <GalleryFilterProps> = ({
 
             {filters.map((filter) => {
                 const Icon = filter.icon
+                const isActive = activeFilter === filter.id
             })}
 
         </div>
