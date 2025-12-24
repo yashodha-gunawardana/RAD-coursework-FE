@@ -87,7 +87,6 @@ const ContactSection = () => {
                                 info@eventora.com
                             </a>
                         </div>
-
                     </div>
 
                     {/* social media */}
@@ -104,8 +103,17 @@ const ContactSection = () => {
                             <i className="fab fa-twitter"></i>
                         </a>
                     </div>
-
                 </div>
+
+
+                {/* right column form card */}
+                <div className="contact-form-card bg-white p-12 lg:p-14 shadow-[20px_20px_0px_#8B0000] transition-transform 
+                                duration-400 hover:-translate-x-1 hover:-translate-y-1">
+
+                    <h3 className="font-serif text-2xl mb-8">Inquiry Form</h3>
+                
+                </div>
+
 
             </div>
 
