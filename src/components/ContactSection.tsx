@@ -112,6 +112,10 @@ const ContactSection = () => {
 
                     <h3 className="font-serif text-2xl mb-8">Inquiry Form</h3>
                 
+                    <form onSubmit={handleSubmit} className="space-y-6">
+
+                        
+                    </form>
                 </div>
 
 
