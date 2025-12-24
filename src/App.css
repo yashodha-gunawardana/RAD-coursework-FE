@@ -22,3 +22,16 @@
   }
 }
 
+/* contact section */
+@keyframes rotateDiamond {
+  from { transform: rotate(45deg); }
+  to { transform: rotate(405deg); }
+}
+
+.animate-rotateDiamond {
+  animation: rotateDiamond 20s infinite linear;
+}
+
+.ease-in-out-cubic {
+  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+}
