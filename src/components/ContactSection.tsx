@@ -21,4 +21,12 @@ const ContactSection = () => {
         e.preventDefault()
         console.log("Form submitted: ", formData)
     }
+
+
+    return (
+        <section id="conatct" className="relative py-24 px-5 bg-[#FDFCFB] font-[Poppins] overflow-hidden
+                                            flex justify-center">
+
+        </section>
+    )
 }
