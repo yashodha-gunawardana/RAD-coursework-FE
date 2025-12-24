@@ -39,6 +39,25 @@ const ContactSection = () => {
             <div className="relative z-10 max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2
                             gap-16 lg:gap-20 items-start">
 
+                <div className="conatct-brand-column flex items-start justify-ceneter">
+                    <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
+
+                    <span className="font-[Poppins] text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
+                        Contact Us
+                    </span>
+
+                    <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
+              
+                </div>
+
+                <h1 className="font-[Poppins] text-5xl md:text-7xl leading-[1.1] font-semibold">
+                    Event<span className="text-[#9B2D2D]">ora</span> 
+                </h1>
+
+              <p className="text-xl text-[#0F0F0F]/80 leading-relaxed max-w-xl">
+                Crafting bespoke experiences in Coimbatore and beyond. Reach out to discuss your next signature event.
+              </p>
+
             </div>
 
         </section>
