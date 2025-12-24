@@ -5,7 +5,7 @@ import AboutSection from '../components/AboutSection';
 import ServiceSection from '../components/ServiceSection';
 import StatsSection from '../components/StatsSection';
 import GallerySection from '../components/GallerySection';
-// import ContactSection from '../components/ContactSection';
+import ContactSection from '../components/ContactSection';
 
 const LandingPage: React.FC = () => {
 
@@ -29,7 +29,7 @@ const LandingPage: React.FC = () => {
             <ServiceSection />
             <StatsSection />
             <GallerySection /> 
-            {/* <ContactSection />   */}
+            <ContactSection />   
             
         </div>
     );
