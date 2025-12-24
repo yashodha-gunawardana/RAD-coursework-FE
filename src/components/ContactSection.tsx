@@ -39,24 +39,62 @@ const ContactSection = () => {
             <div className="relative z-10 max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2
                             gap-16 lg:gap-20 items-start">
 
-                <div className="conatct-brand-column flex items-start justify-ceneter">
-                    <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
+                <div className="conatct-brand-column">
 
-                    <span className="font-[Poppins] text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
-                        Contact Us
-                    </span>
+                    <div className="flex items-center justify-start gap-4 mb-8">
+                        <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]"></div>
 
-                    <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
-              
+                        <span className="text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
+                            Contact Us
+                        </span>
+
+                        <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]"></div>
+
+                    </div>
+
+                    <h1 className="font-[Poppins] text-5xl md:text-7xl leading-[1.1] font-semibold">
+                        Event<span className="text-[#9B2D2D]">ora</span> 
+                    </h1>
+
+                    <p className="text-xl text-[#0F0F0F]/80 leading-relaxed max-w-xl">
+                        Crafting bespoke experiences in Coimbatore and beyond. Reach out to discuss your next signature event.
+                    </p>
+
+
+                    <div className="conatct-method space-y-5 mb-8">
+
+                        {/* address */}
+                        <div className="flex items-center group">
+                            <i className="fas fa-map-marker-alt w-8 text-[#8B0000] text-lg transition-transform duration-300 
+                                        group-hover:scale-110 group-hover:drop-shadow-sm"></i>
+                            <p className="ml-3 text-[#1A1A1A] font-medium">#63 ARPEE Center, NSR Road, Coimbatore</p>
+                        </div>
+
+                        {/* phone no */}
+                        <div className="flex items-center group">
+                            <i className="fas fa-phone-alt w-8 text-[#8B0000] text-lg transition-transform duration-300 
+                                        group-hover:scale-110 group-hover:drop-shadow-sm"></i>
+                            <a href="tel:+919944475341" className="ml-3 text-[#1A1A1A] font-medium hover:text-[#8B0000] transition-colors">
+                                +91 99444 75341
+                            </a>
+                        </div>
+
+                        {/* email */}
+                        <div className="flex items-center group">
+                            <i className="fas fa-envelope w-8 text-[#8B0000] text-lg transition-transform duration-300 
+                                        group-hover:scale-110 group-hover:drop-shadow-sm"></i>
+                            <a href="mailto:info@eventora.com" className="ml-3 text-[#1A1A1A] font-medium hover:text-[#8B0000] transition-colors">
+                                info@eventora.com
+                            </a>
+                        </div>
+                        
+                    </div>
+
+                   
+
                 </div>
 
-                <h1 className="font-[Poppins] text-5xl md:text-7xl leading-[1.1] font-semibold">
-                    Event<span className="text-[#9B2D2D]">ora</span> 
-                </h1>
-
-              <p className="text-xl text-[#0F0F0F]/80 leading-relaxed max-w-xl">
-                Crafting bespoke experiences in Coimbatore and beyond. Reach out to discuss your next signature event.
-              </p>
+                
 
             </div>
 
