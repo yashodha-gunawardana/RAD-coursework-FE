@@ -114,6 +114,8 @@ const ContactSection = () => {
                 
                     {/* submit */}
                     <form onSubmit={handleSubmit} className="space-y-6">
+
+                        {/* name */}
                         <div className="relative group">
                             <input
                                 type="text"
@@ -125,13 +127,82 @@ const ContactSection = () => {
                                 className="w-full py-4 border-0 border-b border-[#E5DED1] bg-transparent outline-none font-sans text-sm focus:border-b-2 focus:border-[#8B0000] transition-all duration-300"
                             />     
 
-                        </div>                   
+                            <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-[#8B0000] transition-all duration-400 group-hover:left-0 
+                                            group-hover:w-full">
+                                        
+                            </span>
+                        </div>   
+
+                        {/* email */}
+                        <div className="relative group">
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Email Address"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                required
+                                className="w-full py-4 border-0 border-b border-[#E5DED1] bg-transparent outline-none font-sans text-sm focus:border-b-2 focus:border-[#8B0000] transition-all duration-300"
+                            />
+
+                            <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-[#8B0000] transition-all duration-400 group-hover:left-0 
+                                            group-hover:w-full">
+
+                            </span>
+                        </div>
+
+                        {/* event type */}
+                        <div className="relative group">
+                            <input
+                                type="text"
+                                name="eventType"
+                                placeholder="Event Type (Wedding, Gala, Corporate)"
+                                value={formData.eventType}
+                                onChange={handleInputChange}
+                                className="w-full py-4 border-0 border-b border-[#E5DED1] bg-transparent outline-none font-sans text-sm focus:border-b-2 focus:border-[#8B0000] transition-all duration-300"
+                            />
+
+                            <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-[#8B0000] transition-all duration-400 group-hover:left-0 
+                                            group-hover:w-full">
+                                            
+                            </span>
+                        </div>
+
+                        {/* message */}
+                        <div className="relative group">
+                            <textarea
+                                name="message"
+                                placeholder="Tell us more about your vision..."
+                                value={formData.message}
+                                onChange={handleInputChange}
+                                rows={4}
+                                className="w-full py-4 border-0 border-b border-[#E5DED1] bg-transparent outline-none font-sans text-sm resize-none focus:border-b-2 focus:border-[#8B0000] transition-all duration-300 min-h-[100px]">
+
+                            </textarea>
+
+                            <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-[#8B0000] transition-all duration-400 group-hover:left-0 
+                                            group-hover:w-full">
+
+                            </span>
+                        </div>
+
+
+                        {/* button */}
+                        <button
+                            type="submit"
+                            className="w-full py-5 bg-[#1A1A1A] text-white border-none font-sans font-bold uppercase tracking-wider cursor-pointer relative overflow-hidden group">
+              
+                            <span className="relative z-10">Send Message</span>
+              
+                            <span className="absolute top-full left-0 w-full h-full bg-[#8B0000] transition-all duration-400 ease-in-out-cubic 
+                                            group-hover:top-0 -z-10">
+
+                            </span>
+                        </button>
+
                     </form>
                 </div>
-
-
             </div>
-
         </section>
     )
 }
