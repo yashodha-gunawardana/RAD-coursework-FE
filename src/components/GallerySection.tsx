@@ -106,13 +106,14 @@ const GalleryItem: React.FC <GalleryItemProps> = ({ item }) => {
     return (
         <div className={`relative overflow-hidden h-[400px] ${getGridClass()} group`}
                     onMouseEnter={() => {
-      setIsHovered(true);
-      if (isVideo) videoRef.current?.play();
-  }}
-  onMouseLeave={() => {
-      setIsHovered(false);
-      if (isVideo) videoRef.current?.pause();
-  }}>
+                        setIsHovered(true);
+                        if (isVideo) videoRef.current?.play();
+                    }}
+
+                    onMouseLeave={() => {
+                        setIsHovered(false);
+                        if (isVideo) videoRef.current?.pause();
+                    }}>
                     
             <div className="absolute inset-0 z-10 transition-opacity duration-400"
                         style={{
@@ -215,12 +216,12 @@ const GallerySection: React.FC = () => {
         { id: 2, category: 'photo', image: 'https://i.pinimg.com/1200x/39/1f/52/391f520e652a821484f4e94fd0c4e07f.jpg', title: 'Corporate Gala Dubai', date: 'Corporate • 5 Nov 2024' },
         { id: 3, category: 'photo', image: 'https://i.pinimg.com/736x/6c/b4/4e/6cb44e54c96383e2d0c7ec687a4afc60.jpg', title: 'Annual Awards Night', date: 'Event • 20 Dec 2024' },
         { id: 4, category: 'video', image:  '/videos/event1.mp4', title: 'Event Highlight Reel', date: 'Video • 8 Sep 2024' },
-        { id: 5, category: 'photo', image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop', title: 'Birthday Celebration', date: 'Birthday • 15 Jul 2024' },
-        { id: 6, category: 'video', image: 'https://images.unsplash.com/photo-1533230393025-56220df6e84d?q=80&w=800&auto=format&fit=crop', title: 'Product Launch Film', date: 'Video • 22 Aug 2024' },
+        { id: 5, category: 'photo', image: 'https://i.pinimg.com/736x/2e/2c/a4/2e2ca48e55adb6feda83b73da0512c0f.jpg', title: 'Live Music Festival', date: 'Music • 15 Jan 2025' },
+        { id: 6, category: 'video', image: '/videos/event2.mp4', title: 'Product Launch Film', date: 'Video • 22 Aug 2024' },
         { id: 7, category: 'photo', image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop', title: 'Charity Gala Night', date: 'Charity • 1 Dec 2024' },
-        { id: 8, category: 'photo', image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1200&auto=format&fit=crop', title: 'Live Music Festival', date: 'Music • 15 Jan 2025' },
-        { id: 9, category: 'video', image: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=800&auto=format&fit=crop', title: 'Stage Performance', date: 'Video • 22 Feb 2025' },
-        { id: 10, category: 'photo', image: 'https://images.unsplash.com/photo-1452623668442-c69b8f635e0a?q=80&w=800&auto=format&fit=crop', title: 'Grand Opening Crowd', date: 'Event • 30 Mar 2025' },
+        { id: 8, category: 'video', image: '/videos/event3.mp4', title: 'Birthday Celebration', date: 'Birthday • 15 Jul 2024' },
+        { id: 9, category: 'photo', image: 'https://i.pinimg.com/1200x/14/8d/7d/148d7d672646bfd5b22e3ab4c4bbe29b.jpg', title: 'Stage Performance', date: 'Video • 22 Feb 2025' },
+        { id: 10, category: 'photo', image: 'https://i.pinimg.com/1200x/e7/83/da/e783daa0f4efe826ec7bbdb416a93392.jpg', title: 'Grand Opening Crowd', date: 'Event • 30 Mar 2025' },
     ];
 
 
@@ -240,23 +241,35 @@ const GallerySection: React.FC = () => {
 
     
     return (
-        <section id="gallery" className="w-full min-h-screen py-20 bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8]">
+        <section id="gallery" className="relative w-full min-h-screen py-20 bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] overflow-hidden">
+
+            {/* circle */}
+            <div className='absolute -top-[200px] -left-[200px] h-[600px] w-[600px] rounded-full border-[120px]
+                                    border-[rgba(139,0,0,0.04)] pointer-events-none z-0'
+                aria-hidden='true'>
+            </div>
+
+            <div className='absolute -bottom-[200px] -right-[200px] h-[700px] w-[700px] rounded-full border-[140px] 
+                                    border-[rgba(139,0,0,0.03)] pointer-events-none z-0'
+                aria-hidden='true'>
+            </div>
+
             <div className="w-full mx-auto text-center">
 
                 {/* header */}
                 <div className="flex justify-center items-center gap-4 mb-3">
                     <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
 
-                        <span className="font-[Poppins] text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
+                    <span className="font-[Poppins] text-sm uppercase tracking-[0.3em] font-semibold text-[#9B2D2D]">
                         The Art of Celebration
-                        </span>
+                    </span>
 
                     <div className="w-16 h-px bg-gradient-to-r from-[#9B2D2D] via-[#D4B483] to-[#9B2D2D]" />
                 </div>
 
                 <h1 className="font-[Poppins] text-5xl md:text-6xl leading-[1.1] font-semibold">
-                    <span className="text-[#9B2D2D]"> Beautiful</span> 
-                    <span className="text-[#0F0F0F]"> & </span> 
+                    <span className="text-[#9B2D2D]"> Beautiful</span>
+                    <span className="text-[#0F0F0F]"> & </span>
                     <span className="text-[#D4B483]"> Unforgettable </span><br />
                     <span className="text-[#0F0F0F]"> Times</span>
                 </h1>
@@ -269,9 +282,9 @@ const GallerySection: React.FC = () => {
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-16 transition-opacity duration-300"
-                        style={{
-                            opacity: gridOpacity
-                        }}>
+                style={{
+                    opacity: gridOpacity
+                }}>
 
                 {filteredItems.map((item) => (
                     <GalleryItem key={item.id} item={item} />
@@ -283,22 +296,22 @@ const GallerySection: React.FC = () => {
                 <button className="relative bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white px-10 py-4 rounded-[50px] 
                                                 font-semibold tracking-wide overflow-hidden group transition-all duration-400 hover:-translate-y-1 
                                                 hover:shadow-xl hover:shadow-[#9B2D2D]/20">
-                
+
                     <span className="flex items-center gap-3">
                         View All Gallery
-                        
+
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                     </span>
-                
+
                     <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent 
                                                 group-hover:translate-x-full transition-transform duration-600" />
-                
+
                 </button>
 
             </div>
         </section>
     )
-    
+
 };
 
 export default GallerySection
