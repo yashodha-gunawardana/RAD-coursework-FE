@@ -112,9 +112,20 @@ const ContactSection = () => {
 
                     <h3 className="font-serif text-2xl mb-8">Inquiry Form</h3>
                 
+                    {/* submit */}
                     <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="relative group">
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Full Name"
+                                value={formData.name}
+                                onChange={handleInputChange}
+                                required
+                                className="w-full py-4 border-0 border-b border-[#E5DED1] bg-transparent outline-none font-sans text-sm focus:border-b-2 focus:border-[#8B0000] transition-all duration-300"
+                            />     
 
-                        
+                        </div>                   
                     </form>
                 </div>
 
