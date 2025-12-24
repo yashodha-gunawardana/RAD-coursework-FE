@@ -8,4 +8,8 @@ const ContactSection = () => {
         eventType: "",
         message: ""
     })
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        
+    }
 }
