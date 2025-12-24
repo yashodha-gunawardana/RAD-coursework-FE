@@ -87,14 +87,25 @@ const ContactSection = () => {
                                 info@eventora.com
                             </a>
                         </div>
-                        
+
                     </div>
 
-                   
+                    {/* social media */}
+                    <div className="contact-socials flex gap-5">
+                        <a href="#" aria-label="Facebook" className="text-[#1A1A1A] text-xl transition-all duration-300 hover:text-[#8B0000] hover:-translate-y-1">
+                            <i className="fab fa-facebook-f"></i>
+                        </a>
+
+                        <a href="#" aria-label="Instagram" className="text-[#1A1A1A] text-xl transition-all duration-300 hover:text-[#8B0000] hover:-translate-y-1">
+                            <i className="fab fa-instagram"></i>
+                        </a>
+
+                        <a href="#" aria-label="Twitter" className="text-[#1A1A1A] text-xl transition-all duration-300 hover:text-[#8B0000] hover:-translate-y-1">
+                            <i className="fab fa-twitter"></i>
+                        </a>
+                    </div>
 
                 </div>
-
-                
 
             </div>
 
