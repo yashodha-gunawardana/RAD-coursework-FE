@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-6 text-[#F5F5F5]">Quick Links</h3>
             <ul className="space-y-3.5">
-              {['About Us', 'Services', 'Portfolio', 'Testimonials', 'Careers'].map((item, index) => (
+              {['About Us', 'Services', 'Gallery', 'Conatct'].map((item, index) => (
                 <li key={index}>
                   <a 
                     href="#" 

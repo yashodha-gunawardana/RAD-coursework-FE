@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, UserPlus, Menu, X as XIcon } from 'react-feather';
+import { useNavigate } from 'react-router-dom';
 
 
 interface HeaderProps {
@@ -10,6 +11,7 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate()
 
   const navItems = [
 
