@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { getMyDetails, loginUser, registerUser } from "../services/auth";
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import morningImg from "../assets/images/loginImage.png";
 import dayImg from "../assets/images/loginimage2.png";
@@ -34,6 +34,7 @@ const images = [
 
 export default function LoginRegister() {
     const navigate = useNavigate()
+    const location = useLocation()
 
     // function to store logged-in user globally
     const { setUser } = useAuth()
