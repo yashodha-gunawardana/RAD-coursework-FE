@@ -133,6 +133,14 @@ export default function LoginRegister() {
         }
     }
 
+    // for login and register
+    useEffect(() => {
+        if (location.state?.formType) {
+            setFormType(location.state.formType)
+        }
+    }, [location.state])
+
+
     useEffect(() => {
         const updateBackgroundByTime = () => {
             const hour = new Date().getHours() // get current hour
