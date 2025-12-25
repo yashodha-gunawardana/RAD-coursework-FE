@@ -136,7 +136,7 @@ export default function LoginRegister() {
     // for login and register
     useEffect(() => {
         if (location.state?.formType) {
-            setFormType(location.state.formType)
+            setFormType(location.state.formType) // auto switch for
         }
     }, [location.state])
 
@@ -159,20 +159,20 @@ export default function LoginRegister() {
     }, []); // runce once on mount
 
     return (
-    <div className="relative flex justify-center items-center min-h-screen bg-gray-100 overflow-hidden">
+    <div className="relative flex justify-center items-center min-h-screen bg-[#F5F5F2] overflow-hidden">
 
         {/* background waves */}
         <div className="absolute inset-0 bg-[#EEE9DF] z-0"></div>
         <div className="absolute top-1/3 -left-20 w-[120%] h-8
-                        bg-gradient-to-r from-[#2C3B4D] to-[#1B2632]
+                        bg-gradient-to-r from-[#8B1E2D] to-[#0F0F14]
                         rounded-full opacity-90 z-1 transform -rotate-3">
         </div>
         <div className="absolute top-1/2 -right-10 w-[110%] h-6
-                        bg-gradient-to-r from-[#C9C1B1] to-[#A35139]
+                        bg-gradient-to-r from-[#E6D3A3] to-[#8B1E2D]
                         rounded-full opacity-80 z-2 transform rotate-2">
         </div>
         <div className="absolute top-2/3 -left-10 w-[115%] h-4
-                        bg-gradient-to-r from-[#FFB162] to-[#A35139]
+                        bg-gradient-to-r from-[#0F0F14] to-[#E6D3A3]
                         rounded-full opacity-85 z-3 transform -rotate-1">
         </div>
         
