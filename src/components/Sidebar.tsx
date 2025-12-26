@@ -114,8 +114,13 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </div>
 
                 <div className="p-4 border-b border-gray-700">
-                    
 
+                    {!isCollapsed && (
+                        <div className="text-amber-200 text-xs uppercase tracking-wider px-4 py-2 opacity-70">
+                            Main Menu
+
+                        </div>
+                    )}
                 </div>
 
             </aside>
