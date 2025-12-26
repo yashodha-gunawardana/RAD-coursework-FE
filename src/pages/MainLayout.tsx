@@ -13,5 +13,8 @@ const MainLayout: React.FC = () => {
                 setIsSidebarCollapsed(false)
             }
         }
+
+        handleReSize()
+        window.addEventListener("resize", handleReSize)
     })
 }
