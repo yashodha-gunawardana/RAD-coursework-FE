@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings, Menu, ChevronLeft, ChevronRight } from "react-feather";
+import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings, Menu, ChevronLeft, ChevronRight, LogOut } from "react-feather";
 
 
 interface SidebarProps {
@@ -203,6 +203,21 @@ const Sidebar: React.FC<SidebarProps> = ({
                     </ul>
                 </div>
 
+                
+                {/* Logout Button */}
+                <div className="p-4 border-t border-gray-700">
+                    <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center p-3 rounded-lg text-red-400 hover:bg-red-800 hover:text-white transition-colors">
+                        
+                            <div className={`w-6 flex justify-center ${!isCollapsed ? 'mr-4' : ''}`}>
+                                <LogOut size={18} />
+                            </div>
+
+                                {!isCollapsed && <span>Logout</span>}
+                    </button>
+                </div>
+                
 
                 {/* user profile */}
                 <div className="mt-auto p-6 border-t border-gray-700 flex items-center gap-3">
