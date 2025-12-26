@@ -69,7 +69,14 @@ const Sidebar: React.FC<SidebarProps> = ({
            <aside
                 className={`
                     ${isCollapsed ? "w-20" : "w-64"}
-                    ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+                    ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+                    fixed lg:relative h-screen bg-gray-800 text-white transition-all duration-300 z-40
+                    flex flex-col border-r border-red-800`}
+                >
+                
+                <div className="p-6 border-b border-amber-200 flex items-center justify-between">
+
+                </div>
 
            </aside>
         </>
