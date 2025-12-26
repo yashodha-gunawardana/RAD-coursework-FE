@@ -57,6 +57,14 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                     <Menu className="w-12 h-12 size-20" />
            </button>
+
+           {isMobileOpen && (
+                <div
+                    onClick={handleOverlayClick}
+                    className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden">
+                    
+                </div>
+           )}
         </>
     )
 
