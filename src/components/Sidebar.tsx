@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { act, useState } from "react";
+import { Users, Calendar, Clipboard, Home } from "react-feather";
 
 
 interface SidebarProps {
@@ -16,5 +17,12 @@ const Sidebar: React.FC<SidebarProps> = ({
     onToggleCollapse,
     onToggleMobile
 }) => {
+
+    const mainMenuItems = [
+        { id: "dashboard", icon: Clipboard, label: "Dashboard", active: true },
+        { id: "users", icon: Users, label: "Users", active: false },
+        { id: "events", icon: Calendar, label: "Events", active: false },
+        { id: "vendors", icon: Home, label: "vendors", active: false}
+    ]
 
 }
