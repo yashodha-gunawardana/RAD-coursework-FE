@@ -1,5 +1,5 @@
 import React, { act, useState } from "react";
-import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User } from "react-feather";
+import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings } from "react-feather";
 
 
 interface SidebarProps {
@@ -32,7 +32,13 @@ const Sidebar: React.FC<SidebarProps> = ({
     ];
 
     const settingItems = [
+        { id: "settings", icon: Settings, label: "Settings" },
         { id: "admin", icon: User, label: "Admin" }
     ];
+
+
+    const handleOverlayClick = () => {
+        onToggleMobile();
+    }
 
 }
