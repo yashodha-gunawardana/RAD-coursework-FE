@@ -37,8 +37,15 @@ const Sidebar: React.FC<SidebarProps> = ({
     ];
 
 
+    // handle mobile overlay click to close menu
     const handleOverlayClick = () => {
         onToggleMobile();
+    }
+
+    // logout handle
+    const handleLogout = () => {
+        localStorage.removeItem("accessToken")
+        window.location.href = "/auth"
     }
 
 }
