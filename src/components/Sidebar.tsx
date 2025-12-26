@@ -1,5 +1,5 @@
 import React, { act, useState } from "react";
-import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings } from "react-feather";
+import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings, Menu } from "react-feather";
 
 
 interface SidebarProps {
@@ -47,5 +47,17 @@ const Sidebar: React.FC<SidebarProps> = ({
         localStorage.removeItem("accessToken")
         window.location.href = "/auth"
     }
+
+
+    return (
+        <>
+            <button
+                onClick={onToggleMobile}
+                className="lg:hidden fixed top-4 left-4 z-50 bg-white p-3 rounded-lg shadow-md flex items-center">
+
+                    <Menu className="w-12 h-12 size-20" />
+           </button>
+        </>
+    )
 
 }
