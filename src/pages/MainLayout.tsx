@@ -30,4 +30,23 @@ const MainLayout: React.FC = () => {
     const handleToggleMobile = () => {    
         setIsMobileMenuOpen(!isMobileMenuOpen);      
     };
+
+
+    return (
+        <div className="min-h-screen bg-gray-50 text-gray-800 font-poppins">
+            <div className="flex">
+
+                <Sidebar
+
+                    isCollapsed={isSidebarCollapsed}
+                    isMobileOpen={isMobileMenuOpen}
+                    onToggleCollapse={handleToggleCollapse}
+                    onToggleMobile={handleToggleMobile}
+
+                />
+
+            </div>
+
+        </div>
+    )
 }
