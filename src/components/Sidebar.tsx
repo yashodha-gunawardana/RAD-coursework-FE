@@ -31,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         { id: "guests", icon: Users, label: "Guests" }
     ];
 
-    const settingItems = [
+    const settingsItems = [
         { id: "settings", icon: Settings, label: "Settings" },
         { id: "admin", icon: User, label: "Admin" }
     ];
@@ -168,14 +168,39 @@ const Sidebar: React.FC<SidebarProps> = ({
                                         </div>
 
                                                 {!isCollapsed && <span>{item.label}</span>}                                        
-
                                     </a>
-
                             </li>
                         ))}
-
                     </ul>
+                </div>
 
+
+                {/* setting section */}
+                <div className="p-4 border-b border-gray-700">
+          
+                    {!isCollapsed && (
+                        <div className="text-amber-200 text-xs uppercase tracking-wider px-4 py-2 opacity-70">
+                            Settings
+
+                        </div>
+                    )}
+          
+                    <ul className="space-y-2">
+            
+                        {settingsItems.map((item) => (
+                            <li 
+                                key={item.id}>
+                                    <a href="#" className="flex items-center p-3 rounded-lg hover:bg-gray-700 hover:text-amber-200 transition-colors">
+
+                                        <div className={`w-6 flex justify-center ${!isCollapsed ? 'mr-4' : ''}`}>
+                                            <item.icon size={18} />
+                                        </div>
+
+                                                {!isCollapsed && <span>{item.label}</span>} 
+                                    </a>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
             </aside>
