@@ -121,6 +121,24 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                         </div>
                     )}
+
+                    <ul className="space-y-2">
+
+                        {mainMenuItems.map((item) => (
+                            <li 
+                                key={item.id}>
+                                    <a href="#" className={`flex items-center p-3 rounded-lg transition-colors
+                                        ${item.active
+                                            ? "bg-red-800 text-white"
+                                            : "hover:bg-gray-700 hover:text-amber-200"
+                                        }`}>
+
+                                    </a>
+
+                            </li>
+                        ))}
+
+                    </ul>
                 </div>
 
             </aside>
