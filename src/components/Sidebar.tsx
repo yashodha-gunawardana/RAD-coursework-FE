@@ -68,7 +68,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 
            <aside
                 className={`
-                    ${isCollapsed ? "w-20" : "w-64"}`}>
+                    ${isCollapsed ? "w-20" : "w-64"}
+                    ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
 
            </aside>
         </>
