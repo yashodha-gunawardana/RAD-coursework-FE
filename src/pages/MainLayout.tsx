@@ -19,4 +19,15 @@ const MainLayout: React.FC = () => {
 
         return () => window.removeEventListener("resize", handleReSize)
     }, [])
+
+
+    // Toggle sidebar collapse
+    const handleToggleCollapse = () => {  
+        setIsSidebarCollapsed(!isSidebarCollapsed);  
+    };
+
+    // Toggle mobile menu
+    const handleToggleMobile = () => {    
+        setIsMobileMenuOpen(!isMobileMenuOpen);      
+    };
 }
