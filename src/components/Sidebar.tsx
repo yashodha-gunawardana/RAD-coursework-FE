@@ -211,8 +211,13 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                     </div>
 
+                    {!isCollapsed && (
+                        <div>
+                            <div className="font-semibold">John Doe</div>
+                            <div className="text-sm text-amber-200">Event Manager</div>
+                        </div>
+                    )}
                 </div>
-
             </aside>
         </>
     )
