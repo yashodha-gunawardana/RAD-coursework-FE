@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
+import { Outlet } from "react-router-dom";
 
 
-const MainLayout: React.FC = () => {
+const DashBoardLayout: React.FC = () => {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -45,8 +46,14 @@ const MainLayout: React.FC = () => {
 
                 />
 
+                <main className="flex-1 p-6 ml-0 lg:ml-0">
+                    <Outlet />
+                </main>
+
             </div>
 
         </div>
     )
 }
+
+export default DashBoardLayout
