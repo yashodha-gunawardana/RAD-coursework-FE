@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings, Menu, ChevronLeft, ChevronRight, LogOut } from "react-feather";
 
 
@@ -217,7 +217,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                 {!isCollapsed && <span>Logout</span>}
                     </button>
                 </div>
-                
+
 
                 {/* user profile */}
                 <div className="mt-auto p-6 border-t border-gray-700 flex items-center gap-3">
@@ -238,3 +238,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     )
 
 }
+
+
+export default Sidebar
