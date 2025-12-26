@@ -113,6 +113,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     </button>
                 </div>
 
+                {/* main menu items */}
                 <div className="p-4 border-b border-gray-700">
 
                     {!isCollapsed && (
@@ -142,6 +143,35 @@ const Sidebar: React.FC<SidebarProps> = ({
                             </li>
                         ))}
                     </ul>
+                </div>
+
+
+                {/* management menu items */}
+                <div className="p-4 border-b border-gray-700">
+
+                    {!isCollapsed && (
+                        <div className="text-amber-200 text-xs uppercase tracking-wide px-4 py-2 opacity-70">
+                            Management
+
+                        </div>
+                    )}
+
+                    <ul className="space-y-2">
+
+                        {managementItems.map((item) => (
+                            <li 
+                                key={item.id}>
+                                    <a href="#" className="flex items-center p-3 rounded-lg hover:bg-gray-700 hover:text-amber-200 transition-colors">
+
+                                        
+
+                                    </a>
+
+                            </li>
+                        ))}
+
+                    </ul>
+
                 </div>
 
             </aside>
