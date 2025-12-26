@@ -163,7 +163,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                                 key={item.id}>
                                     <a href="#" className="flex items-center p-3 rounded-lg hover:bg-gray-700 hover:text-amber-200 transition-colors">
 
-                                        
+                                        <div className={`w-6 flex justify-center ${!isCollapsed ? 'mr-4' : ''}`}>
+                                            <item.icon size={18} />
+                                        </div>
+
+                                                {!isCollapsed && <span>{item.label}</span>}                                        
 
                                     </a>
 
