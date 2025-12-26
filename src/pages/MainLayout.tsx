@@ -10,7 +10,7 @@ const MainLayout: React.FC = () => {
     useEffect(() => {
         const handleReSize = () => {
             if (window.innerWidth < 1024) {
-                
+                setIsSidebarCollapsed(false)
             }
         }
     })
