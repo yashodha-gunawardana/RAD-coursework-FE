@@ -1,5 +1,5 @@
-import React, { act, useState } from "react";
-import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings, Menu } from "react-feather";
+import React, { useState } from "react";
+import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings, Menu, ChevronLeft, ChevronRight } from "react-feather";
 
 
 interface SidebarProps {
@@ -103,8 +103,16 @@ const Sidebar: React.FC<SidebarProps> = ({
                         )}
                     </a>
 
-                    
+                    <button
+                        onClick={onToggleCollapse}
+                        className="text-amber-200 hover:bg-gray-700 p-2 rounded transition-colors">
+
+                            {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+
+                    </button>
                 </div>
+
+                
 
             </aside>
         </>
