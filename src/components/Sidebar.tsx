@@ -203,6 +203,16 @@ const Sidebar: React.FC<SidebarProps> = ({
                     </ul>
                 </div>
 
+
+                {/* user profile */}
+                <div className="mt-auto p-6 border-t border-gray-700 flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-300 to-red-700 flex items-center justify-center font-semibold text-gray-900">
+                        JD
+
+                    </div>
+
+                </div>
+
             </aside>
         </>
     )
