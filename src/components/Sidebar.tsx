@@ -103,6 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         )}
                     </a>
 
+                    {/* collapsed / expand sidebar */}
                     <button
                         onClick={onToggleCollapse}
                         className="text-amber-200 hover:bg-gray-700 p-2 rounded transition-colors">
@@ -112,7 +113,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                     </button>
                 </div>
 
-                
+                <div className="p-4 border-b border-gray-700">
+                    
+
+                </div>
 
             </aside>
         </>
