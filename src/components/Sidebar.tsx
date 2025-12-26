@@ -65,6 +65,12 @@ const Sidebar: React.FC<SidebarProps> = ({
                     
                 </div>
            )}
+
+           <aside
+                className={`
+                    ${isCollapsed ? "w-20" : "w-64"}`}>
+
+           </aside>
         </>
     )
 
