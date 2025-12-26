@@ -1,5 +1,5 @@
 import React, { act, useState } from "react";
-import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign } from "react-feather";
+import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User } from "react-feather";
 
 
 interface SidebarProps {
@@ -29,6 +29,10 @@ const Sidebar: React.FC<SidebarProps> = ({
         { id: "booking", icon: Bookmark, label: "Booking" },
         { id: "budgets", icon: DollarSign, label: "Budgets" },
         { id: "guests", icon: Users, label: "Guests" }
+    ];
+
+    const settingItems = [
+        { id: "admin", icon: User, label: "Admin" }
     ];
 
 }
