@@ -6,4 +6,15 @@ interface SidebarProps {
     isMobileOpen: boolean
     onToggleCollapse: () => void
     onToggleMobile: () => void
+
+}
+
+
+const Sidebar: React.FC<SidebarProps> = ({
+    isCollapsed,
+    isMobileOpen,
+    onToggleCollapse,
+    onToggleMobile
+}) => {
+
 }

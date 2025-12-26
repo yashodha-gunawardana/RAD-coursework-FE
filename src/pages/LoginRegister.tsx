@@ -159,243 +159,246 @@ export default function LoginRegister() {
     }, []); // runce once on mount
 
     return (
-    <div className="relative flex justify-center items-center min-h-screen bg-[#F5F5F2] overflow-hidden">
+        <div className="relative flex justify-center items-center min-h-screen bg-[#F5F5F2] overflow-hidden">
 
-        {/* background waves */}
-        <div className="absolute inset-0 bg-[#EEE9DF] z-0"></div>
-        <div className="absolute top-1/3 -left-20 w-[120%] h-8
-                        bg-gradient-to-r from-[#8B1E2D] to-[#0F0F14]
-                        rounded-full opacity-90 z-1 transform -rotate-3">
-        </div>
-        <div className="absolute top-1/2 -right-10 w-[110%] h-6
-                        bg-gradient-to-r from-[#E6D3A3] to-[#8B1E2D]
-                        rounded-full opacity-80 z-2 transform rotate-2">
-        </div>
-        <div className="absolute top-2/3 -left-10 w-[115%] h-4
-                        bg-gradient-to-r from-[#0F0F14] to-[#E6D3A3]
-                        rounded-full opacity-85 z-3 transform -rotate-1">
-        </div>
-        
+            {/* wave 1 */}
+            <div className='absolute top-50 -left-16 w-[130%] h-30 opacity-20'
+                style={{
+                    background: 'linear-gradient(90deg, transparent 0%, #E6D3A3" 30%,  #8B0000 40%,  transparent 100%)',
+                    borderRadius: '0%',
+                    transform: 'rotate(10deg)'
+                }}>
+            </div>
 
-        {/* card container */}
-        <div className="relative flex w-[1050px] h-[680px]
+            {/* wave 2 */}
+            <div className='absolute top-2/4 -right-28 w-[155%] h-40 opacity-20'
+                style={{
+                    background: 'linear-gradient(90deg, transparent 0%, #8B0000 60%, #E6D3A3" 70%, transparent 100%)',
+                    borderRadius: '0%',
+                    transform: 'rotate(10deg)'
+                }}>
+            </div>
+
+
+            {/* card container */}
+            <div className="relative flex w-[1050px] h-[680px]
                         shadow-[0_15px_45px_rgba(0,0,0,0.3)]
                         rounded-xl overflow-hidden bg-yellow-50 border-2 border-black z-10">
 
-            {/* left panel */}
-            <div className="flex-none w-[320px] relative  
+                {/* left panel */}
+                <div className="flex-none w-[320px] relative  
                             overflow-hidden bg-blue-900 flex justify-center items-center">
 
-                {/* background image (change with time) */}
-                <img 
-                    src={timeImages.src}
-                    alt={timeImages.id}
-                    className="absolute top-0 left-0 w-full h-full object-cover"
-                />
+                    {/* background image (change with time) */}
+                    <img
+                        src={timeImages.src}
+                        alt={timeImages.id}
+                        className="absolute top-0 left-0 w-full h-full object-cover"
+                    />
 
-                {/* vertical divider */}
-                <div className="absolute top-0 right-8 w-[3px] h-full bg-yellow-50 opacity-80"></div>
+                    {/* vertical divider */}
+                    <div className="absolute top-0 right-8 w-[3px] h-full bg-yellow-50 opacity-80"></div>
 
-                {/* text overlay on image */}
-                <div className="relative z-20 p-5 text-left text-white bg-black/20 rounded-lg backdrop-blur-sm">
-                    <h2 className="text-3xl font-extrabold uppercase leading-none">Unforgettable</h2>
-                    <h2 className="text-3xl font-extrabold uppercase leading-none">Event</h2>
-                    <h2 className="text-3xl font-extrabold uppercase leading-none">Experiences</h2>
-                    <h3 className="text-xl font-normal text-yellow-50 mt-2">{timeImages.heading}</h3>
-                    <p className="text-gray-300 text-sm mt-5 border-l-2 border-yellow-50 pl-2">
-                        Curating experiences that defy expectations and redefine possibility.
-                    </p>
+                    {/* text overlay on image */}
+                    <div className="relative z-20 p-5 text-left text-white bg-black/20 rounded-lg backdrop-blur-sm">
+                        <h2 className="text-3xl font-extrabold uppercase leading-none">Unforgettable</h2>
+                        <h2 className="text-3xl font-extrabold uppercase leading-none">Event</h2>
+                        <h2 className="text-3xl font-extrabold uppercase leading-none">Experiences</h2>
+                        <h3 className="text-xl font-normal text-yellow-50 mt-2">{timeImages.heading}</h3>
+                        <p className="text-gray-300 text-sm mt-5 border-l-2 border-yellow-50 pl-2">
+                            Curating experiences that defy expectations and redefine possibility.
+                        </p>
+                    </div>
                 </div>
-            </div>  
 
-            {/* right panel */}
-            <div className="flex-1 bg-gray-900 text-white p-12 flex flex-col rounded-lg">
+                {/* right panel */}
+                <div className="flex-1 bg-gray-900 text-white p-12 flex flex-col rounded-lg">
 
-                {/* header: sign up / sign in buttons */}
-                <div className="flex justify-between mb-8">
-                    <button className={`font-semibold ${formType === "signup" ? "opacity-100 border-b-2 border-white" : "opacity-50"}`}
+                    {/* header: sign up / sign in buttons */}
+                    <div className="flex justify-between mb-8">
+                        <button className={`font-semibold ${formType === "signup" ? "opacity-100 border-b-2 border-white" : "opacity-50"}`}
                             onClick={() => switchForm("signup")}
-                    >Sign Up
-                    </button>
-                    <button className={`font-semibold ${formType === "signin" ? "opacity-100 border-b-2 border-white" : "opacity-50"}`}
+                        >Sign Up
+                        </button>
+                        <button className={`font-semibold ${formType === "signin" ? "opacity-100 border-b-2 border-white" : "opacity-50"}`}
                             onClick={() => switchForm("signin")}
-                    >Sign In
-                    </button>
-                </div>
-
-                {/* content section */}
-                <div className="flex flex-1 gap-10">
-
-                    {/* left text section */}
-                    <div className="flex-1 flex flex-col pt-7 pb-7">
-                        <p className="uppercase text-gray-400 text-sm tracking-wide" style={{fontFamily: 'Inter, sans-serif'}}>welcome</p>
-                        <h1 className="text-5xl font-extrabold mt-4">
-                            {formType === "signup"
-                                ? "Fill the form to become part of team"
-                                : "Sign in and continue your journey with us"}
-                        </h1>
+                        >Sign In
+                        </button>
                     </div>
 
-                    {/* right form section */}
-                    <div className="flex-1 flex flex-col pt-0">
-                        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+                    {/* content section */}
+                    <div className="flex flex-1 gap-10">
 
-                            {/* sign up form */}
-                            {formType === "signup" && (
-                                <>
-                                    <input
-                                        type="text"
-                                        placeholder="Full Name"
-                                        className="w-[320px] px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                        value={fullname}
-                                        onChange={(e) => setFullname(e.target.value)}
-                                        required
-                                    />
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        className="w-[320px] px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                    <div className="relative w-[320px]">
-                                        {/* Lock Icon */}
-                                        <Lock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                        {/* left text section */}
+                        <div className="flex-1 flex flex-col pt-7 pb-7">
+                            <p className="uppercase text-gray-400 text-sm tracking-wide" style={{ fontFamily: 'Inter, sans-serif' }}>welcome</p>
+                            <h1 className="text-5xl font-extrabold mt-4">
+                                {formType === "signup"
+                                    ? "Fill the form to become part of team"
+                                    : "Sign in and continue your journey with us"}
+                            </h1>
+                        </div>
 
+                        {/* right form section */}
+                        <div className="flex-1 flex flex-col pt-0">
+                            <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+
+                                {/* sign up form */}
+                                {formType === "signup" && (
+                                    <>
                                         <input
-                                            type="password"
-                                            placeholder="Password"
+                                            type="text"
+                                            placeholder="Full Name"
                                             className="w-[320px] px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
+                                            value={fullname}
+                                            onChange={(e) => setFullname(e.target.value)}
                                             required
                                         />
-                                    </div>
-                                    
-                                    <div className="relative w-[320px]">
-                                        {/* Lock Icon */}
-                                        <Lock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-
                                         <input
-                                            type="password"
-                                            placeholder="Confirm Password"
+                                            type="email"
+                                            placeholder="Email"
                                             className="w-[320px] px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                            value={confirmPassword}
-                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
                                             required
                                         />
-                                    </div>      
+                                        <div className="relative w-[320px]">
+                                            {/* Lock Icon */}
+                                            <Lock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
 
-                                    {/* terms checkbox */}
-                                    <div className="flex items-center gap-3 mt-2 mb-6">
-                                        <input
-                                            type="checkbox"
-                                            id="terms"
-                                            className="w-4 h-4 border border-gray-500 rounded"
-                                            checked={termsChecked}
-                                            onChange={(e) => setTermsChecked(e.target.checked)}
-                                        />
-                                        <label htmlFor="terms" className="text-gray-400 text-sm">
-                                            I agree to the terms of service
-                                        </label>
-                                    </div>
-
-                                    <div className="flex items-center gap-2">
-                                        <button type="submit" className="flex items-center justify-center gap-2 bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
-                                                Go
-                                                <ArrowRight color="black" size={20}/>  
-                                        </button>
-                                        <div className="flex-1 text-right">
-                                            <p className="text-gray-400 text-sm">
-                                                Already have an account? {" "}
-                                                <button type="button" onClick={() => switchForm("signin")} className="text-yellow-50 font-bold">
-                                                    login form
-                                                </button>
-                                            </p>
+                                            <input
+                                                type="password"
+                                                placeholder="Password"
+                                                className="w-[320px] px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                required
+                                            />
                                         </div>
-                                    </div>
-                                </>
-                            )}
 
-                            {/* sign in form */}
-                            {formType === "signin" && (
-                                <>
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        className="w-[320px] px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                    <div className="relative w-[320px]">
-                                        {/* Lock Icon */}
-                                        <Lock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                        <div className="relative w-[320px]">
+                                            {/* Lock Icon */}
+                                            <Lock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
 
+                                            <input
+                                                type="password"
+                                                placeholder="Confirm Password"
+                                                className="w-[320px] px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                                value={confirmPassword}
+                                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
+                                        {/* terms checkbox */}
+                                        <div className="flex items-center gap-3 mt-2 mb-6">
+                                            <input
+                                                type="checkbox"
+                                                id="terms"
+                                                className="w-4 h-4 border border-gray-500 rounded"
+                                                checked={termsChecked}
+                                                onChange={(e) => setTermsChecked(e.target.checked)}
+                                            />
+                                            <label htmlFor="terms" className="text-gray-400 text-sm">
+                                                I agree to the terms of service
+                                            </label>
+                                        </div>
+
+                                        <div className="flex items-center gap-2">
+                                            <button type="submit" className="flex items-center justify-center gap-2 bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
+                                                Go
+                                                <ArrowRight color="black" size={20} />
+                                            </button>
+                                            <div className="flex-1 text-right">
+                                                <p className="text-gray-400 text-sm">
+                                                    Already have an account? {" "}
+                                                    <button type="button" onClick={() => switchForm("signin")} className="text-yellow-50 font-bold">
+                                                        login form
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+
+                                {/* sign in form */}
+                                {formType === "signin" && (
+                                    <>
                                         <input
-                                            type="password"
-                                            placeholder="Password"
+                                            type="email"
+                                            placeholder="Email"
                                             className="w-[320px] px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
                                             required
                                         />
-                                    </div>
+                                        <div className="relative w-[320px]">
+                                            {/* Lock Icon */}
+                                            <Lock className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
 
-                                    <div className="flex items-center gap-5 mt-5">
-                                        <button type="submit" className="flex items-center justify-center gap-2 bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
-                                            Sign In
-                                            <ArrowRight color="black" size={20}/>
-                                        </button>
-                                        <div className="flex-1 text-right">
-                                            <p className="text-gray-400 text-sm">
-                                                Forgot your password?{" "}
-                                                <a href="#" className="text-yellow-50 font-bold">
-                                                    Recover it here
-                                                </a>
-                                            </p>
-                                        </div>    
-                                    </div>
-                                </>
-                            )}
-                        </form>
+                                            <input
+                                                type="password"
+                                                placeholder="Password"
+                                                className="w-[320px] px-5 py-4 rounded-md bg-gray-800 text-white outline-none"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className="flex items-center gap-5 mt-5">
+                                            <button type="submit" className="flex items-center justify-center gap-2 bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">
+                                                Sign In
+                                                <ArrowRight color="black" size={20} />
+                                            </button>
+                                            <div className="flex-1 text-right">
+                                                <p className="text-gray-400 text-sm">
+                                                    Forgot your password?{" "}
+                                                    <a href="#" className="text-yellow-50 font-bold">
+                                                        Recover it here
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            </form>
+                        </div>
                     </div>
-                </div> 
 
-                {/* horizontal divider */}
-                <div className="absolute bottom-28 right-13 h-[1px] w-[320px] bg-yellow-50 opacity-80"></div>
+                    {/* horizontal divider */}
+                    <div className="absolute bottom-28 right-13 h-[1px] w-[320px] bg-yellow-50 opacity-80"></div>
 
-                {/* footer with social links */}
-                <div className="flex justify-between items-end mt-auto pt-4">
-                    <p className="text-gray-400"> social networks</p>
-                    <div className="flex gap-3 mr-32">
-                        <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white 
+                    {/* footer with social links */}
+                    <div className="flex justify-between items-end mt-auto pt-4">
+                        <p className="text-gray-400"> social networks</p>
+                        <div className="flex gap-3 mr-32">
+                            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white 
                                                 transition-all duration-300
                                                 hover:bg-yellow-50 hover:text-gray-900 hover:scale-110">
-                            <Facebook size={18} />
-                        </a>
-                        <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white
+                                <Facebook size={18} />
+                            </a>
+                            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white
                                                 transition-all duration-300
                                                 hover:bg-yellow-50 hover:text-gray-900 hover:scale-110">
-                            <Twitter size={18} />
-                        </a>
-                        <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white
+                                <Twitter size={18} />
+                            </a>
+                            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white
                                                 transition-all duration-300
                                                 hover:bg-yellow-50 hover:text-gray-900 hover:scale-110">
-                            <Youtube size={18} />
-                        </a>
-                        <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white
+                                <Youtube size={18} />
+                            </a>
+                            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white
                                                 transition-all duration-300
                                                 hover:bg-yellow-50 hover:text-gray-900 hover:scale-110">
-                            <Linkedin size={18} />
-                        </a>
+                                <Linkedin size={18} />
+                            </a>
+                        </div>
                     </div>
-                </div>   
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
 
-    
+
 }
