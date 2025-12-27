@@ -53,7 +53,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 onClick={onToggleMobile}
                 className="lg:hidden fixed top-4 left-4 z-50 bg-white p-3 rounded-lg shadow-md flex items-center">
 
-                <Menu className="w-12 h-12 size-20" />
+                <Menu className="w-8 h-8" />
             </button>
 
             {isMobileOpen && (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bookmark, Calendar, DollarSign, Home, Plus, User, Users } from "react-feather";
+import { Bookmark, Calendar, DollarSign, Home, Plus, RefreshCw, User, Users } from "react-feather";
 
 
 interface DashboardStats {
@@ -183,6 +183,25 @@ const Dashboard: React.FC = () => {
 
   return (
     <main className="flex-1 p-4 md:p-6 lg:p-8">
+
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6
+                      md:mb-8 pb-4 border-b border-gray-200">
+
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-red-800 mb-4 md:mb-0">
+            Dashboard Overview
+
+          </h1>
+
+          <button
+              onClick={refreshDashboard}
+              className="bg-white border border-gray-300 text-gray-800 px-4 md:px-6 py-2 md:py-3
+                          rounded-lg shadow-sm hover:bg-gray-50 hover:shadow-md transition-all flex items-center gap-2">
+ 
+                <RefreshCw className="w-4 h-4" />
+
+                  Refresh
+          </button>
+      </div>
 
     </main>
   )
