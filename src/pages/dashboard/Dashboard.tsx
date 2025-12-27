@@ -67,10 +67,21 @@ const Dashboard: React.FC = () => {
     );
   };
 
-
+  // dashboard statistics function
   const loadDashboardData = () => {
-    
-  }
+    setStats({
+      userCount: 125,
+      eventCount: 12,
+      vendorCount: 45,
+      bookingCount: 40
+    })
+  };
+
+
+  // quick actions handler
+  const handleCreateNewEvent = () => {
+    alert("Create New Event - This would open the event creation form")
+  };
 
 }
 
