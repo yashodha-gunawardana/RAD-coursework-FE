@@ -214,7 +214,7 @@ const Dashboard: React.FC = () => {
 
               <div className="text-3xl md:text-4xl text-red-800 mb-3 md:mb-4">
 
-                <stat.icon className="w-4 h-4 md:w-8 md:h-8" />
+                <stat.icon className="w-4 h-4 md:w-7 md:h-7" />
               </div>
 
               <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 md:mb-2">
@@ -239,7 +239,7 @@ const Dashboard: React.FC = () => {
           <h3 className="text-lg md:text-xl font-bold text-red-800 mb-4 md:mb-6 pb-2 md:pb-3 boredr-b border-amber-100
                           flex items-center gap-2">
 
-              <Zap className="w-8 h-8" />
+              <Zap className="w-8 h-8 md:w-7 md:h-7" />
 
                   Quick Actions
           </h3>
@@ -258,14 +258,17 @@ const Dashboard: React.FC = () => {
                                   : "bg-gray-50 text-gray-800 border border-gray-300 hover:bg-amber-50 hover:border-amber-200 hover:text-gray-900 hover:-translate-y-1"
                                 }`}>
 
-                        <action.icon className="w-4 h-4 md:w-8 md:h-8" />
+                        <action.icon className="w-4 h-4 md:w-6 md:h-6" />
                         {action.label}
                 </button>
             ))}
           </div>
         </div>
 
-        
+        <div className="lg:col-span-2 bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100">
+          
+
+        </div>
       </div>
 
     </main>
