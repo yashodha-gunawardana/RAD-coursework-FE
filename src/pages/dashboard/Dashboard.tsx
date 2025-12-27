@@ -22,3 +22,11 @@ interface UpcomingEvent {
   title: string
   status: string
 }
+
+
+const Dashboard: React.FC = () => {
+
+  
+}
+
+
