@@ -1,8 +1,7 @@
 import { lazy, Suspense, type ReactNode } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import DashBoardLayout from "../pages/DashBoardLayout";
-import Sidebar from "../components/Sidebar";
-import Dashboard from "../pages/Dashboard";
+import DashBoardLayout from "../layouts/DashBoardLayout";
+import Dashboard from "../pages/dashboard/Dashboard";
 
 
 const LandingPage = lazy(() => import("../pages/LandingPage"))
@@ -14,9 +13,11 @@ export default function Router() {
         <Suspense fallback={<div>Loading...</div>}>
             <Routes>
 
+            {/* public routes */}
             <Route path="/" element={<LandingPage />} />   
             <Route path="/auth" element={<LoginRegister />} />
 
+            {/* dahboard routes*/}
             <Route element={<DashBoardLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
             </Route>

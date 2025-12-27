@@ -161,24 +161,27 @@ export default function LoginRegister() {
     return (
         <div className="relative flex justify-center items-center min-h-screen bg-[#F5F5F2] overflow-hidden">
 
-            {/* wave 1 */}
-            <div className='absolute top-50 -left-16 w-[130%] h-30 opacity-20'
-                style={{
-                    background: 'linear-gradient(90deg, transparent 0%, #E6D3A3" 30%,  #8B0000 40%,  transparent 100%)',
-                    borderRadius: '0%',
-                    transform: 'rotate(10deg)'
-                }}>
-            </div>
+             <div className='absolute inset-0 z-0 overflow-hidden'>
+                <div className='absolute inset-0 bg-gradient-to-br from-[#FDFCFB] via-[#F9F5F0] to-[#F5F1EA]'></div>
 
-            {/* wave 2 */}
-            <div className='absolute top-2/4 -right-28 w-[155%] h-40 opacity-20'
-                style={{
-                    background: 'linear-gradient(90deg, transparent 0%, #8B0000 60%, #E6D3A3" 70%, transparent 100%)',
-                    borderRadius: '0%',
-                    transform: 'rotate(10deg)'
-                }}>
-            </div>
+                {/* wave 1 */}
+                <div className='absolute top-50 -left-16 w-[130%] h-30 opacity-20'
+                    style={{
+                        background: 'linear-gradient(90deg, transparent 0%, #D4B483 30%,  #8B0000 40%,  transparent 100%)',
+                        borderRadius: '0%',
+                        transform: 'rotate(10deg)'
+                    }}>
+                </div>
 
+                {/* wave 2 */}
+                <div className='absolute top-2/4 -right-28 w-[155%] h-40 opacity-30'
+                    style={{
+                        background: 'linear-gradient(90deg, transparent 0%, #8B0000 60%, #D4B483 70%, transparent 100%)',
+                        borderRadius: '0%',
+                        transform: 'rotate(10deg)'
+                    }}>
+                </div>
+            </div>
 
             {/* card container */}
             <div className="relative flex w-[1050px] h-[680px]
