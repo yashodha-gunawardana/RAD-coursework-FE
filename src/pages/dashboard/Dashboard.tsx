@@ -26,6 +26,13 @@ interface UpcomingEvent {
 
 const Dashboard: React.FC = () => {
 
+  const [stats, setStats] = useState<DashboardStats> ({
+    userCount: 0,
+    eventCount: 0,
+    vendorCount: 0,
+    bookingCount: 0
+  });
+
   
 }
 
