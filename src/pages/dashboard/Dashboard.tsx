@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bookmark, Calendar, DollarSign, Home, Plus, RefreshCw, User, Users, Zap } from "react-feather";
+import { BarChart2, Bookmark, Calendar, DollarSign, Home, PieChart, Plus, RefreshCw, User, Users, Zap } from "react-feather";
 
 
 interface DashboardStats {
@@ -290,6 +290,43 @@ const Dashboard: React.FC = () => {
           {/* active tab */}
           <div className="space-y-4 md:space-y-6">
 
+            {activeTab === "overview" && (
+              <div>
+                  <h3 className="text-lg md:text-xl font-bold text-red-800 mb-3 md:mb-4 flex items-center gap-2">
+
+                    <BarChart2 className="w-8 h-8 md:w-7 md:h-7" />
+                      
+                      Events by Status
+
+                  </h3>
+
+                  <div className="bg-gradient-to-br from-amber-50 to-gray-50 rounded-xl p-4 md:p-6 lg:p-8 border border-gray-200">
+                    <div className="text-container">
+
+                      <PieChart className="fas fa-chart-pie text-red-800 text-4xl md:text-5xl mb-4 md:mb-6 opacity-70" />
+
+                      <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
+                        Chart showing distribution of events by status
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 md:gap-3 justify-center">
+
+                        <span className="px-3 md:px-4 py-1 md:py-2 rounded-full bg-blue-100 text-blue-800 border border-blue-200 font-semibold text-sm">
+                          PLANNING: 8
+                        </span>
+                        <span className="px-3 md:px-4 py-1 md:py-2 rounded-full bg-green-100 text-green-800 border border-green-200 font-semibold text-sm">
+                          ONGOING: 3
+                        </span>
+                        <span className="px-3 md:px-4 py-1 md:py-2 rounded-full bg-gray-100 text-gray-800 border border-gray-200 font-semibold text-sm">
+                          COMPLETED: 1
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            )}
+
+            
           </div>
         </div>
       </div>
