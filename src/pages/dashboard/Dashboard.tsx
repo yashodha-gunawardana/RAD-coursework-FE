@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BarChart2, Bookmark, Calendar, DollarSign, Home, PieChart, Plus, RefreshCw, User, Users, Zap } from "react-feather";
+import { Activity, BarChart2, Bookmark, Calendar, DollarSign, Home, List, PieChart, Plus, RefreshCw, ThumbsUp, User, UserPlus, Users, Zap } from "react-feather";
 
 
 interface DashboardStats {
@@ -290,6 +290,7 @@ const Dashboard: React.FC = () => {
           {/* active tab */}
           <div className="space-y-4 md:space-y-6">
 
+            {/* overview tab */}
             {activeTab === "overview" && (
               <div>
                   <h3 className="text-lg md:text-xl font-bold text-red-800 mb-3 md:mb-4 flex items-center gap-2">
@@ -326,7 +327,56 @@ const Dashboard: React.FC = () => {
               </div>
             )}
 
-            
+
+            {/* recent activity tab */}
+            {activeTab === "recent" && (
+              <>
+                <div>
+                  <h3 className="text-lg md:text-xl font-bold text-red-800 mb-3 md:mb-4 flex items-center gap-2">
+                    
+                    <Activity className="w-8 h-8 md:w-7 md:h-7" />
+
+                      Recent System Activity
+
+                  </h3>
+
+                  <div className="bg-gradient-to-br from-amber-50 to-gray-50 rounded-xl p-4 md:p-6 lg:p-8 border border-gray-200">
+                    <div className="text-center">
+
+                      <List className="fas fa-list-alt text-red-800 text-4xl md:text-5xl mb-4 md:mb-6 opacity-70" />
+
+                      <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
+                        Timeline of recent activities across all modules
+                      </p>
+
+                      <div className="max-w-md mx-auto text-left space-y-2 md:space-y-3">
+
+                        <p className="flex items-center gap-2 text-sm md:text-base">
+                          <UserPlus className="fas fa-user-plus text-green-500" />
+                            <span>5 new guests added (Today)</span>
+                        </p>
+
+                        <p className="flex items-center gap-2 text-sm md:text-base">
+                          <Calendar className="fas fa-calendar-plus text-blue-500" />
+                            <span>New event created (Yesterday)</span>
+                        </p>
+
+                        <p className="flex items-center gap-2 text-sm md:text-base">
+                          <DollarSign className="fas fa-dollar-sign text-yellow-500" />
+                            <span>Budget updated (2 days ago)</span>
+                        </p>
+
+                        <p className="flex items-center gap-2 text-sm md:text-base">
+                          <ThumbsUp className="fas fa-handshake text-red-800" />
+                            <span>Vendor booking confirmed (3 days ago)</span>
+                        </p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
