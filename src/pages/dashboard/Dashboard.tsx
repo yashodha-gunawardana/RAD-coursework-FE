@@ -203,6 +203,34 @@ const Dashboard: React.FC = () => {
           </button>
       </div>
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
+
+        {statsCards.map((stat, index) => (
+          <div
+              key={index}
+              className="bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100 hover:shadow-xl
+                          hover:translate-y-1 transition-all duration-300 text-center">
+
+              <div className="text-3xl md:text-4xl text-red-800 mb-3 md:mb-4">
+
+                <stat.icon className="w-4 h-4 md:w-8 md:h-8" />
+              </div>
+
+              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 md:mb-2">
+
+                {stat.value}
+
+              </div>
+
+              <div className="text-gary-600 font-medium text-sm md:text-base">
+
+                {stat.label}
+
+              </div>
+          </div>
+        ))}
+      </div>
+
     </main>
   )
 
