@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Bookmark, DollarSign, Home, Plus, User } from "react-feather";
 
 
 interface DashboardStats {
@@ -50,19 +51,19 @@ const Dashboard: React.FC = () => {
     setActivities(
       [
         { id: 1, type: "User", description: "New guset registered: John Smith", date: "2024-06-20", status: "APPROVED" },
-        { id: 2, type: 'Event', description: 'Event created: Summer Wedding', date: '2024-06-19', status: 'PLANNING' },        
-        { id: 3, type: 'Booking', description: 'Booking confirmed', date: '2024-06-18', status: 'CONFIRMED' },                
-        { id: 4, type: 'Budget', description: 'Budget updated', date: '2024-06-17', status: 'UPDATED' },                       
-        { id: 5, type: 'Vendor', description: 'Vendor booking confirmed', date: '2024-06-16', status: 'CONFIRMED' }
+        { id: 2, type: "Event", description: "Event created: Summer Wedding", date: "2024-06-19", status: "PLANNING" },        
+        { id: 3, type: "Booking", description: "Booking confirmed", date: "2024-06-18", status: "CONFIRMED" },                
+        { id: 4, type: "Budget", description: "Budget updated", date: "2024-06-17", status: "UPDATED" },                       
+        { id: 5, type: "Vendor", description: "Vendor booking confirmed", date: "2024-06-16", status: "CONFIRMED" }
       ]
     );
 
     setUpcomingEvents(
       [
-        { id: 1, date: 'Jun 24', title: 'Summer Wedding', status: 'PLANNING' },      
-        { id: 2, date: 'Jul 12', title: 'Corporate Conference', status: 'ONGOING' }, 
-        { id: 3, date: 'Aug 5', title: 'Birthday Bash', status: 'PLANNING' },        
-        { id: 4, date: 'Oct 15', title: 'Product Launch', status: 'PLANNING' }
+        { id: 1, date: "Jun 24", title: "Summer Wedding", status: "PLANNING" },      
+        { id: 2, date: "Jul 12", title: "Corporate Conference", status: "ONGOING" }, 
+        { id: 3, date: "Aug 5", title: "Birthday Bash", status: "PLANNING" },        
+        { id: 4, date: "Oct 15", title: "Product Launch", status: "PLANNING" }
       ]
     );
   };
@@ -117,16 +118,16 @@ const Dashboard: React.FC = () => {
       case "planning":
         return "bg-blue-100 text-blue-800 border border-blue-200";
 
-      case 'ongoing':                   
-      case 'confirmed':                 
-      case 'approved':                  
-        return 'bg-green-100 text-green-800 border border-green-200';  
+      case "ongoing":                   
+      case "confirmed":                 
+      case "approved":                  
+        return "bg-green-100 text-green-800 border border-green-200";  
 
-      case 'completed':                
-        return 'bg-gray-100 text-gray-800 border border-gray-200';     
+      case "completed":                
+        return "bg-gray-100 text-gray-800 border border-gray-200";     
 
       default:                          
-        return 'bg-yellow-100 text-yellow-800 border border-yellow-200';
+        return "bg-yellow-100 text-yellow-800 border border-yellow-200";
     }
   };
 
@@ -134,9 +135,42 @@ const Dashboard: React.FC = () => {
   // array of quick action btn
   const quickActions = [
     {
-      
-    }
-  ]
+      label: "Create New Event",        
+      icon: Plus,                     
+      onClick: handleCreateNewEvent,    
+      primary: true  
+    },
+
+    {
+      label: "Add Booking",        
+      icon: Bookmark,                     
+      onClick: handleCreateNewEvent,    
+      primary: false  
+    },
+
+    {
+      label: "Invite Guests",        
+      icon: User,                     
+      onClick: handleCreateNewEvent,    
+      primary: false  
+    },
+
+    {
+      label: "Add Vendor",        
+      icon: Home,                     
+      onClick: handleCreateNewEvent,    
+      primary: false  
+    },
+
+    {
+      label: "Create Budget",        
+      icon: DollarSign,                     
+      onClick: handleCreateNewEvent,    
+      primary: false  
+    },
+  ];
+
+  
 
 }
 
