@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bookmark, DollarSign, Home, Plus, User } from "react-feather";
+import { Bookmark, Calendar, DollarSign, Home, Plus, User, Users } from "react-feather";
 
 
 interface DashboardStats {
@@ -170,7 +170,15 @@ const Dashboard: React.FC = () => {
     },
   ];
 
-  
+
+  // stats cards
+  const statsCards = [
+    { icon: Users, value: stats.userCount, label: "Total Users" },
+    { icon: Calendar, value: stats.eventCount, label: "Total Events" },
+    { icon: Home, value: stats.vendorCount, label: "Available Vendors" },
+    { icon: Bookmark, value: stats.bookingCount, label: "Confirmed Bookings" },
+
+  ]
 
 }
 
