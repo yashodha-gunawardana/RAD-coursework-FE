@@ -304,7 +304,7 @@ const Dashboard: React.FC = () => {
                   <div className="bg-gradient-to-br from-amber-50 to-gray-50 rounded-xl p-4 md:p-6 lg:p-8 border border-gray-200">
                     <div className="text-container">
 
-                      <PieChart className="fas fa-chart-pie text-red-800 text-4xl md:text-5xl mb-4 md:mb-6 opacity-70" />
+                      <PieChart className="text-red-800 text-4xl md:text-5xl mb-4 md:mb-6 opacity-70" />
 
                       <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
                         Chart showing distribution of events by status
@@ -343,7 +343,7 @@ const Dashboard: React.FC = () => {
                   <div className="bg-gradient-to-br from-amber-50 to-gray-50 rounded-xl p-4 md:p-6 lg:p-8 border border-gray-200">
                     <div className="text-center">
 
-                      <List className="fas fa-list-alt text-red-800 text-4xl md:text-5xl mb-4 md:mb-6 opacity-70" />
+                      <List className="text-red-800 text-4xl md:text-5xl mb-4 md:mb-6 opacity-70" />
 
                       <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
                         Timeline of recent activities across all modules
@@ -352,22 +352,22 @@ const Dashboard: React.FC = () => {
                       <div className="max-w-md mx-auto text-left space-y-2 md:space-y-3">
 
                         <p className="flex items-center gap-2 text-sm md:text-base">
-                          <UserPlus className="fas fa-user-plus text-green-500" />
+                          <UserPlus className="text-green-500" />
                             <span>5 new guests added (Today)</span>
                         </p>
 
                         <p className="flex items-center gap-2 text-sm md:text-base">
-                          <Calendar className="fas fa-calendar-plus text-blue-500" />
+                          <Calendar className="text-blue-500" />
                             <span>New event created (Yesterday)</span>
                         </p>
 
                         <p className="flex items-center gap-2 text-sm md:text-base">
-                          <DollarSign className="fas fa-dollar-sign text-yellow-500" />
+                          <DollarSign className="text-yellow-500" />
                             <span>Budget updated (2 days ago)</span>
                         </p>
 
                         <p className="flex items-center gap-2 text-sm md:text-base">
-                          <ThumbsUp className="fas fa-handshake text-red-800" />
+                          <ThumbsUp className="text-red-800" />
                             <span>Vendor booking confirmed (3 days ago)</span>
                         </p>
 
@@ -439,6 +439,7 @@ const Dashboard: React.FC = () => {
                                   <span className={`px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold ${getStatusBadgeClass(activity.status)}`}>
                                   
                                     {activity.status}
+
                                   </span>
                                 </td>
                             </tr>
@@ -452,11 +453,63 @@ const Dashboard: React.FC = () => {
             )}
 
 
-            
+            {/* upcoming event tab */}
+            {activeTab === "upcoming" && (
+              <div>
+                <h3 className="text-lg md:text-xl font-bold text-red-800 mb-3 md:mb-4 flex items-center gap-2">
+
+                  <Calendar className="w-8 h-8 md:w-7 md:h-7" />
+
+                    Upcoming Events Timeline
+
+                </h3>
+
+                <div className="bg-gradient-to-br from-amber-50 to-gray-50 rounded-xl p-4 md:p-6 lg:p-8 border border-gray-200">
+                  <div className="text-center">
+
+                    <Calendar className="text-red-800 text-4xl md:text-5xl mb-4 md:mb-6 opacity-70" />
+                    
+                    <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
+                      Timeline view of upcoming events
+                    </p>
+
+                    <div className="max-w-md mx-auto space-y-3 md:space-y-4">
+
+                      {upcomingEvents.map((event) => (
+                        <div
+                            key={event.id}
+                            className="p-3 md:p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+
+                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            
+                            <span className="font-bold text-gray-900 text-sm md:text-base">
+
+                              {event.date}:
+
+                            </span>
+                            
+                            <span className={`px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold ${getStatusBadgeClass(event.status)}`}>
+                              
+                              {event.status}
+
+                            </span>
+                          </div>
+
+                          <div className="mt-1 md:mt-2 text-gray-700 text-sm md:text-base">
+
+                            {event.title}
+
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-
     </main>
   )
 
