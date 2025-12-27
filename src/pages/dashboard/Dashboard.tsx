@@ -124,11 +124,19 @@ const Dashboard: React.FC = () => {
 
       case 'completed':                
         return 'bg-gray-100 text-gray-800 border border-gray-200';     
-        
+
       default:                          
         return 'bg-yellow-100 text-yellow-800 border border-yellow-200';
     }
-  }
+  };
+
+  
+  // array of quick action btn
+  const quickActions = [
+    {
+      
+    }
+  ]
 
 }
 
