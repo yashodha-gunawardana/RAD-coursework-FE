@@ -375,8 +375,84 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* detail acitivity */}
+                <div>
+                   <h3 className="text-lg md:text-xl font-bold text-red-800 mb-3 md:mb-4">
+
+                    Detailed Activity Log
+
+                  </h3>
+
+                  <div className="bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
+
+                    <div className="overflow-x-auto">
+                      <table className="w-full min-w-[640px]">
+                        <thead className="bg-gray-100">
+
+                          <tr>
+
+                            <th className="p-3 md:p-4 text-left font-semibold text-gray-700 text-sm md:text-base">
+                              Type
+                            </th>
+
+                            <th className="p-3 md:p-4 text-left font-semibold text-gray-700 text-sm md:text-base">
+                              Description
+                            </th>
+
+                            <th className="p-3 md:p-4 text-left font-semibold text-gray-700 text-sm md:text-base">
+                              Date
+                            </th>
+
+                            <th className="p-3 md:p-4 text-left font-semibold text-gray-700 text-sm md:text-base">
+                              Status
+                            </th>
+
+                          </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                          {activities.map((activity) => (
+                            <tr 
+                                key={activity.id}
+                                className="hover:bg-amber-50 transition-colors">
+
+                                <td className="p-3 md:p-4 font-semibold text-sm md:text-base">
+
+                                  {activity.type}
+
+                                </td>
+
+                                <td className="p-3 md:p-4 text-sm md:text-base">
+                                  
+                                  {activity.description}
+                                </td>
+
+                                <td className="p-3 md:p-4 text-sm md:text-base">
+                                  
+                                  {activity.date}
+                                </td>
+
+                                <td className="p-3 md:p-4">
+                                  <span className={`px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold ${getStatusBadgeClass(activity.status)}`}>
+                                  
+                                    {activity.status}
+                                  </span>
+                                </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </>
             )}
+
+
+            
           </div>
         </div>
       </div>
