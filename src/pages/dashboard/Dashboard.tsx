@@ -1,17 +1,24 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 interface DashboardStats {
-    userCount: number
-    eventCount: number
-    vendorCount: number
-    bookingCount: number
+  userCount: number
+  eventCount: number
+  vendorCount: number
+  bookingCount: number
 }
 
 interface ActivityItem {
-    id: number
-    type: string
-    description: string
-    date: string
-    status: string
+  id: number
+  type: string
+  description: string
+  date: string
+  status: string
+}
+
+interface UpcomingEvent {
+  id: number
+  date: string
+  title: string
+  status: string
 }
