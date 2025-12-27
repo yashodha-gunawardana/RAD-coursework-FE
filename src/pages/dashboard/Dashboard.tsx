@@ -56,7 +56,18 @@ const Dashboard: React.FC = () => {
         { id: 5, type: 'Vendor', description: 'Vendor booking confirmed', date: '2024-06-16', status: 'CONFIRMED' }
       ]
     );
-  }
+
+    setUpcomingEvents(
+      [
+        { id: 1, date: 'Jun 24', title: 'Summer Wedding', status: 'PLANNING' },      
+        { id: 2, date: 'Jul 12', title: 'Corporate Conference', status: 'ONGOING' }, 
+        { id: 3, date: 'Aug 5', title: 'Birthday Bash', status: 'PLANNING' },        
+        { id: 4, date: 'Oct 15', title: 'Product Launch', status: 'PLANNING' }
+      ]
+    );
+  };
+
+  
 
 }
 
