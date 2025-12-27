@@ -178,8 +178,17 @@ const Dashboard: React.FC = () => {
     { icon: Home, value: stats.vendorCount, label: "Available Vendors" },
     { icon: Bookmark, value: stats.bookingCount, label: "Confirmed Bookings" },
 
-  ]
+  ];
+
+
+  return (
+    <main className="flex-1 p-4 md:p-6 lg:p-8">
+
+    </main>
+  )
 
 }
+
+export default Dashboard
 
 
