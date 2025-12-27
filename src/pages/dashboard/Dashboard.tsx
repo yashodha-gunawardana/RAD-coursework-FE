@@ -39,6 +39,11 @@ const Dashboard: React.FC = () => {
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([])
 
 
+  useEffect(() => {
+    loadDashboardData()
+    loadSampleData()
+
+  }, [])
 
 }
 
