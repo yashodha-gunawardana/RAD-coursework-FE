@@ -269,8 +269,23 @@ const Dashboard: React.FC = () => {
         <div className="lg:col-span-2 bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100">
           <div className="flex border-b border-gray-200 mb-4 md:mb-6 overflow-x-auto">
 
+            {["overview", "recent", "upcoming"].map((tab) => (
+              <button
+                    key={tab}
+                    onClick={() => handleTabSwitch(tab as any)}
+                    className={`px-4 md:px-6 py-2 md:py-3 font-medium whitespace-nowrap border-b-3 transition-colors
+                                text-sm md:text-base ${activeTab === tab
+
+                                  ? "text-red-800 border-red-800 bg-red-50"
+                                  : "text-gray-500 border-transparent hover:text-red-700 hover:bg-red-50"
+                                }`}>
+
+                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
           </div>
 
+          
         </div>
       </div>
 
