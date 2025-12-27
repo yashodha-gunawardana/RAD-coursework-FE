@@ -107,6 +107,10 @@ const Dashboard: React.FC = () => {
   };
 
 
+  const handleTabSwitch = (tab: "overview" | "recent" | "upcoming") => {
+    setActiveTab(tab)
+  }
+
 }
 
 
