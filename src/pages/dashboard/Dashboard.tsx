@@ -108,7 +108,11 @@ const Dashboard: React.FC = () => {
 
 
   const handleTabSwitch = (tab: "overview" | "recent" | "upcoming") => {
-    setActiveTab(tab)
+    setActiveTab(tab) // update active tab state
+  };
+
+  const getStatusBadgeClass = (status: string) => {
+    
   }
 
 }
