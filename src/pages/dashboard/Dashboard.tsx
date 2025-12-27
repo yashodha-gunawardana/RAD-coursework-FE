@@ -67,7 +67,10 @@ const Dashboard: React.FC = () => {
     );
   };
 
-  
+
+  const loadDashboardData = () => {
+    
+  }
 
 }
 
