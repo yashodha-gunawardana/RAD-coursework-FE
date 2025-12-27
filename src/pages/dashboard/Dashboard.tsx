@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bookmark, Calendar, DollarSign, Home, Plus, RefreshCw, User, Users } from "react-feather";
+import { Bookmark, Calendar, DollarSign, Home, Plus, RefreshCw, User, Users, Zap } from "react-feather";
 
 
 interface DashboardStats {
@@ -234,7 +234,38 @@ const Dashboard: React.FC = () => {
 
       {/* main content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="lg:col-span-1 bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100">
 
+          <h3 className="text-lg md:text-xl font-bold text-red-800 mb-4 md:mb-6 pb-2 md:pb-3 boredr-b border-amber-100
+                          flex items-center gap-2">
+
+              <Zap className="w-8 h-8" />
+
+                  Quick Actions
+          </h3>
+
+          <div className="space-y-2 md:space-y-3">
+
+            {quickActions.map((action, index) => (
+              <button
+                    key={index}
+                    onClick={action.onClick}
+                    className={`w-full px-4 md:px-5 py-2 md:py-3 rounded-lg transition-all duration-300 flex
+                                items-center gap-2 md:gap-3 text-sm md:text-base
+                                ${action.primary
+                                
+                                  ? "bg-red-800 text-white shadow-lg hover:bg-red-700 hover:shadow-xl hover:-translate-y-1"
+                                  : "bg-gray-50 text-gray-800 border border-gray-300 hover:bg-amber-50 hover:border-amber-200 hover:text-gray-900 hover:-translate-y-1"
+                                }`}>
+
+                        <action.icon className="w-4 h-4 md:w-8 md:h-8" />
+                        {action.label}
+                </button>
+            ))}
+          </div>
+        </div>
+
+        
       </div>
 
     </main>
