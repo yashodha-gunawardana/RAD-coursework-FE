@@ -98,6 +98,15 @@ const Dashboard: React.FC = () => {
   const handleCreateBudget = () => {
     alert("Create Budget - This would open the budget creation form")
   };
+
+
+  // refresh button 
+  const refreshDashboard = () => {
+    loadDashboardData()
+    alert("Dashboard data refreshed!")
+  };
+
+
 }
 
 
