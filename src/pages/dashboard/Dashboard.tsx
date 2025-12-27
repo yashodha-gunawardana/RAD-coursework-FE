@@ -265,6 +265,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
+
         {/* right column */}
         <div className="lg:col-span-2 bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100">
           <div className="flex border-b border-gray-200 mb-4 md:mb-6 overflow-x-auto">
@@ -285,7 +286,11 @@ const Dashboard: React.FC = () => {
             ))}
           </div>
 
-          
+
+          {/* active tab */}
+          <div className="space-y-4 md:space-y-6">
+
+          </div>
         </div>
       </div>
 
