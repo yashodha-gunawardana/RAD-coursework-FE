@@ -26,6 +26,7 @@ interface UpcomingEvent {
 
 const Dashboard: React.FC = () => {
 
+  // intitialize stats satate
   const [stats, setStats] = useState<DashboardStats> ({
     userCount: 0,
     eventCount: 0,
@@ -33,7 +34,9 @@ const Dashboard: React.FC = () => {
     bookingCount: 0
   });
 
-  
+  const [activeTab, setActiveTab] = useState<"overview" | "recent" | "upcoming">("overview")
+
+
 }
 
 
