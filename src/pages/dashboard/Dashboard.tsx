@@ -45,6 +45,11 @@ const Dashboard: React.FC = () => {
 
   }, [])
 
+
+  const loadSampleData = () => {
+    
+  }
+
 }
 
 
