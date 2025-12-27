@@ -203,6 +203,7 @@ const Dashboard: React.FC = () => {
           </button>
       </div>
 
+      {/* stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
 
         {statsCards.map((stat, index) => (
@@ -229,6 +230,11 @@ const Dashboard: React.FC = () => {
               </div>
           </div>
         ))}
+      </div>
+
+      {/* main content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+
       </div>
 
     </main>
