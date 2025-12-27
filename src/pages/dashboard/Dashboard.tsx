@@ -83,6 +83,21 @@ const Dashboard: React.FC = () => {
     alert("Create New Event - This would open the event creation form")
   };
 
+  const handleAddBooking = () => {
+    alert("Add Booking - This would open the booking creation form")
+  };
+
+  const handleInviteGuests = () => {
+    alert("Invite Guests - This would open the guests invitation form")
+  };
+
+  const handleAddVendor = () => {
+    alert("Add Vendor - This would open the vendor creation form")
+  };
+
+  const handleCreateBudget = () => {
+    alert("Create Budget - This would open the budget creation form")
+  };
 }
 
 
