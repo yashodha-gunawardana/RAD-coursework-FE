@@ -35,6 +35,9 @@ const Dashboard: React.FC = () => {
   });
 
   const [activeTab, setActiveTab] = useState<"overview" | "recent" | "upcoming">("overview")
+  const [activities, setActivities] = useState<ActivityItem[]>([])
+
+  
 
 
 }
