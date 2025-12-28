@@ -34,23 +34,20 @@ const DashBoardLayout: React.FC = () => {
 
 
     return (
-        <div className="min-h-screen bg-gray-50 text-gray-800 font-poppins">
-            <div className="flex">
+        <div className="flex h-screen overflow-hidden">
+        
+            <Sidebar
 
-                <Sidebar
+                isCollapsed={isSidebarCollapsed}
+                isMobileOpen={isMobileMenuOpen}
+                onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                onToggleMobile={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 
-                    isCollapsed={isSidebarCollapsed}
-                    isMobileOpen={isMobileMenuOpen}
-                    onToggleCollapse={handleToggleCollapse}
-                    onToggleMobile={handleToggleMobile}
+            />
 
-                />
-
-                <main className="flex-1 p-6 ml-0 lg:ml-0">
-                    <Outlet />
-                </main>
-
-            </div>
+            <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 relative overflow-hidden">
+                <Outlet />
+            </main>
 
         </div>
     )

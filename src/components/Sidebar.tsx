@@ -1,5 +1,6 @@
 import React, { act } from "react";
 import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings, Menu, ChevronLeft, ChevronRight, LogOut } from "react-feather";
+import { NavLink } from "react-router-dom";
 
 
 interface SidebarProps {
@@ -17,21 +18,21 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
 
     const mainMenuItems = [
-        { id: "dashboard", icon: Clipboard, label: "Dashboard", active: false },
-        { id: "users", icon: Users, label: "Users", active: false },
-        { id: "events", icon: Calendar, label: "Events", active: false },
-        { id: "vendors", icon: Home, label: "vendors", active: false}
+        { id: "dashboard", icon: Clipboard, label: "Dashboard", path: "/dashboard" },
+        { id: "users", icon: Users, label: "Users", path: "/dashboard/users" },
+        { id: "events", icon: Calendar, label: "Events", path: "/dashboard/events" },
+        { id: "vendors", icon: Home, label: "vendors", path: "/dashboard/vendors" }
     ];
 
     const managementItems = [
-        { id: "booking", icon: Bookmark, label: "Booking", active: false },
-        { id: "budgets", icon: DollarSign, label: "Budgets", active: false },
-        { id: "guests", icon: Users, label: "Guests", active: false }
+        { id: "booking", icon: Bookmark, label: "Booking", path: "/dashboard/booking" },
+        { id: "budgets", icon: DollarSign, label: "Budgets", path: "/dashboard/budgets" },
+        { id: "guests", icon: Users, label: "Guests", path: "/dashboard/guests" }
     ];
 
     const settingsItems = [
-        { id: "settings", icon: Settings, label: "Settings", active: false },
-        { id: "admin", icon: User, label: "Admin", active: false }
+        { id: "settings", icon: Settings, label: "Settings", path: "/dashboard/settings" },
+        { id: "admin", icon: User, label: "Admin", path: "/dashboard/admin" }
     ];
 
 
@@ -51,15 +52,18 @@ const Sidebar: React.FC<SidebarProps> = ({
         <>
             <button
                 onClick={onToggleMobile}
-                className="lg:hidden fixed top-4 left-4 z-50 bg-white p-3 rounded-lg shadow-md flex items-center">
+                className="lg:hidden fixed top-4 right-4 z-50 bg-gradient-to-br from-[#8B0000]/50 to-[F5F5F5] p-2 rounded-lg shadow-lg border border-[#8B0000]/50 
+                            hover:border-[#8B0000]/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center group">
 
-                <Menu className="w-8 h-8" />
+                <div className="p-1 rounded-md bg-gradient-to-br from-[#800000]/10 to-[#800000]/5 group-hover:from-[#8B0000]/20 group-hover:to-[#800000]/10 transition-colors">
+                    <Menu className="w-6 h-6 text-[#8B0000]" />
+                </div>
             </button>
 
             {isMobileOpen && (
                 <div
                     onClick={handleOverlayClick}
-                    className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden">
+                    className="fixed inset-0 bg-[#1A1A1A]/70 backdrop-blur z-30 lg:hidden">
 
                 </div>
             )}

@@ -3,7 +3,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
 
-
 const LandingPage = lazy(() => import("../pages/LandingPage"))
 const LoginRegister = lazy(() => import("../pages/LoginRegister"))
 
@@ -18,8 +17,9 @@ export default function Router() {
             <Route path="/auth" element={<LoginRegister />} />
 
             {/* dahboard routes*/}
-            <Route element={<DashBoardLayout />}>
-                <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<DashBoardLayout />}>
+                <Route index element={<Dashboard />} />          
+                {/* <Route path="events" element={<EventsPage />} />  */}
             </Route>
            
             </Routes>
