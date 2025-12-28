@@ -2,6 +2,7 @@ import { lazy, Suspense, type ReactNode } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
+// import EventsPage from "../pages/dashboard/EventsPage";
 
 const LandingPage = lazy(() => import("../pages/LandingPage"))
 const LoginRegister = lazy(() => import("../pages/LoginRegister"))
@@ -19,7 +20,7 @@ export default function Router() {
             {/* dahboard routes*/}
             <Route path="/dashboard" element={<DashBoardLayout />}>
                 <Route index element={<Dashboard />} />          
-                {/* <Route path="events" element={<EventsPage />} />  */}
+                 {/* <Route path="events" element={<EventsPage />} />    */}
             </Route>
            
             </Routes>
