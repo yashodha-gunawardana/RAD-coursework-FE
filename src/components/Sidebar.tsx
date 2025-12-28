@@ -138,18 +138,28 @@ const Sidebar: React.FC<SidebarProps> = ({
                         {mainMenuItems.map((item) => (
                             <li
                                 key={item.id}>
-                                <a href="#" className={`flex items-center p-3 rounded-lg transition-colors
-                                        ${item.active
-                                        ? "bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white" // active
-                                        : "hover:bg-[#2a2a2a] hover:text-[#f5deb3]" // hover
-                                    }`}>
+                                <NavLink
+                                    to={item.path}
+                                    className={({ isActive }) => 
+                                        `flex items-center p-3 rounded-lg transition-colors
+                                        ${ 
+                                            isActive
+                                                ? "bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white" // active
+                                                : "hover:bg-[#2a2a2a] hover:text-[#f5deb3]" // hover
+                                        }`
+                                    }
+                                    
+                                    onClick={() => {
+                                        if (isMobileOpen) onToggleMobile()
+                                    }}>
 
                                     <div className={`w-6 flex justify-center ${!isCollapsed ? 'mr-4' : ''}`}>
                                         <item.icon size={20} />
                                     </div>
 
                                     {!isCollapsed && <span>{item.label}</span>}
-                                </a>
+
+                                </NavLink>
                             </li>
                         ))}
                     </ul>
