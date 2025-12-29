@@ -262,4 +262,30 @@ const EventsPage: React.FC = () => {
     useEffect(() => {
         loadEvents()
     }, [loadEvents])
+
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0A0A0A] p-5 md:p-10 
+                        font-[poppins]">
+
+            {/* toast notification */}
+            {toast.show && (
+                <div className={`fixed bottom-6 right-6 bg-white text-gray-900 px-6 py-4 rounded-xl shadow-lg z-50
+                                    animate-slideIn flex items-center gap-3 
+                                    ${toast.type === "success" ? "border-l-4 border-green-500" : "border-l-4 border-red-500"}
+                                `}>
+
+                    {toast.type === "success" ? (
+                        <AlertCircle className="text-green-500" size={20} />
+                    ) : (
+                        <AlertCircle className="text-red-500" size={20} />
+                    )}
+                    
+                    <span>{toast.message}</span>
+                    
+                </div>
+            )}
+
+        </div>
+    )
 }
