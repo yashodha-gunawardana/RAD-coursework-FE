@@ -162,5 +162,17 @@ const EventForm: React.FC = () => {
             showToast("Required fields are missing..", "error")
             return
         }
+
+        const formData = new FormData()
+        formData.append("title", eventData.title)
+        formData.append("type", eventData.type)
+        formData.append("date", eventData.date)
+        if (eventData.time) formData.append("time", eventData.time)
+        formData.append("location", eventData.location)
+        if (eventData.description) formData.append("description", eventData.description)
+        formData.append("basePrice", eventData.basePrice.toString());
+        formData.append("status", eventData.status);
+        if (eventData.image) formData.append("image", eventData.image);
+
     }
 }
