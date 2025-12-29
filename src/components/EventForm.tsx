@@ -146,6 +146,9 @@ const EventForm: React.FC = () => {
                 })) || []);
 
                 setPreview(eventData.image || null)
+            
+            }).catch(() => {
+                showToast("Error loading event", "error")
             })
         }
     })
