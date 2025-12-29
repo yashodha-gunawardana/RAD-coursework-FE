@@ -109,4 +109,10 @@ const EventForm: React.FC = () => {
             setPreview(URL.createObjectURL(e.target.files[0]))
         }
     }
+
+    // toast notifications
+    const showToast = (message: string, type: "success" | "error" = "success") => {
+        setToast({ show: true, message, type })
+        
+    }
 }
