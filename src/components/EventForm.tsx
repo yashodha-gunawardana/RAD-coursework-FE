@@ -271,6 +271,31 @@ const EventForm: React.FC = () => {
 
                                 </span>
 
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                                    {/* title */}
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                            
+                                            Event Title <span className="text-[#8B0000]">*</span>
+
+                                        </label>
+
+                                        <input 
+                                            type="text"
+                                            id="title"
+                                            value={eventData.title}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
+                                                        transition-all"
+                                            placeholder="e.g. Corporate Gala 2024"
+                                            required
+                                        />
+                                    </div>
+
+                                </div>
+
                             </form>
 
                         </div>
