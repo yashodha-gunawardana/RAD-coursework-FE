@@ -43,5 +43,21 @@ interface ToastState {
 const EventForm: React.FC = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
-    const editId = searchParams.get("edit")
+
+    // get edit id from url params
+    const editId = searchParams.get("edit") 
+
+
+    const [eventData, setEventData] = useState<EventData>({
+        title: "",
+        type: "",
+        date:  new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0], 
+        time: "",
+        location: "",
+        description: "",
+        basePrice: 0,
+        status: "PLANNING",
+        extraItems: [],
+        image: null
+    });
 }
