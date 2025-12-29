@@ -140,4 +140,19 @@ const EventsPage: React.FC = () => {
             setToast(prev => ({ ...prev, show: false }))
         }, 3000)
     }, [])
+
+    const loadEvents = useCallback(async () => {
+        try {
+            setLoading(true)
+            const response = await getMyEvents()
+            setEvents(response.data || [])
+        
+        } catch (err: any) {
+            console.error("Error loading events: ", err)
+            showToast("Failed to load events", err)
+        
+        } finally {
+            setLoading(false)
+        }
+    }, [showToast])
 }
