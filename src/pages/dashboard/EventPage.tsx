@@ -131,4 +131,13 @@ const EventsPage: React.FC = () => {
         }
         return classes[status] || "bg-gray-100 text-gray-800 border border-gray-200"
     }, [])
+
+
+    // toast notification
+    const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
+        setToast({ show: true, message, type })
+        setTimeout(() =>{
+            setToast(prev => ({ ...prev, show: false }))
+        }, 3000)
+    }, [])
 }
