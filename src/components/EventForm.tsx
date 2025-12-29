@@ -114,9 +114,18 @@ const EventForm: React.FC = () => {
     const showToast = (message: string, type: "success" | "error" = "success") => {
         setToast({ show: true, message, type })
 
-        
+        // hide automatically after the 3 seconds
         setTimeout(() => {
             setToast(prev => ({ ...prev, show: false }));
         }, 3000);
     }
+
+
+    useEffect(() => {
+        if (editId) {
+            getEventById(editId).then((eventData: any) => {
+                
+            })
+        }
+    })
 }
