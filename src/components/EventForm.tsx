@@ -113,6 +113,10 @@ const EventForm: React.FC = () => {
     // toast notifications
     const showToast = (message: string, type: "success" | "error" = "success") => {
         setToast({ show: true, message, type })
+
         
+        setTimeout(() => {
+            setToast(prev => ({ ...prev, show: false }));
+        }, 3000);
     }
 }
