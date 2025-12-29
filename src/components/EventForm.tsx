@@ -157,5 +157,10 @@ const EventForm: React.FC = () => {
     // submit form
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
+
+        if (!eventData.title || !eventData.type || !eventData.date || !eventData.location || !eventData.basePrice) {
+            showToast("Required fields are missing..", "error")
+            return
+        }
     }
 }
