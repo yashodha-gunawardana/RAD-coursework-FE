@@ -18,3 +18,17 @@ interface ExtraItem {
     unitPrice: number
     quantity: number
 }
+
+interface EventData {
+    _id?: string | null
+    title: string;
+    type: string;
+    date: string;
+    time?: string;
+    location: string;
+    description?: string;
+    basePrice: number;
+    status: string;
+    extraItems?: ExtraItem[];
+    image?: File | null;
+}
