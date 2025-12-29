@@ -175,4 +175,24 @@ const EventsPage: React.FC = () => {
             showToast("Failed to delete event", "error")
         }
     }, [showToast])
+
+
+    // dashboard statistics
+    const stats = React.useMemo(() => {
+        const totalEvents = events.length
+        const activeEvents = events.filter(e => e.status === EventStatus.ONGOING).length
+        const totalRevenue = events.reduce((sum, event) => sum + calculateTotalprice(event), 0)
+
+        // within next 30 days from today
+        const today = new Date()
+        const nextMonth = new Date()
+        nextMonth.setDate(today.getDate() + 30)
+        
+        const upcomingEvents = events.filter(e => {
+            const eventDate = new Date(e.date)
+            return eventDate > today && eventDate <= nextMonth
+        }).length
+
+        return { totalEvents, activeEvents, upcomingEvents, totalRevenue }
+    }, [events, calculateTotalprice])
 }
