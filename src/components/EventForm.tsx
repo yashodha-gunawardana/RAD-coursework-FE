@@ -344,7 +344,25 @@ const EventForm: React.FC = () => {
                                         </select>
                                     </div>
 
-                                    
+                                    {/* date */}
+                                    <div>
+                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                      
+                                            Date <span className="text-[#8B0000]">*</span>
+
+                                        </label>
+
+                                        <input
+                                            type="date"
+                                            id="date"
+                                            value={eventData.date}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm 
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10 
+                                                        transition-all"
+                                            required
+                                        />
+                                    </div>
 
                                 </div>
 
