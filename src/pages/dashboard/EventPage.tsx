@@ -232,7 +232,7 @@ const EventsPage: React.FC = () => {
     }, [showToast]);
 
 
-    // details view
+    // full details view
     const viewEventDetails = useCallback((event: Event) => {
         const totalPrice = calculateTotalprice(event)
         let details = `Event Details:\n\n`
@@ -257,4 +257,9 @@ const EventsPage: React.FC = () => {
         }
         alert(details)
     }, [calculateTotalprice, getEventTypeLabel])
+
+
+    useEffect(() => {
+        loadEvents()
+    }, [loadEvents])
 }
