@@ -421,6 +421,61 @@ const EventsPage: React.FC = () => {
                                     View All
                         </button>
                     </div>
+
+                    {/* filters */}
+                    <div className="px-6 py-5 bg-gray-50 border-b border-gray-200 flex flex-col md:flex-row gap-4 items-start 
+                                    md:items-center">
+                        
+                        <div className="flex-1 min-w-0 w-full md:w-auto">
+                            <div className="relative">
+
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+
+                                <input
+                                    type="text"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    placeholder="Search events by title, location, or description..."
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 
+                                                focus:ring-red-500 focus:border-transparent transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex gap-3 w-full md:w-auto">
+
+                            <select
+                                value={typeFilter}
+                                onChange={(e) => setTypeFilter(e.target.value)}
+                                className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 
+                                            focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
+
+                                <option value="">All Types</option>
+                                <option value="WEDDING">Wedding</option>
+                                <option value="BIRTHDAY">Birthday</option>
+                                <option value="CONFERENCE">Conference</option>
+                                <option value="CORPORATE">Corporate</option>
+                                <option value="PARTY">Party</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value)}
+                                className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 
+                                            focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
+
+                                <option value="">All Status</option>
+                                <option value="PLANNING">Planning</option>
+                                <option value="ONGOING">Ongoing</option>
+                                <option value="COMPLETED">Completed</option>
+                                <option value="CANCELLED">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* event list */}
+                    
                 </div>
 
             </div>
