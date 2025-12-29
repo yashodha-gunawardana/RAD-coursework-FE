@@ -218,6 +218,16 @@ const EventsPage: React.FC = () => {
             result = result.filter(event => event.status === statusFilter);
         }
 
+        // sort by most recent date first
         return result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     }, [events, searchTerm, typeFilter, statusFilter])
+
+
+    // filter reset
+    const resetFilters = useCallback(() => {
+        setSearchTerm('');
+        setTypeFilter('');
+        setStatusFilter('');
+        showToast('Showing all events');
+    }, [showToast]);
 }
