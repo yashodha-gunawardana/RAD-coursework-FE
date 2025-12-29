@@ -221,6 +221,30 @@ const EventForm: React.FC = () => {
                 </div>
             )}
 
+            <div className="max-w-6xl mx-auto">
+
+                {/* header */}
+                <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+                    <div>
+                        <h1 className="text-2xl md:text-3xl font-extrabold text-[#8B0000] tracking-tight">
+
+                            {editId ? "Edit Event Details" : "Create Event"}
+
+                        </h1>
+                    </div>
+
+                    <button
+                        onClick={() => navigate("/dashboard/events")}
+                        className="text-[#6B7280] font-semibold text-sm flex items-center gap-2 hover:text-[#8B0000] transition-colors">
+
+                            <ChevronLeft size={16} />
+
+                            Back to Dashboard
+                    </button>
+                </header>
+
+            </div>
+
         </div>
     )
 }
