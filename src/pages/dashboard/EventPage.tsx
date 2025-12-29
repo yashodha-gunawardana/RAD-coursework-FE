@@ -217,5 +217,7 @@ const EventsPage: React.FC = () => {
         if (statusFilter) {
             result = result.filter(event => event.status === statusFilter);
         }
-    })
+
+        return result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    }, [events, searchTerm, typeFilter, statusFilter])
 }
