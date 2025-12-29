@@ -41,5 +41,7 @@ interface ToastState {
 
 
 const EventForm: React.FC = () => {
-    
+    const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
+    const editId = searchParams.get("edit")
 }
