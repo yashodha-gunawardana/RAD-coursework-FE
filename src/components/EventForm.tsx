@@ -174,5 +174,12 @@ const EventForm: React.FC = () => {
         formData.append("status", eventData.status);
         if (eventData.image) formData.append("image", eventData.image);
 
+
+        extraItems.forEach((item: ExtraItem, idx: number) => {
+            formData.append(`extraItems[${idx}][name]`, item.name);
+            formData.append(`extraItems[${idx}][unitPrice]`, item.unitPrice.toString());
+            formData.append(`extraItems[${idx}][quantity]`, item.quantity.toString());
+        });
+
     }
 }
