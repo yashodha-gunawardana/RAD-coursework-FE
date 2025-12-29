@@ -459,8 +459,60 @@ const EventForm: React.FC = () => {
                                         </div>
 
                                         {/* cover photo */}
-                                    </div>
+                                        <div className="md:col-span-2">
+                                            <label className="block text-sm font-semibold text-[#121212] mb-2">
+                        
+                                                Cover Photo
+                      
+                                            </label>
 
+                                            <div
+                                                onClick={() => document.getElementById('imageInput')?.click()}
+                                                className="border-2 border-dashed border-[#E5E7EB] rounded-xl p-10 text-center cursor-pointer bg-[#FAFAFA] hover:border-[#8B0000] 
+                                                            hover:bg-white transition-all">
+                        
+                                                    <ImageIcon size={32} className="text-[#C5A059] mx-auto mb-3" />
+                                                
+                                                <p className="font-semibold text-[#121212]">
+                                                    Click to upload or drag and drop
+                                                </p>
+
+                                                <p className="text-xs text-[#6B7280] mt-1">
+                                                    PNG, JPG (max. 5MB)
+                                                </p>
+                                            </div>
+
+                                            <input
+                                                type="file"
+                                                id="imageInput"
+                                                accept="image/*"
+                                                className="hidden"
+                                                onChange={handleImage}
+                                            />
+
+                                            {preview && (
+                                                <div className="mt-5 rounded-xl overflow-hidden border border-[#E5E7EB]">
+                                                    <img
+                                                        src={preview}
+                                                        alt="Preview"
+                                                        className="w-full h-64 object-cover"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setEventData(prev => ({ ...prev, image: null }));
+                                                            setPreview(null);
+                                                        }}
+                                                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 
+                                                                    transition-all">
+                                                        
+                                                        <Trash2 size={16} />
+                                                        
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
 
