@@ -32,3 +32,9 @@ interface EventData {
     extraItems?: ExtraItem[];
     image?: File | null;
 }
+
+interface ToastState {
+    show: boolean
+    message: string
+    type: "success" | "error"
+}
