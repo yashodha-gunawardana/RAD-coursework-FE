@@ -80,11 +80,16 @@ const EventForm: React.FC = () => {
 
     // extra items management
     const addExtraItem = () => setExtraItems(prev => [...prev, {
-        id: Date.now(),
+        id: Date.now(), // unique id using timestamp
         name: " ",
         unitPrice: 0,
         quantity: 1
     }]);
 
-    
+    const updateExtraItem = (id: number, field: keyof ExtraItem, value: string | number) =>
+        setExtraItems(prev => prev.map((item: ExtraItem) =>
+        (item.id === id ? {
+            ...item,
+        })
+        ))
 }
