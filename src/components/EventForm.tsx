@@ -383,7 +383,26 @@ const EventForm: React.FC = () => {
                                         />
                                     </div>
 
-                                    {/*}
+                                    {/* location */}
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                        
+                                            Venue / Location <span className="text-[#8B0000]">*</span>
+
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="location"
+                                            value={eventData.location}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm 
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10 
+                                                        transition-all"
+                                            placeholder="Enter venue name or address"
+                                            required
+                                        />
+                                    </div>
 
                                 </div>
 
