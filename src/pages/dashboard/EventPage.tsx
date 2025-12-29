@@ -81,3 +81,8 @@ const EventStatus = {
     COMPLETED: "COMPLETED",
     CANCELLED: "CANCELLED"
 } as const;
+
+
+const EvensPage: React.FC = () => {
+    const navigate = useNavigate()
+}
