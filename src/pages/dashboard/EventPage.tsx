@@ -66,3 +66,18 @@ interface ToastState {
     type: "success" | "error"
 }
 
+const eventType = {
+    WEDDING: "WEDDING",
+    BIRTHDAY: "BIRTHDAY",
+    CONFERENCE: "CONFERENCE",
+    CORPORATE: "CORPORATE",
+    PARTY: "PARTY",
+    OTHER: "OTHER"
+} as const;
+
+const EventStatus = {
+    PLANNING: "PLANNING",
+    ONGOING: "ONGOING",
+    COMPLETED: "COMPLETED",
+    CANCELLED: "CANCELLED"
+} as const;
