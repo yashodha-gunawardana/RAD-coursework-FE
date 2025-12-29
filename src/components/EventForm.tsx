@@ -138,6 +138,11 @@ const EventForm: React.FC = () => {
                     status: eventData.status,
                     extraItems: eventData.extraItems || []
                 })
+
+                setExtraItems(eventData.extraItems?.map((item: any) => ({
+                    ...item,
+                    id: Date.now() + Math.random()
+                })) || []);
             })
         }
     })
