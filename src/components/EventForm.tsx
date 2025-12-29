@@ -610,17 +610,23 @@ const EventForm: React.FC = () => {
                                             
                                             Cancel
                                     </button>
+
+                                    <button
+                                        type="submit"
+                                        className="px-6 py-3 bg-[#8B0000] text-white rounded-xl font-bold hover:bg-[#660000] hover:shadow-lg hover:-translate-y-0.5 
+                                                    transition-all flex items-center justify-center gap-2">
+                                        
+                                            <Check size={18} />
+
+                                            Save Event
+                                    </button>
                                 </div>
                             </form>
-
                         </div>
-
                     </main>
-
                 </div>
-
             </div>
-
         </div>
     )
 }
+
