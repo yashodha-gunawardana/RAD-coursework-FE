@@ -94,7 +94,8 @@ const EventsPage: React.FC = () => {
     const [typeFilter, setTypeFilter] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
 
-
+    
+    // calculate total price
     const calculateTotalprice = useCallback((event: Event) => {
         let total = event.basePrice || 0
 
@@ -104,6 +105,18 @@ const EventsPage: React.FC = () => {
             })
         }
         return total
-
     }, []);
+
+
+    const getEventTypeLabel = useCallback((type: string) => {
+        const labels: Record<string, string> = {
+            WEDDING: "WEDDING",
+            BIRTHDAY: "BIRTHDAY",
+            CONFERENCE: "CONFERENCE",
+            CORPORATE: "CORPORATE",
+            PARTY: "PARTY",
+            OTHER: "OTHER"
+        }
+        return labels[type] || type
+    }, [])
 }
