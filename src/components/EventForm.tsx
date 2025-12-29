@@ -191,6 +191,10 @@ const EventForm: React.FC = () => {
                 await createEvent(formData)
                 showToast("Event created successfully..")
             }
+
+            setTimeout(() => {
+                navigate("/dashboard/events");
+            }, 1200)
         }
     }
 }
