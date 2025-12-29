@@ -85,4 +85,12 @@ const EventStatus = {
 
 const EvensPage: React.FC = () => {
     const navigate = useNavigate()
+
+    const [events, setEvents] = useState<Event[]>([])
+    const [loading, setLoading] = useState(true)
+    const [toast, setToast] = useState<ToastState>({ show: false, message: " ", type: "success" })
+
+    const [searchTerm, setSearchTerm] = useState("")
+    const [typeFilter, setTypeFilter] = useState("")
+    const [statusFilter, setStatusFilter] = useState("")
 }
