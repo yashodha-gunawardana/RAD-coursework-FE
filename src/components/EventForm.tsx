@@ -425,6 +425,19 @@ const EventForm: React.FC = () => {
                                     </div>
                                 </div>
 
+                                {/* pricing */}
+                                <div className="mt-10 pt-8 border-t border-[#E5E7EB]">
+                                    <span className="block text-xs uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2 border-b-2 border-[#FDFCF0]">
+                    
+                                        Pricing & Media
+                  
+                                    </span>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        
+                                    </div>
+
+                                </div>
                             </form>
 
                         </div>
