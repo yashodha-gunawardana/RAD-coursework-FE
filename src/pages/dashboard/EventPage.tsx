@@ -83,7 +83,7 @@ const EventStatus = {
 } as const;
 
 
-const EvensPage: React.FC = () => {
+const EventsPage: React.FC = () => {
     const navigate = useNavigate()
 
     const [events, setEvents] = useState<Event[]>([])
@@ -93,4 +93,17 @@ const EvensPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [typeFilter, setTypeFilter] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
+
+
+    const calculateTotalprice = useCallback((event: Event) => {
+        let total = event.basePrice || 0
+
+        if (event.extraItems && event.extraItems.length > 0) {
+            event.extraItems.forEach(item => {
+                total += (item.unitPrice || 0) * (item.quantity || 1)
+            })
+        }
+        return total
+
+    }, []);
 }
