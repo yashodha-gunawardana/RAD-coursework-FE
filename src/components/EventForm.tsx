@@ -64,4 +64,9 @@ const EventForm: React.FC = () => {
     const [extraItems, setExtraItems] = useState<ExtraItem[]>([]);
     const [preview, setPreview] = useState<string | null>(null);
     const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
+
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { id, value } = e.target
+    }
 }
