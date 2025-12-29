@@ -195,4 +195,27 @@ const EventsPage: React.FC = () => {
 
         return { totalEvents, activeEvents, upcomingEvents, totalRevenue }
     }, [events, calculateTotalprice])
+
+
+    // filter
+    const filteredEvents = React.useMemo(() => {
+        let result = [...events];
+
+        if (searchTerm) {
+            const term = searchTerm.toLowerCase();
+            result = result.filter(event =>
+                event.title.toLowerCase().includes(term) ||
+                event.location.toLowerCase().includes(term) ||
+                (event.description && event.description.toLowerCase().includes(term))
+            );
+        }
+
+        if (typeFilter) {
+            result = result.filter(event => event.type === typeFilter);
+        }
+
+        if (statusFilter) {
+            result = result.filter(event => event.status === statusFilter);
+        }
+    })
 }
