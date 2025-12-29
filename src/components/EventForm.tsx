@@ -294,6 +294,33 @@ const EventForm: React.FC = () => {
                                         />
                                     </div>
 
+                                    {/* category */}
+                                    <div>
+                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                      
+                                            Category <span className="text-[#8B0000]">*</span>
+                    
+                                        </label>
+
+                                        <select
+                                            id="type"
+                                            value={eventData.type}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm 
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10 
+                                                        transition-all"
+                                            required>
+
+                                                <option value="">Select Type</option>
+                                                <option value="WEDDING">Wedding</option>
+                                                <option value="BIRTHDAY">Birthday</option>
+                                                <option value="CONFERENCE">Conference</option>
+                                                <option value="CORPORATE">Corporate</option>
+                                                <option value="PARTY">Party</option>
+                                                <option value="OTHER">Other</option>
+                                        </select>
+                                    </div>
+
                                 </div>
 
                             </form>
