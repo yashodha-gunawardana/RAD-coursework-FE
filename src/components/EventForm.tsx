@@ -60,4 +60,8 @@ const EventForm: React.FC = () => {
         extraItems: [],
         image: null
     });
+
+    const [extraItems, setExtraItems] = useState<ExtraItem[]>([]);
+    const [preview, setPreview] = useState<string | null>(null);
+    const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
 }
