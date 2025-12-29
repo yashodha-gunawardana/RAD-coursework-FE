@@ -314,6 +314,96 @@ const EventsPage: React.FC = () => {
                     </div>
                 </header>
 
+                {/* stats card */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all 
+                                    hover:-translate-y-1">
+
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Events</div>
+                            <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
+                
+                                <Calendar className="text-red-800" size={24} />
+                            
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{stats.totalEvents}</div>
+                        <div className="text-sm text-green-600 font-medium flex items-center gap-1">
+                        
+                            <TrendingUp size={16} />
+
+                                12% from last month
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all 
+                                    hover:-translate-y-1">
+
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Active Events</div>
+                            <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+                                
+                                <CheckCircle className="text-green-600" size={24} />
+
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{stats.activeEvents}</div>
+                        <div className="text-sm text-green-600 font-medium flex items-center gap-1">
+                            
+                            <TrendingUp size={16} />
+                                
+                                3 ongoing events
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all 
+                                    hover:-translate-y-1">
+                        
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Upcoming Events</div>
+                            <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                                
+                                <Clock className="text-blue-600" size={24} />
+
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{stats.upcomingEvents}</div>
+                        <div className="text-sm text-red-600 font-medium flex items-center gap-1">
+                        
+                            <TrendingDown size={16} />
+
+                                2 in next week
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all 
+                                    hover:-translate-y-1">
+            
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Revenue</div>
+                            <div className="w-12 h-12 bg-yellow-50 rounded-lg flex items-center justify-center">
+                                
+                                <DollarSign className="text-yellow-600" size={24} />
+
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{formatCurrency(stats.totalRevenue)}</div>
+                        <div className="text-sm text-green-600 font-medium flex items-center gap-1">
+                            
+                            <TrendingUp size={16} />
+
+                                18% increase
+                        </div>
+                    </div>
+                </div>
+
+                {/* main content */}
+                
+
             </div>
 
         </div>
