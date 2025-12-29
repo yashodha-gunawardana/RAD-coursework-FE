@@ -35,3 +35,19 @@
 .ease-in-out-cubic {
   transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 }
+
+
+/* event form */
+@keyframes slideLeft {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+        .animate-slide-left {
+          animation: slideLeft 0.3s ease;
+        }
