@@ -404,6 +404,25 @@ const EventForm: React.FC = () => {
                                         />
                                     </div>
 
+                                    {/* description */}
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                        
+                                            Description
+
+                                        </label>
+
+                                        <textarea
+                                            id="description"
+                                            value={eventData.description}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm 
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10 
+                                                        transition-all resize-none"
+                                            placeholder="Brief overview..."
+                                            rows={4}
+                                        />
+                                    </div>
                                 </div>
 
                             </form>
