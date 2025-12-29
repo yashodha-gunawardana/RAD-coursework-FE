@@ -141,6 +141,8 @@ const EventsPage: React.FC = () => {
         }, 3000)
     }, [])
 
+
+    // get event handler
     const loadEvents = useCallback(async () => {
         try {
             setLoading(true)
@@ -153,6 +155,24 @@ const EventsPage: React.FC = () => {
         
         } finally {
             setLoading(false)
+        }
+    }, [showToast])
+
+
+    // delete handler
+    const handleDeleteEvent = useCallback(async (id: string, title: string) => {
+        if (!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) {
+            return
+        }
+
+        try {
+            await deleteEvent(id)
+            setEvents(prev => prev.filter(event => event._id !== id))
+            showToast("Event deleted successfully..")
+        
+        } catch (err: any) {
+            console.error("Error deleting event: ", err)
+            showToast("Failed to delete event", "error")
         }
     }, [showToast])
 }
