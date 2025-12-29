@@ -402,7 +402,26 @@ const EventsPage: React.FC = () => {
                 </div>
 
                 {/* main content */}
-                
+                <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                    <div className="px-6 py-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start 
+                                    md:items-center gap-4">
+
+                        <div>
+                            <h2 className="text-xl font-semibold text-gray-900">Event Management</h2>
+                            <p className="text-gray-600 text-sm mt-1">Manage all events in one place</p>
+                        </div>
+
+                        <button
+                            onClick={resetFilters}
+                            className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 
+                                        transition-all flex items-center gap-2">
+              
+                                <Filter size={16} />
+                                    
+                                    View All
+                        </button>
+                    </div>
+                </div>
 
             </div>
 
