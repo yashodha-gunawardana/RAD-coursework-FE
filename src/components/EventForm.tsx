@@ -175,11 +175,22 @@ const EventForm: React.FC = () => {
         if (eventData.image) formData.append("image", eventData.image);
 
 
+        // append extra items to form data
         extraItems.forEach((item: ExtraItem, idx: number) => {
             formData.append(`extraItems[${idx}][name]`, item.name);
             formData.append(`extraItems[${idx}][unitPrice]`, item.unitPrice.toString());
             formData.append(`extraItems[${idx}][quantity]`, item.quantity.toString());
         });
 
+        try {
+            if (editId) {
+                await updateEvent(editId, formData)
+                showToast("Event updated successfully..")
+            
+            } else {
+                await createEvent(formData)
+                showToast("Event created successfully..")
+            }
+        }
     }
 }
