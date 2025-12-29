@@ -90,7 +90,11 @@ const EventForm: React.FC = () => {
         setExtraItems(prev => prev.map((item: ExtraItem) =>
             (item.id === id ? {
                 ...item,
+
+                // convert to number for price/quantity
                 [field]: field === "name" ? value: Number(value)
             } : item)
         ));
+
+        const removeExtraItem = (id: number) => setExtraItems(prev => prev.filter((item: ExtraItem) => item.id !== id));
 }
