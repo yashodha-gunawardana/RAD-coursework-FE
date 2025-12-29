@@ -184,6 +184,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                 key={item.id}>
                                 <NavLink
                                     to={item.path}
+                                    end={item.path === "/dashboard"} 
                                     className={({ isActive }) => 
                                         `flex items-center p-3 rounded-lg transition-colors
                                         ${ 
@@ -227,6 +228,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                 key={item.id}>
                                 <NavLink
                                     to={item.path}
+                                    end={item.path === "/dashboard"} 
                                     className={({ isActive }) => 
                                         `flex items-center p-3 rounded-lg transition-colors
                                         ${ 
