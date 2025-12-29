@@ -139,10 +139,13 @@ const EventForm: React.FC = () => {
                     extraItems: eventData.extraItems || []
                 })
 
+                // extra items with unique ids
                 setExtraItems(eventData.extraItems?.map((item: any) => ({
                     ...item,
                     id: Date.now() + Math.random()
                 })) || []);
+
+                setPreview(eventData.image || null)
             })
         }
     })
