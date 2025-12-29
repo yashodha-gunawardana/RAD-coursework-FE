@@ -195,6 +195,9 @@ const EventForm: React.FC = () => {
             setTimeout(() => {
                 navigate("/dashboard/events");
             }, 1200)
+        
+        } catch (err: any) {
+            showToast(err.response?.data?.message || "Error occurred", "error")
         }
     }
 }
