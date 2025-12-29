@@ -66,11 +66,25 @@ const EventForm: React.FC = () => {
     const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
 
 
+    // handle input changes
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { id, value } = e.target
         setEventData(prev => ({
+
+            // update eventData dynamically and basePrice as number
             ...prev,
             [id]: id === "baseprice" ? parseFloat(value) || 0 : value
         }));
     }
+
+
+    // extra items management
+    const addExtraItem = () => setExtraItems(prev => [...prev, {
+        id: Date.now(),
+        name: " ",
+        unitPrice: 0,
+        quantity: 1
+    }]);
+
+    
 }
