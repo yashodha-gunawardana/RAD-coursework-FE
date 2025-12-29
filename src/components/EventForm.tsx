@@ -259,6 +259,24 @@ const EventForm: React.FC = () => {
                         </div>
                     </aside>
 
+                    {/* main form */}
+                    <main className="lg:col-span-3">
+                        <div className="bg-white border border-[#E5E7EB] rounded-2xl shadow-xl p-6 md:p-8">
+
+                            <form id="eventForm" onSubmit={handleSubmit}>
+                                <span className="block text-xs uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2
+                                                border-b-2 border-[#FDFCF0]">
+                                                    
+                                    Event Essentials
+
+                                </span>
+
+                            </form>
+
+                        </div>
+
+                    </main>
+
                 </div>
 
             </div>
