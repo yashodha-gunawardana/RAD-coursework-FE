@@ -280,11 +280,41 @@ const EventsPage: React.FC = () => {
                     ) : (
                         <AlertCircle className="text-red-500" size={20} />
                     )}
-                    
+
                     <span>{toast.message}</span>
-                    
                 </div>
             )}
+
+            <div className="max-w-7xl mx-auto">
+
+                {/* header */}
+                <header className="flex flex-col md:flex-row justify-between items-start md:ietms-center gap-4 mb-8
+                                    pb-6 border-b border-gray-200">
+                                    
+                    <div>
+                        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-red-800 to-red-600 
+                                        bg-clip-text text-transparent">
+              
+                            Event Manager
+                        </h1>
+
+                        <p className="text-gray-600 mt-2">Professional Event Management System</p>
+                    </div>
+
+                    <div className="flex gap-3">
+                        <button
+                            onClick={() => navigate("/dashboard/events/create")}
+                            className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
+                                        hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-0.5">
+                            
+                                <Plus size={18} />
+                                
+                                    Create Event
+                        </button>
+                    </div>
+                </header>
+
+            </div>
 
         </div>
     )
