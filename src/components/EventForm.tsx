@@ -151,5 +151,11 @@ const EventForm: React.FC = () => {
                 showToast("Error loading event", "error")
             });
         }
-    }, [editId])
+    }, [editId]) // run effect when editid changes
+
+
+    // submit form
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault()
+    }
 }
