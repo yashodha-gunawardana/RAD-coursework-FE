@@ -68,5 +68,9 @@ const EventForm: React.FC = () => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { id, value } = e.target
+        setEventData(prev => ({
+            ...prev,
+            [id]: id === "baseprice" ? parseFloat(value) || 0 : value
+        }));
     }
 }
