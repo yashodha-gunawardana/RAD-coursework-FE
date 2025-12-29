@@ -434,7 +434,31 @@ const EventForm: React.FC = () => {
                                     </span>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        
+
+                                        {/* base price */}
+                                        <div className="md:col-span-2">
+                                            <label className="block text-sm font-semibold text-[#121212] mb-2">
+                        
+                                                Base Budget / Price ($) <span className="text-[#8B0000]">*</span>
+                      
+                                            </label>
+
+                                            <input
+                                                type="number"
+                                                id="basePrice"
+                                                value={eventData.basePrice || ''}
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm 
+                                                            focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10 
+                                                            transition-all"
+                                                placeholder="0.00"
+                                                min="0"
+                                                step="0.01"
+                                                required
+                                            />
+                                        </div>
+
+                                        {/* cover photo */}
                                     </div>
 
                                 </div>
