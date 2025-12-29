@@ -121,10 +121,23 @@ const EventForm: React.FC = () => {
     }
 
 
+    // fetch event data if in edit mode
     useEffect(() => {
         if (editId) {
             getEventById(editId).then((eventData: any) => {
-                
+
+                setEventData({
+                    _id: eventData._id,
+                    title: eventData.title,
+                    type: eventData.type,
+                    date: eventData.date.split("T")[0], 
+                    time: eventData.time || "",
+                    location: eventData.location,
+                    description: eventData.description || "",
+                    basePrice: eventData.basePrice,
+                    status: eventData.status,
+                    extraItems: eventData.extraItems || []
+                })
             })
         }
     })
