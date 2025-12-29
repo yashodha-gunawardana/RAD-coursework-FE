@@ -149,7 +149,7 @@ const EventForm: React.FC = () => {
             
             }).catch(() => {
                 showToast("Error loading event", "error")
-            })
+            });
         }
-    })
+    }, [editId])
 }
