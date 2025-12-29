@@ -230,4 +230,31 @@ const EventsPage: React.FC = () => {
         setStatusFilter('');
         showToast('Showing all events');
     }, [showToast]);
+
+
+    // details view
+    const viewEventDetails = useCallback((event: Event) => {
+        const totalPrice = calculateTotalprice(event)
+        let details = `Event Details:\n\n`
+        details += `Title: ${event.title}\n`
+        details += `Type: ${getEventTypeLabel(event.type)}\n`
+        details += `Date: ${formatDate(event.date)}${event.time ? `at ${event.time}` : ``}\n`
+        details += `Location: ${event.location}\n`
+        details += `Status: ${event.status}\n`
+        details += `Base Price: ${formatCurrency(event.basePrice)}\n`
+        details += `Total Price: ${formatCurrency(totalPrice)}\n\n`
+
+        if (event.description) {
+            details += `Description: ${event.description}\n\n`
+        }
+
+        if (event.extraItems && event.extraItems.length > 0) {
+            details += `Extra Items:\n`
+            event.extraItems.forEach(item => {
+                const quantity = item.quantity || 1
+                details += `• ${item.name}: ${formatCurrency(item.unitPrice)} × ${quantity} = ${formatCurrency(item.unitPrice * quantity)}\n`
+            })
+        }
+        alert(details)
+    }, [calculateTotalprice, getEventTypeLabel])
 }
