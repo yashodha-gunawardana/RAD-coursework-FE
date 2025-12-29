@@ -582,6 +582,35 @@ const EventForm: React.FC = () => {
                                                 Add Custom Charge
                                     </button>
                                 </div>
+
+                                {/* action buttons */}
+                                <div className="flex flex-col sm:flex-row justify-end gap-3 mt-10">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setEventData({
+                                                title: "",
+                                                type: "",
+                                                date: new Date(new Date().setDate(new Date().getDate() + 1))
+                                                    .toISOString()
+                                                    .split("T")[0],
+                                                time: "",
+                                                location: "",
+                                                description: "",
+                                                basePrice: 0,
+                                                status: "PLANNING",
+                                                extraItems: [],
+                                                image: null,
+                                            });
+                                                setExtraItems([]);
+                                                setPreview(null);
+                                        }}
+                                        className="px-6 py-3 bg-white border border-[#E5E7EB] text-[#6B7280] rounded-xl font-bold hover:bg-[#F3F4F6] hover:text-[#121212] 
+                                                    transition-all flex items-center justify-center">
+                                            
+                                            Cancel
+                                    </button>
+                                </div>
                             </form>
 
                         </div>
