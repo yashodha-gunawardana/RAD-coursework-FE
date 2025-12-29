@@ -199,5 +199,28 @@ const EventForm: React.FC = () => {
         } catch (err: any) {
             showToast(err.response?.data?.message || "Error occurred", "error")
         }
-    }
+    };
+
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0A0A0A] p-5
+                        md:p-10 font-serif">
+            
+            {/* toast notifications */}
+            {toast.show && (
+                <div className={`fixed top-6 right-6 px-6 py-4 bg-[#121212] text-[#FDFCF0] rounded-xl shadow-lg
+                                flex items-center gap-3 z-50 animate-slide-left`}>
+                    
+                    {toast.type === "success" ? (
+                        <CheckCircle className="text-green-400" size={20} />
+                    ) : (
+                        <AlertCircle className="text-red-500" size={20} />
+                    )}
+
+                    <span>{toast.message}</span>
+                </div>
+            )}
+
+        </div>
+    )
 }
