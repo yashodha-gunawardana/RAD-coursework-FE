@@ -507,12 +507,80 @@ const EventForm: React.FC = () => {
                                                                     transition-all">
                                                         
                                                         <Trash2 size={16} />
-                                                        
+
                                                     </button>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
+                                </div>
+
+                                {/* extra items */}
+                                <div className="mt-10 pt-8 border-t border-[#E5E7EB]">
+                                     <span className="block text-xs uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2 border-b-2 border-[#FDFCF0]">
+                    
+                                        Line Items / Extras
+
+                                    </span>
+
+                                    <div id="extraItemsContainer" className="space-y-3">
+
+                                        {extraItems.map((item: ExtraItem) => (
+                                            <div key={item.id} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+
+                                                <input
+                                                    type="text"
+                                                    value={item.name}
+                                                    onChange={(e) => updateExtraItem(item.id, 'name', e.target.value)}
+                                                    className="px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm 
+                                                                focus:outline-none focus:border-[#C5A059] focus:ring-4 focus:ring-[#C5A059]/10 transition-all"
+                                                    placeholder="Item Name"
+                                                />
+
+                                                <input
+                                                    type="number"
+                                                    value={item.unitPrice || ''}
+                                                    onChange={(e) => updateExtraItem(item.id, 'unitPrice', e.target.value)}
+                                                    className="px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm 
+                                                                focus:outline-none focus:border-[#C5A059] focus:ring-4 focus:ring-[#C5A059]/10 transition-all"
+                                                    placeholder="Price"
+                                                    min="0"
+                                                    step="0.01"
+                                                />
+
+                                                <input
+                                                    type="number"
+                                                    value={item.quantity}
+                                                    onChange={(e) => updateExtraItem(item.id, 'quantity', e.target.value)}
+                                                    className="px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm 
+                                                                focus:outline-none focus:border-[#C5A059] focus:ring-4 focus:ring-[#C5A059]/10 transition-all"
+                                                    placeholder="Qty"
+                                                    min="1"
+                                                />
+
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeExtraItem(item.id)}
+                                                    className="flex items-center justify-center h-12 text-[#8B0000] bg-[#FEF2F2] rounded-lg hover:bg-[#8B0000] hover:text-white 
+                                                                transition-all">
+                                                
+                                                        <Trash2 size={18} />
+
+                                                </button>
+                                            </div>   
+                                        ))}
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        onClick={addExtraItem}
+                                        className="w-full mt-4 px-4 py-3 border border-dashed border-[#C5A059] text-[#C5A059] rounded-xl font-bold hover:border-[#8B0000] 
+                                                    hover:text-[#8B0000] hover:bg-[#FDFCF0] transition-all flex items-center justify-center gap-2">
+                                    
+                                            <PlusCircle size={18} />
+
+                                                Add Custom Charge
+                                    </button>
                                 </div>
                             </form>
 
