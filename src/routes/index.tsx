@@ -21,9 +21,9 @@ export default function Router() {
             {/* dahboard routes*/}
             <Route path="/dashboard" element={<DashBoardLayout />}>
                 <Route index element={<Dashboard />} />          
-                {/* <Route path="events" element={<EventPage />} />
+                 {/* <Route path="events" element={<EventPage />} />
                 <Route path="events/create" element={<EventForm />} /> 
-                <Route path="events/edit" element={<EventForm />} />    */}
+                <Route path="events/edit" element={<EventForm />} />     */}
             </Route>
            
             </Routes>

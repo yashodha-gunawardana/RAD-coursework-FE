@@ -630,3 +630,5 @@ const EventForm: React.FC = () => {
     )
 }
 
+
+export default EventForm
