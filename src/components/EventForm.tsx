@@ -243,6 +243,24 @@ const EventForm: React.FC = () => {
                     </button>
                 </header>
 
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-10">
+
+                    {/* sidebar */}
+                    <aside className="lg:col-span-1">
+                        <div className="sticky top-8">
+                            <h2 className="text-lg font-semibold text-[#121212] mb-2">
+
+                                General Information
+                            </h2>
+
+                            <p className="text-sm text-[#6B7280]">
+                                Enter the details for your event using our elite management system.
+                            </p>
+                        </div>
+                    </aside>
+
+                </div>
+
             </div>
 
         </div>
