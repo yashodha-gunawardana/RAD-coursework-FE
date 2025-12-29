@@ -39,3 +39,30 @@ const formatCurrency = (amount: number): string => {
     }).format(amount)
 }
 
+interface ExtraItem {
+    name: string
+    unitPrice: number
+    quantity?: number
+}
+
+interface Event {
+    _id: string
+    title: string;
+    type: string;
+    date: string; 
+    time?: string;
+    location: string;
+    description?: string;
+    basePrice: number;
+    status: string;
+    extraItems?: ExtraItem[];
+    createdAt: string;
+    updatedAt: string;
+}
+
+interface ToastState {
+    show: boolean
+    message: string
+    type: "success" | "error"
+}
+
