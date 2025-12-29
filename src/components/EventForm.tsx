@@ -88,8 +88,9 @@ const EventForm: React.FC = () => {
 
     const updateExtraItem = (id: number, field: keyof ExtraItem, value: string | number) =>
         setExtraItems(prev => prev.map((item: ExtraItem) =>
-        (item.id === id ? {
-            ...item,
-        })
-        ))
+            (item.id === id ? {
+                ...item,
+                [field]: field === "name" ? value: Number(value)
+            } : item)
+        ));
 }
