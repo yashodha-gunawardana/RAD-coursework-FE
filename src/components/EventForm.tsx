@@ -96,5 +96,17 @@ const EventForm: React.FC = () => {
             } : item)
         ));
 
+        // remove an extra item by id
         const removeExtraItem = (id: number) => setExtraItems(prev => prev.filter((item: ExtraItem) => item.id !== id));
+
+
+    // image upload handler
+    const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setEventData(prev => ({ ...prev, image: e.target.files![0] }))
+            
+            // create preview URL
+            setPreview(URL.createObjectURL(e.target.files[0]))
+        }
+    }
 }
