@@ -69,5 +69,14 @@ const VendorForm: React.FC = () => {
         }, 3000);
     }
 
+    
+    // handle input
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { id, value } = e.target;
+        setFormData((prev) => ({ 
+            ...prev, [id]: value 
+        }));
+    };
+
 
 }
