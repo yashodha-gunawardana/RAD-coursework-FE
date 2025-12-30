@@ -59,4 +59,15 @@ const VendorForm: React.FC = () => {
     const [loading, setLoading] = useState(false)
     const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success" })
 
+
+    // toast notifi
+    const showToast = (message: string, type: "success" | "error" = "success") => {
+        setToast({ show: true, message, type })
+
+        setTimeout(() => {
+            setToast(prev => ({ ...prev, show: false }));
+        }, 3000);
+    }
+
+
 }
