@@ -77,4 +77,12 @@ const getAvailabilityClass = (isAvailable: boolean): string => {
 
 const VendorPage: React.FC = () => {
     const navigate = useNavigate()
+
+    const [vendors, setVendors] = useState<Vendor[]>([])
+    const [loading, setLoading] = useState(true)
+    const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success" })
+
+    const [searchTerm, setSearchTerm] = useState("")
+    const [categoryFilter, setCategoryFilter] = useState("")
+    const [availabilityFilter, setAvailabilityFilter] = useState("")
 }
