@@ -25,3 +25,18 @@ export const VendorCategory = {
 
 export type VendorCategory = typeof VendorCategory[keyof typeof VendorCategory]
 
+interface VendorFormData {
+    name: string;
+    category: VendorCategory | "";
+    contact: string;
+    priceRange: string;
+    description?: string;
+    image: File | null;
+    isAvailable: boolean;
+}
+
+interface ToastState {
+    show: boolean;
+    message: string;
+    type: "success" | "error";
+}
