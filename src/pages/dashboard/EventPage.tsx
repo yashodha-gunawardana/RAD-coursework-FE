@@ -96,7 +96,7 @@ const EventsPage: React.FC = () => {
 
     
     // calculate total price
-    const calculateTotalprice = useCallback((event: Event) => {
+    const calculateTotalPrice = useCallback((event: Event) => {
         let total = event.basePrice || 0
 
         if (event.extraItems && event.extraItems.length > 0) {
@@ -181,7 +181,7 @@ const EventsPage: React.FC = () => {
     const stats = React.useMemo(() => {
         const totalEvents = events.length
         const activeEvents = events.filter(e => e.status === EventStatus.ONGOING).length
-        const totalRevenue = events.reduce((sum, event) => sum + calculateTotalprice(event), 0)
+        const totalRevenue = events.reduce((sum, event) => sum + calculateTotalPrice(event), 0)
 
         // within next 30 days from today
         const today = new Date()
@@ -194,7 +194,7 @@ const EventsPage: React.FC = () => {
         }).length
 
         return { totalEvents, activeEvents, upcomingEvents, totalRevenue }
-    }, [events, calculateTotalprice])
+    }, [events, calculateTotalPrice])
 
 
     // filter
@@ -234,7 +234,7 @@ const EventsPage: React.FC = () => {
 
     // full details view
     const viewEventDetails = useCallback((event: Event) => {
-        const totalPrice = calculateTotalprice(event)
+        const totalPrice = calculateTotalPrice(event)
         let details = `Event Details:\n\n`
         details += `Title: ${event.title}\n`
         details += `Type: ${getEventTypeLabel(event.type)}\n`
@@ -256,7 +256,7 @@ const EventsPage: React.FC = () => {
             })
         }
         alert(details)
-    }, [calculateTotalprice, getEventTypeLabel])
+    }, [calculateTotalPrice, getEventTypeLabel])
 
 
     useEffect(() => {
@@ -265,8 +265,7 @@ const EventsPage: React.FC = () => {
 
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0A0A0A] p-5 md:p-10 
-                        font-[poppins]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] p-5 md:p-10">
 
             {/* toast notification */}
             {toast.show && (
@@ -292,13 +291,14 @@ const EventsPage: React.FC = () => {
                                     pb-6 border-b border-gray-200">
                                     
                     <div>
-                        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-red-800 to-red-600 
-                                        bg-clip-text text-transparent">
+                        <h1 className="text-3xl md:text-6xl font-bold text-[#8B0000]/80 font-[poppins]">
               
-                            Event Manager
+                            Event Dashboard
                         </h1>
 
-                        <p className="text-gray-600 mt-2">Professional Event Management System</p>
+                        <p className="text-[#0F0F0F]/80 leading-relaxed text-l mt-1">
+                            Professional Event Management System
+                        </p>
                     </div>
 
                     <div className="flex gap-3">
@@ -316,11 +316,11 @@ const EventsPage: React.FC = () => {
 
                 {/* stats card */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all 
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg transition-all 
                                     hover:-translate-y-1">
 
                         <div className="flex justify-between items-center mb-4">
-                            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Events</div>
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Total Events</div>
                             <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
                 
                                 <Calendar className="text-red-800" size={24} />
@@ -337,11 +337,11 @@ const EventsPage: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all 
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg transition-all 
                                     hover:-translate-y-1">
 
                         <div className="flex justify-between items-center mb-4">
-                            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Active Events</div>
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Active Events</div>
                             <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
                                 
                                 <CheckCircle className="text-green-600" size={24} />
@@ -358,11 +358,11 @@ const EventsPage: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all 
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg transition-all 
                                     hover:-translate-y-1">
                         
                         <div className="flex justify-between items-center mb-4">
-                            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Upcoming Events</div>
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Upcoming Events</div>
                             <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
                                 
                                 <Clock className="text-blue-600" size={24} />
@@ -379,11 +379,11 @@ const EventsPage: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all 
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg transition-all 
                                     hover:-translate-y-1">
             
                         <div className="flex justify-between items-center mb-4">
-                            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Revenue</div>
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Total Revenue</div>
                             <div className="w-12 h-12 bg-yellow-50 rounded-lg flex items-center justify-center">
                                 
                                 <DollarSign className="text-yellow-600" size={24} />
@@ -407,13 +407,13 @@ const EventsPage: React.FC = () => {
                                     md:items-center gap-4">
 
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-900">Event Management</h2>
-                            <p className="text-gray-600 text-sm mt-1">Manage all events in one place</p>
+                            <h2 className="text-2xl font-bold text-[#8B0000]/80 font-serif">Event Management</h2>
+                            <p className="text-[#0F0F0F]/80 leading-relaxed text-[13px] mt-1">Manage all events in one place</p>
                         </div>
 
                         <button
                             onClick={resetFilters}
-                            className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 
+                            className="px-4 py-2 bg-green-300 border border-green-800 text-black-900 rounded-lg font-medium hover:bg-green-200 
                                         transition-all flex items-center gap-2">
               
                                 <Filter size={16} />
@@ -429,13 +429,13 @@ const EventsPage: React.FC = () => {
                         <div className="flex-1 min-w-0 w-full md:w-auto">
                             <div className="relative">
 
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-BLACK" size={18} />
 
                                 <input
                                     type="text"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    placeholder="Search events by title, location, or description..."
+                                    placeholder="Search events by Event Id..."
                                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 
                                                 focus:ring-red-500 focus:border-transparent transition-all"
                                 />

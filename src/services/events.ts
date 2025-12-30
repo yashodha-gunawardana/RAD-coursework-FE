@@ -1,7 +1,7 @@
 import api from "./api";
 
 
-export const createEvent = async (data: any) => {
+export const createEvent = async (data: FormData) => {
     const res = await api.post("/events", data, {
         headers: {
             "Content-Type": "multipart/form-data"
@@ -22,7 +22,7 @@ export const getEventById = async (id: string) => {
 };
 
 
-export const updateEvent = async (id: string, data: any) => {
+export const updateEvent = async (id: string, data: FormData) => {
   const res = await api.put(`/events/${id}`, data, {
     headers: {
       "Content-Type": "multipart/form-data"

@@ -7,7 +7,9 @@ import {
   Trash2,
   Check,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Paperclip,
+  Clipboard
 } from "react-feather";
 import { createEvent, getEventById, updateEvent } from "../services/events";
 
@@ -203,16 +205,17 @@ const EventForm: React.FC = () => {
 
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0A0A0A] p-5
-                        md:p-10 font-serif">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0A0A0A] p-5 md:p-10">
             
             {/* toast notifications */}
             {toast.show && (
-                <div className={`fixed top-6 right-6 px-6 py-4 bg-[#121212] text-[#FDFCF0] rounded-xl shadow-lg
-                                flex items-center gap-3 z-50 animate-slide-left`}>
+                <div className={`fixed bottom-6 right-6 bg-white text-gray-900 px-6 py-4 rounded-xl shadow-lg z-50
+                                    animate-slideIn flex items-center gap-3 
+                                    ${toast.type === "success" ? "border-l-4 border-green-500" : "border-l-4 border-red-500"}
+                                `}>
                     
                     {toast.type === "success" ? (
-                        <CheckCircle className="text-green-400" size={20} />
+                        <CheckCircle className="text-green-500" size={20} />
                     ) : (
                         <AlertCircle className="text-red-500" size={20} />
                     )}
@@ -226,7 +229,7 @@ const EventForm: React.FC = () => {
                 {/* header */}
                 <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
                     <div>
-                        <h1 className="text-2xl md:text-3xl font-extrabold text-[#8B0000] tracking-tight">
+                        <h1 className="text-2xl md:text-6xl font-bold text-[#8B0000]/80 font-[poppins]">
 
                             {editId ? "Edit Event Details" : "Create Event"}
 
@@ -235,7 +238,7 @@ const EventForm: React.FC = () => {
 
                     <button
                         onClick={() => navigate("/dashboard/events")}
-                        className="text-[#6B7280] font-semibold text-sm flex items-center gap-2 hover:text-[#8B0000] transition-colors">
+                        className="text-[#0A0A0A]/80 font-semibold text-l flex items-center gap-2 hover:text-[#8B0000] transition-colors">
 
                             <ChevronLeft size={16} />
 
@@ -248,12 +251,12 @@ const EventForm: React.FC = () => {
                     {/* sidebar */}
                     <aside className="lg:col-span-1">
                         <div className="sticky top-8">
-                            <h2 className="text-lg font-semibold text-[#121212] mb-2">
+                            <h2 className="text-lg font-bold text-[#0A0A0A]/80 mb-2">
 
                                 General Information
                             </h2>
 
-                            <p className="text-sm text-[#6B7280]">
+                            <p className="text-sm text-[#0A0A0A]/80">
                                 Enter the details for your event using our elite management system.
                             </p>
                         </div>
@@ -264,18 +267,19 @@ const EventForm: React.FC = () => {
                         <div className="bg-white border border-[#E5E7EB] rounded-2xl shadow-xl p-6 md:p-8">
 
                             <form id="eventForm" onSubmit={handleSubmit}>
-                                <span className="block text-xs uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2
+                                <span className="flex items-start gap-3 block text-xl uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2
                                                 border-b-2 border-[#FDFCF0]">
-                                                    
-                                    Event Essentials
 
+                                    <Clipboard className="w-8 h-8 text-[#C5A059]" />            
+                                    
+                                        Event Essentials
                                 </span>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                                     {/* title */}
                                     <div className="md:col-span-2">
-                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
                                             
                                             Event Title <span className="text-[#8B0000]">*</span>
 
@@ -296,7 +300,7 @@ const EventForm: React.FC = () => {
 
                                     {/* category */}
                                     <div>
-                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
                       
                                             Category <span className="text-[#8B0000]">*</span>
                     
@@ -323,7 +327,7 @@ const EventForm: React.FC = () => {
 
                                     {/* status */}
                                     <div>
-                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
                                 
                                             Status
                     
@@ -346,7 +350,7 @@ const EventForm: React.FC = () => {
 
                                     {/* date */}
                                     <div>
-                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
                       
                                             Date <span className="text-[#8B0000]">*</span>
 
@@ -366,7 +370,7 @@ const EventForm: React.FC = () => {
 
                                     {/* time */}
                                     <div>
-                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
                                             
                                             Starting Time
 
@@ -385,7 +389,7 @@ const EventForm: React.FC = () => {
 
                                     {/* location */}
                                     <div className="md:col-span-2">
-                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
                                         
                                             Venue / Location <span className="text-[#8B0000]">*</span>
 
@@ -406,7 +410,7 @@ const EventForm: React.FC = () => {
 
                                     {/* description */}
                                     <div className="md:col-span-2">
-                                        <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
                                         
                                             Description
 
@@ -427,7 +431,7 @@ const EventForm: React.FC = () => {
 
                                 {/* pricing */}
                                 <div className="mt-10 pt-8 border-t border-[#E5E7EB]">
-                                    <span className="block text-xs uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2 border-b-2 border-[#FDFCF0]">
+                                    <span className="block text-xl uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2 border-b-2 border-[#FDFCF0]">
                     
                                         Pricing & Media
                   
@@ -437,7 +441,7 @@ const EventForm: React.FC = () => {
 
                                         {/* base price */}
                                         <div className="md:col-span-2">
-                                            <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                            <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
                         
                                                 Base Budget / Price ($) <span className="text-[#8B0000]">*</span>
                       
@@ -460,7 +464,7 @@ const EventForm: React.FC = () => {
 
                                         {/* cover photo */}
                                         <div className="md:col-span-2">
-                                            <label className="block text-sm font-semibold text-[#121212] mb-2">
+                                            <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
                         
                                                 Cover Photo
                       
@@ -517,7 +521,7 @@ const EventForm: React.FC = () => {
 
                                 {/* extra items */}
                                 <div className="mt-10 pt-8 border-t border-[#E5E7EB]">
-                                     <span className="block text-xs uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2 border-b-2 border-[#FDFCF0]">
+                                     <span className="block text-xl uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2 border-b-2 border-[#FDFCF0]">
                     
                                         Line Items / Extras
 
@@ -561,10 +565,10 @@ const EventForm: React.FC = () => {
                                                 <button
                                                     type="button"
                                                     onClick={() => removeExtraItem(item.id)}
-                                                    className="flex items-center justify-center h-12 text-[#8B0000] bg-[#FEF2F2] rounded-lg hover:bg-[#8B0000] hover:text-white 
+                                                    className="flex items-center justify-center h-12 text-red-800 bg-red-200 border border-red-300 rounded-lg hover:text-black 
                                                                 transition-all">
                                                 
-                                                        <Trash2 size={18} />
+                                                        <Trash2 size={20} />
 
                                                 </button>
                                             </div>   
@@ -613,12 +617,19 @@ const EventForm: React.FC = () => {
 
                                     <button
                                         type="submit"
-                                        className="px-6 py-3 bg-[#8B0000] text-white rounded-xl font-bold hover:bg-[#660000] hover:shadow-lg hover:-translate-y-0.5 
-                                                    transition-all flex items-center justify-center gap-2">
+                                        className="relative bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white px-10 py-4 rounded-xl 
+                                                    font-semibold tracking-wide overflow-hidden group transition-all duration-400 hover:-translate-y-1 
+                                                    hover:shadow-xl hover:shadow-[#9B2D2D]/20">
                                         
-                                            <Check size={18} />
-
-                                            Save Event
+                                            <span className="flex items-center gap-3">
+                                                              
+                                                <Check className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                                                              
+                                                    Save Event
+                                            </span>
+                                                            
+                                            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                                                            group-hover:translate-x-full transition-transform duration-600" />
                                     </button>
                                 </div>
                             </form>
