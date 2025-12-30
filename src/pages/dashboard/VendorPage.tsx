@@ -224,6 +224,104 @@ const VendorPage: React.FC = () => {
                     <span>{toast.message}</span>
                 </div>
             )}
+
+            <div className="max-w-7xl mx-auto">
+
+                {/* header */}
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 
+                                    pb-6 border-b border-gray-200">
+
+                    <div>
+                        <h1 className="text-3xl md:text-6xl font-bold text-[#8B0000]/80 font-[poppins]">
+              
+                            Vendor Dashboard
+                        </h1>
+
+                        <p className="text-[#0F0F0F]/80 leading-relaxed text-l mt-1">
+                            Professional Vendor Management System
+                        </p>
+                    </div>
+
+                    <div className="flex gap-3">
+                        <button
+                            onClick={() => navigate("/dashboard/vendors/create")}
+                            className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
+                                        hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-0.5">
+                                                
+                                <Plus size={18} />
+                                                    
+                                    Add Vendor
+                        </button>
+                    </div>
+                </header>
+
+                {/* stats cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg transition-all 
+                                    hover:-translate-y-1">
+                        
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Total Vendors</div>
+                            <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
+                                
+                                <Calendar className="text-red-800" size={24} />
+
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{stats.totalVendors}</div>
+                        <div className="text-sm text-green-600 font-medium flex items-center gap-1">
+                            
+                            <TrendingUp size={16} />
+
+                                12% from last month
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg transition-all 
+                                    hover:-translate-y-1">
+
+                            <div className="flex justify-between items-center mb-4">
+                                <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Available Vendors</div>
+                                <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+                                    
+                                    <CheckCircle className="text-green-600" size={24} />
+
+                                </div>
+                            </div>
+
+                            <div className="text-3xl font-bold text-gray-900 mb-2">{stats.availableVendors}</div>
+                            <div className="text-sm text-green-600 font-medium flex items-center gap-1">
+                        
+                                <TrendingUp size={16} />
+
+                                    {stats.availableVendors} ready to book
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg transition-all 
+                                    hover:-translate-y-1">
+                        
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Categories</div>
+                            <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                                
+                                <Clock className="text-blue-600" size={24} />
+
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{stats.totalCategories}</div>
+                        <div className="text-sm text-red-600 font-medium flex items-center gap-1">
+                            
+                            <TrendingDown size={16} />
+
+                                {stats.totalCategories} services
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     )
 }
