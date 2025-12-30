@@ -40,3 +40,8 @@ interface ToastState {
     message: string;
     type: "success" | "error";
 }
+
+const VendorForm: React.FC = () => {
+    const { id: editId } = useParams<{ id?: string }>()
+    const navigate = useNavigate()
+}
