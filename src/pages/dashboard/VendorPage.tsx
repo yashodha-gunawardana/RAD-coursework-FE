@@ -120,7 +120,7 @@ const VendorPage: React.FC = () => {
 
         try {
             await deleteVendor(id)
-            setVendors(prev => prev.filter(vendors => vendors._id !== id))
+            setVendors(prev => prev.filter(vendor => vendor._id !== id))
             showToast("Vendor deleted successfully..")
         
         } catch (err: any) {
@@ -142,4 +142,34 @@ const VendorPage: React.FC = () => {
             totalCategories
         }
     }, [vendors]);
+
+
+    // filters
+    const filteredVendors = React.useMemo(() => {
+        let result = [...vendors]
+
+        // search by name, contact, description
+        if (searchTerm) {
+            const term = searchTerm.toLowerCase();
+            result = result.filter(vendor =>
+                vendor.name.toLowerCase().includes(term) ||
+                vendor.contact.toLowerCase().includes(term) ||
+                (vendor.description && vendor.description.toLowerCase().includes(term))
+            );
+        }
+
+        // category
+        if (categoryFilter) {
+            result = result.filter(vendor => vendor.category === categoryFilter);
+        }
+
+        // availability 
+        if (availabilityFilter) {
+            const available = availabilityFilter === 'true';
+            result = result.filter(vendor => vendor.isAvailable === available);
+        }
+
+        return result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }, [vendors, searchTerm, categoryFilter, availabilityFilter]);
+    
 }
