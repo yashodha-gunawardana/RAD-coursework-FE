@@ -463,6 +463,56 @@ const VendorPage: React.FC = () => {
                                                 />
                                             )}
                                         </div>
+
+                                        {/* content */}
+                                        <div className="p-5">
+                                            <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
+
+                                                {vendor.name}
+
+                                            </h3>
+                                            <div className="space-y-3 mb-4">
+                                                <div className="flex items-start gap-2 text-gray-600">
+
+                                                    <Calendar size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
+
+                                                    <div>
+                                                        <div className="font-medium">
+                                
+                                                            {new Date(vendor.createdAt).toLocaleDateString()}
+                                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-start gap-2 text-gray-600">
+
+                                                    <Eye size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
+                                                    <span className="line-clamp-1">{vendor.contact}</span>
+
+                                                </div>
+
+                                                {vendor.description && (
+                                                    <div className="flex items-start gap-2 text-gray-600">
+                                                        
+                                                        <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
+                                                        <span className="line-clamp-2">{vendor.description}</span>
+
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="flex justify-between items-center mb-4">
+                                                <div className="text-xl font-bold text-red-800">
+                                                
+                                                    {formatPriceRange(vendor.priceRange)}
+
+                                                </div>
+                                            </div>
+
+                                            {/* action button */}
+                                            
+                                        </div>
                                     </div>
                                 ))
                             </div>
