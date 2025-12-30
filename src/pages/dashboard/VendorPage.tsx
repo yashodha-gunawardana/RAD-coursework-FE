@@ -369,15 +369,15 @@ const VendorPage: React.FC = () => {
                                 className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2
                                             focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
 
-                                    <option value="">All Categories</option>
-                                    <option value="PHOTOGRAPY">Photography</option>
-                                    <option value="CATERING">Catering</option>
-                                    <option value="DECORATION">Decoration</option>
-                                    <option value="DJ">DJ</option>
-                                    <option value="VENUE">Venue</option>
-                                    <option value="MAKEUP">Makeup</option>
-                                    <option value="FLORIST">Florist</option>
-                                    <option value="OTHER">Other</option>
+                                <option value="">All Categories</option>
+                                <option value="PHOTOGRAPY">Photography</option>
+                                <option value="CATERING">Catering</option>
+                                <option value="DECORATION">Decoration</option>
+                                <option value="DJ">DJ</option>
+                                <option value="VENUE">Venue</option>
+                                <option value="MAKEUP">Makeup</option>
+                                <option value="FLORIST">Florist</option>
+                                <option value="OTHER">Other</option>
                             </select>
 
                             <select
@@ -386,12 +386,87 @@ const VendorPage: React.FC = () => {
                                 className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2
                                             focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
 
-                                    <option value="">All Status</option>
-                                    <option value="true">Available</option>
-                                    <option value="false">Unavailable</option>
+                                <option value="">All Status</option>
+                                <option value="true">Available</option>
+                                <option value="false">Unavailable</option>
                             </select>
                         </div>
+                    </div>
 
+                    {/* vendor list */}
+                    <div className="p-6">
+                        {loading ? (
+
+                            <div className="flex justify-center items-center py-12">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-800"></div>
+                            </div>
+
+                        ) : filteredVendors.length === 0 ? (
+
+                            <div className="text-center py-12">
+
+                                <Calendar className="text-gray-300 mx-auto mb-4" size={64} />
+
+                                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                                    {searchTerm || categoryFilter || availabilityFilter
+                                        ? 'No Vendors Match Your Filters'
+                                        : 'No Vendors Found'
+                                    }
+                                </h3>
+
+                                <p className="text-gray-600 max-w-md mx-auto mb-6">
+                                    {searchTerm || categoryFilter || availabilityFilter
+                                        ? 'Try adjusting your search or filter criteria.'
+                                        : 'Get started by adding your first vendor to the directory.'}
+                                </p>
+
+                                <button
+                                    onClick={() => navigate("/dashboard/vendors/create")}
+                                    className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold
+                                                hover:shadow-lg transition-all inline-flex items-center gap-2">
+                  
+                                        <Plus size={18} />
+                  
+                                            Add Your First Vendor
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                                {filteredVendors.map((vendor) => (
+                                    <div
+                                        key={vendor._id}
+                                        className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm
+                                                    hover:shadow-lg transition-all hover:-translate-y-1">
+
+                                        <div className="h-40 bg-gradient-to-r from-red-800 to-red-600 relative">
+                                            <div className="absolute top-4 left-4 bg-white/90 text-red-800 px-3 py-1 rounded-full text-xs
+                                                        font-semibold uppercase tracking-wide">
+                                            
+                                                {getCategoryLabel(vendor.category)}
+                                        
+                                            </div>
+                                        
+                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold
+                                                                ${getAvailabilityClass(vendor.isAvailable)}
+                                                            `}>
+                                            
+                                                {vendor.isAvailable ? 'Available' : 'Unavailable'}
+                                            
+                                            </div>
+                                        
+                                            {vendor.image && (
+                                                <img
+                                                    src={vendor.image}
+                                                    alt={vendor.name}
+                                                    className="absolute inset-0 w-full h-full object-cover opacity-20"
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                ))
+                            </div>
+                        )}
                     </div>
                 </div>
 
