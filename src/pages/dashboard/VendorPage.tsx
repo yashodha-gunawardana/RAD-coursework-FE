@@ -73,3 +73,8 @@ const getAvailabilityClass = (isAvailable: boolean): string => {
         ? "bg-green-100 text-green-800 border border-green-200"
         : "bg-red-100 text-red-800 border border-red-200"
 }
+
+
+const VendorPage: React.FC = () => {
+    const navigate = useNavigate()
+}
