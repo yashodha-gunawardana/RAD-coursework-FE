@@ -29,5 +29,23 @@ export const VendorCategory = {
     OTHER: "OTHER"
 } as const;
 
-export type VendorCategory = typeof VendorCategory[keyof typeof VendorCategory]
+export type VendorCategoryType = typeof VendorCategory[keyof typeof VendorCategory]
 
+interface Vendor {
+    _id: string;
+    name: string;
+    category: VendorCategoryType;
+    contact: string;
+    priceRange: string;
+    description?: string;
+    image?: string;
+    isAvailable: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+interface ToastState {
+    show: boolean;
+    message: string;
+    type: "success" | "error";
+}
