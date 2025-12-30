@@ -67,3 +67,9 @@ const getCategoryLabel = (category: VendorCategoryType): string => {
     }
     return labels[category] || category
 }
+
+const getAvailabilityClass = (isAvailable: boolean): string => {
+    return isAvailable
+        ? "bg-green-100 text-green-800 border border-green-200"
+        : "bg-red-100 text-red-800 border border-red-200"
+}
