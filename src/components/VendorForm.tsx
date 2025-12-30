@@ -44,4 +44,19 @@ interface ToastState {
 const VendorForm: React.FC = () => {
     const { id: editId } = useParams<{ id?: string }>()
     const navigate = useNavigate()
+
+    const [formData, setFormData] = useState<VendorFormData>({
+        name: "",
+        category: "",
+        contact: "",
+        priceRange: "",
+        description: "",
+        image: null,
+        isAvailable: true
+    })
+
+    const [preview, setPreview] = useState<string | null>(null)
+    const [loading, setLoading] = useState(false)
+    const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success" })
+
 }
