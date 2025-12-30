@@ -341,6 +341,58 @@ const VendorPage: React.FC = () => {
                                     View All
                         </button>
                     </div>
+
+                    {/* filters */}
+                    <div className="px-6 py-5 bg-gray-50 border-b border-gray-200 flex flex-col md:flex-row gap-4 items-start 
+                                    md:items-center">
+
+                        <div className="flex-1 min-w-0 w-full md:w-auto">
+                            <div className="relative">
+
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+
+                                <input
+                                    type="text"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    placeholder="Search vendors by name, contact, or description..."
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2
+                                                focus:ring-red-500 focus:border-transparent transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex gap-3 w-full md:w-auto">
+                            <select
+                                value={categoryFilter}
+                                onChange={(e) => setCategoryFilter(e.target.value)}
+                                className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2
+                                            focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
+
+                                    <option value="">All Categories</option>
+                                    <option value="PHOTOGRAPY">Photography</option>
+                                    <option value="CATERING">Catering</option>
+                                    <option value="DECORATION">Decoration</option>
+                                    <option value="DJ">DJ</option>
+                                    <option value="VENUE">Venue</option>
+                                    <option value="MAKEUP">Makeup</option>
+                                    <option value="FLORIST">Florist</option>
+                                    <option value="OTHER">Other</option>
+                            </select>
+
+                            <select
+                                value={availabilityFilter}
+                                onChange={(e) => setAvailabilityFilter(e.target.value)}
+                                className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2
+                                            focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
+
+                                    <option value="">All Status</option>
+                                    <option value="true">Available</option>
+                                    <option value="false">Unavailable</option>
+                            </select>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
