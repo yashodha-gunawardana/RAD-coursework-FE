@@ -89,6 +89,7 @@ const VendorForm: React.FC = () => {
     } 
 
 
+    // loading data on edit mode
     useEffect(() => {
         if (editId) {
             const loadVendor = async () => {
@@ -122,5 +123,50 @@ const VendorForm: React.FC = () => {
         }
     }, [editId])
 
+
+    // handle submit form
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+
+        if (!formData.name || !formData.category || !formData.contact || !formData.priceRange) {
+            showToast("Please fill all required fields", "error");
+            return
+        }
+
+        const data = new FormData();
+        data.append("name", formData.name);
+        data.append("category", formData.category);
+        data.append("contact", formData.contact);
+        data.append("priceRange", formData.priceRange);
+        if (formData.description) data.append("description", formData.description);
+        if (formData.image) data.append("image", formData.image);
+        data.append("isAvailable", String(formData.isAvailable));
+
+        try {
+            setLoading(true)
+
+            if (editId) {
+                await updateVendor(editId, data) 
+                showToast("Vendor updated successfully..")
+            
+            } else {
+                await createVendor(data)
+                showToast("Vendor created successfully..")
+            }
+
+            setTimeout(() => {
+                navigate("/dashboard/events");
+            }, 1200)
+        
+        } catch (err: any) {
+            showToast(err?.response?.data?.message || "Operation failed", "error");        
+        
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
+    
 
 }
