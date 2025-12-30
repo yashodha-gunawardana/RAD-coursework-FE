@@ -407,13 +407,51 @@ const VendorForm: React.FC = () => {
                                     </div>
                                 </div>
 
-                                
+                                {/* buttons */}
+                                <div className="flex flex-col sm:flex-row justify-end gap-3 mt-10">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setFormData({
+                                                name: "",
+                                                category: "",
+                                                contact: "",
+                                                priceRange: "",
+                                                description: "",
+                                                image: null,
+                                                isAvailable: true
+                                            })
+                                            setPreview(null)
+                                        }}
+                                        className="px-6 py-3 bg-white border border-[#E5E7EB] text-[#6B7280] rounded-xl font-bold hover:bg-[#F3F4F6] hover:text-[#121212]
+                                                    transition-all flex items-center justify-center">
+                                    
+                                            Cancel
+                                    </button>
+                  
+                                    <button
+                                        type="submit"
+                                        // disabled={loading}
+                                        className="relative bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white px-10 py-4 rounded-xl
+                                                    font-semibold tracking-wide overflow-hidden group transition-all duration-400 hover:-translate-y-1
+                                                    hover:shadow-xl hover:shadow-[#9B2D2D]/20 disabled:opacity-70 disabled:cursor-not-allowed">
+                                    
+                                        <span className="flex items-center gap-3">
+                                        
+                                            <Check className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                                        
+                                                {/* {loading ? "Saving..." : editId ? "Update Vendor" : "Save Vendor"} */}
+                                                Save Vendor
+                                        </span>
+                                        <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent
+                                                    group-hover:translate-x-full transition-transform duration-600" />
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </main>
                 </div>
             </div>
-                
         </div>
     )
 
