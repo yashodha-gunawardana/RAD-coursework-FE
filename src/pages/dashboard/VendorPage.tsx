@@ -321,6 +321,28 @@ const VendorPage: React.FC = () => {
                     </div>
                 </div>
 
+                {/* main content */}
+                <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                    <div className="px-6 py-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start 
+                                    md:items-center gap-4">
+
+                        <div>
+                            <h2 className="text-2xl font-bold text-[#8B0000]/80 font-serif">Vendor Management</h2>
+                            <p className="text-[#0F0F0F]/80 leading-relaxed text-[13px] mt-1">Browse and manage all vendors</p>
+                        </div>
+
+                        <button
+                            onClick={resetFilters}
+                            className="px-4 py-2 bg-green-300 border border-green-800 text-black-900 rounded-lg font-medium hover:bg-green-200
+                                        transition-all flex items-center gap-2">
+                            
+                                <Filter size={16} />
+
+                                    View All
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
     )
