@@ -172,4 +172,12 @@ const VendorPage: React.FC = () => {
         return result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }, [vendors, searchTerm, categoryFilter, availabilityFilter]);
     
+
+    // rest filters
+    const resetFilters = useCallback(() => {
+        setSearchTerm('');
+        setCategoryFilter('');
+        setAvailabilityFilter('');
+        showToast('Showing all vendors');
+    }, [showToast]);
 }
