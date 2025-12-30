@@ -89,5 +89,38 @@ const VendorForm: React.FC = () => {
     } 
 
 
+    useEffect(() => {
+        if (editId) {
+            const loadVendor = async () => {
+                try {
+                    setLoading(true)
+                    const response = await getvendorById(editId)
+                    const vendor = response.data
+
+                    setFormData({
+                        name: vendor.name,
+                        category: vendor.category,
+                        contact: vendor.contact,
+                        priceRange: vendor.priceRange,
+                        description: vendor.description || "",
+                        image: null,
+                        isAvailable: vendor.isAvailable
+                    })
+
+                    if (vendor.image) {
+                        setPreview(vendor.image)
+                    }
+
+                } catch (err: any) {
+                    showToast("Failed to load vendor details", "error")
+                
+                } finally {
+                    setLoading(false)
+                }
+            } 
+            loadVendor()
+        }
+    }, [editId])
+
 
 }
