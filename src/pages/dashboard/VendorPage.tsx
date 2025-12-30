@@ -114,7 +114,7 @@ const VendorPage: React.FC = () => {
 
 
     // delete vendor
-    const handleDeleteVendors = useCallback(async (id: string, name: string) => {
+    const handleDeleteVendor = useCallback(async (id: string, name: string) => {
         if (!confirm(`Delete "${name}"? This cannot be undone`))
             return
 
@@ -511,16 +511,48 @@ const VendorPage: React.FC = () => {
                                             </div>
 
                                             {/* action button */}
-                                            
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => navigate(`/dashboard/vendors/edit/${vendor._id}`)}
+                                                    className="flex-1 px-3 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium
+                                                                hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
+
+                                                        <Edit size={16} />
+                                                            
+                                                            Edit
+                                                </button>
+
+                                                <button
+                                                    onClick={() => viewVendorDetails(vendor)}
+                                                    className="flex-1 px-3 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium
+                                                                hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
+                                                        
+                                                        <Eye size={16} />
+                                                    
+                                                            View
+                                                </button>
+
+                                                <button
+                                                    onClick={() => handleDeleteVendor(vendor._id, vendor.name)}
+                                                    className="flex-1 px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-800
+                                                                hover:text-white transition-all flex items-center justify-center gap-1">
+                                                    
+                                                        <Trash2 size={16} />
+                                                    
+                                                            Delete
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                ))
+                                ))}
                             </div>
                         )}
                     </div>
                 </div>
-
             </div>
         </div>
     )
 }
+
+
+export default VendorPage
