@@ -88,10 +88,27 @@ const VendorPage: React.FC = () => {
 
 
     // toast notification
-    const showToast = useCallback((message: string, type: 'success' | 'error' = 'success') => {
+    const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
         setToast({ show: true, message, type });
         setTimeout(() => {
             setToast(prev => ({ ...prev, show: false }));
         }, 3000);
     }, []);
+
+
+    // load all vendors
+    const loadVendors = useCallback(async () => {
+        try {
+            setLoading(true)
+            const response = await getAllVendors()
+            setVendors(response.data || [])
+        
+        } catch (err : any) {
+            console.error("Error loading vendors: ", err)
+            showToast("Failed to load vendors", err)
+        
+        } finally {
+            setLoading(false)
+        }
+    }, [showToast])
 }
