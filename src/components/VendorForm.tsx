@@ -69,14 +69,25 @@ const VendorForm: React.FC = () => {
         }, 3000);
     }
 
-    
+
     // handle input
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { id, value } = e.target;
         setFormData((prev) => ({ 
             ...prev, [id]: value 
         }));
-    };
+    }
+
+
+    // image handler
+    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setFormData((prev) => ({ ...prev, image: file }));
+            setPreview(URL.createObjectURL(file));
+        }
+    } 
+
 
 
 }
