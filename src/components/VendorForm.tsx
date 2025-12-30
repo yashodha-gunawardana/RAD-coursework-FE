@@ -224,6 +224,193 @@ const VendorForm: React.FC = () => {
                             </p>
                         </div>
                     </aside>
+
+                    {/* main form */}
+                    <main className="lg:col-span-3">
+                        <div className="bg-white border border-[#E5E7EB] rounded-2xl shadow-xl p-6 md:p-8">
+
+                            <form onSubmit={handleSubmit}>
+                                <span className="flex items-start gap-3 block text-xl uppercase tracking-wider font-bold text-[#C5A059] mb-6 pb-2 border-b-2 border-[#FDFCF0]">
+                  
+                                    <Clipboard className="w-8 h-8 text-[#C5A059]" />
+                            
+                                        Vendor Essentials
+                                </span>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                                    {/* vendor name */}
+                                    <div className="md:col-span-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
+                      
+                                            Vendor Name <span className="text-[#8B0000]">*</span>
+
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
+                                                        transition-all"
+                                            placeholder="e.g. Elite Photography Studio"
+                                            required
+                                            disabled={loading}
+                                        />
+                                    </div>
+
+                                    {/* category */}
+                                    <div>
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
+                                            
+                                            Category <span className="text-[#8B0000]">*</span>
+
+                                        </label>
+
+                                        <select
+                                            id="category"
+                                            value={formData.category}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
+                                                        transition-all"
+                                            required
+                                            disabled={loading}>
+
+                                                <option value="">Select Category</option>
+                                                <option value={VendorCategory.PHOTOGRAPY}>Photography</option>
+                                                <option value={VendorCategory.CATERING}>Catering</option>
+                                                <option value={VendorCategory.DECORATION}>Decoration</option>
+                                                <option value={VendorCategory.DJ}>DJ</option>
+                                                <option value={VendorCategory.VENUE}>Venue</option>
+                                                <option value={VendorCategory.MAKEUP}>Makeup Artist</option>
+                                                <option value={VendorCategory.FLORIST}>Florist</option>
+                                                <option value={VendorCategory.OTHER}>Other</option>
+                                        </select>
+                                    </div>
+
+                                    {/* contact */}
+                                    <div>
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
+                                        
+                                            Contact Info <span className="text-[#8B0000]">*</span>
+
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="contact"
+                                            value={formData.contact}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
+                                                        transition-all"
+                                            placeholder="Phone or Email"
+                                            required
+                                            disabled={loading}
+                                        />
+                                    </div>
+
+                                    {/* price range */}
+                                    <div className="md:col-span-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
+                                        
+                                            Price Range <span className="text-[#8B0000]">*</span>
+
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="priceRange"
+                                            value={formData.priceRange}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
+                                                        transition-all"
+                                            placeholder="e.g. $500 - $2000"
+                                            required
+                                            disabled={loading}
+                                        />
+                                    </div>
+
+                                    {/* description */}
+                                    <div className="md:col-span-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
+                                        
+                                            Description
+
+                                        </label>
+
+                                        <textarea
+                                            id="description"
+                                            value={formData.description}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
+                                                        focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
+                                                        transition-all resize-none"
+                                            placeholder="Brief description of services..."
+                                            rows={4}
+                                            disabled={loading}
+                                        />
+                                    </div>
+
+                                    {/* vendor photo */}
+                                    <div className="md:col-span-2">
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
+                                            
+                                            Vendor Photo
+
+                                        </label>
+
+                                        <div
+                                            onClick={() => document.getElementById("imageInput")?.click()}
+                                            className="border-2 border-dashed border-[#E5E7EB] rounded-xl p-10 text-center cursor-pointer bg-[#FAFAFA] 
+                                                        hover:border-[#8B0000] hover:bg-white transition-all">
+
+                                                <ImageIcon size={32} className="text-[#C5A059] mx-auto mb-3" />
+                                        
+                                            <p className="font-semibold text-[#121212]">
+                                                Click to upload or drag and drop
+                                            </p>
+
+                                            <p className="text-xs text-[#6B7280] mt-1">PNG, JPG (max. 5MB)</p>
+                                        </div>
+
+                                        <input
+                                            type="file"
+                                            id="imageInput"
+                                            accept="image/*"
+                                            className="hidden"
+                                            onChange={handleImage}
+                                            disabled={loading}
+                                        />
+                    
+                                        {preview && (
+                                            <div className="mt-5 rounded-xl overflow-hidden border border-[#E5E7EB] relative">
+                                                <img src={preview} alt="Preview" className="w-full h-64 object-cover" />
+                                                    
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setFormData((prev) => ({ ...prev, image: null }));
+                                                        setPreview(null);
+                                                    }}
+                                                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 
+                                                               transition-all">
+                                                        
+                                                        <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                
+                            </form>
+                        </div>
+                    </main>
                 </div>
             </div>
                 
