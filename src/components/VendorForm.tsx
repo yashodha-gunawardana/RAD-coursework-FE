@@ -187,6 +187,32 @@ const VendorForm: React.FC = () => {
                 </div>
             )}
             
+            <div className="max-w-6xl mx-auto">
+
+                {/* header */}
+                <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+                    <div>
+                        <h1 className="text-2xl md:text-6xl font-bold text-[#8B0000]/80 font-[poppins]">
+                        
+                            {editId ? "Edit Vendor Details" : "Add New Vendor"}
+
+                        </h1>
+                    </div>
+
+                    <button
+                        onClick={() => navigate("/dashboard/vendors")}
+                        className="text-[#0A0A0A]/80 font-semibold text-l flex items-center gap-2 hover:text-[#8B0000] transition-colors">
+                        
+                            <ChevronLeft size={16} />
+
+                                Back to Vendors
+                    </button>
+                </header>
+
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-10">
+                    
+                </div>
+            </div>
                 
         </div>
     )
