@@ -111,4 +111,21 @@ const VendorPage: React.FC = () => {
             setLoading(false)
         }
     }, [showToast])
+
+
+    // delete vendor
+    const handleDeleteVendors = useCallback(async (id: string, name: string) => {
+        if (!confirm(`Delete "${name}"? This cannot be undone`))
+            return
+
+        try {
+            await deleteVendor(id)
+            setVendors(prev => prev.filter(vendors => vendors._id !== id))
+            showToast("Vendor deleted successfully..")
+        
+        } catch (err: any) {
+            console.error("Deleted failedd: ", err)
+            showToast(err?.response?.data?.message || "Failed to delete vendor", "error")
+        }
+    }, [showToast])
 }
