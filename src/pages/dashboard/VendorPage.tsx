@@ -198,4 +198,9 @@ const VendorPage: React.FC = () => {
         details += `Added: ${new Date(vendor.createdAt).toLocaleDateString()}`;
         alert(details);
     }, []);
+
+
+    useEffect(() =>{
+        loadVendors()
+    }, [loadVendors])
 }
