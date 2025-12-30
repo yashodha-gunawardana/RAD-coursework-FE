@@ -128,4 +128,18 @@ const VendorPage: React.FC = () => {
             showToast(err?.response?.data?.message || "Failed to delete vendor", "error")
         }
     }, [showToast])
+
+
+    // stats card
+    const stats = React.useMemo(() => {
+        const totalVendors = vendors.length;
+        const availableVendors = vendors.filter(v => v.isAvailable).length;
+        const totalCategories = new Set(vendors.map(v => v.category)).size;
+
+        return {
+            totalVendors,
+            availableVendors,
+            totalCategories
+        }
+    }, [vendors]);
 }
