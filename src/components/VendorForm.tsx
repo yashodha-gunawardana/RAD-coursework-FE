@@ -1,0 +1,27 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  ChevronLeft,
+  Clipboard,
+  CheckCircle,
+  AlertCircle,
+  Image as ImageIcon,
+  Trash2,
+  Check,
+} from "react-feather";
+import { createVendor, updateVendor, getvendorById } from "../services/vendor";
+
+
+export const VendorCategory = {
+    PHOTOGRAPY: "PHOTOGRAPY",
+    CATERING: "CATERING",
+    DECORATION: "DECORATION",
+    DJ: "DJ",
+    VENUE: "VENUE",
+    MAKEUP: "MAKEUP",
+    FLORIST: "FLORIST",
+    OTHER: "OTHER"
+} as const;
+
+export type VendorCategory = typeof VendorCategory[keyof typeof VendorCategory]
+
