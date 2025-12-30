@@ -53,3 +53,17 @@ interface ToastState {
 const formatPriceRange = (priceRange: string): string => {
     return priceRange || "Price on request"
 }
+
+const getCategoryLabel = (category: VendorCategoryType): string => {
+    const labels: Record<VendorCategoryType, string> = {
+        PHOTOGRAPHY: "Photography",
+        CATERING: "Catering",
+        DECORATION: "Decoration",
+        DJ: "Dj",
+        VENUE: "Venue",
+        MAKEUP: "Makeup Artist",
+        FLORIST: "Florist",
+        OTHER: "Other"
+    }
+    return labels[category] || category
+}

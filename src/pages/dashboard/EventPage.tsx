@@ -110,12 +110,12 @@ const EventsPage: React.FC = () => {
 
     const getEventTypeLabel = useCallback((type: string) => {
         const labels: Record<string, string> = {
-            WEDDING: "WEDDING",
-            BIRTHDAY: "BIRTHDAY",
-            CONFERENCE: "CONFERENCE",
-            CORPORATE: "CORPORATE",
-            PARTY: "PARTY",
-            OTHER: "OTHER"
+            WEDDING: "Wedding",
+            BIRTHDAY: "Birthday",
+            CONFERENCE: "Conference",
+            CORPORATE: "Corporate",
+            PARTY: "Party",
+            OTHER: "Other"
         }
         return labels[type] || type
     }, [])
