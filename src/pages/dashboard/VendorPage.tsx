@@ -49,3 +49,7 @@ interface ToastState {
     message: string;
     type: "success" | "error";
 }
+
+const formatPriceRange = (priceRange: string): string => {
+    return priceRange || "Price on request"
+}
