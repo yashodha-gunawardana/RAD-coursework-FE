@@ -456,3 +456,6 @@ const VendorForm: React.FC = () => {
     )
 
 }
+
+
+export default VendorForm
