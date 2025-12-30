@@ -165,7 +165,7 @@ const VendorPage: React.FC = () => {
 
         // availability 
         if (availabilityFilter) {
-            const available = availabilityFilter === 'true';
+            const available = availabilityFilter === "true";
             result = result.filter(vendor => vendor.isAvailable === available);
         }
 
@@ -175,9 +175,27 @@ const VendorPage: React.FC = () => {
 
     // rest filters
     const resetFilters = useCallback(() => {
-        setSearchTerm('');
-        setCategoryFilter('');
-        setAvailabilityFilter('');
-        showToast('Showing all vendors');
+        setSearchTerm("");
+        setCategoryFilter("");
+        setAvailabilityFilter("");
+        showToast("Showing all vendors");
     }, [showToast]);
+
+
+    // full details popup
+    const viewVendorDetails = useCallback((vendor: Vendor) => {
+        let details = `Vendor Details:\n\n`;
+        details += `Name: ${vendor.name}\n`;
+        details += `Category: ${getCategoryLabel(vendor.category)}\n`;
+        details += `Contact: ${vendor.contact}\n`;
+        details += `Price Range: ${formatPriceRange(vendor.priceRange)}\n`;
+        details += `Status: ${vendor.isAvailable ? 'Available' : 'Unavailable'}\n\n`;
+
+        if (vendor.description) {
+            details += `Description:\n${vendor.description}\n\n`;
+        }
+
+        details += `Added: ${new Date(vendor.createdAt).toLocaleDateString()}`;
+        alert(details);
+    }, []);
 }
