@@ -85,4 +85,13 @@ const VendorPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [categoryFilter, setCategoryFilter] = useState("")
     const [availabilityFilter, setAvailabilityFilter] = useState("")
+
+
+    // toast notification
+    const showToast = useCallback((message: string, type: 'success' | 'error' = 'success') => {
+        setToast({ show: true, message, type });
+        setTimeout(() => {
+            setToast(prev => ({ ...prev, show: false }));
+        }, 3000);
+    }, []);
 }
