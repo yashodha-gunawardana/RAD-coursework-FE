@@ -210,7 +210,20 @@ const VendorForm: React.FC = () => {
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-10">
-                    
+
+                    {/* sidebar */}
+                    <aside className="lg:col-span-1">
+                        <div className="sticky top-8">
+                            <h2 className="text-lg font-bold text-[#0A0A0A]/80 mb-2">
+                                
+                                General Information
+                            </h2>
+                            
+                            <p className="text-sm text-[#0A0A0A]/80">
+                                Add or update vendor details for your elite event management system.
+                            </p>
+                        </div>
+                    </aside>
                 </div>
             </div>
                 
