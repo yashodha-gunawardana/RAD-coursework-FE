@@ -95,6 +95,9 @@ const EventsPage: React.FC = () => {
     const [typeFilter, setTypeFilter] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
 
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    
     
     // calculate total price
     const calculateTotalPrice = useCallback((event: Event) => {
