@@ -276,8 +276,8 @@ const EventsPage: React.FC = () => {
 
 
     useEffect(() => {
-        loadEvents()
-    }, [loadEvents])
+        loadEvents(page)
+    }, [page, loadEvents])
 
 
     return (
