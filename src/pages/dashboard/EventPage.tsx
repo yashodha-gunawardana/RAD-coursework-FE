@@ -148,7 +148,7 @@ const EventsPage: React.FC = () => {
     }, [])
 
 
-    // get event handler
+    // get event handler with pagination
     const loadEvents = useCallback(async (pageNumber: number = 1) => {
         try {
             setLoading(true)
@@ -158,6 +158,8 @@ const EventsPage: React.FC = () => {
             setTotalPages(response.totalPages || 1)
             setTotalItems(response.totalItems || 0)
             setPage(pageNumber);
+
+            window.scrollTo({ top: 0, behavior: "smooth" })
         
         } catch (err: any) {
             console.error("Error loading events: ", err)
