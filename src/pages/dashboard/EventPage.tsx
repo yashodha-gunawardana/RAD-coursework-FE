@@ -99,6 +99,13 @@ const EventsPage: React.FC = () => {
     const [totalPages, setTotalPages] = useState(1);
     
     
+    useEffect(() => {
+        getMyEvents(page).then(res => {
+            setEvents(res.data);
+            setTotalPages(res.totalPages);
+        })
+    }, [page]);
+
     // calculate total price
     const calculateTotalPrice = useCallback((event: Event) => {
         let total = event.basePrice || 0
