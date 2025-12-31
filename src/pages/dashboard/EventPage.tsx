@@ -538,155 +538,222 @@ const EventsPage: React.FC = () => {
                                 </button>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <>
 
-                                {filteredEvents.map((event) => {
-                                    const totalPrice = calculateTotalPrice(event)
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                                    return (
-                                        <div
-                                            key={event._id}
-                                            className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm 
-                                                        hover:shadow-lg transition-all hover:-translate-y-1">  
+                                    {filteredEvents.map((event) => {
+                                        const totalPrice = calculateTotalPrice(event)
 
-                                            {/* form image as cover photo */}
-                                            <div className="h-40 relative overflow-hidden">
-                                                {event.image ? (
-                                                    <div
-                                                        className="w-full h-full bg-cover bg-center"
-                                                        style={{ backgroundImage: `url(${event.image})` }}
-                                                    />
-                                                ) : (
-                                                    
-                                                    <div className="relative h-64 w-96 overflow-hidden rounded-2xl bg-[#C2A886] shadow-lg">
-                                                        <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
+                                        return (
+                                            <div
+                                                key={event._id}
+                                                className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm 
+                                                            hover:shadow-lg transition-all hover:-translate-y-1">  
 
-                                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
+                                                {/* form image as cover photo */}
+                                                <div className="h-40 relative overflow-hidden">
+                                                    {event.image ? (
+                                                        <div
+                                                            className="w-full h-full bg-cover bg-center"
+                                                            style={{ backgroundImage: `url(${event.image})` }}
+                                                        />
+                                                    ) : (
+                                                        
+                                                        <div className="relative h-64 w-96 overflow-hidden rounded-2xl bg-[#C2A886] shadow-lg">
+                                                            <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
 
-                                                        <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
+                                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
 
-                                                        <div className="relative flex h-full flex-col items-center justify-center">
-                                                            <div className="text-[#4A0404]/70 drop-shadow-sm">
-                                                                
-                                                                <Calendar size={60} strokeWidth={1.2} />
+                                                            <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
 
-                                                            </div>
-                                                            
-                                                            <div className="mt-4 flex flex-col items-center">
-                                                                <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#4A0404]/30 to-transparent"></div>
-                                                                <span className="mt-2 text-[10px] uppercase tracking-[0.2em] text-[#4A0404]/50 font-medium">
+                                                            <div className="relative flex h-full flex-col items-center justify-center">
+                                                                <div className="text-[#4A0404]/70 drop-shadow-sm">
                                                                     
-                                                                    Established
-                                                                </span>
+                                                                    <Calendar size={60} strokeWidth={1.2} />
+
+                                                                </div>
+                                                                
+                                                                <div className="mt-4 flex flex-col items-center">
+                                                                    <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#4A0404]/30 to-transparent"></div>
+                                                                    <span className="mt-2 text-[10px] uppercase tracking-[0.2em] text-[#4A0404]/50 font-medium">
+                                                                        
+                                                                        Established
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                )}
-
-                                                {/* Type Badge */}
-                                                <div className="absolute top-4 left-4 bg-white/90 text-red-800 px-3 py-1 rounded-full text-xs 
-                                                                font-semibold uppercase tracking-wide">
-                                                    
-                                                    {getEventTypeLabel(event.type)}
-                                                </div>
-
-                                                {/* Status Badge */}
-                                                <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold 
-                                                                ${getStatusClass(event.status)}`}>
-                                                    
-                                                    {event.status}
-                                                </div>
-                                            </div>
-
-                                            <div className="p-5">
-                                                <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
-                            
-                                                    {event.title}
-                                                </h3>
-
-                                                <div className="space-y-3 mb-4">
-                                                    <div className="flex items-start gap-2 text-gray-600">
-
-                                                        <Calendar size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
-
-                                                        <div>
-                                                            <div className="font-medium">{formatDate(event.date)}</div>
-                                                            
-                                                            {event.time && (
-                                                                <div className="text-sm text-gray-500">{event.time}</div>
-                                                            )}
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="flex items-start gap-2 text-gray-600">
-                                    
-                                                        <Eye size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
-                                                        <span className="line-clamp-1">{event.location}</span>
-                                                    </div>
-
-                                                    {event.description && (
-                                                        <div className="flex items-start gap-2 text-gray-600">
-                              
-                                                            <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
-                                                            <span className="line-clamp-2">{event.description}</span>
-                                                        </div>
                                                     )}
 
-                                                    {event.extraItems && event.extraItems.length > 0 && (
+                                                    {/* Type Badge */}
+                                                    <div className="absolute top-4 left-4 bg-white/90 text-red-800 px-3 py-1 rounded-full text-xs 
+                                                                    font-semibold uppercase tracking-wide">
+                                                        
+                                                        {getEventTypeLabel(event.type)}
+                                                    </div>
+
+                                                    {/* Status Badge */}
+                                                    <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold 
+                                                                    ${getStatusClass(event.status)}`}>
+                                                        
+                                                        {event.status}
+                                                    </div>
+                                                </div>
+
+                                                <div className="p-5">
+                                                    <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
+                                
+                                                        {event.title}
+                                                    </h3>
+
+                                                    <div className="space-y-3 mb-4">
                                                         <div className="flex items-start gap-2 text-gray-600">
-                                                            
-                                                            <Plus size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
-                                                            <span>{event.extraItems.length} extra item{event.extraItems.length !== 1 ? 's' : ''}</span>
+
+                                                            <Calendar size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
+
+                                                            <div>
+                                                                <div className="font-medium">{formatDate(event.date)}</div>
+                                                                
+                                                                {event.time && (
+                                                                    <div className="text-sm text-gray-500">{event.time}</div>
+                                                                )}
+                                                            </div>
                                                         </div>
-                                                    )}
-                                                </div>
 
-                                                <div className="flex justify-between items-center mb-4">
-                                                    <div className="text-xl font-bold text-red-800">
-                                                        {formatCurrency(totalPrice)}
+                                                        <div className="flex items-start gap-2 text-gray-600">
+                                        
+                                                            <Eye size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
+                                                            <span className="line-clamp-1">{event.location}</span>
+                                                        </div>
+
+                                                        {event.description && (
+                                                            <div className="flex items-start gap-2 text-gray-600">
+                                
+                                                                <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
+                                                                <span className="line-clamp-2">{event.description}</span>
+                                                            </div>
+                                                        )}
+
+                                                        {event.extraItems && event.extraItems.length > 0 && (
+                                                            <div className="flex items-start gap-2 text-gray-600">
+                                                                
+                                                                <Plus size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
+                                                                <span>{event.extraItems.length} extra item{event.extraItems.length !== 1 ? 's' : ''}</span>
+                                                            </div>
+                                                        )}
                                                     </div>
 
-                                                    <div className="text-sm text-gray-500">
-                                                        Base: {formatCurrency(event.basePrice)}
+                                                    <div className="flex justify-between items-center mb-4">
+                                                        <div className="text-xl font-bold text-red-800">
+                                                            {formatCurrency(totalPrice)}
+                                                        </div>
+
+                                                        <div className="text-sm text-gray-500">
+                                                            Base: {formatCurrency(event.basePrice)}
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div className="flex gap-2">
-                                                    <button
-                                                        onClick={() => navigate(`/dashboard/events/create?edit=${event._id}`)}
-                                                        className="flex-1 px-3 py-2 bg-yellow-100 border border-yellow-300 text-yellow-700 rounded-lg font-medium 
-                                                                    hover:bg-yellow-50 transition-all flex items-center justify-center gap-1">
-                                                        
-                                                            <Edit size={16} />
+                                                    <div className="flex gap-2">
+                                                        <button
+                                                            onClick={() => navigate(`/dashboard/events/create?edit=${event._id}`)}
+                                                            className="flex-1 px-3 py-2 bg-yellow-100 border border-yellow-300 text-yellow-700 rounded-lg font-medium 
+                                                                        hover:bg-yellow-50 transition-all flex items-center justify-center gap-1">
                                                             
-                                                                Edit
-                                                    </button>
+                                                                <Edit size={16} />
+                                                                
+                                                                    Edit
+                                                        </button>
 
-                                                    <button
-                                                        onClick={() => viewEventDetails(event)}
-                                                        className="flex-1 px-3 py-2 bg-blue-100 border border-blue-300 text-blue-700 rounded-lg font-medium 
-                                                                    hover:bg-blue-50 transition-all flex items-center justify-center gap-1">
+                                                        <button
+                                                            onClick={() => viewEventDetails(event)}
+                                                            className="flex-1 px-3 py-2 bg-blue-100 border border-blue-300 text-blue-700 rounded-lg font-medium 
+                                                                        hover:bg-blue-50 transition-all flex items-center justify-center gap-1">
+                                                                
+                                                                <Eye size={16} />
+
+                                                                    View
+                                                        </button>
+
+                                                        <button
+                                                            onClick={() => handleDeleteEvent(event._id, event.title)}
+                                                            className="flex-1 px-3 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg font-medium hover:bg-red-50 
+                                                                        hover:text-red transition-all flex items-center justify-center gap-1">
                                                             
-                                                            <Eye size={16} />
+                                                                <Trash2 size={16} />
 
-                                                                View
-                                                    </button>
-
-                                                    <button
-                                                        onClick={() => handleDeleteEvent(event._id, event.title)}
-                                                        className="flex-1 px-3 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg font-medium hover:bg-red-50 
-                                                                    hover:text-red transition-all flex items-center justify-center gap-1">
-                                                        
-                                                            <Trash2 size={16} />
-
-                                                                Delete
-                                                    </button>
+                                                                    Delete
+                                                        </button>
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
+                                        )
+                                    })}
+                                </div>
+
+                                {/* pagination */}
+                                {totalPages > 1 && (
+                                    <div className="mt-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-600">
+                    
+                                        <div>
+                                            Showing{' '}
+                                            <span className="font-medium text-gray-900">
+                                                {(page - 1) * limit + 1}–{Math.min(page * limit, totalItems)}
+                                            </span>{' '}
+                                            of <span className="font-medium text-gray-900">{totalItems}</span> events
                                         </div>
-                                    )
-                                })}
-                            </div>
+
+                                        {/* Navigation buttons */}
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                onClick={() => setPage(1)}
+                                                disabled={page === 1}
+                                                className="px-4 py-2 border border-gray-300 rounded-lg bg-white disabled:opacity-50 
+                                                        disabled:cursor-not-allowed hover:bg-gray-50 transition-colors">
+                                                    
+                                                    First
+
+                                            </button>
+
+                                            <button
+                                                onClick={() => setPage(prev => Math.max(1, prev - 1))}
+                                                disabled={page === 1}
+                                                className="px-4 py-2 border border-gray-300 rounded-lg bg-white disabled:opacity-50 
+                                                        disabled:cursor-not-allowed hover:bg-gray-50 transition-colors flex items-center gap-1">
+                                            
+                                                    <span>←</span> Prev
+
+                                            </button>
+
+                                            <span className="px-4 py-2 font-medium text-gray-900">
+                                                
+                                                Page {page} of {totalPages}
+
+                                            </span>
+
+                                            <button
+                                                onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
+                                                disabled={page === totalPages}
+                                                className="px-4 py-2 border border-gray-300 rounded-lg bg-white disabled:opacity-50 
+                                                        disabled:cursor-not-allowed hover:bg-gray-50 transition-colors flex items-center gap-1">
+                                            
+                                                    Next <span>→</span>
+
+                                            </button>
+
+                                            <button
+                                                onClick={() => setPage(totalPages)}
+                                                disabled={page === totalPages}
+                                                className="px-4 py-2 border border-gray-300 rounded-lg bg-white disabled:opacity-50 
+                                                        disabled:cursor-not-allowed hover:bg-gray-50 transition-colors">
+                                            
+                                                    Last
+
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>

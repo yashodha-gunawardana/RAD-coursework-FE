@@ -17,8 +17,8 @@ export const createEvent = async (formData: FormData) => {
 }
 
 // Get own events
-export const getMyEvents = async (page = 1) => {
-  const res = await api.get(`/events/my?page=${page}`);
+export const getMyEvents = async (page = 1, limit = 6) => {
+  const res = await api.get(`/events/my?page=${page}&limit=${limit}`);
   return res.data;
 }
 
