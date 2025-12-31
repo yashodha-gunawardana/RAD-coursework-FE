@@ -95,16 +95,11 @@ const EventsPage: React.FC = () => {
     const [typeFilter, setTypeFilter] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
 
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [totalItems, setTotalItems] = useState(0)
+    const limit = 6
     
-    
-    useEffect(() => {
-        getMyEvents(page).then(res => {
-            setEvents(res.data);
-            setTotalPages(res.totalPages);
-        })
-    }, [page]);
 
     // calculate total price
     const calculateTotalPrice = useCallback((event: Event) => {
@@ -154,11 +149,15 @@ const EventsPage: React.FC = () => {
 
 
     // get event handler
-    const loadEvents = useCallback(async () => {
+    const loadEvents = useCallback(async (pageNumber: number = 1) => {
         try {
             setLoading(true)
-            const response = await getMyEvents()
+            const response = await getMyEvents(pageNumber)
+            
             setEvents(response.data || [])
+            setTotalPages(response.totalPages || 1)
+            setTotalItems(response.totalItems || 0)
+            setPage(pageNumber);
         
         } catch (err: any) {
             console.error("Error loading events: ", err)
@@ -298,6 +297,7 @@ const EventsPage: React.FC = () => {
                     <span>{toast.message}</span>
                 </div>
             )}
+
 
             <div className="max-w-7xl mx-auto">
 
