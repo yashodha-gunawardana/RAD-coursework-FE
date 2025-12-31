@@ -11,16 +11,24 @@ const PUBLIC_ENDPOINTS = ["/auth/login", "/auth/register"]
 
 // request interceptor: run before every request
 api.interceptors.request.use((config) => {
+    console.log("Request URL:", config.url);
+    console.log("Access Token exists:", !!localStorage.getItem("accessToken"));
+
     const token = localStorage.getItem("accessToken")
 
     // check if current request is to a public endpoint
-    const isPublic = PUBLIC_ENDPOINTS.some((url) => config.url?.includes(url))
+    const isPublic = PUBLIC_ENDPOINTS.some((publicUrl) => config.url?.endsWith(publicUrl));
+    console.log("Is public endpoint?", isPublic);    
 
     // if token exists and endpoint is NOT public, add Authorization header
     if (token && !isPublic) {
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = `Bearer ${token}`;
+        console.log("Added Authorization header");
+    } else {
+        console.log("No Authorization header added");
     }
-    return config
+
+    return config;
 })
 
 // response interceptor: runs on every response/error
@@ -48,6 +56,7 @@ api.interceptors.response.use(
                 }
 
                 const res = await refreshTokens(refreshToken)
+
                 localStorage.setItem("accessToken", res.accessToken)
 
                 // update original request Authorization header

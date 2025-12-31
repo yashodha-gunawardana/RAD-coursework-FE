@@ -8,7 +8,6 @@ import {
   Check,
   CheckCircle,
   AlertCircle,
-  Paperclip,
   Clipboard
 } from "react-feather";
 import { createEvent, getEventById, updateEvent } from "../services/events";
@@ -66,6 +65,8 @@ const EventForm: React.FC = () => {
     const [extraItems, setExtraItems] = useState<ExtraItem[]>([]);
     const [preview, setPreview] = useState<string | null>(null);
     const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
+    const [loading, setLoading] = useState(false)
+    const [imageRemoved, setImageRemoved] = useState(false);
 
 
     // handle input changes
@@ -75,7 +76,7 @@ const EventForm: React.FC = () => {
 
             // update eventData dynamically and basePrice as number
             ...prev,
-            [id]: id === "baseprice" ? parseFloat(value) || 0 : value
+            [id]: id === "baseprice" ? Number(value) || 0 : value
         }));
     }
 
@@ -87,6 +88,7 @@ const EventForm: React.FC = () => {
         unitPrice: 0,
         quantity: 1
     }]);
+
 
     const updateExtraItem = (id: number, field: keyof ExtraItem, value: string | number) =>
         setExtraItems(prev => prev.map((item: ExtraItem) =>
@@ -109,7 +111,17 @@ const EventForm: React.FC = () => {
             
             // create preview URL
             setPreview(URL.createObjectURL(e.target.files[0]))
+            setImageRemoved(false)
         }
+    }
+
+    const handleRemoveImage = () => {
+        setEventData((prev) => ({ 
+            ...prev, image: null 
+        }))
+
+        setPreview(null);
+        setImageRemoved(true);
     }
 
     // toast notifications
@@ -126,33 +138,57 @@ const EventForm: React.FC = () => {
     // fetch event data if in edit mode
     useEffect(() => {
         if (editId) {
+            setLoading(true)
             getEventById(editId).then((eventData: any) => {
 
                 setEventData({
                     _id: eventData._id,
-                    title: eventData.title,
-                    type: eventData.type,
+                    title: eventData.title || "",
+                    type: eventData.type || "",
                     date: eventData.date.split("T")[0], 
                     time: eventData.time || "",
-                    location: eventData.location,
+                    location: eventData.location || "",
                     description: eventData.description || "",
-                    basePrice: eventData.basePrice,
-                    status: eventData.status,
-                    extraItems: eventData.extraItems || []
+                    basePrice: eventData.basePrice || 0,
+                    status: eventData.status || "PLANNING",
+                    image: null,
+                    // extraItems: eventData.extraItems || []
                 })
 
-                // extra items with unique ids
-                setExtraItems(eventData.extraItems?.map((item: any) => ({
-                    ...item,
-                    id: Date.now() + Math.random()
-                })) || []);
+                setExtraItems(
+                    (eventData.extraItems || []).map((item: any, index: number) => ({
+                        id: Date.now() + index + Math.random(),
+                        name: item.name || "",
+                        unitPrice: item.unitPrice || 0,
+                        quantity: item.quantity || 1
+                    }))
+                );
 
-                setPreview(eventData.image || null)
+                if (eventData.image) {
+                    setPreview(eventData.image); // direct URL from backend
+                }
             
             }).catch(() => {
                 showToast("Error loading event", "error")
             });
+        
+        } else {
+            setEventData({
+                title: "",
+                type: "",
+                date: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0],
+                time: "",
+                location: "",
+                description: "",
+                basePrice: 0,
+                status: "PLANNING",
+                image: null
+            })
         }
+        setExtraItems([]);
+        setPreview(null);
+        setImageRemoved(false)
+
     }, [editId]) // run effect when editid changes
 
 
@@ -160,7 +196,7 @@ const EventForm: React.FC = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
 
-        if (!eventData.title || !eventData.type || !eventData.date || !eventData.location || !eventData.basePrice) {
+        if (!eventData.title || !eventData.type || !eventData.date || !eventData.location || eventData.basePrice <= 0) {
             showToast("Required fields are missing..", "error")
             return
         }
@@ -174,14 +210,22 @@ const EventForm: React.FC = () => {
         if (eventData.description) formData.append("description", eventData.description)
         formData.append("basePrice", eventData.basePrice.toString());
         formData.append("status", eventData.status);
-        if (eventData.image) formData.append("image", eventData.image);
+      
+        if (editId) {
+            formData.append("imageRemoved", imageRemoved.toString());
+        }
 
+        // append new image if selected
+        if (eventData.image instanceof File) {
+            formData.append("image", eventData.image);
+        }
 
-        // append extra items to form data
         extraItems.forEach((item: ExtraItem, idx: number) => {
-            formData.append(`extraItems[${idx}][name]`, item.name);
-            formData.append(`extraItems[${idx}][unitPrice]`, item.unitPrice.toString());
-            formData.append(`extraItems[${idx}][quantity]`, item.quantity.toString());
+            if (item.name && item.name.trim() !== "") {
+                formData.append(`extraItems[${idx}][name]`, item.name.trim());
+                formData.append(`extraItems[${idx}][unitPrice]`, item.unitPrice.toString());
+                formData.append(`extraItems[${idx}][quantity]`, item.quantity.toString());
+            }
         });
 
         try {
@@ -478,7 +522,8 @@ const EventForm: React.FC = () => {
                                                     <ImageIcon size={32} className="text-[#C5A059] mx-auto mb-3" />
                                                 
                                                 <p className="font-semibold text-[#121212]">
-                                                    Click to upload or drag and drop
+                                                    {/* Click to upload or drag and drop */}
+                                                    {preview ? "Change cover photo" : "Click to upload or drag and drop"}
                                                 </p>
 
                                                 <p className="text-xs text-[#6B7280] mt-1">
@@ -495,22 +540,24 @@ const EventForm: React.FC = () => {
                                             />
 
                                             {preview && (
-                                                <div className="mt-5 rounded-xl overflow-hidden border border-[#E5E7EB]">
+                                                <div className="mt-5 rounded-xl overflow-hidden border border-[#E5E7EB] relative">
                                                     <img
                                                         src={preview}
-                                                        alt="Preview"
+                                                        alt="Event Cover Preview"
                                                         className="w-full h-64 object-cover"
+                                                        onError={() => {
+                                                            console.error("Image failed to load:", preview);
+                                                            setPreview(null);
+                                                            showToast("Failed to load existing image", "error");
+                                                        }}
                                                     />
                                                     <button
                                                         type="button"
-                                                        onClick={() => {
-                                                            setEventData(prev => ({ ...prev, image: null }));
-                                                            setPreview(null);
-                                                        }}
-                                                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 
+                                                        onClick={handleRemoveImage} 
+                                                        className="absolute top-4  right-4 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 
                                                                     transition-all">
                                                         
-                                                        <Trash2 size={16} />
+                                                        <Trash2 size={18} />
 
                                                     </button>
                                                 </div>

@@ -1,39 +1,51 @@
 import api from "./api";
 
-// create event (admin)
-export const createEvent = async (data: FormData) => {
-    const res = await api.post("/events", data, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    });
-    return res.data
-};
+// Create event (admin only)
+export const createEvent = async (formData: FormData) => {
+  try {
+    const res = await api.post("/events", formData, {
+      headers: { 
+        "Content-Type": "multipart/form-data" 
+      }
+    })
+    return res.data;
 
-// get own events (public)
+  } catch (err: any) {
+    console.error("Failed to create event:", err);
+    throw err;
+  }
+}
+
+// Get own events
 export const getMyEvents = async () => {
   const res = await api.get("/events");
   return res.data;
-};
+}
 
-// get event by id (public)
+// Get event by id
 export const getEventById = async (id: string) => {
   const res = await api.get(`/events/${id}`);
-  return res.data;
-};
+  return res.data.data;
+}
 
-// update event (admin)
-export const updateEvent = async (id: string, data: FormData) => {
-  const res = await api.put(`/events/${id}`, data, {
-    headers: {
-      "Content-Type": "multipart/form-data"
-    }
-  });
-  return res.data;
-};
+// Update event (admin only)
+export const updateEvent = async (id: string, formData: FormData) => {
+  try {
+    const res = await api.put(`/events/${id}`, formData, {
+      headers: { 
+        "Content-Type": "multipart/form-data" 
+      }
+    })
+    return res.data;
+    
+  } catch (err: any) {
+    console.error("Failed to update event:", err);
+    throw err;
+  }
+}
 
-// delete event (admin)
+// Delete event
 export const deleteEvent = async (id: string) => {
   const res = await api.delete(`/events/${id}`);
   return res.data;
-};
+}

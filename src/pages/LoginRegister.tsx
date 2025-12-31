@@ -91,7 +91,7 @@ export default function LoginRegister() {
                 // store user data in AuthContext
                 setUser(details.data)
 
-                navigate("/home")
+                navigate("/dashboard")
             
             }
 
@@ -134,13 +134,18 @@ export default function LoginRegister() {
     }
 
     // for login and register
+    // useEffect(() => {
+    //     if (location.state?.formType) {
+    //         setFormType(location.state.formType) // auto switch for
+    //     }
+    // }, [location.state])
     useEffect(() => {
-        if (location.state?.formType) {
-            setFormType(location.state.formType) // auto switch for
-        }
-    }, [location.state])
+        if (location.pathname === "/login") setFormType("signin");
+        if (location.pathname === "/register") setFormType("signup");
+    }, [location.pathname]);
 
-
+    
+    
     useEffect(() => {
         const updateBackgroundByTime = () => {
             const hour = new Date().getHours() // get current hour

@@ -56,6 +56,7 @@ interface Event {
     basePrice: number;
     status: string;
     extraItems?: ExtraItem[];
+    image?: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -124,7 +125,7 @@ const EventsPage: React.FC = () => {
     // status badge
     const getStatusClass = useCallback((status: string) => {
         const classes: Record<string, string> = {
-            "PLANING": "bg-blue-100 text-blue-800 border border-blue-200",
+            "PLANNING": "bg-blue-100 text-blue-800 border border-blue-200",
             "ONGOING": "bg-green-100 text-green-800 border border-green-200",
             "COMPLETED": "bg-yellow-100 text-yellow-800 border border-yellow-200",
             "CANCELLED": "bg-red-100 text-red-800 border border-red-200"
@@ -161,20 +162,24 @@ const EventsPage: React.FC = () => {
 
     // delete handler
     const handleDeleteEvent = useCallback(async (id: string, title: string) => {
-        if (!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) {
-            return
-        }
+
+        if (!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
 
         try {
-            await deleteEvent(id)
-            setEvents(prev => prev.filter(event => event._id !== id))
-            showToast("Event deleted successfully..")
-        
+            setEvents(prev => prev.filter(event => event._id !== id));
+
+            const res = await deleteEvent(id);
+
+            showToast("Event deleted successfully.", "success");
+            console.log("Delete response:", res);
+
         } catch (err: any) {
-            console.error("Error deleting event: ", err)
-            showToast("Failed to delete event", "error")
+            console.error("Error deleting event:", err);
+
+            loadEvents();
+            showToast("Failed to delete event.", "error");
         }
-    }, [showToast])
+    }, [showToast, loadEvents]);
 
 
     // dashboard statistics
@@ -435,7 +440,7 @@ const EventsPage: React.FC = () => {
                                     type="text"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    placeholder="Search events by Event Id..."
+                                    placeholder="Search events by id, loacation, or description..."
                                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 
                                                 focus:ring-red-500 focus:border-transparent transition-all"
                                 />
@@ -524,19 +529,38 @@ const EventsPage: React.FC = () => {
                                             className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm 
                                                         hover:shadow-lg transition-all hover:-translate-y-1">  
 
-                                            <div className="h-40 bg-gradient-to-r from-red-800 to-red-600 relative">
+                                            {/* form image as cover photo */}
+                                            <div className="h-40 relative overflow-hidden">
+                                                {event.image ? (
+                                                    <div
+                                                        className="w-full h-full bg-cover bg-center"
+                                                        style={{ backgroundImage: `url(${event.image})` }}
+                                                    />
+                                                ) : (
+                                                    // <div className="w-full h-full bg-gradient-to-r from-red-800 to-red-600" />
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-[#8B0000]/90 via-[#C5A059]/70 to-[#8B0000]/90 
+                                                                    flex items-center justify-center">
+                                                        <div className="text-white/20">
+                                                            <Calendar size={80} />
+                                                        </div>
+                                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
+                                                    </div>
+                                                )}
+
+                                                {/* Type Badge */}
                                                 <div className="absolute top-4 left-4 bg-white/90 text-red-800 px-3 py-1 rounded-full text-xs 
                                                                 font-semibold uppercase tracking-wide">
-                                                        
+                                                    
                                                     {getEventTypeLabel(event.type)}
                                                 </div>
 
+                                                {/* Status Badge */}
                                                 <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold 
                                                                 ${getStatusClass(event.status)}`}>
-                                            
+                                                    
                                                     {event.status}
                                                 </div>
-                                            </div> 
+                                            </div>
 
                                             <div className="p-5">
                                                 <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
@@ -593,12 +617,12 @@ const EventsPage: React.FC = () => {
 
                                                 <div className="flex gap-2">
                                                     <button
-                                                        onClick={() => navigate(`/dashboard/events/edit/${event._id}`)}
+                                                        onClick={() => navigate(`/dashboard/events/create?edit=${event._id}`)}
                                                         className="flex-1 px-3 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium 
                                                                     hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
-                                                            
+                                                        
                                                             <Edit size={16} />
-
+                                                            
                                                                 Edit
                                                     </button>
 
