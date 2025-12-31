@@ -17,8 +17,8 @@ export const createEvent = async (formData: FormData) => {
 }
 
 // Get own events
-export const getMyEvents = async () => {
-  const res = await api.get("/events");
+export const getMyEvents = async (page = 1) => {
+  const res = await api.get(`/events/my?page=${page}`);
   return res.data;
 }
 
@@ -37,7 +37,7 @@ export const updateEvent = async (id: string, formData: FormData) => {
       }
     })
     return res.data;
-    
+
   } catch (err: any) {
     console.error("Failed to update event:", err);
     throw err;
