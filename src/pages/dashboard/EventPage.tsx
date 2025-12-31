@@ -281,8 +281,13 @@ const EventsPage: React.FC = () => {
 
     useEffect(() => {
         setPage(1);
-    }, [searchTerm, typeFilter, statusFilter]);
+    }, [searchTerm, typeFilter, statusFilter])
 
+    useEffect(() => {
+        loadEvents(1);
+    }, [searchTerm, typeFilter, statusFilter])
+
+    
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] p-5 md:p-10">
 
