@@ -18,6 +18,7 @@ import {
   ArrowLeft,
   ArrowRight
 } from "react-feather";
+import ConfirmDialog from "../../components/ConfirmationDialog";
 import { getMyEvents, deleteEvent } from "../../services/events";
 
 
@@ -93,7 +94,8 @@ const EventsPage: React.FC = () => {
     const [events, setEvents] = useState<Event[]>([])
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState<ToastState>({ show: false, message: " ", type: "success" })
-
+    const [deleteDialog, setDeleteDialog] = useState<{ open: boolean, id?: string, title?:string }>({ open: false })
+ 
     const [searchTerm, setSearchTerm] = useState("")
     const [typeFilter, setTypeFilter] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
@@ -163,9 +165,7 @@ const EventsPage: React.FC = () => {
             setEvents(response.data || [])
             setTotalPages(response.totalPages || 1)
             setTotalItems(response.totalItems || 0)
-            setPage(pageNumber);
-
-            // window.scrollTo({ top: 0, behavior: "smooth" })
+            setPage(pageNumber)
         
         } catch (err: any) {
             console.error("Error loading events: ", err)
@@ -194,7 +194,6 @@ const EventsPage: React.FC = () => {
         if (!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
 
         try {
-            // setEvents(prev => prev.filter(event => event._id !== id))
 
             const res = await deleteEvent(id);
 
