@@ -13,7 +13,10 @@ import {
   Trash2,
   TrendingUp,
   TrendingDown,
-  AlertCircle
+  AlertCircle,
+  ChevronRight,
+  ArrowLeft,
+  ArrowRight
 } from "react-feather";
 import { getMyEvents, deleteEvent } from "../../services/events";
 
@@ -67,7 +70,7 @@ interface ToastState {
     type: "success" | "error"
 }
 
-const eventType = {
+const EventType = {
     WEDDING: "WEDDING",
     BIRTHDAY: "BIRTHDAY",
     CONFERENCE: "CONFERENCE",
@@ -94,12 +97,13 @@ const EventsPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [typeFilter, setTypeFilter] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
+    const [allEvents, setAllEvents] = useState<Event[]>([]); 
 
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const limit = 6
-    
+   
 
     // calculate total price
     const calculateTotalPrice = useCallback((event: Event) => {
@@ -152,23 +156,36 @@ const EventsPage: React.FC = () => {
     const loadEvents = useCallback(async (pageNumber: number = 1) => {
         try {
             setLoading(true)
-            const response = await getMyEvents(pageNumber)
-            
+            const response = await getMyEvents(pageNumber, limit, searchTerm, typeFilter, statusFilter)
+
+            console.log("Fetched events:", response.data)
+
             setEvents(response.data || [])
             setTotalPages(response.totalPages || 1)
             setTotalItems(response.totalItems || 0)
             setPage(pageNumber);
 
-            window.scrollTo({ top: 0, behavior: "smooth" })
+            // window.scrollTo({ top: 0, behavior: "smooth" })
         
         } catch (err: any) {
             console.error("Error loading events: ", err)
-            showToast("Failed to load events", err)
+            showToast("Failed to load events", "error")
         
         } finally {
             setLoading(false)
         }
-    }, [showToast])
+    }, [searchTerm, typeFilter, statusFilter, showToast])
+
+
+    // all event stats
+    const loadAllEvents = useCallback(async () => {
+        try {
+            const response = await getMyEvents(1, 1000); // large limit to get all
+            setAllEvents(response.data || []);
+        } catch (err) {
+            console.error("Error loading all events:", err);
+        }
+    }, []);
 
 
     // delete handler
@@ -177,12 +194,18 @@ const EventsPage: React.FC = () => {
         if (!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
 
         try {
-            setEvents(prev => prev.filter(event => event._id !== id));
+            // setEvents(prev => prev.filter(event => event._id !== id))
 
             const res = await deleteEvent(id);
 
-            showToast("Event deleted successfully.", "success");
-            console.log("Delete response:", res);
+            showToast("Event deleted successfully.", "success")
+            console.log("Delete response:", res)
+
+            const isLastItemOnPage = events.length === 1
+            const newPage = isLastItemOnPage && page > 1 ? page - 1 : page
+
+            setPage(newPage)
+            loadEvents(newPage)
 
         } catch (err: any) {
             console.error("Error deleting event:", err);
@@ -195,48 +218,22 @@ const EventsPage: React.FC = () => {
 
     // dashboard statistics
     const stats = React.useMemo(() => {
-        const totalEvents = events.length
-        const activeEvents = events.filter(e => e.status === EventStatus.ONGOING).length
-        const totalRevenue = events.reduce((sum, event) => sum + calculateTotalPrice(event), 0)
+        const totalEvents = allEvents.length
+        const activeEvents = allEvents.filter(e => e.status === EventStatus.ONGOING).length
+        const totalRevenue = allEvents.reduce((sum, event) => sum + calculateTotalPrice(event), 0)
 
         // within next 30 days from today
         const today = new Date()
         const nextMonth = new Date()
         nextMonth.setDate(today.getDate() + 30)
         
-        const upcomingEvents = events.filter(e => {
+        const upcomingEvents = allEvents.filter(e => {
             const eventDate = new Date(e.date)
             return eventDate > today && eventDate <= nextMonth
         }).length
 
         return { totalEvents, activeEvents, upcomingEvents, totalRevenue }
-    }, [events, calculateTotalPrice])
-
-
-    // filter
-    const filteredEvents = React.useMemo(() => {
-        let result = [...events];
-
-        if (searchTerm) {
-            const term = searchTerm.toLowerCase();
-            result = result.filter(event =>
-                event.title.toLowerCase().includes(term) ||
-                event.location.toLowerCase().includes(term) ||
-                (event.description && event.description.toLowerCase().includes(term))
-            );
-        }
-
-        if (typeFilter) {
-            result = result.filter(event => event.type === typeFilter);
-        }
-
-        if (statusFilter) {
-            result = result.filter(event => event.status === statusFilter);
-        }
-
-        // sort by most recent date first
-        return result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    }, [events, searchTerm, typeFilter, statusFilter])
+    }, [allEvents, calculateTotalPrice])
 
 
     // filter reset
@@ -275,19 +272,25 @@ const EventsPage: React.FC = () => {
     }, [calculateTotalPrice, getEventTypeLabel])
 
 
+    // load pagination events when page or filter change
     useEffect(() => {
         loadEvents(page)
     }, [page, loadEvents])
 
+    
+    // load all events once for stats
+    useEffect(() => {
+        loadAllEvents();
+    }, [loadAllEvents])
+
+
+    // reset page when filters change
     useEffect(() => {
         setPage(1);
     }, [searchTerm, typeFilter, statusFilter])
 
-    useEffect(() => {
-        loadEvents(1);
-    }, [searchTerm, typeFilter, statusFilter])
+ 
 
-    
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] p-5 md:p-10">
 
@@ -460,7 +463,7 @@ const EventsPage: React.FC = () => {
                                     type="text"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    placeholder="Search events by id, loacation, or description..."
+                                    placeholder="Search events by title, loacation, or description..."
                                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 
                                                 focus:ring-red-500 focus:border-transparent transition-all"
                                 />
@@ -507,7 +510,7 @@ const EventsPage: React.FC = () => {
                                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-800"></div>
                             </div>
 
-                        ) : filteredEvents.length === 0 ? (
+                        ) : events.length === 0 ? (
 
                             <div className="text-center py-12">
 
@@ -542,7 +545,7 @@ const EventsPage: React.FC = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                                    {filteredEvents.map((event) => {
+                                    {events.map((event) => {
                                         const totalPrice = calculateTotalPrice(event)
 
                                         return (
@@ -693,7 +696,7 @@ const EventsPage: React.FC = () => {
 
                                 {/* pagination */}
                                 {totalPages > 1 && (
-                                    <div className="mt-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-600">
+                                    <div className="mt-15 flex flex-col sm:flex-col justify-center items-center gap-4 text-sm text-gray-600">
                     
                                         <div>
                                             Showing{' '}
@@ -706,23 +709,23 @@ const EventsPage: React.FC = () => {
                                         {/* Navigation buttons */}
                                         <div className="flex items-center gap-2">
                                             <button
-                                                onClick={() => setPage(1)}
-                                                disabled={page === 1}
-                                                className="px-4 py-2 border border-gray-300 rounded-lg bg-white disabled:opacity-50 
-                                                        disabled:cursor-not-allowed hover:bg-gray-50 transition-colors">
-                                                    
-                                                    First
-
-                                            </button>
-
-                                            <button
                                                 onClick={() => setPage(prev => Math.max(1, prev - 1))}
                                                 disabled={page === 1}
-                                                className="px-4 py-2 border border-gray-300 rounded-lg bg-white disabled:opacity-50 
-                                                        disabled:cursor-not-allowed hover:bg-gray-50 transition-colors flex items-center gap-1">
+                                                className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
+                                                            bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
+                                                            hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
+                                                            active:scale-95
+                                                            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent">
+                                                
+                                                <span className="text-sm font-semibold tracking-widest uppercase">
+                                                    
+                                                    Prev
+                                                </span>
                                             
-                                                    <span>←</span> Prev
-
+                                                <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-[#4A0404]/10 group-hover:bg-[#F8F4E3]/20">
+                                                    
+                                                    <ArrowLeft size={14} strokeWidth={3} className="transition-transform group-hover:translate-x-0.5" />
+                                                </div>
                                             </button>
 
                                             <span className="px-4 py-2 font-medium text-gray-900">
@@ -734,21 +737,21 @@ const EventsPage: React.FC = () => {
                                             <button
                                                 onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
                                                 disabled={page === totalPages}
-                                                className="px-4 py-2 border border-gray-300 rounded-lg bg-white disabled:opacity-50 
-                                                        disabled:cursor-not-allowed hover:bg-gray-50 transition-colors flex items-center gap-1">
+                                                className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
+                                                            bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
+                                                            hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
+                                                            active:scale-95
+                                                            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent">
+                                                
+                                                <span className="text-sm font-semibold tracking-widest uppercase">
+                                                    
+                                                    Next
+                                                </span>
                                             
-                                                    Next <span>→</span>
-
-                                            </button>
-
-                                            <button
-                                                onClick={() => setPage(totalPages)}
-                                                disabled={page === totalPages}
-                                                className="px-4 py-2 border border-gray-300 rounded-lg bg-white disabled:opacity-50 
-                                                        disabled:cursor-not-allowed hover:bg-gray-50 transition-colors">
-                                            
-                                                    Last
-
+                                                <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-[#4A0404]/10 group-hover:bg-[#F8F4E3]/20">
+                                                    
+                                                    <ArrowRight size={14} strokeWidth={3} className="transition-transform group-hover:translate-x-0.5" />
+                                                </div>
                                             </button>
                                         </div>
                                     </div>
