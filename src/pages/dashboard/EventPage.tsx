@@ -94,7 +94,9 @@ const EventsPage: React.FC = () => {
     const [events, setEvents] = useState<Event[]>([])
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState<ToastState>({ show: false, message: " ", type: "success" })
+
     const [deleteDialog, setDeleteDialog] = useState<{ open: boolean, id?: string, title?:string }>({ open: false })
+    const [detailsModal, setDetailsModal] = useState<{ open: boolean; event: Event | null }>({ open: false, event: null });
  
     const [searchTerm, setSearchTerm] = useState("")
     const [typeFilter, setTypeFilter] = useState("")
