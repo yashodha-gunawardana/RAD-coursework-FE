@@ -189,7 +189,10 @@ const EventsPage: React.FC = () => {
 
 
     // delete handler
-    const handleDeleteEvent = useCallback(async (id: string, title: string) => {
+    const handleDeleteEvent = useCallback((id: string, title: string) => {
+        setDeleteDialog({ open: true, id, title })
+    }, [])
+    /*const handleDeleteEvent = useCallback(async (id: string, title: string) => {
 
         if (!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
 
@@ -212,7 +215,7 @@ const EventsPage: React.FC = () => {
             loadEvents();
             showToast("Failed to delete event.", "error");
         }
-    }, [showToast, loadEvents]);
+    }, [showToast, loadEvents]);*/
 
 
     // dashboard statistics
