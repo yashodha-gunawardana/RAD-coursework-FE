@@ -192,14 +192,17 @@ const EventsPage: React.FC = () => {
     const handleDeleteEvent = useCallback((id: string, title: string) => {
         setDeleteDialog({ open: true, id, title })
     }, [])
-    /*const handleDeleteEvent = useCallback(async (id: string, title: string) => {
 
-        if (!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
+
+    // confimation function
+    const confirmDelete = useCallback(async () => {
+        if (!deleteDialog.id)
+            return
 
         try {
+            // setEvents(prev => prev.filter(event => event._id !== deleteDialog.id))
 
-            const res = await deleteEvent(id);
-
+            const res = await deleteEvent(deleteDialog.id)
             showToast("Event deleted successfully.", "success")
             console.log("Delete response:", res)
 
@@ -209,13 +212,17 @@ const EventsPage: React.FC = () => {
             setPage(newPage)
             loadEvents(newPage)
 
+            await loadAllEvents()
+        
         } catch (err: any) {
-            console.error("Error deleting event:", err);
+            console.error("Error deleting event:", err)
+            loadEvents()
+            showToast("Failed to delete event.", "error")
 
-            loadEvents();
-            showToast("Failed to delete event.", "error");
+        } finally {
+            setDeleteDialog({ open: false })
         }
-    }, [showToast, loadEvents]);*/
+    }, [deleteDialog.id, showToast, loadEvents])
 
 
     // dashboard statistics
@@ -688,8 +695,8 @@ const EventsPage: React.FC = () => {
 
                                                                     Delete
                                                         </button>
+                                                        
                                                     </div>
-                                                    
                                                 </div>
                                             </div>
                                         )
@@ -763,6 +770,17 @@ const EventsPage: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            <ConfirmDialog
+                isOpen={deleteDialog.open}
+                title="Delete Event?"
+                message={`Are you sure you want to delete "${deleteDialog.title || 'this event'}"? This action cannot be undone.`}
+                confirmText="Delete"
+                cancelText="Cancel"
+                danger={true}
+                onConfirm={confirmDelete}
+                onCancel={() => setDeleteDialog({ open: false })}
+            />
         </div>
     )
 }
