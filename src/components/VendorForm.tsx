@@ -13,7 +13,7 @@ import { createVendor, updateVendor, getvendorById } from "../services/vendor";
 
 
 export const VendorCategory = {
-    PHOTOGRAPY: "PHOTOGRAPY",
+    PHOTOGRAPHY: "PHOTOGRAPHY",
     CATERING: "CATERING",
     DECORATION: "DECORATION",
     DJ: "DJ",
@@ -45,7 +45,7 @@ const VendorForm: React.FC = () => {
     const { id: editId } = useParams<{ id?: string }>()
     const navigate = useNavigate()
 
-    const [formData, setFormData] = useState<VendorFormData>({
+    const [vendorData, setVendorData] = useState<VendorFormData>({
         name: "",
         category: "",
         contact: "",
@@ -58,6 +58,7 @@ const VendorForm: React.FC = () => {
     const [preview, setPreview] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
     const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success" })
+    const [imageRemoved, setImageRemoved] = useState(false)
 
 
     // toast notifi
@@ -73,21 +74,36 @@ const VendorForm: React.FC = () => {
     // handle input
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { id, value } = e.target;
-        setFormData((prev) => ({ 
+        setVendorData((prev) => ({ 
             ...prev, [id]: value 
         }));
     }
 
 
+    const handleAvailabilityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setVendorData((prev) => ({ ...prev, isAvailable: e.target.checked }))
+    }
+
     // image handler
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setFormData((prev) => ({ ...prev, image: file }));
-            setPreview(URL.createObjectURL(file));
+        if (e.target.files && e.target.files[0]) {
+            setVendorData((prev) => ({ ...prev, image: e.target.files![0] }))
+
+            // create preview URL
+            setPreview(URL.createObjectURL(e.target.files[0]))
+            setImageRemoved(false)
         }
     } 
 
+    // handle image remove
+    const handleRemoveImage = () => {
+        setVendorData((prev) => ({
+            ...prev, image: null
+        }))
+
+        setPreview(null)
+        setImageRemoved(true)
+    }
 
     // loading data on edit mode
     useEffect(() => {
@@ -98,11 +114,11 @@ const VendorForm: React.FC = () => {
                     const response = await getvendorById(editId)
                     const vendor = response.data
 
-                    setFormData({
-                        name: vendor.name,
-                        category: vendor.category,
-                        contact: vendor.contact,
-                        priceRange: vendor.priceRange,
+                    setVendorData({
+                        name: vendor.name || "",
+                        category: vendor.category || "",
+                        contact: vendor.contact || "",
+                        priceRange: vendor.priceRange || 0,
                         description: vendor.description || "",
                         image: null,
                         isAvailable: vendor.isAvailable
@@ -120,7 +136,7 @@ const VendorForm: React.FC = () => {
                 }
             } 
             loadVendor()
-        }
+        } 
     }, [editId])
 
 
@@ -128,19 +144,19 @@ const VendorForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        if (!formData.name || !formData.category || !formData.contact || !formData.priceRange) {
+        if (!vendorData.name || !vendorData.category || !vendorData.contact || !vendorData.priceRange) {
             showToast("Please fill all required fields", "error");
             return
         }
 
         const data = new FormData();
-        data.append("name", formData.name);
-        data.append("category", formData.category);
-        data.append("contact", formData.contact);
-        data.append("priceRange", formData.priceRange);
-        if (formData.description) data.append("description", formData.description);
-        if (formData.image) data.append("image", formData.image);
-        data.append("isAvailable", String(formData.isAvailable));
+        data.append("name", vendorData.name);
+        data.append("category", vendorData.category);
+        data.append("contact", vendorData.contact);
+        data.append("priceRange", vendorData.priceRange);
+        if (vendorData.description) data.append("description", vendorData.description);
+        if (vendorData.image) data.append("image", vendorData.image);
+        data.append("isAvailable", String(vendorData.isAvailable));
 
         try {
             setLoading(true)
@@ -250,7 +266,7 @@ const VendorForm: React.FC = () => {
                                         <input
                                             type="text"
                                             id="name"
-                                            value={formData.name}
+                                            value={vendorData.name}
                                             onChange={handleChange}
                                             className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
                                                         focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
@@ -271,7 +287,7 @@ const VendorForm: React.FC = () => {
 
                                         <select
                                             id="category"
-                                            value={formData.category}
+                                            value={vendorData.category}
                                             onChange={handleChange}
                                             className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
                                                         focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
@@ -280,7 +296,7 @@ const VendorForm: React.FC = () => {
                                             disabled={loading}>
 
                                                 <option value="">Select Category</option>
-                                                <option value={VendorCategory.PHOTOGRAPY}>Photography</option>
+                                                <option value={VendorCategory.PHOTOGRAPHY}>Photography</option>
                                                 <option value={VendorCategory.CATERING}>Catering</option>
                                                 <option value={VendorCategory.DECORATION}>Decoration</option>
                                                 <option value={VendorCategory.DJ}>DJ</option>
@@ -302,7 +318,7 @@ const VendorForm: React.FC = () => {
                                         <input
                                             type="text"
                                             id="contact"
-                                            value={formData.contact}
+                                            value={vendorData.contact}
                                             onChange={handleChange}
                                             className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
                                                         focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
@@ -324,7 +340,7 @@ const VendorForm: React.FC = () => {
                                         <input
                                             type="text"
                                             id="priceRange"
-                                            value={formData.priceRange}
+                                            value={vendorData.priceRange}
                                             onChange={handleChange}
                                             className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
                                                         focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
@@ -345,7 +361,7 @@ const VendorForm: React.FC = () => {
 
                                         <textarea
                                             id="description"
-                                            value={formData.description}
+                                            value={vendorData.description}
                                             onChange={handleChange}
                                             className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#FAFAFA] text-[#121212] text-sm
                                                         focus:outline-none focus:border-[#C5A059] focus:bg-white focus:ring-4 focus:ring-[#C5A059]/10
@@ -394,7 +410,7 @@ const VendorForm: React.FC = () => {
                                                 <button
                                                     type="button"
                                                     onClick={() => {
-                                                        setFormData((prev) => ({ ...prev, image: null }));
+                                                        setVendorData((prev) => ({ ...prev, image: null }));
                                                         setPreview(null);
                                                     }}
                                                     className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 
@@ -412,7 +428,7 @@ const VendorForm: React.FC = () => {
                                     <button
                                         type="button"
                                         onClick={() => {
-                                            setFormData({
+                                            setVendorData({
                                                 name: "",
                                                 category: "",
                                                 contact: "",

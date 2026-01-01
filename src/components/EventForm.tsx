@@ -76,7 +76,7 @@ const EventForm: React.FC = () => {
 
             // update eventData dynamically and basePrice as number
             ...prev,
-            [id]: id === "baseprice" ? Number(value) || 0 : value
+            [id]: id === "basePrice" ? Number(value) || 0 : value
         }));
     }
 
@@ -152,7 +152,7 @@ const EventForm: React.FC = () => {
                     basePrice: eventData.basePrice || 0,
                     status: eventData.status || "PLANNING",
                     image: null,
-                    // extraItems: eventData.extraItems || []
+                    extraItems: eventData.extraItems || []
                 })
 
                 setExtraItems(

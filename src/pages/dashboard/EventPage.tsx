@@ -18,7 +18,6 @@ import {
   ArrowLeft,
   ArrowRight
 } from "react-feather";
-import ConfirmDialog from "../../components/ConfirmationDialog";
 import { getMyEvents, deleteEvent } from "../../services/events";
 
 
@@ -95,9 +94,6 @@ const EventsPage: React.FC = () => {
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState<ToastState>({ show: false, message: " ", type: "success" })
 
-    const [deleteDialog, setDeleteDialog] = useState<{ open: boolean, id?: string, title?:string }>({ open: false })
-    const [detailsModal, setDetailsModal] = useState<{ open: boolean; event: Event | null }>({ open: false, event: null });
- 
     const [searchTerm, setSearchTerm] = useState("")
     const [typeFilter, setTypeFilter] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
@@ -191,40 +187,32 @@ const EventsPage: React.FC = () => {
 
 
     // delete handler
-    const handleDeleteEvent = useCallback((id: string, title: string) => {
-        setDeleteDialog({ open: true, id, title })
-    }, [])
-
-
-    // confimation function
-    const confirmDelete = useCallback(async () => {
-        if (!deleteDialog.id)
-            return
+    const handleDeleteEvent = useCallback(async (id: string, title: string) => {
+        if(!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`))
+        return
 
         try {
-            // setEvents(prev => prev.filter(event => event._id !== deleteDialog.id))
+             setEvents(prev => prev.filter(event => event._id !== id))
 
-            const res = await deleteEvent(deleteDialog.id)
+            const res = await deleteEvent(id)
             showToast("Event deleted successfully.", "success")
             console.log("Delete response:", res)
 
             const isLastItemOnPage = events.length === 1
             const newPage = isLastItemOnPage && page > 1 ? page - 1 : page
 
+            
             setPage(newPage)
             loadEvents(newPage)
-
-            await loadAllEvents()
+            loadAllEvents()
         
         } catch (err: any) {
             console.error("Error deleting event:", err)
             loadEvents()
             showToast("Failed to delete event.", "error")
 
-        } finally {
-            setDeleteDialog({ open: false })
         }
-    }, [deleteDialog.id, showToast, loadEvents])
+    }, [loadEvents])
 
 
     // dashboard statistics
@@ -259,10 +247,11 @@ const EventsPage: React.FC = () => {
     // full details view
     const viewEventDetails = useCallback((event: Event) => {
         const totalPrice = calculateTotalPrice(event)
+
         let details = `Event Details:\n\n`
         details += `Title: ${event.title}\n`
         details += `Type: ${getEventTypeLabel(event.type)}\n`
-        details += `Date: ${formatDate(event.date)}${event.time ? `at ${event.time}` : ``}\n`
+        details += `Date: ${formatDate(event.date)}${event.time ? ` at ${event.time}` : ``}\n`
         details += `Location: ${event.location}\n`
         details += `Status: ${event.status}\n`
         details += `Base Price: ${formatCurrency(event.basePrice)}\n`
@@ -274,13 +263,15 @@ const EventsPage: React.FC = () => {
 
         if (event.extraItems && event.extraItems.length > 0) {
             details += `Extra Items:\n`
-            event.extraItems.forEach(item => {
+            event.extraItems.forEach((item: ExtraItem) => {
                 const quantity = item.quantity || 1
                 details += `• ${item.name}: ${formatCurrency(item.unitPrice)} × ${quantity} = ${formatCurrency(item.unitPrice * quantity)}\n`
             })
         }
+
         alert(details)
     }, [calculateTotalPrice, getEventTypeLabel])
+
 
 
     // load pagination events when page or filter change
@@ -574,7 +565,7 @@ const EventsPage: React.FC = () => {
                                                         />
                                                     ) : (
                                                         
-                                                        <div className="relative h-64 w-96 overflow-hidden rounded-2xl bg-[#C2A886] shadow-lg">
+                                                        <div className="relative h-50 w-98 overflow-hidden rounded-xl bg-[#C2A886] shadow-lg">
                                                             <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
 
                                                             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
@@ -615,41 +606,41 @@ const EventsPage: React.FC = () => {
                                                 </div>
 
                                                 <div className="p-5">
-                                                    <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
+                                                    <h3 className="text-lg font-bold mb-4 line-clamp-2 font-serif">
                                 
-                                                        {event.title}
+                                                        {event.title.charAt(0).toUpperCase() + event.title.slice(1)}
                                                     </h3>
 
-                                                    <div className="space-y-3 mb-4">
-                                                        <div className="flex items-start gap-2 text-gray-600">
+                                                    <div className="space-y-3 mb-5 text-[#0A0A0A]/90">
+                                                        <div className="flex items-start gap-3">
 
-                                                            <Calendar size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
+                                                            <Calendar size={16} className="mt-1.5 flex-shrink-0 text-red-800" />
 
                                                             <div>
                                                                 <div className="font-medium">{formatDate(event.date)}</div>
                                                                 
                                                                 {event.time && (
-                                                                    <div className="text-sm text-gray-500">{event.time}</div>
+                                                                    <div className="text-sm">{event.time}</div>
                                                                 )}
                                                             </div>
                                                         </div>
 
-                                                        <div className="flex items-start gap-2 text-gray-600">
+                                                        <div className="flex items-start gap-3">
                                         
-                                                            <Eye size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
-                                                            <span className="line-clamp-1">{event.location}</span>
+                                                            <Eye size={16} className="mt-1 flex-shrink-0 text-red-800" />
+                                                            <span className="line-clamp-1 font-medium">{event.location}</span>
                                                         </div>
 
                                                         {event.description && (
-                                                            <div className="flex items-start gap-2 text-gray-600">
+                                                            <div className="flex items-start gap-3">
                                 
-                                                                <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
-                                                                <span className="line-clamp-2">{event.description}</span>
+                                                                <AlertCircle size={16} className="mt-1 flex-shrink-0 text-red-800" />
+                                                                <span className="line-clamp-2 font-medium">{event.description}</span>
                                                             </div>
                                                         )}
 
                                                         {event.extraItems && event.extraItems.length > 0 && (
-                                                            <div className="flex items-start gap-2 text-gray-600">
+                                                            <div className="flex items-start gap-3 text-gray-600">
                                                                 
                                                                 <Plus size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
                                                                 <span>{event.extraItems.length} extra item{event.extraItems.length !== 1 ? 's' : ''}</span>
@@ -697,9 +688,19 @@ const EventsPage: React.FC = () => {
 
                                                                     Delete
                                                         </button>
-                                                        
                                                     </div>
-                                                </div>
+
+                                                    {/* <ConfirmDialog
+                                                        isOpen={deleteDialog.open}
+                                                        title="Delete Event?"
+                                                        message={`Are you sure you want to delete "${deleteDialog.title || 'this event'}"? This action cannot be undone.`}
+                                                        confirmText="Delete"
+                                                        cancelText="Cancel"
+                                                        danger={true}
+                                                        onConfirm={confirmDelete}
+                                                        onCancel={() => setDeleteDialog({ open: false })}
+                                                    /> */}
+                                                 </div>
                                             </div>
                                         )
                                     })}
@@ -772,17 +773,6 @@ const EventsPage: React.FC = () => {
                     </div>
                 </div>
             </div>
-
-            <ConfirmDialog
-                isOpen={deleteDialog.open}
-                title="Delete Event?"
-                message={`Are you sure you want to delete "${deleteDialog.title || 'this event'}"? This action cannot be undone.`}
-                confirmText="Delete"
-                cancelText="Cancel"
-                danger={true}
-                onConfirm={confirmDelete}
-                onCancel={() => setDeleteDialog({ open: false })}
-            />
         </div>
     )
 }

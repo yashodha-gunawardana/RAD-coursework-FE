@@ -17,11 +17,6 @@ export const createEvent = async (formData: FormData) => {
 }
 
 // Get own events
-/*export const getMyEvents = async (page = 1, limit = 6) => {
-  const res = await api.get(`/events/my?page=${page}&limit=${limit}`);
-  return res.data;
-}*/
-
 export const getMyEvents = async (
   page: number = 1,
   limit: number = 6,
@@ -29,16 +24,18 @@ export const getMyEvents = async (
   typeFilter: string = "",
   statusFilter: string = ""
 ) => {
-  const params = new URLSearchParams();
-  params.set("page", page.toString());
-  params.set("limit", limit.toString());
-  if (searchTerm) params.set("search", searchTerm);
-  if (typeFilter) params.set("type", typeFilter);
-  if (statusFilter) params.set("status", statusFilter);
 
-  const res = await api.get(`/events/my?${params.toString()}`);
-  return res.data;
-};
+  const params = new URLSearchParams()
+  params.set("page", page.toString())
+  params.set("limit", limit.toString())
+
+  if (searchTerm) params.set("search", searchTerm)
+  if (typeFilter) params.set("type", typeFilter)
+  if (statusFilter) params.set("status", statusFilter)
+
+  const res = await api.get(`/events/my?${params.toString()}`)
+  return res.data
+}
 
 // Get event by id
 export const getEventById = async (id: string) => {
