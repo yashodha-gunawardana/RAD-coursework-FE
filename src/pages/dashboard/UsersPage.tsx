@@ -217,4 +217,20 @@ const UserPage: React.FC = () => {
         return result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     
     }, [users, searchTerm, roleFilter, statusFilter])
+
+
+    // reset
+    const resetFilters = useCallback(() => {
+        setSearchTerm("")
+        setRoleFilter("")
+        setStatusFilter("")
+        showToast("Filters cleared")
+    }, [showToast])
+
+
+
+    useEffect(() => {
+        loadUsers()
+
+    }, [loadUsers])
 }
