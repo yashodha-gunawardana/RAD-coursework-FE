@@ -159,4 +159,20 @@ const UserPage: React.FC = () => {
             showToast("Failed to approve vendor", "error")
         }
     }, [showToast])
+
+
+    // reject vendor req
+    const handleReject = useCallback(async (userId: string) => {
+        try {
+            await rejectVendorRequest(userId)
+            setUsers(prev =>
+                prev.map(u => u._id === userId ? {
+                    ...u, VendorStatus: "REJECTED" as VendorStatusType } : u)
+            )
+            showToast("Vendor request rejected", "success")
+
+        } catch (err: any) {
+            showToast("Failed to reject vendor", "error")
+        }
+    }, [showToast])
 }
