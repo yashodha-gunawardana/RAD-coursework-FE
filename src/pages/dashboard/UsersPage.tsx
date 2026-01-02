@@ -142,5 +142,21 @@ const UserPage: React.FC = () => {
         } finally {
             setLoading(false)
         }
-    }, [showToast]);
+    }, [showToast])
+
+
+    // approve vendor req
+    const handleApprove = useCallback(async (userId: string) => {
+        try {
+            await approveVendorRequest(userId)
+            setUsers(prev =>
+                prev.map(u=> u._id === userId ? {
+                    ...u, VendorStatus: "APPROVED" as VendorStatusType } : u)
+            )
+            showToast("Vendor approved successfully", "success")
+        
+        } catch (err: any) {
+            showToast("Failed to approve vendor", "error")
+        }
+    }, [showToast])
 }
