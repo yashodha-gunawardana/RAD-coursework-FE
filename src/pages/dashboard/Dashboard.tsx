@@ -172,7 +172,23 @@ const Dashboard: React.FC = () => {
       setIsRequesting(false)
     }
   }
+
+  const closeModal = () => {
+    setShowVendorModal(false)
+  }
   
+
+  // determine vendor sts
+  const isVendor = user?.roles.includes("VENDOR")
+  const vendorStatus = user?.vendorStatus
+
+  const canRequestVendor =
+    user?.roles.includes("USER") &&
+    !isVendor &&
+    vendorStatus !== "PENDING" &&
+    vendorStatus !== "APPROVED"
+
+
   // array of quick action btn
   const quickActions = [
     {
