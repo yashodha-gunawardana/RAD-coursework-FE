@@ -11,7 +11,7 @@ import {
   Shield,
   Clock,
 } from "react-feather";
-import { getAllUsers, approveVendorRequest, rejectVendorRequest } from "../../services/auth";
+import { getAllUsers, approveVendorRequest, rejectVendorRequest, deleteUserAccount } from "../../services/auth";
 
 
 export const Role = {
@@ -125,6 +125,27 @@ const UsersPage: React.FC = () => {
         userName: ""
     })
 
+
+    // delete user
+    const handleDelete = useCallback(async () => {
+        const { userId, userName } = deleteModal
+
+        if (!userId)
+            return
+
+        try {
+            await deleteUserAccount(userId)
+
+            setUsers(prev => prev.filter(u => u._id !== userId))
+            showToast(`User "${userName}" deleted successfully`, "error")
+
+        } catch (err: any) {
+            showToast("Failed to delete user", "error")
+
+        } finally {
+            setDeleteModal({ show: false, userId: null, userName: "" })
+        }
+    })
 
 
     const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
