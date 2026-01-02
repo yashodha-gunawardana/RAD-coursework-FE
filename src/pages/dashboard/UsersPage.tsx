@@ -42,3 +42,26 @@ interface AppUser {
     vendorStatus: VendorStatusType,
     createdAt: string
 }
+
+interface ToastState {
+    show: boolean
+    message: string
+    type: "success" | "error"
+}
+
+
+const getRoleBadgeClass = (role: RoleType): string => {
+    switch (role) {
+        case "ADMIN":
+            return "bg-purple-100 text-purple-800 border border-purple-200"
+
+        case "VENDOR":
+            return "bg-orange-100 text-orange-800 border border-orange-200"
+
+        case "USER":
+            return "bg-blue-100 text-blue-800 border border-blue-200"
+
+        default:
+            return "bg-gray-100 text-gray-800"
+    }
+}
