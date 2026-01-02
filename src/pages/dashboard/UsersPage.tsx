@@ -66,6 +66,7 @@ const getRoleBadgeClass = (role: RoleType): string => {
     }
 }
 
+
 // status badge
 const getStatusBadgeClass = (status: VendorStatusType): string => {
     switch (status) {
@@ -74,7 +75,7 @@ const getStatusBadgeClass = (status: VendorStatusType): string => {
 
         case "PENDING":
             return "bg-yellow-100 text-yellow-800 border border-yellow-200"
-            
+
         case "REJECTED":
             return "bg-red-100 text-red-800 border border-red-200"
 
@@ -82,4 +83,35 @@ const getStatusBadgeClass = (status: VendorStatusType): string => {
         default:
             return "bg-gray-100 text-gray-800 border border-gray-300"
     }
+}
+
+
+// status label
+const getStatusLabel = (status: VendorStatusType): string => {
+    switch (status) {
+        case "NOT_REQUESTED": 
+            return "No Request"
+
+        case "PENDING": 
+            return "Pending"
+        case "APPROVED": 
+            return "Approved"
+
+        case "REJECTED": 
+            return "Rejected"
+
+        default: 
+            return status
+    }
+}
+
+
+const UserPage: React.FC = () => {
+    const [users, setUsers] = useState<AppUser[]>([])
+    const [loading, setLoading] = useState(true)
+    const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success"})
+
+    const [searchTerm, setSearchTerm] = useState("")
+    const [roleFilter, setRoleFilter] = useState<RoleType | "">("")
+    const [statusFilter, setStatusFilter] = useState<VendorStatusType | "">("")
 }
