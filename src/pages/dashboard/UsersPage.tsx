@@ -118,11 +118,29 @@ const UserPage: React.FC = () => {
 
 
     const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
-        setToast({ show: true, message, type });
+        setToast({ show: true, message, type })
         setTimeout(() => 
             setToast(
                 { show: false, message: "", type: "success" }
             
-        ), 4000);
-    }, []);
+        ), 3000)
+    }, [])
+
+
+    // load users
+    const loadUsers = useCallback(async () => {
+        try {
+            setLoading(true)
+            const response = await getAllUsers()
+            
+            setUsers(response.data || [])
+
+        } catch (err: any) {
+            console.error("Error loading users:", err)
+            showToast("Failed to load users. Please refresh.", "error")
+
+        } finally {
+            setLoading(false)
+        }
+    }, [showToast]);
 }
