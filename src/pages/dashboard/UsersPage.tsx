@@ -191,4 +191,30 @@ const UserPage: React.FC = () => {
             pending
         }
     }, [users])
+
+
+    // filters
+    const filterdUsers = React.useMemo(() => {
+        let result = [...users]
+
+        if (searchTerm) {
+            const term = searchTerm.toLowerCase()
+            result = result.filter(
+                u =>
+                    u.fullname.toLowerCase().includes(term) ||
+                u.email.toLowerCase().includes(term)
+            )
+        }
+
+        if (roleFilter) {
+            result = result.filter(u => u.roles.includes(roleFilter))
+        }
+
+        if (statusFilter) {
+            result = result.filter(u => u.vendorStatus === statusFilter)
+        }
+
+        return result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    
+    }, [users, searchTerm, roleFilter, statusFilter])
 }
