@@ -114,4 +114,15 @@ const UserPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [roleFilter, setRoleFilter] = useState<RoleType | "">("")
     const [statusFilter, setStatusFilter] = useState<VendorStatusType | "">("")
+
+
+
+    const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
+        setToast({ show: true, message, type });
+        setTimeout(() => 
+            setToast(
+                { show: false, message: "", type: "success" }
+            
+        ), 4000);
+    }, []);
 }
