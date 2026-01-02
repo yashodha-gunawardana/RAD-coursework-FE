@@ -110,7 +110,7 @@ const getStatusLabel = (status: VendorStatusType): string => {
 }
 
 
-const UserPage: React.FC = () => {
+const UsersPage: React.FC = () => {
     const [users, setUsers] = useState<AppUser[]>([])
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success"})
@@ -155,7 +155,7 @@ const UserPage: React.FC = () => {
             await approveVendorRequest(userId)
             setUsers(prev =>
                 prev.map(u=> u._id === userId ? {
-                    ...u, VendorStatus: "APPROVED" as VendorStatusType } : u)
+                    ...u, vendorStatus: "APPROVED" as VendorStatusType } : u)
             )
             showToast("Vendor approved successfully", "success")
         
@@ -171,7 +171,7 @@ const UserPage: React.FC = () => {
             await rejectVendorRequest(userId)
             setUsers(prev =>
                 prev.map(u => u._id === userId ? {
-                    ...u, VendorStatus: "REJECTED" as VendorStatusType } : u)
+                    ...u, vendorStatus: "REJECTED" as VendorStatusType } : u)
             )
             showToast("Vendor request rejected", "success")
 
@@ -198,7 +198,7 @@ const UserPage: React.FC = () => {
 
 
     // filters
-    const filterdUsers = React.useMemo(() => {
+    const filteredUsers = React.useMemo(() => {
         let result = [...users]
 
         if (searchTerm) {
@@ -460,7 +460,7 @@ const UserPage: React.FC = () => {
                                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-800"></div>
                             </div>
 
-                        ) : filterdUsers.length === 0 ? (
+                        ) : filteredUsers.length === 0 ? (
 
                             <div className="text-center py-12">
 
@@ -482,7 +482,7 @@ const UserPage: React.FC = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                                {filterdUsers.map((user) => (
+                                {filteredUsers.map((user) => (
                                     <div
                                         key={user._id}
                                         className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
@@ -492,11 +492,13 @@ const UserPage: React.FC = () => {
 
                                             <User className="text-white/80" size={64} />
 
+                                            {/* role badge */}
                                             <div className="absolute top-4 left-4 flex gap-2">
                                                 {user.roles.map((role) => (
                                                 
                                                     <span
-                                                        key={role}
+                                                        // key={role}
+                                                        key={`${user._id}-${role}`} 
                                                         className={`px-3 py-1 rounded-full text-xs font-semibold 
                                                                     ${getRoleBadgeClass(role)}
                                                                 `}>
@@ -506,6 +508,7 @@ const UserPage: React.FC = () => {
                                                 ))}
                                             </div>
 
+                                            {/* status badge */}
                                             <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold 
                                                                 ${getStatusBadgeClass(user.vendorStatus)}
                                                             `}>
@@ -550,7 +553,7 @@ const UserPage: React.FC = () => {
                                                 </div>
                                             )}
 
-                                            {/* Delete disabled until implemented */}
+                                            {/* delete disabled until implemented */}
                                             <button
                                                 disabled
                                                 className="w-full px-3 py-2 bg-gray-100 text-gray-400 rounded-lg font-medium cursor-not-allowed flex 
@@ -573,4 +576,4 @@ const UserPage: React.FC = () => {
 }
 
 
-export default UserPage
+export default UsersPage
