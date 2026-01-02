@@ -58,10 +58,10 @@ const getRoleBadgeClass = (role: RoleType): string => {
             return "bg-orange-100 text-orange-800 border border-orange-200"
 
         case "USER":
-            return "bg-blue-100 text-blue-800 border border-blue-200"
+            return "bg-pink-100 text-pink-800 border border-pink-200"
 
         default:
-            return "bg-gray-100 text-gray-800"
+            return "bg-gray-100 text-gray-800 border border-gray-200"
     }
 }
 
@@ -80,7 +80,7 @@ const getStatusBadgeClass = (status: VendorStatusType): string => {
 
         case "NOT_REQUESTED":
         default:
-            return "bg-gray-100 text-gray-800 border border-gray-300"
+            return "bg-stone-100 text-stone-800 border border-stone-200"
     }
 }
 
@@ -118,6 +118,12 @@ const UsersPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [roleFilter, setRoleFilter] = useState<RoleType | "">("")
     const [statusFilter, setStatusFilter] = useState<VendorStatusType | "">("")
+
+    const [deleteModal, setDeleteModal] = useState<{ show: boolean, userId: string | null, userName: string }>({
+        show: false,
+        userId: null,
+        userName: ""
+    })
 
 
 
@@ -488,38 +494,53 @@ const UsersPage: React.FC = () => {
                                         className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
                                                     transition-all hover:-translate-y-1">
 
-                                        <div className="h-40 bg-gradient-to-r from-red-800 to-red-600 relative flex items-center justify-center">
+                                        
+                                        <div className="relative h-50 w-full overflow-hidden rounded-xl bg-[#C2A886] shadow-lg">
+  
+  
+                                            <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
+                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
+                                            <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
 
-                                            <User className="text-white/80" size={64} />
-
-                                            {/* role badge */}
-                                            <div className="absolute top-4 left-4 flex gap-2">
+                                            {/* role badges */}
+                                            <div className="absolute top-4 left-4 flex gap-2 z-10">
                                                 {user.roles.map((role) => (
-                                                
+                                                        
                                                     <span
-                                                        // key={role}
-                                                        key={`${user._id}-${role}`} 
-                                                        className={`px-3 py-1 rounded-full text-xs font-semibold 
-                                                                    ${getRoleBadgeClass(role)}
-                                                                `}>
-                                                    
+                                                        key={`${user._id}-${role}`}
+                                                        className={`px-3 py-1 rounded-full text-xs font-semibold uppercase 
+                                                                        ${getRoleBadgeClass(role)}
+                                                                    `}>
+                                                            
                                                             {getRoleLabel(role)}
                                                     </span>
                                                 ))}
                                             </div>
 
                                             {/* status badge */}
-                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold 
+                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold uppercase z-10 
                                                                 ${getStatusBadgeClass(user.vendorStatus)}
                                                             `}>
-                                                
+
                                                     {getStatusLabel(user.vendorStatus)}
+                                            </div>
+
+                                            <div className="relative flex h-full flex-col items-center justify-center">
+                                                <div className="text-[#4A0404]/70 drop-shadow-sm">
+                                                        
+                                                    <User size={60} strokeWidth={1.2} />
+
+                                                </div>
+
+                                                <div className="mt-4 flex flex-col items-center">
+                                                    <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#4A0404]/30 to-transparent"></div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div className="p-5">
 
-                                            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                                            <h3 className="text-lg font-semibold text-gray-900 mb-2 capitalize">
                                                 {user.fullname}
                                             </h3>
 

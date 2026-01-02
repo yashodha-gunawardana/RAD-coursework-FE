@@ -37,22 +37,28 @@ export const requestVendor = async () => {
     return res.data
 };
 
-// Admin: Get all users (for admin panel)
+// admin get all users (for admin panel)
 export const getAllUsers = async () => {
     const res = await api.get("/auth/users")
     return res.data
 }
 
-// Admin: Approve vendor request
+// admin approve vendor request
 export const approveVendorRequest = async (userId: string) => {
     const res = await api.post(`/auth/users/approve/${userId}`)
     return res.data
 }
 
-// Admin: Reject vendor request
+// admin reject vendor request
 export const rejectVendorRequest = async (userId: string) => {
     const res = await api.post(`/auth/users/reject/${userId}`)
     return res.data
+}
+
+// admin delete user
+export const deleteUserAccount = async (userId: string) => {
+  const res = await api.delete(`/auth/users/${userId}`);
+  return res.data;
 }
 
 // refresh access token using refresh token

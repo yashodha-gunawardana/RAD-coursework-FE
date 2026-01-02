@@ -268,7 +268,7 @@ const VendorPage: React.FC = () => {
                     {toast.type === "success" ? (
                         <CheckCircle className="text-green-500" size={20} />
                     ) : (
-                        <CheckCircle className="text-red-500" size={20} />
+                        <AlertCircle className="text-red-500" size={20} />
                     )}
 
                     <span>{toast.message}</span>
@@ -542,9 +542,10 @@ const VendorPage: React.FC = () => {
 
                                                 {/* content */}
                                                 <div className="p-5">
-                                                    <h3 className="text-lg font-bold mb-4 line-clamp-2 font-serif">
+                                                    <h3 className="text-lg font-bold mb-4 line-clamp-2 font-serif capitalize">
 
-                                                        {vendor.name.charAt(0).toUpperCase() + vendor.name.slice(1)}
+                                                        {/* {vendor.name.charAt(0).toUpperCase() + vendor.name.slice(1)} */}
+                                                        {vendor.name}
 
                                                     </h3>
 

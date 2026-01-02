@@ -251,7 +251,7 @@ const Dashboard: React.FC = () => {
               {toast.type === "success" ? (
                   <CheckCircle className="text-green-500" size={20} />
               ) : (
-                  <CheckCircle className="text-red-500" size={20} />
+                  <AlertCircle className="text-red-500" size={20} />
               )}
             
               <span>{toast.message}</span>
