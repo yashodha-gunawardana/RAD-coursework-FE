@@ -175,4 +175,20 @@ const UserPage: React.FC = () => {
             showToast("Failed to reject vendor", "error")
         }
     }, [showToast])
+
+
+    // stats cards
+    const stats = React.useMemo(() => {
+        const totalUsers = users.length
+        const admins = users.filter(u => u.roles.includes("ADMIN")).length
+        const vendors = users.filter(u => u.roles.includes("VENDOR")).length
+        const pending = users.filter(u => u.vendorStatus.includes("PENDING")).length
+
+        return {
+            totalUsers,
+            admins,
+            vendors,
+            pending
+        }
+    }, [users])
 }
