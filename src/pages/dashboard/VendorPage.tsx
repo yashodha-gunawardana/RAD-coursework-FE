@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { 
     Plus,
     Calendar,
     CheckCircle,
     Clock,
-    DollarSign,
     Filter,
     Search,
     Edit,
@@ -13,7 +12,10 @@ import {
     Trash2,
     TrendingUp,
     TrendingDown,
-    AlertCircle
+    AlertCircle,
+    ArrowRight,
+    ArrowLeft,
+    DollarSign
 } from "react-feather";
 import { getAllVendors, deleteVendor } from "../../services/vendor";
 
@@ -70,8 +72,8 @@ const getCategoryLabel = (category: VendorCategoryType): string => {
 
 const getAvailabilityClass = (isAvailable: boolean): string => {
     return isAvailable
-        ? "bg-green-100 text-green-800 border border-green-200"
-        : "bg-red-100 text-red-800 border border-red-200"
+        ? "bg-green-100 text-green-800 border border-green-300"
+        : "bg-red-100 text-red-800 border border-red-300"
 }
 
 
@@ -79,12 +81,19 @@ const VendorPage: React.FC = () => {
     const navigate = useNavigate()
 
     const [vendors, setVendors] = useState<Vendor[]>([])
+    const [allVendors, setAllVendors] = useState<Vendor[]>([]);
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success" })
 
     const [searchTerm, setSearchTerm] = useState("")
     const [categoryFilter, setCategoryFilter] = useState("")
     const [availabilityFilter, setAvailabilityFilter] = useState("")
+    const [loadingStats, setLoadingStats] = useState(false)
+    
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [totalItems, setTotalItems] = useState(0)
+    const limit = 6
 
 
     // toast notification
@@ -97,11 +106,21 @@ const VendorPage: React.FC = () => {
 
 
     // load all vendors
-    const loadVendors = useCallback(async () => {
+    const loadVendors = useCallback(async (pageNumber: number = 1) => {
         try {
             setLoading(true)
-            const response = await getAllVendors()
+            const response = await getAllVendors({
+                page: pageNumber,
+                limit,
+                search: searchTerm || undefined,
+                category: categoryFilter || undefined,
+                isAvailable: availabilityFilter ? availabilityFilter === "true" : undefined
+            })  
+
             setVendors(response.data || [])
+            setTotalPages(response.totalPages || 1)
+            setTotalItems(response.totalItems || 0) 
+            setPage(pageNumber)
         
         } catch (err : any) {
             console.error("Error loading vendors: ", err)
@@ -110,8 +129,22 @@ const VendorPage: React.FC = () => {
         } finally {
             setLoading(false)
         }
-    }, [showToast])
+    }, [searchTerm, categoryFilter, availabilityFilter, showToast])
 
+
+    const loadAllVendorsForStats = useCallback(async () => {
+        try {
+            setLoadingStats(true)
+            const response = await getAllVendors({  limit: 1000 }); // large limit to get all
+            setAllVendors(response.data || []);
+        } catch (err) {
+            console.error("Error loading all vendors:", err);
+        
+        } finally {
+            setLoadingStats(false)
+        }
+    }, [])
+        
 
     // delete vendor
     const handleDeleteVendor = useCallback(async (id: string, name: string) => {
@@ -120,32 +153,35 @@ const VendorPage: React.FC = () => {
 
         try {
             await deleteVendor(id)
-            setVendors(prev => prev.filter(vendor => vendor._id !== id))
+            // setVendors(prev => prev.filter(vendor => vendor._id !== id))
             showToast("Vendor deleted successfully..")
+
+            loadVendors(page)
+            loadAllVendorsForStats()
         
         } catch (err: any) {
             console.error("Deleted failedd: ", err)
             showToast(err?.response?.data?.message || "Failed to delete vendor", "error")
         }
-    }, [showToast])
+    }, [page, loadVendors, showToast, loadAllVendorsForStats])
 
 
     // stats card
     const stats = React.useMemo(() => {
-        const totalVendors = vendors.length;
-        const availableVendors = vendors.filter(v => v.isAvailable).length;
-        const totalCategories = new Set(vendors.map(v => v.category)).size;
+        const totalVendors = allVendors.length;
+        const availableVendors = allVendors.filter(v => v.isAvailable).length;
+        const totalCategories = new Set(allVendors.map(v => v.category)).size;
 
         return {
             totalVendors,
             availableVendors,
             totalCategories
         }
-    }, [vendors]);
+    }, [allVendors]);
 
 
     // filters
-    const filteredVendors = React.useMemo(() => {
+   /* const filteredVendors = React.useMemo(() => {
         let result = [...vendors]
 
         // search by name, contact, description
@@ -170,7 +206,7 @@ const VendorPage: React.FC = () => {
         }
 
         return result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    }, [vendors, searchTerm, categoryFilter, availabilityFilter]);
+    }, [vendors, searchTerm, categoryFilter, availabilityFilter]);*/
     
 
     // rest filters
@@ -178,7 +214,8 @@ const VendorPage: React.FC = () => {
         setSearchTerm("");
         setCategoryFilter("");
         setAvailabilityFilter("");
-        showToast("Showing all vendors");
+        setPage(1)
+        showToast("Filters cleared");
     }, [showToast]);
 
 
@@ -201,8 +238,21 @@ const VendorPage: React.FC = () => {
 
 
     useEffect(() =>{
-        loadVendors()
-    }, [loadVendors])
+        loadVendors(page)
+    }, [page, loadVendors])
+
+
+    // load all events once for stats
+    useEffect(() => {
+        loadAllVendorsForStats();
+    }, [loadAllVendorsForStats])
+    
+    
+    // reset page when filters change
+    useEffect(() => {
+        setPage(1);
+    }, [searchTerm, categoryFilter, availabilityFilter])
+    
 
 
     return (
@@ -349,7 +399,7 @@ const VendorPage: React.FC = () => {
                         <div className="flex-1 min-w-0 w-full md:w-auto">
                             <div className="relative">
 
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" size={18} />
 
                                 <input
                                     type="text"
@@ -370,7 +420,7 @@ const VendorPage: React.FC = () => {
                                             focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
 
                                 <option value="">All Categories</option>
-                                <option value="PHOTOGRAPY">Photography</option>
+                                <option value="PHOTOGRAPHY">Photography</option>
                                 <option value="CATERING">Catering</option>
                                 <option value="DECORATION">Decoration</option>
                                 <option value="DJ">DJ</option>
@@ -401,7 +451,7 @@ const VendorPage: React.FC = () => {
                                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-800"></div>
                             </div>
 
-                        ) : filteredVendors.length === 0 ? (
+                        ) : vendors.length === 0 ? (
 
                             <div className="text-center py-12">
 
@@ -431,121 +481,215 @@ const VendorPage: React.FC = () => {
                                 </button>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                                {filteredVendors.map((vendor) => (
-                                    <div
-                                        key={vendor._id}
-                                        className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm
-                                                    hover:shadow-lg transition-all hover:-translate-y-1">
+                                    {vendors.map((vendor) => (
 
-                                        <div className="h-40 bg-gradient-to-r from-red-800 to-red-600 relative">
-                                            <div className="absolute top-4 left-4 bg-white/90 text-red-800 px-3 py-1 rounded-full text-xs
-                                                        font-semibold uppercase tracking-wide">
-                                            
-                                                {getCategoryLabel(vendor.category)}
-                                        
-                                            </div>
-                                        
-                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold
-                                                                ${getAvailabilityClass(vendor.isAvailable)}
-                                                            `}>
-                                            
-                                                {vendor.isAvailable ? 'Available' : 'Unavailable'}
-                                            
-                                            </div>
-                                        
-                                            {vendor.image && (
-                                                <img
-                                                    src={vendor.image}
-                                                    alt={vendor.name}
-                                                    className="absolute inset-0 w-full h-full object-cover opacity-20"
-                                                />
-                                            )}
-                                        </div>
+                                        <div
+                                            key={vendor._id}
+                                            className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm
+                                                        hover:shadow-lg transition-all hover:-translate-y-1">
 
-                                        {/* content */}
-                                        <div className="p-5">
-                                            <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
-
-                                                {vendor.name}
-
-                                            </h3>
-                                            <div className="space-y-3 mb-4">
-                                                <div className="flex items-start gap-2 text-gray-600">
-
-                                                    <Calendar size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
-
-                                                    <div>
-                                                        <div className="font-medium">
-                                
-                                                            {new Date(vendor.createdAt).toLocaleDateString()}
-                                                        
+                                                {/* form image as cover photo */}
+                                                <div className="h-40 relative overflow-hidden">
+                                                    {vendor.image ? (
+                                                        <div
+                                                            className="w-full h-full bg-cover bg-center"
+                                                            style={{ backgroundImage: `url(${vendor.image})` }}
+                                                        />
+                                                    ) : (
+                                                                                                            
+                                                        <div className="relative h-50 w-98 overflow-hidden rounded-xl bg-[#C2A886] shadow-lg">
+                                                            <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
+                                                    
+                                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
+                                                    
+                                                            <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
+                                                    
+                                                            <div className="relative flex h-full flex-col items-center justify-center">
+                                                                <div className="text-[#4A0404]/70 drop-shadow-sm">
+                                                                                                                        
+                                                                    <Calendar size={60} strokeWidth={1.2} />
+                                                    
+                                                                </div>
+                                                                                                                    
+                                                                <div className="mt-4 flex flex-col items-center">
+                                                                    <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#4A0404]/30 to-transparent"></div>
+                                                                    <span className="mt-2 text-[10px] uppercase tracking-[0.2em] text-[#4A0404]/50 font-medium">
+                                                                                                                            
+                                                                        Established
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    )}
 
-                                                <div className="flex items-start gap-2 text-gray-600">
-
-                                                    <Eye size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
-                                                    <span className="line-clamp-1">{vendor.contact}</span>
-
-                                                </div>
-
-                                                {vendor.description && (
-                                                    <div className="flex items-start gap-2 text-gray-600">
+                                                    {/* Type Badge */}
+                                                    <div className="absolute top-4 left-4 bg-white/90 text-red-800 px-3 py-1 rounded-full text-xs 
+                                                                    font-semibold uppercase tracking-wide">
                                                         
-                                                        <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-red-800" />
-                                                        <span className="line-clamp-2">{vendor.description}</span>
-
+                                                        {getCategoryLabel(vendor.category)}
                                                     </div>
-                                                )}
-                                            </div>
 
-                                            <div className="flex justify-between items-center mb-4">
-                                                <div className="text-xl font-bold text-red-800">
-                                                
-                                                    {formatPriceRange(vendor.priceRange)}
-
+                                                    {/* availability Badge */}
+                                                    <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold 
+                                                                    ${getAvailabilityClass(vendor.isAvailable)}`}>
+                                                        
+                                                        {vendor.isAvailable ? 'Available' : 'Unavailable'}
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            {/* action button */}
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() => navigate(`/dashboard/vendors/edit/${vendor._id}`)}
-                                                    className="flex-1 px-3 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium
-                                                                hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
+                                                {/* content */}
+                                                <div className="p-5">
+                                                    <h3 className="text-lg font-bold mb-4 line-clamp-2 font-serif">
 
-                                                        <Edit size={16} />
+                                                        {vendor.name.charAt(0).toUpperCase() + vendor.name.slice(1)}
+
+                                                    </h3>
+
+                                                    <div className="space-y-3 mb-5 text-[#0A0A0A]/90">
+                                                        <div className="flex items-start gap-3">
+
+                                                            <Calendar size={16} className="mt-1.5 flex-shrink-0 text-red-800" />
+
+                                                            <div>
+                                                                <div className="font-medium">
+                                        
+                                                                    {new Date(vendor.createdAt).toLocaleDateString()}
+                                                                
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="flex items-start gap-3">
+
+                                                            <Eye size={16} className="mt-1 flex-shrink-0 text-red-800" />
+                                                            <span className="line-clamp-1 font-medium">{vendor.contact}</span>
+
+                                                        </div>
+
+                                                        {vendor.description && (
+                                                            <div className="flex items-start gap-3">
+                                                                
+                                                                <AlertCircle size={16} className="mt-1 flex-shrink-0 text-red-800" />
+                                                                <span className="line-clamp-2 font-medium">{vendor.description}</span>
+
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="flex items-start gap-2">
+                                                        
+                                                        <DollarSign className="mt-2 flex-shrink-0 text-red-800" size={20} />
+                                                        <span className="line-clamp-1 font-bold text-2xl text-red-800">
                                                             
-                                                            Edit
-                                                </button>
+                                                            {formatPriceRange(vendor.priceRange)}
+                                                        </span>
 
-                                                <button
-                                                    onClick={() => viewVendorDetails(vendor)}
-                                                    className="flex-1 px-3 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium
-                                                                hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
-                                                        
-                                                        <Eye size={16} />
-                                                    
-                                                            View
-                                                </button>
+                                                    </div> 
 
-                                                <button
-                                                    onClick={() => handleDeleteVendor(vendor._id, vendor.name)}
-                                                    className="flex-1 px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-800
-                                                                hover:text-white transition-all flex items-center justify-center gap-1">
+                                                    {/* action button */}
+                                                    <div className="flex gap-2 mt-5">
+                                                        <button
+                                                            onClick={() => navigate(`/dashboard/vendors/edit/${vendor._id}`)}
+                                                            className="flex-1 px-3 py-2 bg-yellow-100 border border-yellow-300 text-yellow-700 rounded-lg font-medium
+                                                                        hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
+
+                                                                <Edit size={16} />
+                                                                    
+                                                                    Edit
+                                                        </button>
+
+                                                        <button
+                                                            onClick={() => viewVendorDetails(vendor)}
+                                                            className="flex-1 px-3 py-2 bg-blue-100 border border-blue-300 text-blue-700 rounded-lg font-medium
+                                                                        hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
+                                                                
+                                                                <Eye size={16} />
+                                                            
+                                                                    View
+                                                        </button>
+
+                                                        <button
+                                                            onClick={() => handleDeleteVendor(vendor._id, vendor.name)}
+                                                            className="flex-1 px-3 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg font-medium hover:bg-red-50
+                                                                        hover:text-red transition-all flex items-center justify-center gap-1">
+                                                            
+                                                                <Trash2 size={16} />
+                                                            
+                                                                    Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* pagination */}
+                                {totalPages > 1 && (
+                                    
+                                    <div className="mt-15 flex flex-col sm:flex-col justify-center items-center gap-4 text-sm text-gray-600">
                                                     
-                                                        <Trash2 size={16} />
+                                        <div>
+                                            Showing{' '}
+                                            <span className="font-medium text-gray-900">
+                                                {(page - 1) * limit + 1}–{Math.min(page * limit, totalItems)}
+                                            </span>{' '}
+                                                of <span className="font-medium text-gray-900">{totalItems}</span> events
+                                        </div>
+                                
+                                        {/* Navigation buttons */}
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                onClick={() => setPage(prev => Math.max(1, prev - 1))}
+                                                disabled={page === 1}
+                                                className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
+                                                            bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
+                                                            hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
+                                                            active:scale-95
+                                                            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent">
                                                     
-                                                            Delete
-                                                </button>
-                                            </div>
+                                                    <span className="text-sm font-semibold tracking-widest uppercase">
+                                                                                    
+                                                        Prev
+                                                    </span>
+                                                                            
+                                                    <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-[#4A0404]/10 group-hover:bg-[#F8F4E3]/20">
+                                                                                    
+                                                        <ArrowLeft size={14} strokeWidth={3} className="transition-transform group-hover:translate-x-0.5" />
+                                                    </div>
+                                            </button>
+                                
+                                            <span className="px-4 py-2 font-medium text-gray-900">
+                                                                                
+                                                Page {page} of {totalPages}
+                                
+                                            </span>
+                                
+                                            <button
+                                                onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
+                                                disabled={page === totalPages}
+                                                className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
+                                                            bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
+                                                            hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
+                                                            active:scale-95
+                                                            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent">
+                                                                                
+                                                    <span className="text-sm font-semibold tracking-widest uppercase">
+                                                                                    
+                                                        Next
+                                                    </span>
+                                                                            
+                                                    <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-[#4A0404]/10 group-hover:bg-[#F8F4E3]/20">
+                                                                                    
+                                                        <ArrowRight  size={14} strokeWidth={3} className="transition-transform group-hover:translate-x-0.5" />
+                                                    </div>
+                                            </button>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>

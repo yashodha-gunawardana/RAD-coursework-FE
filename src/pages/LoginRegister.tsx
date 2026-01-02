@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { getMyDetails, loginUser, registerUser } from "../services/auth";
 import { Form, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
@@ -6,7 +6,7 @@ import morningImg from "../assets/images/loginImage.png";
 import dayImg from "../assets/images/loginimage2.png";
 import eveningImg from "../assets/images/loginImage3.png";
 import nightImg from "../assets/images/loginImage4.png";
-import { ArrowRight, Facebook, Twitter, Youtube, Linkedin, Lock } from "react-feather";
+import { ArrowRight, Facebook, Twitter, Youtube, Linkedin, Lock, AlertCircle } from "react-feather";
 
 
 const images = [
@@ -30,7 +30,14 @@ const images = [
         src: nightImg,
         heading: "Working late? Stay Focused.."
     },
-];
+]
+
+interface ToastState {
+    show: boolean
+    message: string
+    type: "success" | "error"
+}
+
 
 export default function LoginRegister() {
     const navigate = useNavigate()
@@ -47,39 +54,71 @@ export default function LoginRegister() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
-    const [role, setRole] = useState("USER")
-    const [termsChecked, setTermsChecked] = useState(false);
+    
+    const [toast, setToast] = useState<ToastState>({ show: false, message: " ", type: "success" })
+
+
+
+    // toast notification
+    const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
+        setToast({ show: true, message, type })
+        setTimeout(() =>{
+            setToast(prev => ({ ...prev, show: false }))
+        }, 3000)
+    }, [])
 
     const switchForm = (type: "signup" | "signin") => {
-    setFormType(type);
-  };
+        setFormType(type);
+    }
     
     const handleSubmit = async (e: FormEvent) => {
         // prevent default form refresh
         e.preventDefault()
 
-        if (formType === "signup" && (!fullname || !email || !password || !confirmPassword)) {
-            alert("All fields are required..")
-            return
-        }
-
-        if (formType == "signin" && (!email || !password)) {
-            alert("All fields are required..")
+        if (formType === "signup") {
+            if (!fullname || !email || !password || !confirmPassword) {
+                showToast("All fields are required..", "error")
                 return
+            }
+
+            if (password !== confirmPassword) {
+                showToast("Passwords don not match..", "error")
+                return
+            }
+
+            
+            try {
+                await registerUser(fullname, email, password)
+                    showToast("Registration successful! Please log in.", "success")
+                    setFullname("")
+                    setEmail("")
+                    setPassword("")
+                    setConfirmPassword("")
+                    setFormType("signin")
+
+            } catch (err: any) {
+                const message = err.response?.data?.message || err.message || "Registration failed."
+                showToast(message, "error")
+            }
+            return
+
         }
 
-        try {
+        
+        // signin
+        if (formType == "signin") {
+            if (!email || !password) {
+                showToast("Email and password are required..", "error")
+                return
+            }
 
-            if (formType === "signin") {
-                 // send login request to backend
+            try {
+                // send login request to backend
                 const res = await loginUser(email, password)
 
-                // verify token received
-                console.log(res.data.accessToken)
-
                 // check if token exists
-                if (!res.data.accessToken) {
-                    alert("Login failed..")
+                if (!res.data?.accessToken) {
+                    showToast("Login failed: No token received..", "error")
                     return
                 }
 
@@ -92,53 +131,17 @@ export default function LoginRegister() {
                 setUser(details.data)
 
                 navigate("/dashboard")
-            
+
+            } catch (err: any) {
+                const message = err.response?.data?.message || err.message || "Login failed."
+                showToast(message, "error")
+      
             }
-
-            if (formType === "signup") {
-
-                if (password !== confirmPassword) {
-                    alert("Passwords do not match..")
-                    return
-                }
-
-                if (!termsChecked) {
-                    alert("You must accept the terms..")
-                    return
-                }
-
-                await registerUser({
-                    fullname,
-                    email,
-                    password,
-                    role
-                })
-
-                alert("Registration successful! Please login..")
-
-                // reset fields
-                setFullname("")
-                setEmail("")
-                setPassword("")
-                setConfirmPassword("")
-                setTermsChecked(false)
-
-                // auto switch to login page
-                setFormType("signin")
-            }
-
-        } catch (err) {
-            console.error(err)
-            alert("Something went wrong..")
         }
-    }
 
-    // for login and register
-    // useEffect(() => {
-    //     if (location.state?.formType) {
-    //         setFormType(location.state.formType) // auto switch for
-    //     }
-    // }, [location.state])
+    }
+     
+
     useEffect(() => {
         if (location.pathname === "/login") setFormType("signin");
         if (location.pathname === "/register") setFormType("signup");
@@ -166,7 +169,26 @@ export default function LoginRegister() {
     return (
         <div className="relative flex justify-center items-center min-h-screen bg-[#F5F5F2] overflow-hidden">
 
-             <div className='absolute inset-0 z-0 overflow-hidden'>
+
+            {/* toast notification */}
+            {toast.show && (
+                <div className={`fixed bottom-6 right-6 bg-white text-gray-900 px-6 py-4 rounded-xl shadow-lg z-50
+                                    animate-slideIn flex items-center gap-3 
+                                    ${toast.type === "success" ? "border-l-4 border-green-500" : "border-l-4 border-red-500"}
+                                `}>
+            
+                    {toast.type === "success" ? (
+                        <AlertCircle className="text-green-500" size={20} />
+                    ) : (
+                        <AlertCircle className="text-red-500" size={20} />
+                    )}
+            
+                    <span>{toast.message}</span>
+                </div>
+            )}
+
+            
+            <div className='absolute inset-0 z-0 overflow-hidden'>
                 <div className='absolute inset-0 bg-gradient-to-br from-[#FDFCFB] via-[#F9F5F0] to-[#F5F1EA]'></div>
 
                 {/* wave 1 */}
@@ -299,7 +321,7 @@ export default function LoginRegister() {
                                         </div>
 
                                         {/* terms checkbox */}
-                                        <div className="flex items-center gap-3 mt-2 mb-6">
+                                        {/* <div className="flex items-center gap-3 mt-2 mb-6">
                                             <input
                                                 type="checkbox"
                                                 id="terms"
@@ -310,7 +332,7 @@ export default function LoginRegister() {
                                             <label htmlFor="terms" className="text-gray-400 text-sm">
                                                 I agree to the terms of service
                                             </label>
-                                        </div>
+                                        </div> */}
 
                                         <div className="flex items-center gap-2">
                                             <button type="submit" className="flex items-center justify-center gap-2 bg-yellow-50 text-gray-900 px-6 py-3 rounded font-bold">

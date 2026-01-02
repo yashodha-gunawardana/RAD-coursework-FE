@@ -240,7 +240,7 @@ const EventsPage: React.FC = () => {
         setSearchTerm('');
         setTypeFilter('');
         setStatusFilter('');
-        showToast('Showing all events');
+        showToast('Filters cleared');
     }, [showToast]);
 
 
@@ -459,7 +459,7 @@ const EventsPage: React.FC = () => {
                         <div className="flex-1 min-w-0 w-full md:w-auto">
                             <div className="relative">
 
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-BLACK" size={18} />
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" size={18} />
 
                                 <input
                                     type="text"
@@ -544,7 +544,6 @@ const EventsPage: React.FC = () => {
                             </div>
                         ) : (
                             <>
-
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                                     {events.map((event) => {

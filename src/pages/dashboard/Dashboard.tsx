@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Activity, BarChart2, Bookmark, Calendar, ChevronRight, DollarSign, Home, List, PieChart, Plus, RefreshCw, ThumbsUp, User, UserPlus, Users, Zap } from "react-feather";
+import { useAuth } from "../../context/authContext";
+import { requestVendor, getMyDetails } from "../../services/auth";
 
 
 interface DashboardStats {
@@ -24,8 +26,15 @@ interface UpcomingEvent {
   status: string
 }
 
+interface ToastState {
+    show: boolean
+    message: string
+    type: "success" | "error"
+}
+
 
 const Dashboard: React.FC = () => {
+  const { user, setUser } = useAuth()
 
   // intitialize stats satate
   const [stats, setStats] = useState<DashboardStats> ({
@@ -38,6 +47,19 @@ const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"overview" | "recent" | "upcoming">("overview")
   const [activities, setActivities] = useState<ActivityItem[]>([])
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([])
+  const [vendorModal, setShowVendorModal] = useState(false)
+  const [isRequesting, setIsRequesting] = useState(false)
+
+  const [toast, setToast] = useState<ToastState>({ show: false, message: " ", type: "success" })
+  
+
+  // toast notification
+  const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
+    setToast({ show: true, message, type })
+      setTimeout(() =>{
+        setToast(prev => ({ ...prev, show: false }))
+    }, 3000)
+  }, [])
 
 
   useEffect(() => {
@@ -104,13 +126,14 @@ const Dashboard: React.FC = () => {
   // refresh button 
   const refreshDashboard = () => {
     loadDashboardData()
-    alert("Dashboard data refreshed!")
+    showToast("Dashboard data refreshed!", "success")
   };
 
 
   const handleTabSwitch = (tab: "overview" | "recent" | "upcoming") => {
     setActiveTab(tab) // update active tab state
   };
+
 
   const getStatusBadgeClass = (status: string) => {
     switch (status.toLowerCase()) {
@@ -131,6 +154,24 @@ const Dashboard: React.FC = () => {
     }
   };
 
+
+  // vendor request
+  const handleVendorRequest = async () => {
+    setIsRequesting(true)
+    
+    try {
+      await requestVendor()
+      const updated = await getMyDetails()
+      setUser(updated.data)
+      setShowVendorModal(true)
+    
+    } catch (err: any) {
+      showToast(err.response?.data?.message || "Failed to send vendor request", "error")
+    
+    } finally {
+      setIsRequesting(false)
+    }
+  }
   
   // array of quick action btn
   const quickActions = [

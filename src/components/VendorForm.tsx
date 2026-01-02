@@ -42,7 +42,7 @@ interface ToastState {
 }
 
 const VendorForm: React.FC = () => {
-    const { id: editId } = useParams<{ id?: string }>()
+    const { id: editId } = useParams<{ id: string }>()
     const navigate = useNavigate()
 
     const [vendorData, setVendorData] = useState<VendorFormData>({
@@ -79,7 +79,6 @@ const VendorForm: React.FC = () => {
         }));
     }
 
-
     const handleAvailabilityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setVendorData((prev) => ({ ...prev, isAvailable: e.target.checked }))
     }
@@ -106,22 +105,25 @@ const VendorForm: React.FC = () => {
     }
 
     // loading data on edit mode
-    useEffect(() => {
+    /*useEffect(() => {
         if (editId) {
+
             const loadVendor = async () => {
                 try {
                     setLoading(true)
-                    const response = await getvendorById(editId)
-                    const vendor = response.data
+                    const vendor = await getvendorById(editId)
+
+                                console.log("EDIT VENDOR DATA:", vendor); // 🔍 DEBUG (IMPORTANT)
+
 
                     setVendorData({
                         name: vendor.name || "",
                         category: vendor.category || "",
                         contact: vendor.contact || "",
-                        priceRange: vendor.priceRange || 0,
+                        priceRange: vendor.priceRange || "",
                         description: vendor.description || "",
                         image: null,
-                        isAvailable: vendor.isAvailable
+                        isAvailable: vendor.isAvailable ?? true
                     })
 
                     if (vendor.image) {
@@ -137,7 +139,43 @@ const VendorForm: React.FC = () => {
             } 
             loadVendor()
         } 
-    }, [editId])
+    }, [editId])*/
+    // In VendorForm.tsx, fix the useEffect:
+
+useEffect(() => {
+    const loadVendorData = async () => {
+        if (editId) {
+            try {
+                setLoading(true);
+                const vendor = await getvendorById(editId);
+                
+                console.log("Loaded vendor data:", vendor); // Debug log
+                
+                setVendorData({
+                    name: vendor.name || "",
+                    category: vendor.category || "",
+                    contact: vendor.contact || "",
+                    priceRange: vendor.priceRange || "",
+                    description: vendor.description || "",
+                    image: null,
+                    isAvailable: vendor.isAvailable ?? true
+                });
+
+                if (vendor.image) {
+                    setPreview(vendor.image);
+                }
+                setImageRemoved(false)
+            } catch (err: any) {
+                console.error("Failed to load vendor:", err);
+                showToast("Failed to load vendor details", "error");
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
+
+    loadVendorData();
+}, [editId]);
 
 
     // handle submit form
@@ -149,29 +187,36 @@ const VendorForm: React.FC = () => {
             return
         }
 
-        const data = new FormData();
-        data.append("name", vendorData.name);
-        data.append("category", vendorData.category);
-        data.append("contact", vendorData.contact);
-        data.append("priceRange", vendorData.priceRange);
-        if (vendorData.description) data.append("description", vendorData.description);
-        if (vendorData.image) data.append("image", vendorData.image);
-        data.append("isAvailable", String(vendorData.isAvailable));
+        const formData = new FormData();
+        formData.append("name", vendorData.name);
+        formData.append("category", vendorData.category);
+        formData.append("contact", vendorData.contact);
+        formData.append("priceRange", vendorData.priceRange);
+        if (vendorData.description) formData.append("description", vendorData.description);
+        if (vendorData.image) formData.append("image", vendorData.image);
+        formData.append("isAvailable", String(vendorData.isAvailable));
 
+        if(editId) {
+            formData.append("imageRemoved", imageRemoved.toString())
+        }
+
+        if (vendorData.image) {
+            formData.append("image", vendorData.image)
+        }
         try {
             setLoading(true)
 
             if (editId) {
-                await updateVendor(editId, data) 
+                await updateVendor(editId, formData) 
                 showToast("Vendor updated successfully..")
             
             } else {
-                await createVendor(data)
+                await createVendor(formData)
                 showToast("Vendor created successfully..")
             }
 
             setTimeout(() => {
-                navigate("/dashboard/events");
+                navigate("/dashboard/vendors");
             }, 1200)
         
         } catch (err: any) {
@@ -180,6 +225,19 @@ const VendorForm: React.FC = () => {
         } finally {
             setLoading(false)
         }
+    }
+
+    const resetForm = () => {
+        setVendorData({
+            name: "",
+            category: "",
+            contact: "",
+            priceRange: "",
+            description: "",
+            image: null,
+            isAvailable: true,
+        })
+        setPreview(null);
     }
 
 
@@ -196,7 +254,7 @@ const VendorForm: React.FC = () => {
                     {toast.type === "success" ? (
                         <CheckCircle className="text-green-500" size={20} />
                     ) : (
-                        <AlertCircle className="text-red-500" size={20} />
+                        <CheckCircle className="text-red-500" size={20} />
                     )}
             
                     <span>{toast.message}</span>
@@ -372,6 +430,26 @@ const VendorForm: React.FC = () => {
                                         />
                                     </div>
 
+                                    {/* availability */}
+                                    <div className="md:col-span-2 flex items-center gap-4">
+                                        <input
+                                            type="checkbox"
+                                            id="isAvailable"
+                                            checked={vendorData.isAvailable}
+                                            onChange={handleAvailabilityChange}
+                                            disabled={loading}
+                                            className="w-5 h-5 text-[#C5A059] rounded focus:ring-[#C5A059]"
+                                        />
+
+                                        <label htmlFor="isAvailable" className="text-base font-medium text-[#0A0A0A] cursor-pointer">
+                                            
+                                            {/* Vendor is currently available for bookings */}
+                                                    Vendor is currently {vendorData.isAvailable ? "available" : "unavailable"} for bookings
+
+
+                                        </label>
+                                    </div>
+
                                     {/* vendor photo */}
                                     <div className="md:col-span-2">
                                         <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
@@ -380,6 +458,7 @@ const VendorForm: React.FC = () => {
 
                                         </label>
 
+                                
                                         <div
                                             onClick={() => document.getElementById("imageInput")?.click()}
                                             className="border-2 border-dashed border-[#E5E7EB] rounded-xl p-10 text-center cursor-pointer bg-[#FAFAFA] 
@@ -388,10 +467,12 @@ const VendorForm: React.FC = () => {
                                                 <ImageIcon size={32} className="text-[#C5A059] mx-auto mb-3" />
                                         
                                             <p className="font-semibold text-[#121212]">
-                                                Click to upload or drag and drop
+                                                {preview ? "Change cover photo" : "Click to upload or drag and drop"}
                                             </p>
 
-                                            <p className="text-xs text-[#6B7280] mt-1">PNG, JPG (max. 5MB)</p>
+                                            <p className="text-xs text-[#6B7280] mt-1">
+                                                PNG, JPG (max. 5MB)
+                                            </p>
                                         </div>
 
                                         <input
@@ -400,23 +481,28 @@ const VendorForm: React.FC = () => {
                                             accept="image/*"
                                             className="hidden"
                                             onChange={handleImage}
-                                            disabled={loading}
+                                            // disabled={loading}
                                         />
                     
                                         {preview && (
                                             <div className="mt-5 rounded-xl overflow-hidden border border-[#E5E7EB] relative">
-                                                <img src={preview} alt="Preview" className="w-full h-64 object-cover" />
-                                                    
+                                                <img 
+                                                    src={preview} 
+                                                    alt="Vendor Photo" 
+                                                    className="w-full h-64 object-cover" 
+                                                    onError={() => {
+                                                            console.error("Image failed to load:", preview)
+                                                            setPreview(null)
+                                                            showToast("Failed to load existing image", "error")
+                                                        }}
+                                                />
                                                 <button
                                                     type="button"
-                                                    onClick={() => {
-                                                        setVendorData((prev) => ({ ...prev, image: null }));
-                                                        setPreview(null);
-                                                    }}
-                                                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 
+                                                    onClick={handleRemoveImage}
+                                                    className="absolute top-4 right-4 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 
                                                                transition-all">
                                                         
-                                                        <Trash2 size={16} />
+                                                        <Trash2 size={18} />
                                                 </button>
                                             </div>
                                         )}
@@ -447,7 +533,7 @@ const VendorForm: React.FC = () => {
                   
                                     <button
                                         type="submit"
-                                        // disabled={loading}
+                                        disabled={loading}
                                         className="relative bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white px-10 py-4 rounded-xl
                                                     font-semibold tracking-wide overflow-hidden group transition-all duration-400 hover:-translate-y-1
                                                     hover:shadow-xl hover:shadow-[#9B2D2D]/20 disabled:opacity-70 disabled:cursor-not-allowed">
@@ -456,8 +542,8 @@ const VendorForm: React.FC = () => {
                                         
                                             <Check className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                                         
-                                                {/* {loading ? "Saving..." : editId ? "Update Vendor" : "Save Vendor"} */}
-                                                Save Vendor
+                                                 {loading ? "Saving..." : editId ? "Update Vendor" : "Save Vendor"} 
+                                                {/* Save Vendor */}
                                         </span>
                                         <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent
                                                     group-hover:translate-x-full transition-transform duration-600" />

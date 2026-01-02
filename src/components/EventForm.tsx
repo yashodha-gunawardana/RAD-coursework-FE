@@ -261,7 +261,7 @@ const EventForm: React.FC = () => {
                     {toast.type === "success" ? (
                         <CheckCircle className="text-green-500" size={20} />
                     ) : (
-                        <AlertCircle className="text-red-500" size={20} />
+                        <CheckCircle className="text-red-500" size={20} />
                     )}
 
                     <span>{toast.message}</span>
@@ -522,7 +522,6 @@ const EventForm: React.FC = () => {
                                                     <ImageIcon size={32} className="text-[#C5A059] mx-auto mb-3" />
                                                 
                                                 <p className="font-semibold text-[#121212]">
-                                                    {/* Click to upload or drag and drop */}
                                                     {preview ? "Change cover photo" : "Click to upload or drag and drop"}
                                                 </p>
 
@@ -664,6 +663,7 @@ const EventForm: React.FC = () => {
 
                                     <button
                                         type="submit"
+                                        // disabled={loading}
                                         className="relative bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white px-10 py-4 rounded-xl 
                                                     font-semibold tracking-wide overflow-hidden group transition-all duration-400 hover:-translate-y-1 
                                                     hover:shadow-xl hover:shadow-[#9B2D2D]/20">
@@ -671,7 +671,8 @@ const EventForm: React.FC = () => {
                                             <span className="flex items-center gap-3">
                                                               
                                                 <Check className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
-                                                              
+                                             {/* {loading ? "Saving..." : editId ? "Update Event" : "Save Event"}  */}
+
                                                     Save Event
                                             </span>
                                                             

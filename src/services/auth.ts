@@ -12,8 +12,8 @@ type RegisterDataType = {
 }
 
 // register function
-export const registerUser = async (data: RegisterDataType) => {
-    const res = await api.post("/auth/register", data)
+export const registerUser = async (fullname: string, email: string, password: string) => {
+    const res = await api.post("/auth/register", {fullname, email, password})
     // return only the response data to the called function
     return res.data
 }
@@ -27,8 +27,32 @@ export const loginUser = async (email: string, password: string) => {
 
 // get my details function
 export const getMyDetails = async () => {
-  const res = await api.get("/auth/me")
-  return res.data
+    const res = await api.get("/auth/me")
+    return res.data
+}
+
+// request to become a vendor
+export const requestVendor = async () => {
+    const res = await api.post("/auth/request/vendor")
+    return res.data
+};
+
+// Admin: Get all users (for admin panel)
+export const getAllUsers = async () => {
+    const res = await api.get("/auth/users")
+    return res.data
+}
+
+// Admin: Approve vendor request
+export const approveVendorRequest = async (userId: string) => {
+    const res = await api.post(`/auth/users/approve/${userId}`)
+    return res.data
+}
+
+// Admin: Reject vendor request
+export const rejectVendorRequest = async (userId: string) => {
+    const res = await api.post(`/auth/users/reject/${userId}`)
+    return res.data
 }
 
 // refresh access token using refresh token

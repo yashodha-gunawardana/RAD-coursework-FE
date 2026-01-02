@@ -32,7 +32,7 @@ export default function Router() {
                 {/* <Route path="events/edit" element={<EventForm />} />  */}
                 <Route path="vendors" element={<VendorPage />} />
                 <Route path="vendors/create" element={<VendorForm />} />
-                <Route path="vendors/edit/:id" element={<VendorForm />} />    
+                <Route path="vendors/edit/:id" element={<VendorForm />} />      
                 {/* <Route path="users" element={<UsersPage />} /> */}
 
             </Route>
