@@ -22,9 +22,23 @@ export const Role = {
 } as const
 
 
-export const vendorStatus = {
+export const VendorStatus = {
     NOT_REQUESTED: "NOT_REQUESTED",
     PENDING: "PENDING",
     APPROVED: "APPROVED",
     REJECTED: "REJECTED"
 } as const
+
+
+export type RoleType = typeof Role[keyof typeof Role]
+export type VendorStatusType = typeof VendorStatus[keyof typeof VendorStatus]
+
+
+interface AppUser {
+    _id: string,
+    fullname: string,
+    email: string,
+    roles: RoleType[],
+    vendorStatus: VendorStatusType,
+    createdAt: string
+}
