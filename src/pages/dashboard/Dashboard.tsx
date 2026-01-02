@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Activity, BarChart2, Bookmark, Calendar, ChevronRight, DollarSign, Home, List, PieChart, Plus, RefreshCw, ThumbsUp, User, UserPlus, Users, Zap } from "react-feather";
+import { Activity, AlertCircle, BarChart2, Bookmark, Calendar, CheckCircle, ChevronRight, Clock, DollarSign, Home, List, PieChart, Plus, RefreshCw, ThumbsUp, User, UserPlus, Users, X, Zap } from "react-feather";
 import { useAuth } from "../../context/authContext";
 import { requestVendor, getMyDetails } from "../../services/auth";
 
@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"overview" | "recent" | "upcoming">("overview")
   const [activities, setActivities] = useState<ActivityItem[]>([])
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([])
-  const [vendorModal, setShowVendorModal] = useState(false)
+  const [showVendorModal, setShowVendorModal] = useState(false)
   const [isRequesting, setIsRequesting] = useState(false)
 
   const [toast, setToast] = useState<ToastState>({ show: false, message: " ", type: "success" })
@@ -241,16 +241,22 @@ const Dashboard: React.FC = () => {
   return (
     <main className="relative flex-1 p-4 md:p-6 lg:p-8 bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8]">
 
-      {/* circle */}
-      <div className='absolute -top-[200px] -left-[200px] h-[600px] w-[600px] rounded-full border-[120px]
-                            border-[rgba(139,0,0,0.04)] pointer-events-none z-0'
-        aria-hidden='true'>
-      </div>
-
-      <div className='absolute -bottom-[200px] -right-[200px] h-[700px] w-[700px] rounded-full border-[140px] 
-                            border-[rgba(139,0,0,0.03)] pointer-events-none z-0'
-        aria-hidden='true'>
-      </div>
+      {/* toast notification */}
+      {toast.show && (
+          <div className={`fixed bottom-6 right-6 bg-white text-gray-900 px-6 py-4 rounded-xl shadow-lg z-50
+                            animate-slideIn flex items-center gap-3 
+                            ${toast.type === "success" ? "border-l-4 border-green-500" : "border-l-4 border-red-500"}
+                        `}>
+            
+              {toast.type === "success" ? (
+                  <CheckCircle className="text-green-500" size={20} />
+              ) : (
+                  <CheckCircle className="text-red-500" size={20} />
+              )}
+            
+              <span>{toast.message}</span>
+          </div>
+      )}
 
 
       <div className="relative z-10">
@@ -719,6 +725,105 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* endor button */}
+      {canRequestVendor && (
+        <button
+          onClick={handleVendorRequest}
+          disabled={isRequesting}
+          className="fixed bottom-20 right-6 z-50 w-12 h-12 bg-[#8B0000] text-white rounded-full shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 
+                      transition-all group">
+
+          {isRequesting ? (
+            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          ) : (
+
+            <UserPlus className="w-5 h-5" />
+
+          )}
+          
+          {/* text hover*/}
+          <span className="absolute right-14 scale-0 group-hover:scale-100 transition-transform origin-right bg-gray-800 text-white text-xs px-3 py-1.5 
+                            rounded-lg whitespace-nowrap pointer-events-none">
+            Register as Vendor
+
+          </span>
+        </button>
+      )}
+
+      {/* vendor status popup */}
+      {showVendorModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative overflow-hidden">
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-[#1A1A1A]/60 hover:text-[#800000] transition-colors">
+              
+                <X className="w-6 h-6" />
+
+            </button>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-yellow-100 mb-6">
+                
+                <Clock className="w-10 h-10 text-yellow-600" />
+
+              </div>
+
+              <h2 className="text-2xl font-bold text-[#1A1A1A] mb-3">
+                Vendor Request Sent!
+              </h2>
+
+              <p className="text-[#1A1A1A]/70 leading-relaxed mb-6">
+                Your request to become a vendor has been successfully submitted.
+                <br />
+
+                <strong>Admin will review it shortly.</strong>
+                <br />
+
+                You'll be notified via email once approved.
+              </p>
+
+              <button
+                onClick={closeModal}
+                className="bg-gradient-to-r from-[#800000] to-[#9B2D2D] text-white px-8 py-3 rounded-full font-semibold 
+                            hover:shadow-lg transition-all">
+            
+                  Got it, thanks!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* show status if pending or approved */}
+      {vendorStatus === "PENDING" && (
+        <div className="fixed bottom-8 left-8 z-40 bg-yellow-50 border-2 border-yellow-400 text-yellow-800 px-6 py-4 rounded-xl shadow-xl flex items-center gap-3">
+          
+          <AlertCircle className="w-6 h-6" />
+
+          <div>
+
+            <p className="font-semibold">Vendor Request Pending</p>
+            <p className="text-sm">Waiting for admin approval...</p>
+
+          </div>
+        </div>
+      )}
+
+      {vendorStatus === "APPROVED" && isVendor && (
+        <div className="fixed bottom-8 left-8 z-40 bg-green-50 border-2 border-green-400 text-green-800 px-6 py-4 rounded-xl shadow-xl flex items-center gap-3">
+          
+          <CheckCircle className="w-6 h-6" />
+
+          <div>
+
+            <p className="font-semibold">You're an Approved Vendor!</p>
+            <p className="text-sm">Access vendor dashboard features now.</p>
+
+          </div>
+        </div>
+      )}
     </main>
   )
 

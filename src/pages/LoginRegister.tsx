@@ -6,7 +6,7 @@ import morningImg from "../assets/images/loginImage.png";
 import dayImg from "../assets/images/loginimage2.png";
 import eveningImg from "../assets/images/loginImage3.png";
 import nightImg from "../assets/images/loginImage4.png";
-import { ArrowRight, Facebook, Twitter, Youtube, Linkedin, Lock, AlertCircle } from "react-feather";
+import { ArrowRight, Facebook, Twitter, Youtube, Linkedin, Lock, AlertCircle, CheckCircle } from "react-feather";
 
 
 const images = [
@@ -178,9 +178,9 @@ export default function LoginRegister() {
                                 `}>
             
                     {toast.type === "success" ? (
-                        <AlertCircle className="text-green-500" size={20} />
+                        <CheckCircle className="text-green-500" size={20} />
                     ) : (
-                        <AlertCircle className="text-red-500" size={20} />
+                        <CheckCircle className="text-red-500" size={20} />
                     )}
             
                     <span>{toast.message}</span>
