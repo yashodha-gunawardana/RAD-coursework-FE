@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Calendar,
@@ -97,4 +97,14 @@ const BookingPage: React.FC = () => {
 
     const [searchTerm, setSearchTerm] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
+
+
+    const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
+        setToast({ show: true, message, type })
+        setTimeout(() => 
+            setToast(
+                { show: false, message: "", type: "success" }
+                
+        ), 3000)
+    }, [])
 }
