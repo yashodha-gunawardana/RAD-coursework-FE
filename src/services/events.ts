@@ -88,3 +88,9 @@ export const getAllEvents = async (
   return res.data
 }
 
+
+export const getAllEventsForSelect = async () => {
+    const res = await api.get("/events/dropdown")
+    return res.data
+}
+

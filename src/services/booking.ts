@@ -37,3 +37,14 @@ export const getBookingById = async (id: string) => {
 }
 
 
+// get booking asssigned to logged-in vendor
+export const getVendorBookings = async () => {
+    const res = await api.get("/bookings/vendor/bookings")
+    return res.data;
+}
+
+// vendor booking status
+export const updateBookingStatus = async (id: string, status: string) => {
+    const res = await api.put(`/bookings/vendor/bookings/${id}/status`, { status });
+    return res.data;
+}

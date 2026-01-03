@@ -12,10 +12,12 @@ import {
   Clock,
   DollarSign,
   User,
+  Plus,
+  X,
 } from "react-feather";
-import { createBooking, getMyBooking, updateBooking, deleteBooking } from "../../services/booking";
-import { getMyEvents } from "../../services/events";
-import { getAllVendors } from "../../services/vendor";
+import { createBooking, getMyBooking, updateBooking, deleteBooking, getVendorBookings, updateBookingStatus } from "../../services/booking";
+import { getAllEventsForSelect } from "../../services/events";
+import { getAllVendorsForSelect } from "../../services/vendor";
 
 
 export const BookingStatus = {
@@ -105,6 +107,9 @@ const formatDate = (dateString: string): string => {
 }
 
 
+const userRole = localStorage.getItem("role") || "USER"
+
+
 const BookingPage: React.FC = () => {
     const navigate = useNavigate()
 
@@ -160,7 +165,10 @@ const BookingPage: React.FC = () => {
         try {
             setLoadingResources(true)
         
-            const [eventRes, vendorRes] = await Promise.all([getMyEvents(), getAllVendors()])
+            const [eventRes, vendorRes] = await Promise.all([getAllEventsForSelect(), getAllVendorsForSelect()])
+
+            console.log("Events:", eventRes.data)
+            console.log("Vendors:", vendorRes.data)
 
             setEvents(eventRes.data || [])
             setVendors(vendorRes.data || [])
@@ -175,12 +183,13 @@ const BookingPage: React.FC = () => {
 
 
     // Open modal → load data
-    const openCreateModal = () => {
-        loadResources()
+    const openCreateModal =  async () => {
         setIsCreateModalOpen(true)
         setSelectedEventId("")
         setSelectedVendorId("")
         setNotes("")
+
+        await loadResources()
     }
 
     
@@ -197,7 +206,7 @@ const BookingPage: React.FC = () => {
             setCreating(true)
             await createBooking({
                 eventId: selectedEventId,
-                vendorId: selectedEventId,
+                vendorId: selectedVendorId,
                 notes: notes || undefined
             })
 
@@ -215,7 +224,7 @@ const BookingPage: React.FC = () => {
 
 
     // booking status update
-    const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
+    /*const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
         try {
             await updateBooking(id, { status })
             setBookings((prev) => prev.map((b) => (b._id === id ? { ...b, status } : b)))
@@ -223,9 +232,25 @@ const BookingPage: React.FC = () => {
             showToast(`Booking ${status.toLocaleLowerCase()} successfully`)
 
         } catch (err: any) {
-            showToast("Failed to update booking statys", "error")
+            showToast("Failed to update booking status", "error")
         }
-    }, [showToast])
+    }, [showToast])*/
+
+
+    const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
+        try {
+            if (userRole === "VENDOR") {
+                await updateBookingStatus(id, status);
+            } else {
+                await updateBooking(id, { status });
+            }
+
+            setBookings((prev) => prev.map((b) => (b._id === id ? { ...b, status } : b)))
+            showToast(`Booking ${status.toLowerCase()} successfully`)
+        } catch (err: any) {
+            showToast("Failed to update booking status", "error")
+        }
+    }, [showToast, userRole])
 
 
     // delete booking
@@ -284,7 +309,7 @@ const BookingPage: React.FC = () => {
     const resetFilters = useCallback(() => {
         setSearchTerm("")
         setStatusFilter("")
-        showToast("Showing all bookings")
+        showToast("Filteres cleared")
     }, [showToast])
 
 
@@ -305,7 +330,7 @@ const BookingPage: React.FC = () => {
                             `}>
                 
                     {toast.type === "success" ? (
-                        <AlertCircle className="text-green-500" size={20} />
+                        <CheckCircle className="text-green-500" size={20} />
                     ) : (
                         <AlertCircle className="text-red-500" size={20} />
                     )}
@@ -328,6 +353,19 @@ const BookingPage: React.FC = () => {
                         <p className="text-[#0F0F0F]/80 leading-relaxed text-l mt-1">
                             Professional Booking Management System
                         </p>
+                    </div>
+
+                    {/* add new booking btn */}
+                    <div className="flex gap-3">
+                        <button
+                            onClick={openCreateModal}
+                            className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
+                                        hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-0.5">
+                                                
+                                <Plus size={18} />
+                                                    
+                                    New Booking
+                        </button>
                     </div>
                 </header>
 
@@ -545,7 +583,7 @@ const BookingPage: React.FC = () => {
                                         <div className="p-5">
                                             <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
                                                 
-                                                    {booking.eventId.title}
+                                                {booking.eventId.title}
 
                                             </h3>
 
@@ -625,6 +663,111 @@ const BookingPage: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            {/* create booking modal */}
+            {isCreateModalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 relative">
+
+                        <button
+                            onClick={() => setIsCreateModalOpen(false)}
+                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                            
+                                <X size={24} />
+
+                        </button>
+
+                        <h2 className="text-2xl font-bold text-[#8B0000] mb-6">
+                            Create New Vendor Booking
+                        </h2>
+
+                        {loadingResources ? (
+                            <div className="text-center py-8">
+                                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-red-800 mx-auto"></div>
+                                <p className="mt-4 text-gray-600">Loading events and vendors...</p>
+                            </div>
+
+                        ) : (
+
+                            <form onSubmit={handleCreateBooking} className="space-y-5">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Your Event</label>
+
+                                    <select
+                                        value={selectedEventId}
+                                        onChange={(e) => setSelectedEventId(e.target.value)}
+                                        required
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 
+                                                    focus:border-transparent">
+                                    
+                                        <option value="">Select an event</option>
+                                            
+                                        {events.map((event) => (
+                                            <option key={event._id} value={event._id}>
+
+                                                {event.title} — {formatDate(event.date)} ({event.location})
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Vendor</label>
+
+                                    <select
+                                        value={selectedVendorId}
+                                        onChange={(e) => setSelectedVendorId(e.target.value)}
+                                        required
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 
+                                                    focus:border-transparent">
+                                    
+                                        <option value="">Select a vendor</option>
+
+                                        {vendors.map((vendor) => (
+                                            <option key={vendor._id} value={vendor._id}>
+                                                {vendor.name} ({vendor.category})
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Notes (Optional)</label>
+
+                                    <textarea
+                                        value={notes}
+                                        onChange={(e) => setNotes(e.target.value)}
+                                        rows={4}
+                                        placeholder="Special requests, timing, setup details..."
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 
+                                                    focus:border-transparent"
+                                    />
+                                </div>
+
+                                <div className="flex gap-4 pt-4">
+                                    <button
+                                        type="submit"
+                                        disabled={creating}
+                                        className="flex-1 px-6 py-3 bg-red-800 text-white rounded-lg font-medium hover:bg-red-700 disabled:opacity-70 
+                                                    transition-all">
+                                    
+                                            {creating ? "Creating..." : "Create Booking"}
+
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsCreateModalOpen(false)}
+                                        className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-100 transition-all">
+                                    
+                                            Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

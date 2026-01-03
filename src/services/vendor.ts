@@ -49,3 +49,9 @@ export const deleteVendor = async (id: string) => {
     const res = await api.delete(`/vendors/${id}`)
     return res.data
 }
+
+
+export const getAllVendorsForSelect = async () => {
+    const res = await api.get("/vendors/dropdown")
+    return res.data
+}
