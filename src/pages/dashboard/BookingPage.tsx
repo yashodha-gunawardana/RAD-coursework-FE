@@ -118,12 +118,26 @@ const BookingPage: React.FC = () => {
             const response = await getMyBooking()
             setBookings(response.data || [])
 
-        } catch (err) {
+        } catch (err : any) {
             console.error("Error loading bookings:", err)
             showToast("Failed to load bookings", "error")
         
         } finally {
             setLoading(false)
+        }
+    }, [showToast])
+
+
+    // booking status update
+    const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
+        try {
+            await updateBooking(id, { status })
+            setBookings((prev) => prev.map((b) => (b._id === id ? { ...b, status } : b)))
+
+            showToast(`Booking ${status.toLocaleLowerCase()} successfully`)
+
+        } catch (err: any) {
+            showToast("Failed to update booking statys", "error")
         }
     }, [showToast])
 }
