@@ -155,6 +155,7 @@ const BookingPage: React.FC = () => {
     }, [showToast])
 
 
+    // load events and vendors
     const loadResources = useCallback(async () => {
         try {
             setLoadingResources(true)
@@ -172,8 +173,17 @@ const BookingPage: React.FC = () => {
         }
     }, [showToast])
 
-    
 
+    // Open modal → load data
+    const openCreateModal = () => {
+        loadResources()
+        setIsCreateModalOpen(true)
+        setSelectedEventId("")
+        setSelectedVendorId("")
+        setNotes("")
+    }
+
+    
     // booking status update
     const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
         try {
