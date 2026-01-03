@@ -184,6 +184,36 @@ const BookingPage: React.FC = () => {
     }
 
     
+    // create booking
+    const handleCreateBooking = async (e: React.FormEvent) => {
+        e.preventDefault()
+
+        if (!selectedEventId || !selectedVendorId) {
+            showToast("Please select an event and vendor", "error")
+            return
+        }
+
+        try {
+            setCreating(true)
+            await createBooking({
+                eventId: selectedEventId,
+                vendorId: selectedEventId,
+                notes: notes || undefined
+            })
+
+            showToast("Booking created successfully.")
+            setIsCreateModalOpen(false)
+            loadBookings() // refresh list
+
+        } catch (err: any) {
+            showToast("Failed to create booking", "error")
+        
+        } finally {
+            setCreating(false)
+        }
+    }
+
+
     // booking status update
     const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
         try {
