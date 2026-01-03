@@ -155,6 +155,25 @@ const BookingPage: React.FC = () => {
     }, [showToast])
 
 
+    const loadResources = useCallback(async () => {
+        try {
+            setLoadingResources(true)
+        
+            const [eventRes, vendorRes] = await Promise.all([getMyEvents(), getAllVendors()])
+
+            setEvents(eventRes.data || [])
+            setVendors(vendorRes.data || [])
+
+        } catch (err) {
+            showToast("Failed to load events or vendors", "error")
+
+        } finally {
+            setLoadingResources(false)
+        }
+    }, [showToast])
+
+    
+
     // booking status update
     const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
         try {
