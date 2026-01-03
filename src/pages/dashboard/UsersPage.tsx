@@ -516,9 +516,9 @@ const UsersPage: React.FC = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                                {filteredUsers.map((user) => (
+                                {filteredUsers.map((user, index) => (
                                     <div
-                                        key={user._id}
+                                        key={user._id || `user-${index}`}
                                         className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
                                                     transition-all hover:-translate-y-1">
 
@@ -532,10 +532,10 @@ const UsersPage: React.FC = () => {
 
                                             {/* role badges */}
                                             <div className="absolute top-3 left-3 flex gap-2">
-                                                {user.roles.map((role) => (
+                                                {user.roles.map((role, roleIndex) => (
                                                         
                                                     <span
-                                                        key={role}
+                                                        key={`${user._id}-${role}-${roleIndex}`}
                                                         className={`px-2 py-1 rounded-full text-xs font-semibold uppercase 
                                                                         ${getRoleBadgeClass(role)}
                                                                     `}>

@@ -48,7 +48,6 @@ const EventForm: React.FC = () => {
     // get edit id from url params
     const editId = searchParams.get("edit") 
 
-
     const [eventData, setEventData] = useState<EventData>({
         title: "",
         type: "",
@@ -152,7 +151,7 @@ const EventForm: React.FC = () => {
                     basePrice: eventData.basePrice || 0,
                     status: eventData.status || "PLANNING",
                     image: null,
-                    extraItems: eventData.extraItems || []
+                    // extraItems: eventData.extraItems || []
                 })
 
                 setExtraItems(
@@ -170,7 +169,10 @@ const EventForm: React.FC = () => {
             
             }).catch(() => {
                 showToast("Error loading event", "error")
-            });
+            })
+            .finally (() => {
+                setLoading(false)
+            })
         
         } else {
             setEventData({
@@ -184,14 +186,14 @@ const EventForm: React.FC = () => {
                 status: "PLANNING",
                 image: null
             })
+             setExtraItems([]);
+            setPreview(null);
+            setImageRemoved(false)
+            setLoading(false)
         }
-        setExtraItems([]);
-        setPreview(null);
-        setImageRemoved(false)
-
     }, [editId]) // run effect when editid changes
 
-
+    
     // submit form
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
@@ -201,6 +203,8 @@ const EventForm: React.FC = () => {
             return
         }
 
+        setLoading(true)
+        
         const formData = new FormData()
         formData.append("title", eventData.title)
         formData.append("type", eventData.type)
@@ -244,8 +248,11 @@ const EventForm: React.FC = () => {
         
         } catch (err: any) {
             showToast(err.response?.data?.message || "Error occurred", "error")
+        
+        } finally {
+            setLoading(false)
         }
-    };
+    }
 
 
     return (
@@ -663,7 +670,7 @@ const EventForm: React.FC = () => {
 
                                     <button
                                         type="submit"
-                                        // disabled={loading}
+                                        disabled={loading}
                                         className="relative bg-gradient-to-br from-[#9B2D2D] to-[#7A1C1C] text-white px-10 py-4 rounded-xl 
                                                     font-semibold tracking-wide overflow-hidden group transition-all duration-400 hover:-translate-y-1 
                                                     hover:shadow-xl hover:shadow-[#9B2D2D]/20">
@@ -671,9 +678,9 @@ const EventForm: React.FC = () => {
                                             <span className="flex items-center gap-3">
                                                               
                                                 <Check className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
-                                             {/* {loading ? "Saving..." : editId ? "Update Event" : "Save Event"}  */}
+                                              
+                                                    {loading ? "Saving..." : editId ? "Update Event" : "Create Event"}  
 
-                                                    Save Event
                                             </span>
                                                             
                                             <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent 
