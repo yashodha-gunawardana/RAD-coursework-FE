@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Calendar,
@@ -91,5 +91,10 @@ const formatDate = (dateString: string): string => {
 const BookingPage: React.FC = () => {
     const navigate = useNavigate()
 
-    
+    const [booking, setBookings] = useState<Booking[]>([])
+    const [loading, setLoading] = useState(true)
+    const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success" })
+
+    const [searchTerm, setSearchTerm] = useState("")
+    const [statusFilter, setStatusFilter] = useState("")
 }
