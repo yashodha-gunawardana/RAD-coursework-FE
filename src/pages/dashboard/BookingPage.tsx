@@ -23,3 +23,26 @@ export const BookingStatus = {
 } as const
 
 export type BookingStatusType = typeof BookingStatus[keyof typeof BookingStatus]
+
+
+interface Booking {
+    _id: string
+    eventId: {
+        _id: string
+        title: string
+        date: string
+        location: string
+    }
+
+    vendorId: {
+        _id: string
+        name: string
+        category: string
+        image?: string
+    }
+
+    userId: string
+    status: BookingStatusType
+    notes?: string
+    createdAt: string
+} 
