@@ -157,57 +157,54 @@ const UsersPage: React.FC = () => {
     // approve vendor req
     const handleApprove = useCallback(async (userId: string) => {
         try {
-            await approveVendorRequest(userId)
-            setUsers(prev =>
-                prev.map(u=> u._id === userId ? {
-                    ...u, vendorStatus: "APPROVED" as VendorStatusType } : u)
-            )
-            showToast("Vendor approved successfully", "success")
-        
+            await approveVendorRequest(userId);
+            
+            await loadUsers();
+            
+            showToast("Vendor approved successfully", "success");
         } catch (err: any) {
-            showToast("Failed to approve vendor", "error")
+            // Show actual backend message
+            const message = err.response?.data?.message || "Failed to approve vendor";
+            showToast(message, "error");
         }
-    }, [showToast])
+    }, [showToast, loadUsers]);
 
 
     // reject vendor req
     const handleReject = useCallback(async (userId: string) => {
         try {
-            await rejectVendorRequest(userId)
-            setUsers(prev =>
-                prev.map(u => u._id === userId ? {
-                    ...u, vendorStatus: "REJECTED" as VendorStatusType } : u)
-            )
-            showToast("Vendor request rejected", "success")
-
+            await rejectVendorRequest(userId);
+            
+            await loadUsers();
+            
+            showToast("Vendor request rejected", "success");
         } catch (err: any) {
-            showToast("Failed to reject vendor", "error")
+            const message = err.response?.data?.message || "Failed to reject vendor";
+            showToast(message, "error");
         }
-    }, [showToast])
-
+    }, [showToast, loadUsers]);
 
     // delete user
     const handleDelete = useCallback(async () => {
-            const { userId, fullname } = deleteModal
+        const { userId, fullname } = deleteModal
 
-                console.log("Deleting user:", userId); // Debug log
-
-
-        if (!userId)
-            return
+        if (!userId) {
+            showToast("Invalid user ID. Cannot delete.", "error");
+            setDeleteModal({ show: false, userId: null, fullname: "" });
+            return;
+        }
+        console.log("Deleting user:", userId);
 
         try {
-                    console.log("Calling deleteUserAccount with userId:", userId); // Debug log
-
+                    
             await deleteUserAccount(userId)
 
             setUsers(prev => prev.filter(u => u._id !== userId))
             showToast(`User "${fullname}" deleted successfully`, "success")
 
         } catch (err: any) {
-                    console.error("Delete error details:", err); // Debug log
-
-            showToast("Failed to delete user", "error")
+            console.error("Delete error details:", err); 
+            showToast(err.message || "Failed to delete user", "error")
 
         } finally {
             setDeleteModal({ show: false, userId: null, fullname: "" })
@@ -606,6 +603,11 @@ const UsersPage: React.FC = () => {
                                             <button
                                                 type="button"
                                                  onClick={() => {
+                                                    if (!user._id) {
+            showToast("Cannot delete: User ID missing", "error");
+            console.error("User missing _id:", user);
+            return;
+        }
         console.log("Delete clicked for user ID:", user._id); // Add this
         setDeleteModal({ 
             show: true, 

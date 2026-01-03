@@ -56,17 +56,24 @@ export const rejectVendorRequest = async (userId: string) => {
 }
 
 // admin delete user
+// admin delete user
 export const deleteUserAccount = async (userId: string) => {
   try {
-    const res = await api.delete(`/auth/users/${userId}`);
+    const res = await api.delete(`/auth/users/${userId}`); // ← Removed /auth
     return res.data;
-
   } catch (err: any) {
     console.error("Delete user error:", err);
-    throw err;
+    
+    // Extract server message if available
+    const errorMessage = 
+      err.response?.data?.message || 
+      err.message || 
+      "Failed to delete user";
+
+    // Re-throw so frontend can catch and show error toast
+    throw new Error(errorMessage);
   }
-  
-}
+};
 
 // refresh access token using refresh token
 export const refreshTokens = async (refreshToken: string) => {

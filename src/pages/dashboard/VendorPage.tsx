@@ -153,7 +153,7 @@ const VendorPage: React.FC = () => {
 
         try {
             await deleteVendor(id)
-            // setVendors(prev => prev.filter(vendor => vendor._id !== id))
+    
             showToast("Vendor deleted successfully..")
 
             loadVendors(page)
@@ -179,35 +179,6 @@ const VendorPage: React.FC = () => {
         }
     }, [allVendors]);
 
-
-    // filters
-   /* const filteredVendors = React.useMemo(() => {
-        let result = [...vendors]
-
-        // search by name, contact, description
-        if (searchTerm) {
-            const term = searchTerm.toLowerCase();
-            result = result.filter(vendor =>
-                vendor.name.toLowerCase().includes(term) ||
-                vendor.contact.toLowerCase().includes(term) ||
-                (vendor.description && vendor.description.toLowerCase().includes(term))
-            );
-        }
-
-        // category
-        if (categoryFilter) {
-            result = result.filter(vendor => vendor.category === categoryFilter);
-        }
-
-        // availability 
-        if (availabilityFilter) {
-            const available = availabilityFilter === "true";
-            result = result.filter(vendor => vendor.isAvailable === available);
-        }
-
-        return result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    }, [vendors, searchTerm, categoryFilter, availabilityFilter]);*/
-    
 
     // rest filters
     const resetFilters = useCallback(() => {
@@ -533,7 +504,7 @@ const VendorPage: React.FC = () => {
                                                     </div>
 
                                                     {/* availability Badge */}
-                                                    <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold 
+                                                    <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold uppercase
                                                                     ${getAvailabilityClass(vendor.isAvailable)}`}>
                                                         
                                                         {vendor.isAvailable ? 'Available' : 'Unavailable'}
