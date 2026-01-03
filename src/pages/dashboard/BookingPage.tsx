@@ -13,6 +13,7 @@ import {
   DollarSign,
   User,
 } from "react-feather";
+import { getMyBooking, updateBooking, deleteBooking } from "../../services/booking";
 
 
 export const BookingStatus = {
@@ -114,9 +115,15 @@ const BookingPage: React.FC = () => {
         try {
             setLoading(true)
 
-            const response = await 
-        } catch (err) {
+            const response = await getMyBooking()
+            setBookings(response.data || [])
 
+        } catch (err) {
+            console.error("Error loading bookings:", err)
+            showToast("Failed to load bookings", "error")
+        
+        } finally {
+            setLoading(false)
         }
-    })
+    }, [showToast])
 }
