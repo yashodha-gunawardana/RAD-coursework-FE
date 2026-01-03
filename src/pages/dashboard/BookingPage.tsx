@@ -86,3 +86,10 @@ const formatDate = (dateString: string): string => {
         day: "numeric",
     })
 }
+
+
+const BookingPage: React.FC = () => {
+    const navigate = useNavigate()
+
+    
+}
