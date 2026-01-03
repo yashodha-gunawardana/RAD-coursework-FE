@@ -205,4 +205,343 @@ const BookingPage: React.FC = () => {
     useEffect(() => {
         loadBookings()
     }, [loadBookings])
+
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] p-5 md:p-10">
+
+            {/* Toast */}
+            {toast.show && (
+                <div
+                    className={`fixed bottom-6 right-6 bg-white text-gray-900 px-6 py-4 rounded-xl shadow-lg z-50
+                                animate-slideIn flex items-center gap-3
+                                ${toast.type === "success" ? "border-l-4 border-green-500" : "border-l-4 border-red-500"}
+                            `}>
+                
+                    {toast.type === "success" ? (
+                        <AlertCircle className="text-green-500" size={20} />
+                    ) : (
+                        <AlertCircle className="text-red-500" size={20} />
+                    )}
+                
+                    <span>{toast.message}</span>
+                </div>
+            )}
+
+            <div className="max-w-7xl mx-auto">
+
+                {/* header */}
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 pb-6 border-b border-gray-200">
+                    <div>
+                        <h1 className="text-3xl md:text-6xl font-bold text-[#8B0000]/80 font-[poppins]">
+                            
+                            Bookings Dashboard
+
+                        </h1>
+
+                        <p className="text-[#0F0F0F]/80 leading-relaxed text-l mt-1">
+                            Professional Booking Management System
+                        </p>
+                    </div>
+                </header>
+
+                {/* stats card */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg 
+                                    transition-all hover:-translate-y-1">
+
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Total Bookings</div>
+                            <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
+                                    
+                                <Calendar className="text-red-800" size={24} />
+                                    
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{stats.totalBookings}</div>
+                        <div className="text-sm text-green-600 font-medium flex items-center gap-1">
+                            
+                            <TrendingUp size={16} />
+                                    
+                                All time bookings
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg 
+                                    transition-all hover:-translate-y-1">
+                        
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Pending</div>
+                            <div className="w-12 h-12 bg-yellow-50 rounded-lg flex items-center justify-center">
+                                
+                                <Clock className="text-yellow-600" size={24} />
+
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{stats.pending}</div>
+                        <div className="text-sm text-yellow-600 font-medium flex items-center gap-1">
+                            
+                            <Clock size={16} />
+
+                                Awaiting confirmation
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg 
+                                    transition-all hover:-translate-y-1">
+                                        
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Confirmed</div>
+                            <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+                                
+                                <CheckCircle className="text-green-600" size={24} />
+
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{stats.confirmed}</div>
+                        <div className="text-sm text-green-600 font-medium flex items-center gap-1">
+                            
+                            <TrendingUp size={16} />
+
+                                Active bookings
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-[#F5F5F5] to-[#8B0000]/20 rounded-xl p-6 shadow-md border border-[#8B0000]/10 hover:shadow-lg 
+                                    transition-all hover:-translate-y-1">
+
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm font-semibold text-[#0A0A0A] uppercase tracking-wide">Completed</div>
+                            <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                                
+                                <DollarSign className="text-blue-600" size={24} />
+
+                            </div>
+                        </div>
+
+                        <div className="text-3xl font-bold text-gray-900 mb-2">{stats.completed}</div>
+                        <div className="text-sm text-blue-600 font-medium flex items-center gap-1">
+                            
+                            <CheckCircle size={16} />
+
+                                Successfully completed
+                        </div>
+                    </div>
+                </div>
+
+                {/* main content */}
+                <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+
+                    <div className="px-6 py-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h2 className="text-2xl font-bold text-[#8B0000]/80 font-serif">
+                                
+                                Booking Management
+                            </h2>
+
+                            <p className="text-[#0F0F0F]/80 leading-relaxed text-[13px] mt-1">
+                                View and manage your vendor bookings
+                            </p>
+                        </div>
+
+                        <button
+                            onClick={resetFilters}
+                            className="px-4 py-2 bg-green-300 border border-green-800 text-black rounded-lg font-medium hover:bg-green-200 
+                                        transition-all flex items-center gap-2">
+                            
+                                <Filter size={16} />
+                                    
+                                    View All
+                        </button>
+                    </div>
+
+                    {/* filters */}
+                    <div className="px-6 py-5 bg-gray-50 border-b border-gray-200 flex flex-col md:flex-row gap-4 items-start md:items-center">
+                        <div className="flex-1 min-w-0 w-full md:w-auto">
+                            
+                            <div className="relative">
+                                
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                            
+                                <input
+                                    type="text"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    placeholder="Search by event title, vendor, or location..."
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none 
+                                                focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex gap-3 w-full md:w-auto">
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value)}
+                                className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 
+                                            focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
+                            
+                                <option value="">All Status</option>
+                                <option value="PENDING">Pending</option>
+                                <option value="CONFIRMED">Confirmed</option>
+                                <option value="COMPLETED">Completed</option>
+                                <option value="CANCELLED">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* booking grid */}
+                    <div className="p-6">
+
+                        {loading ? (
+
+                            <div className="flex justify-center items-center py-12">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-800"></div>
+                            </div>
+
+                        ) : filteredBookings.length === 0 ? (
+
+                            <div className="text-center py-12">
+
+                                <Calendar className="text-gray-300 mx-auto mb-4" size={64} />
+                                
+                                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                                    {searchTerm || statusFilter 
+                                        ? "No Bookings Match Filters" 
+                                        : "No Bookings Found"
+                                    }
+                                </h3>
+
+                                <p className="text-gray-600 max-w-md mx-auto mb-6">
+                                    {searchTerm || statusFilter
+                                        ? "Try adjusting your search or filter criteria."
+                                        : "You haven't made any vendor bookings yet."
+                                    }
+                                </p>
+                            </div>
+                        ) : (
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                                {filteredBookings.map((booking) => (
+
+                                    <div
+                                        key={booking._id}
+                                        className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
+                                                    transition-all hover:-translate-y-1">
+                                            
+                                        <div className="h-40 bg-gradient-to-r from-red-800 to-red-600 relative flex items-center justify-center">
+                                            {booking.vendorId.image ? (
+
+                                                <img
+                                                    src={booking.vendorId.image}
+                                                    alt={booking.vendorId.name}
+                                                    className="absolute inset-0 w-full h-full object-cover opacity-30"
+                                                />
+                                            ) : (
+
+                                                <User className="text-white/80" size={64} />
+
+                                            )}
+
+                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold 
+                                                                ${getStatusBadgeClass(booking.status)}
+                                                            `}>
+                                                    
+                                                    {getStatusLabel(booking.status)}
+                                            </div>
+                                        </div>
+
+                                        <div className="p-5">
+                                            <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
+                                                
+                                                    {booking.eventId.title}
+
+                                            </h3>
+
+                                            <p className="text-sm text-gray-600 mb-3">
+
+                                                <strong>Vendor:</strong> {booking.vendorId.name}
+                                            </p>
+
+                                            <div className="space-y-2 text-sm text-gray-600 mb-4">
+
+                                                <p><strong>Date:</strong> {formatDate(booking.eventId.date)}</p>
+                                                <p><strong>Location:</strong> {booking.eventId.location}</p>
+
+                                            </div>
+
+                                            {booking.notes && (
+                                                <p className="text-sm text-gray-500 italic mb-4 line-clamp-2">
+                                                    "{booking.notes}"
+                                                </p>
+                                            )}
+
+
+                                            <div className="flex flex-wrap gap-2 mb-3">
+                                                {booking.status === "PENDING" && (
+                                                    <>
+                                                        <button
+                                                            onClick={() => handleStatusChange(booking._id, "CONFIRMED")}
+                                                            className="flex-1 px-3 py-2 bg-green-100 text-green-800 rounded-lg font-medium hover:bg-green-200 
+                                                                        transition-all flex items-center justify-center gap-1">
+                                                            
+                                                                
+                                                                <CheckCircle size={16} />
+                                                                    
+                                                                    Confirm
+                                                        </button>
+
+                                                        <button
+                                                            onClick={() => handleStatusChange(booking._id, "CANCELLED")}
+                                                            className="flex-1 px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-200 
+                                                                        transition-all flex items-center justify-center gap-1">
+                                                            
+                                                                <XCircle size={16} />
+
+                                                                    Cancel
+                                                        </button>
+                                                    </>
+                                                )}
+
+                                                {booking.status === "CONFIRMED" && (
+                                                    <button
+                                                        onClick={() => handleStatusChange(booking._id, "COMPLETED")}
+                                                        className="flex-1 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg font-medium hover:bg-blue-200 
+                                                                    transition-all flex items-center justify-center gap-1">
+                                                    
+                                                            <CheckCircle size={16} />
+
+                                                                Mark Complete
+                                                    </button>
+                                                )}
+                                            </div>
+
+                                            {/* delete button */}
+                                            <button
+                                                onClick={() => handleDeleteBooking(booking._id, booking.eventId.title)}
+                                                className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-800 hover:text-white 
+                                                            transition-all flex items-center justify-center gap-1">
+                                            
+                                                    <Trash2 size={16} />
+
+                                                        Delete Booking
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
+
+
+export default BookingPage

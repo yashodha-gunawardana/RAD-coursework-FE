@@ -7,7 +7,7 @@ import EventForm from "../components/EventForm";
 import VendorPage from "../pages/dashboard/VendorPage";
 import VendorForm from "../components/VendorForm";
 import UsersPage from "../pages/dashboard/UsersPage";
-// import BookingPage from "../pages/dashboard/BookingPage";
+import BookingPage from "../pages/dashboard/BookingPage";
 
 
 const LandingPage = lazy(() => import("../pages/LandingPage"))
@@ -35,7 +35,7 @@ export default function Router() {
                 <Route path="vendors/create" element={<VendorForm />} />
                 <Route path="vendors/edit/:id" element={<VendorForm />} />      
                 <Route path="users" element={<UsersPage />} /> 
-                {/* <Route path="booking" element={<BookingPage />} /> */}
+                <Route path="booking" element={<BookingPage />} />
 
             </Route>
 
