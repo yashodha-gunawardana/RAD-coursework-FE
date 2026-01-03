@@ -57,8 +57,15 @@ export const rejectVendorRequest = async (userId: string) => {
 
 // admin delete user
 export const deleteUserAccount = async (userId: string) => {
-  const res = await api.delete(`/auth/users/${userId}`);
-  return res.data;
+  try {
+    const res = await api.delete(`/auth/users/${userId}`);
+    return res.data;
+
+  } catch (err: any) {
+    console.error("Delete user error:", err);
+    throw err;
+  }
+  
 }
 
 // refresh access token using refresh token

@@ -64,3 +64,25 @@ export const deleteEvent = async (id: string) => {
   const res = await api.delete(`/events/${id}`);
   return res.data;
 }
+
+
+// get ALL events (admin only)
+export const getAllEvents = async (
+  page: number = 1,
+  limit: number = 6,
+  searchTerm = "",
+  typeFilter = "",
+  statusFilter = ""
+) => {
+  const params = new URLSearchParams()
+  params.set("page", page.toString())
+  params.set("limit", limit.toString())
+
+  if (searchTerm) params.set("search", searchTerm)
+  if (typeFilter) params.set("type", typeFilter)
+  if (statusFilter) params.set("status", statusFilter)
+
+  const res = await api.get(`/events/all?${params.toString()}`)
+  return res.data
+}
+

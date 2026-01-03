@@ -119,32 +119,10 @@ const UsersPage: React.FC = () => {
     const [roleFilter, setRoleFilter] = useState<RoleType | "">("")
     const [statusFilter, setStatusFilter] = useState<VendorStatusType | "">("")
 
-    const [deleteModal, setDeleteModal] = useState<{ show: boolean, userId: string | null, userName: string }>({
+    const [deleteModal, setDeleteModal] = useState<{ show: boolean, userId: string | null, fullname: string }>({
         show: false,
         userId: null,
-        userName: ""
-    })
-
-
-    // delete user
-    const handleDelete = useCallback(async () => {
-        const { userId, userName } = deleteModal
-
-        if (!userId)
-            return
-
-        try {
-            await deleteUserAccount(userId)
-
-            setUsers(prev => prev.filter(u => u._id !== userId))
-            showToast(`User "${userName}" deleted successfully`, "error")
-
-        } catch (err: any) {
-            showToast("Failed to delete user", "error")
-
-        } finally {
-            setDeleteModal({ show: false, userId: null, userName: "" })
-        }
+        fullname: ""
     })
 
 
@@ -206,6 +184,35 @@ const UsersPage: React.FC = () => {
             showToast("Failed to reject vendor", "error")
         }
     }, [showToast])
+
+
+    // delete user
+    const handleDelete = useCallback(async () => {
+            const { userId, fullname } = deleteModal
+
+                console.log("Deleting user:", userId); // Debug log
+
+
+        if (!userId)
+            return
+
+        try {
+                    console.log("Calling deleteUserAccount with userId:", userId); // Debug log
+
+            await deleteUserAccount(userId)
+
+            setUsers(prev => prev.filter(u => u._id !== userId))
+            showToast(`User "${fullname}" deleted successfully`, "success")
+
+        } catch (err: any) {
+                    console.error("Delete error details:", err); // Debug log
+
+            showToast("Failed to delete user", "error")
+
+        } finally {
+            setDeleteModal({ show: false, userId: null, fullname: "" })
+        }
+    }, [showToast, deleteModal])
 
 
     // stats cards
@@ -516,7 +523,7 @@ const UsersPage: React.FC = () => {
                                                     transition-all hover:-translate-y-1">
 
                                         
-                                        <div className="relative h-50 w-full overflow-hidden rounded-xl bg-[#C2A886] shadow-lg">
+                                        <div className="relative h-50 w-98 bg-[#C2A886] rounded-xl overflow-hidden shadow-lg">
   
   
                                             <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
@@ -524,12 +531,12 @@ const UsersPage: React.FC = () => {
                                             <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
 
                                             {/* role badges */}
-                                            <div className="absolute top-4 left-4 flex gap-2 z-10">
+                                            <div className="absolute top-3 left-3 flex gap-2">
                                                 {user.roles.map((role) => (
                                                         
                                                     <span
-                                                        key={`${user._id}-${role}`}
-                                                        className={`px-3 py-1 rounded-full text-xs font-semibold uppercase 
+                                                        key={role}
+                                                        className={`px-2 py-1 rounded-full text-xs font-semibold uppercase 
                                                                         ${getRoleBadgeClass(role)}
                                                                     `}>
                                                             
@@ -595,15 +602,23 @@ const UsersPage: React.FC = () => {
                                                 </div>
                                             )}
 
-                                            {/* delete disabled until implemented */}
+                                            {/* delete button*/}
                                             <button
-                                                disabled
-                                                className="w-full px-3 py-2 bg-gray-100 text-gray-400 rounded-lg font-medium cursor-not-allowed flex 
-                                                            items-center justify-center gap-1 opacity-50">
-                                            
-                                                    <Trash2 size={16} />
+                                                type="button"
+                                                 onClick={() => {
+        console.log("Delete clicked for user ID:", user._id); // Add this
+        setDeleteModal({ 
+            show: true, 
+            userId: user._id, 
+            fullname: user.fullname 
+        });
+    }}
+                                                className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-700 hover:text-white 
+                                                            transition-all flex items-center justify-center gap-1">
                                                 
-                                                        Delete User (Coming Soon)
+                                                    <Trash2 size={16} />
+
+                                                        Delete User
                                             </button>
                                         </div>
                                     </div>
@@ -613,6 +628,52 @@ const UsersPage: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            {/* delete modal */}
+            {deleteModal.show && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
+                        
+                        <div className="text-center">
+                            <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                
+                                <Trash2 className="w-10 h-10 text-red-600" />
+
+                            </div>
+
+                            <h2 className="text-2xl font-bold text-gray-900 mb-3">Delete User?</h2>
+
+                            <p className="text-gray-600 mb-2">Are you sure you want to delete:</p>
+
+                            <p className="font-semibold text-lg text-gray-900 mb-6">{deleteModal.fullname}</p>
+
+                            <p className="text-sm text-red-600 mb-8">
+                                This action <strong>cannot be undone</strong>. All data will be permanently removed.
+                            </p>
+
+                            <div className="flex gap-3">
+                                <button
+                                    type="button"
+                                    onClick={() => setDeleteModal({ show: false, userId: null, fullname: "" })}
+                                    className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 
+                                                transition-all">
+                                    
+                                        Cancel
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={handleDelete}
+                                    className="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 
+                                                transition-all">
+                                    
+                                    Yes, Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -18,7 +18,7 @@ import {
   ArrowLeft,
   ArrowRight
 } from "react-feather";
-import { getMyEvents, deleteEvent } from "../../services/events";
+import { getMyEvents, deleteEvent, getAllEvents } from "../../services/events";
 
 
 const formatDate = (dateString: string): string => {
@@ -105,6 +105,10 @@ const EventsPage: React.FC = () => {
     const limit = 6
    
 
+    const user = JSON.parse(localStorage.getItem("user") || "{}")
+    const isAdmin = user?.roles?.includes("ADMIN")
+
+
     // calculate total price
     const calculateTotalPrice = useCallback((event: Event) => {
         let total = event.basePrice || 0
@@ -156,10 +160,22 @@ const EventsPage: React.FC = () => {
     const loadEvents = useCallback(async (pageNumber: number = 1) => {
         try {
             setLoading(true)
-            const response = await getMyEvents(pageNumber, limit, searchTerm, typeFilter, statusFilter)
+            const response = await getMyEvents(
+                pageNumber, 
+                limit, 
+                searchTerm.trim() || undefined, 
+                typeFilter || undefined, 
+                statusFilter || undefined
+            )
 
-            console.log("Fetched events:", response.data)
-
+            // Handle 204 No Content (backend returns no body when empty)
+      if (response.status === 204 || !response.data) {
+        setEvents([]);
+        setTotalPages(1);
+        setTotalItems(0);
+        setPage(pageNumber);
+        return;
+      }
             setEvents(response.data || [])
             setTotalPages(response.totalPages || 1)
             setTotalItems(response.totalItems || 0)
@@ -178,10 +194,16 @@ const EventsPage: React.FC = () => {
     // all event stats
     const loadAllEvents = useCallback(async () => {
         try {
-            const response = await getMyEvents(1, 1000); // large limit to get all
-            setAllEvents(response.data || []);
+            const response = await getMyEvents(1, 1000, undefined, undefined, undefined); // large limit to get all
+            // setAllEvents(response.data || []);
+            if (response.status === 204 || !response.data) {
+            setAllEvents([]);
+            return;
+            }
+            setAllEvents(response.data || [])
         } catch (err) {
             console.error("Error loading all events:", err);
+            setAllEvents([])
         }
     }, []);
 
@@ -240,6 +262,7 @@ const EventsPage: React.FC = () => {
         setSearchTerm('');
         setTypeFilter('');
         setStatusFilter('');
+        setPage(1)
         showToast('Filters cleared');
     }, [showToast]);
 
@@ -289,7 +312,7 @@ const EventsPage: React.FC = () => {
     // reset page when filters change
     useEffect(() => {
         setPage(1);
-    }, [searchTerm, typeFilter, statusFilter])
+    }, [searchTerm, typeFilter, statusFilter, loadEvents])
 
  
 
