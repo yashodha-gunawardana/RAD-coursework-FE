@@ -108,6 +108,7 @@ const formatDate = (dateString: string): string => {
 
 
 const userRole = localStorage.getItem("role") || "USER"
+const currentUserId = localStorage.getItem("userId")
 
 
 const BookingPage: React.FC = () => {
@@ -147,8 +148,16 @@ const BookingPage: React.FC = () => {
         try {
             setLoading(true)
 
-            const response = await getMyBooking()
-            setBookings(response.data || [])
+            let response
+            if (userRole === "VENDOR") {
+                response = await getVendorBookings()
+
+            } else {
+                response = await getMyBooking()
+            }
+
+            // const response = await getMyBooking()
+             setBookings(response.data || [])
 
         } catch (err : any) {
             console.error("Error loading bookings:", err)
@@ -270,6 +279,12 @@ const BookingPage: React.FC = () => {
     }, [showToast])
 
 
+    useEffect(() => {
+        loadBookings()
+    }, [loadBookings])
+
+
+
     // calculate stats
     const stats = React.useMemo(() => {
         const totalBookings = bookings.length
@@ -313,10 +328,7 @@ const BookingPage: React.FC = () => {
     }, [showToast])
 
 
-    useEffect(() => {
-        loadBookings()
-    }, [loadBookings])
-
+    
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] p-5 md:p-10">
@@ -356,17 +368,19 @@ const BookingPage: React.FC = () => {
                     </div>
 
                     {/* add new booking btn */}
-                    <div className="flex gap-3">
-                        <button
-                            onClick={openCreateModal}
-                            className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
-                                        hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-0.5">
-                                                
-                                <Plus size={18} />
+                    {userRole !== "VENDOR" && (
+                        <div className="flex gap-3">
+                            <button
+                                onClick={openCreateModal}
+                                className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
+                                            hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-0.5">
                                                     
-                                    New Booking
-                        </button>
-                    </div>
+                                    <Plus size={18} />
+                                                        
+                                        New Booking
+                            </button>
+                        </div>
+                    )}
                 </header>
 
                 {/* stats card */}
@@ -607,7 +621,7 @@ const BookingPage: React.FC = () => {
 
 
                                             <div className="flex flex-wrap gap-2 mb-3">
-                                                {booking.status === "PENDING" && (
+                                                {booking.status === "PENDING" &&  userRole !== "USER" && (
                                                     <>
                                                         <button
                                                             onClick={() => handleStatusChange(booking._id, "CONFIRMED")}
@@ -632,7 +646,7 @@ const BookingPage: React.FC = () => {
                                                     </>
                                                 )}
 
-                                                {booking.status === "CONFIRMED" && (
+                                                {booking.status === "CONFIRMED" && (userRole === "VENDOR" || userRole === "ADMIN") && (
                                                     <button
                                                         onClick={() => handleStatusChange(booking._id, "COMPLETED")}
                                                         className="flex-1 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg font-medium hover:bg-blue-200 
@@ -646,15 +660,17 @@ const BookingPage: React.FC = () => {
                                             </div>
 
                                             {/* delete button */}
-                                            <button
-                                                onClick={() => handleDeleteBooking(booking._id, booking.eventId.title)}
-                                                className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-800 hover:text-white 
-                                                            transition-all flex items-center justify-center gap-1">
-                                            
-                                                    <Trash2 size={16} />
+                                            {(userRole === "ADMIN" || booking.userId === currentUserId) && (
+                                                <button
+                                                    onClick={() => handleDeleteBooking(booking._id, booking.eventId.title)}
+                                                    className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-800 hover:text-white 
+                                                                transition-all flex items-center justify-center gap-1">
+                                                
+                                                        <Trash2 size={16} />
 
-                                                        Delete Booking
-                                            </button>
+                                                            Delete Booking
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

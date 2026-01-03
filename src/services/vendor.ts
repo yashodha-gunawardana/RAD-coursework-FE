@@ -55,3 +55,31 @@ export const getAllVendorsForSelect = async () => {
     const res = await api.get("/vendors/dropdown")
     return res.data
 }
+
+// update own vendor profile (vendor)
+export const updateOwnVendorProfile = async (data: FormData) => {
+    try {
+        const res = await api.put("/vendors/me", data, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        return res.data
+
+    } catch (err: any) {
+        console.error("Failed to update own vendor profile:", err)
+        throw err
+    }
+}
+
+// get own vendor profile (vendor)
+export const getOwnVendorProfile = async () => {
+    try {
+        const res = await api.get("/vendors/me")
+        return res.data
+
+    } catch (err: any) {
+        console.error("Failed to fetch own vendor profile:", err)
+        throw err
+    }
+}
