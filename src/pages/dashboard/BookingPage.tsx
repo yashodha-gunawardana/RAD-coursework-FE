@@ -77,3 +77,12 @@ const getStatusBadgeClass = (status: BookingStatusType): string => {
 const getStatusLabel = (status: BookingStatusType): string => {
     return status.charAt(0) + status.slice(1).toLowerCase()
 }
+
+
+const formatDate = (dateString: string): string => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+    })
+}
