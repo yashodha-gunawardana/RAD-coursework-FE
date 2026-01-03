@@ -13,7 +13,9 @@ import {
   DollarSign,
   User,
 } from "react-feather";
-import { getMyBooking, updateBooking, deleteBooking } from "../../services/booking";
+import { createBooking, getMyBooking, updateBooking, deleteBooking } from "../../services/booking";
+import { getMyEvents } from "../../services/events";
+import { getAllVendors } from "../../services/vendor";
 
 
 export const BookingStatus = {
@@ -47,6 +49,20 @@ interface Booking {
     notes?: string
     createdAt: string
 } 
+
+interface Event {
+    _id: string
+    title: string
+    date: string
+    location: string
+}
+
+interface Vendor {
+    _id: string
+    name: string
+    category: string
+    image?: string
+}
 
 interface ToastState {
     show: boolean
@@ -93,11 +109,22 @@ const BookingPage: React.FC = () => {
     const navigate = useNavigate()
 
     const [bookings, setBookings] = useState<Booking[]>([])
+    const [events, setEvents] = useState<Event[]>([])
+    const [vendors, setVendors] = useState<Vendor[]>([])
+
     const [loading, setLoading] = useState(true)
+    const [loadingResources, setLoadingResources] = useState(false)
+
     const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success" })
 
     const [searchTerm, setSearchTerm] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
+
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+    const [selectedEventId, setSelectedEventId] = useState("")
+    const [selectedVendorId, setSelectedVendorId] = useState("")
+    const [notes, setNotes] = useState("")
+    const [creating, setCreating] = useState(false)
 
 
     const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
