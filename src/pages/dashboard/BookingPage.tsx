@@ -107,4 +107,16 @@ const BookingPage: React.FC = () => {
                 
         ), 3000)
     }, [])
+
+
+    // load user's booking
+    const loadBookings = useCallback(async () => {
+        try {
+            setLoading(true)
+
+            const response = await 
+        } catch (err) {
+
+        }
+    })
 }
