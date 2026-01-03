@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Calendar,
@@ -92,7 +92,7 @@ const formatDate = (dateString: string): string => {
 const BookingPage: React.FC = () => {
     const navigate = useNavigate()
 
-    const [booking, setBookings] = useState<Booking[]>([])
+    const [bookings, setBookings] = useState<Booking[]>([])
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success" })
 
@@ -140,4 +140,69 @@ const BookingPage: React.FC = () => {
             showToast("Failed to update booking statys", "error")
         }
     }, [showToast])
+
+
+    // delete booking
+    const handleDeleteBooking = useCallback(async (id: string, eventTitle: string) => {
+        if (!confirm(`Delete booking for "${eventTitle}"? This cannot be undone.`)) 
+            return
+
+        try {
+            await deleteBooking(id)
+            setBookings((prev) => prev.filter((b) => b._id !== id))
+
+            showToast("Booking deleted successfully")
+
+        } catch (err: any) {
+            showToast("Failed to delete booking", "error")
+        }
+    }, [showToast])
+
+
+    // calculate stats
+    const stats = React.useMemo(() => {
+        const totalBookings = bookings.length
+        const pending = bookings.filter((b) => b.status === "PENDING").length
+        const confirmed = bookings.filter((b) => b.status === "CONFIRMED").length
+        const completed = bookings.filter((b) => b.status === "COMPLETED").length
+
+        return { totalBookings, pending, confirmed, completed }
+    }, [bookings])
+
+
+    // filters
+    const filteredBookings = React.useMemo(() => {
+        let result = [...bookings]
+
+        if (searchTerm) {
+            const term = searchTerm.toLowerCase()
+
+            result = result.filter(
+                (b) =>
+                b.eventId.title.toLowerCase().includes(term) ||
+                b.vendorId.name.toLowerCase().includes(term) ||
+                b.eventId.location.toLowerCase().includes(term)
+            )
+        }
+
+        if (statusFilter) {
+            result = result.filter((b) => b.status === statusFilter)
+        }
+
+        return result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
+    }, [bookings, searchTerm, statusFilter])
+
+
+    // reset field
+    const resetFilters = useCallback(() => {
+        setSearchTerm("")
+        setStatusFilter("")
+        showToast("Showing all bookings")
+    }, [showToast])
+
+
+    useEffect(() => {
+        loadBookings()
+    }, [loadBookings])
 }
