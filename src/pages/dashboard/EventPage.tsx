@@ -14,11 +14,10 @@ import {
   TrendingUp,
   TrendingDown,
   AlertCircle,
-  ChevronRight,
   ArrowLeft,
-  ArrowRight
+  ArrowRight,
 } from "react-feather";
-import { getMyEvents, deleteEvent, getAllEvents } from "../../services/events";
+import { deleteEvent, getAllEvents } from "../../services/events";
 
 
 const formatDate = (dateString: string): string => {
@@ -60,6 +59,11 @@ interface Event {
     status: string;
     extraItems?: ExtraItem[];
     image?: string;
+    userId?: {
+        _id: string,
+        name: string,
+        email: string
+    };
     createdAt: string;
     updatedAt: string;
 }
@@ -103,11 +107,26 @@ const EventsPage: React.FC = () => {
     const [totalPages, setTotalPages] = useState(1)
     const [totalItems, setTotalItems] = useState(0)
     const limit = 6
+
+    const [isAdmin, setIsAdmin] = useState(true)
+
+
+    // check if user is admin 
+    useEffect(() => {
+        const userData = localStorage.getItem("user")
+
+        if (userData) {
+            try {
+                const user = JSON.parse(userData)
+                setIsAdmin(user?.roles?.includes("ADMIN") || false)
+
+            } catch (err) {
+                console.log("Error parsing user data: ", err)
+                setIsAdmin(false)
+            }
+        }
+    })
    
-
-    const user = JSON.parse(localStorage.getItem("user") || "{}")
-    const isAdmin = user?.roles?.includes("ADMIN")
-
 
     // calculate total price
     const calculateTotalPrice = useCallback((event: Event) => {
@@ -156,56 +175,72 @@ const EventsPage: React.FC = () => {
     }, [])
 
 
-    // get event handler with pagination
+
+    // load events with pagination - always get all events
     const loadEvents = useCallback(async (pageNumber: number = 1) => {
         try {
-            setLoading(true)
-            const response = await getMyEvents(
-                pageNumber, 
-                limit, 
-                searchTerm.trim() || undefined, 
-                typeFilter || undefined, 
+            setLoading(true);
+            console.log("Loading ALL events...")
+            
+            const response = await getAllEvents(
+                pageNumber,
+                limit,
+                searchTerm.trim() || undefined,
+                typeFilter || undefined,
                 statusFilter || undefined
-            )
+            );
 
-            // Handle 204 No Content (backend returns no body when empty)
-      if (response.status === 204 || !response.data) {
-        setEvents([]);
-        setTotalPages(1);
-        setTotalItems(0);
-        setPage(pageNumber);
-        return;
-      }
+            // Handle response
+            if (!response || !response.data) {
+                console.log("No data in response")
+
+                setEvents([])
+                setTotalPages(1)
+                setTotalItems(0)
+                setPage(pageNumber)
+                return
+            }
+
+            console.log("Loaded events:", response.data.length)
+
             setEvents(response.data || [])
             setTotalPages(response.totalPages || 1)
             setTotalItems(response.totalItems || 0)
             setPage(pageNumber)
-        
+            
         } catch (err: any) {
             console.error("Error loading events: ", err)
+
             showToast("Failed to load events", "error")
-        
+            setEvents([])
+
         } finally {
             setLoading(false)
         }
     }, [searchTerm, typeFilter, statusFilter, showToast])
 
 
-    // all event stats
+    // load all event for stats
     const loadAllEvents = useCallback(async () => {
         try {
-            const response = await getMyEvents(1, 1000, undefined, undefined, undefined); // large limit to get all
-            // setAllEvents(response.data || []);
-            if (response.status === 204 || !response.data) {
-            setAllEvents([]);
-            return;
+            console.log("Loading ALL events for stats...")
+
+            const response = await getAllEvents(1, 1000)
+            
+            if (response && response.data) {
+                console.log("All events loaded for stats:", response.data.length)
+                setAllEvents(response.data || [])
+
+            } else {
+                console.log("No data for stats")
+                setAllEvents([]);
             }
-            setAllEvents(response.data || [])
+
         } catch (err) {
-            console.error("Error loading all events:", err);
+            console.error("Error loading all events for stats:", err)
             setAllEvents([])
         }
-    }, []);
+    }, [])
 
 
     // delete handler
@@ -230,11 +265,11 @@ const EventsPage: React.FC = () => {
         
         } catch (err: any) {
             console.error("Error deleting event:", err)
-            loadEvents()
             showToast("Failed to delete event.", "error")
+            loadEvents()
 
         }
-    }, [loadEvents])
+    }, [loadEvents, page, events.length, loadAllEvents, showToast])
 
 
     // dashboard statistics
@@ -299,22 +334,35 @@ const EventsPage: React.FC = () => {
 
     // load pagination events when page or filter change
     useEffect(() => {
+        console.log("Page or filters changed, loading events...");
+
         loadEvents(page)
     }, [page, loadEvents])
 
     
     // load all events once for stats
     useEffect(() => {
+            console.log("User role changed, loading all events for stats...");
         loadAllEvents();
     }, [loadAllEvents])
 
 
     // reset page when filters change
     useEffect(() => {
-        setPage(1);
-    }, [searchTerm, typeFilter, statusFilter, loadEvents])
+                console.log("Filters changed, resetting page to 1");
 
- 
+        setPage(1);
+    }, [searchTerm, typeFilter, statusFilter])
+
+
+    useEffect(() => {
+        if (isAdmin !== null) {
+            console.log("Admin status changed to:", isAdmin);
+            loadEvents(1);
+            loadAllEvents();
+        }
+    }, [isAdmin, loadEvents, loadAllEvents]);
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] p-5 md:p-10">

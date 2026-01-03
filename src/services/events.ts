@@ -82,6 +82,8 @@ export const getAllEvents = async (
   if (typeFilter) params.set("type", typeFilter)
   if (statusFilter) params.set("status", statusFilter)
 
+  
+  console.log("Request URL: /events/all?" + params.toString());
   const res = await api.get(`/events/all?${params.toString()}`)
   return res.data
 }
