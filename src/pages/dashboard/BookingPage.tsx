@@ -11,13 +11,14 @@ import {
   TrendingUp,
   Clock,
   DollarSign,
-  User,
   Plus,
   X,
+  Bookmark,
 } from "react-feather";
 import { createBooking, getMyBooking, updateBooking, deleteBooking, getVendorBookings, updateBookingStatus } from "../../services/booking";
 import { getAllEventsForSelect } from "../../services/events";
 import { getAllVendorsForSelect } from "../../services/vendor";
+import { useAuth } from "../../context/authContext";
 
 
 export const BookingStatus = {
@@ -57,6 +58,11 @@ interface Event {
     title: string
     date: string
     location: string
+    basePrice: number
+    extraItems?: Array<{
+        name: string
+        unitPrice: number
+    }>
 }
 
 interface Vendor {
@@ -107,12 +113,14 @@ const formatDate = (dateString: string): string => {
 }
 
 
-const userRole = localStorage.getItem("role") || "USER"
-const currentUserId = localStorage.getItem("userId")
-
-
 const BookingPage: React.FC = () => {
     const navigate = useNavigate()
+
+    const { user } = useAuth()
+    const isAdmin = user?.roles.includes("ADMIN")
+    const isVendor = user?.roles.includes("VENDOR")
+    const isUser  = user?.roles.includes("USER")
+    const currentUserId = user?._id
 
     const [bookings, setBookings] = useState<Booking[]>([])
     const [events, setEvents] = useState<Event[]>([])
@@ -128,9 +136,12 @@ const BookingPage: React.FC = () => {
 
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [selectedEventId, setSelectedEventId] = useState("")
+    // const [extraItems, setExtraItems] = useState<ExtraItem[]>([])
     const [selectedVendorId, setSelectedVendorId] = useState("")
     const [notes, setNotes] = useState("")
     const [creating, setCreating] = useState(false)
+
+    const [selectedExtraItems, setSelectedExtraItems] = useState<{ name: string; unitPrice: number; quantity: number }[]>([])
 
 
     const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
@@ -148,16 +159,12 @@ const BookingPage: React.FC = () => {
         try {
             setLoading(true)
 
-            let response
-            if (userRole === "VENDOR") {
-                response = await getVendorBookings()
-
-            } else {
-                response = await getMyBooking()
-            }
+            const response = isVendor
+                ? await getVendorBookings()
+                : await getMyBooking()
 
             // const response = await getMyBooking()
-             setBookings(response.data || [])
+            setBookings(response.data || [])
 
         } catch (err : any) {
             console.error("Error loading bookings:", err)
@@ -166,7 +173,7 @@ const BookingPage: React.FC = () => {
         } finally {
             setLoading(false)
         }
-    }, [showToast])
+    }, [isVendor, showToast])
 
 
     // load events and vendors
@@ -197,6 +204,7 @@ const BookingPage: React.FC = () => {
         setSelectedEventId("")
         setSelectedVendorId("")
         setNotes("")
+        setSelectedExtraItems([])
 
         await loadResources()
     }
@@ -216,7 +224,9 @@ const BookingPage: React.FC = () => {
             await createBooking({
                 eventId: selectedEventId,
                 vendorId: selectedVendorId,
-                notes: notes || undefined
+                notes: notes || undefined,
+                extraItems: selectedExtraItems.length > 0 ? selectedExtraItems : undefined
+                
             })
 
             showToast("Booking created successfully.")
@@ -248,10 +258,12 @@ const BookingPage: React.FC = () => {
 
     const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
         try {
-            if (userRole === "VENDOR") {
-                await updateBookingStatus(id, status);
-            } else {
-                await updateBooking(id, { status });
+
+            if (isVendor) {
+                await updateBookingStatus(id, status)
+
+            } else if (isAdmin) {
+                await updateBooking(id, { status })
             }
 
             setBookings((prev) => prev.map((b) => (b._id === id ? { ...b, status } : b)))
@@ -259,7 +271,7 @@ const BookingPage: React.FC = () => {
         } catch (err: any) {
             showToast("Failed to update booking status", "error")
         }
-    }, [showToast, userRole])
+    }, [showToast])
 
 
     // delete booking
@@ -324,7 +336,7 @@ const BookingPage: React.FC = () => {
     const resetFilters = useCallback(() => {
         setSearchTerm("")
         setStatusFilter("")
-        showToast("Filteres cleared")
+        showToast("Filters cleared")
     }, [showToast])
 
 
@@ -368,7 +380,7 @@ const BookingPage: React.FC = () => {
                     </div>
 
                     {/* add new booking btn */}
-                    {userRole !== "VENDOR" && (
+                    {!isVendor && (
                         <div className="flex gap-3">
                             <button
                                 onClick={openCreateModal}
@@ -572,21 +584,39 @@ const BookingPage: React.FC = () => {
                                         className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
                                                     transition-all hover:-translate-y-1">
                                             
-                                        <div className="h-40 bg-gradient-to-r from-red-800 to-red-600 relative flex items-center justify-center">
+                                        <div className="h-40 relative overflow-hidden">
                                             {booking.vendorId.image ? (
 
                                                 <img
                                                     src={booking.vendorId.image}
                                                     alt={booking.vendorId.name}
-                                                    className="absolute inset-0 w-full h-full object-cover opacity-30"
+                                                    className="absolute inset-0 w-full h-full object-cover opacity-80"
                                                 />
                                             ) : (
 
-                                                <User className="text-white/80" size={64} />
-
+                                                <div className="relative h-50 w-98 overflow-hidden rounded-xl bg-[#C2A886] shadow-lg">
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
+                                                
+                                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
+                                            
+                                                    <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
+                                                
+                                                    <div className="relative flex h-full flex-col items-center justify-center">
+                                                        <div className="text-[#4A0404]/70 drop-shadow-sm">
+                                                                                                                    
+                                                            <Bookmark size={60} strokeWidth={1.2} />
+                                                
+                                                        </div>
+                                                                                                                
+                                                        <div className="mt-4 flex flex-col items-center">
+                                                            <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#4A0404]/30 to-transparent"></div>
+                                                                                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             )}
 
-                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold 
+                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold uppercase
                                                                 ${getStatusBadgeClass(booking.status)}
                                                             `}>
                                                     
@@ -595,18 +625,18 @@ const BookingPage: React.FC = () => {
                                         </div>
 
                                         <div className="p-5">
-                                            <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
+                                            <h3 className="text-lg font-semibold text-[#0A0A0A]/90 capitalize mb-4 line-clamp-1">
                                                 
                                                 {booking.eventId.title}
 
                                             </h3>
 
-                                            <p className="text-sm text-gray-600 mb-3">
+                                            <p className="text-sm text-[#0A0A0A]/80 mb-3">
 
                                                 <strong>Vendor:</strong> {booking.vendorId.name}
                                             </p>
 
-                                            <div className="space-y-2 text-sm text-gray-600 mb-4">
+                                            <div className="space-y-3 text-sm text-[#0A0A0A]/80 mb-4">
 
                                                 <p><strong>Date:</strong> {formatDate(booking.eventId.date)}</p>
                                                 <p><strong>Location:</strong> {booking.eventId.location}</p>
@@ -614,14 +644,14 @@ const BookingPage: React.FC = () => {
                                             </div>
 
                                             {booking.notes && (
-                                                <p className="text-sm text-gray-500 italic mb-4 line-clamp-2">
+                                                <p className="text-sm text-[#0A0A0A]/70 italic mb-5 line-clamp-2">
                                                     "{booking.notes}"
                                                 </p>
                                             )}
 
 
                                             <div className="flex flex-wrap gap-2 mb-3">
-                                                {booking.status === "PENDING" &&  userRole !== "USER" && (
+                                                {booking.status === "PENDING" &&  (isAdmin || isVendor) && (
                                                     <>
                                                         <button
                                                             onClick={() => handleStatusChange(booking._id, "CONFIRMED")}
@@ -646,7 +676,7 @@ const BookingPage: React.FC = () => {
                                                     </>
                                                 )}
 
-                                                {booking.status === "CONFIRMED" && (userRole === "VENDOR" || userRole === "ADMIN") && (
+                                                {booking.status === "CONFIRMED" && (isVendor || isAdmin) && (
                                                     <button
                                                         onClick={() => handleStatusChange(booking._id, "COMPLETED")}
                                                         className="flex-1 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg font-medium hover:bg-blue-200 
@@ -660,7 +690,7 @@ const BookingPage: React.FC = () => {
                                             </div>
 
                                             {/* delete button */}
-                                            {(userRole === "ADMIN" || booking.userId === currentUserId) && (
+                                            {(isAdmin || booking.userId === currentUserId) && !isVendor && (
                                                 <button
                                                     onClick={() => handleDeleteBooking(booking._id, booking.eventId.title)}
                                                     className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-800 hover:text-white 
@@ -681,7 +711,7 @@ const BookingPage: React.FC = () => {
             </div>
 
             {/* create booking modal */}
-            {isCreateModalOpen && (
+            {isCreateModalOpen && !isVendor && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                     <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 relative">
 
@@ -706,80 +736,203 @@ const BookingPage: React.FC = () => {
                         ) : (
 
                             <form onSubmit={handleCreateBooking} className="space-y-5">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Your Event</label>
+                {/* Event Select */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Your Event
+                  </label>
+                  <select
+                    value={selectedEventId}
+                    onChange={(e) => {
+                      setSelectedEventId(e.target.value);
+                      setSelectedExtraItems([]); // Reset extras when event changes
+                    }}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  >
+                    <option value="">Select an event</option>
+                    {events.map((event) => (
+                      <option key={event._id} value={event._id}>
+                        {event.title} — {formatDate(event.date)} ({event.location})
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-                                    <select
-                                        value={selectedEventId}
-                                        onChange={(e) => setSelectedEventId(e.target.value)}
-                                        required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 
-                                                    focus:border-transparent">
-                                    
-                                        <option value="">Select an event</option>
-                                            
-                                        {events.map((event) => (
-                                            <option key={event._id} value={event._id}>
+                {/* Vendor Select */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Vendor
+                  </label>
+                  <select
+                    value={selectedVendorId}
+                    onChange={(e) => setSelectedVendorId(e.target.value)}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  >
+                    <option value="">Select a vendor</option>
+                    {vendors.map((vendor) => (
+                      <option key={vendor._id} value={vendor._id}>
+                        {vendor.name} ({vendor.category})
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-                                                {event.title} — {formatDate(event.date)} ({event.location})
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                {/* Extra Items + Total Price */}
+                {selectedEventId && (() => {
+                  const selectedEvent = events.find((e) => e._id === selectedEventId);
+                  if (!selectedEvent) return null;
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Vendor</label>
+                  const extraTotal = selectedExtraItems.reduce(
+                    (sum, item) => sum + item.unitPrice * item.quantity,
+                    0
+                  );
+                  const totalPrice = selectedEvent.basePrice + extraTotal;
 
-                                    <select
-                                        value={selectedVendorId}
-                                        onChange={(e) => setSelectedVendorId(e.target.value)}
-                                        required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 
-                                                    focus:border-transparent">
-                                    
-                                        <option value="">Select a vendor</option>
+                  return (
+                    <>
+                      {/* Extra Items */}
+                      {selectedEvent.extraItems && selectedEvent.extraItems.length > 0 && (
+                        <div className="space-y-4">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Extra Items (Optional)
+                          </label>
+                          <div className="bg-gray-50 rounded-lg p-4 space-y-4">
+                            {selectedEvent.extraItems.map((item) => {
+                              const isSelected = selectedExtraItems.some((i) => i.name === item.name);
+                              const qty =
+                                selectedExtraItems.find((i) => i.name === item.name)?.quantity || 1;
 
-                                        {vendors.map((vendor) => (
-                                            <option key={vendor._id} value={vendor._id}>
-                                                {vendor.name} ({vendor.category})
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Notes (Optional)</label>
-
-                                    <textarea
-                                        value={notes}
-                                        onChange={(e) => setNotes(e.target.value)}
-                                        rows={4}
-                                        placeholder="Special requests, timing, setup details..."
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 
-                                                    focus:border-transparent"
+                              return (
+                                <div
+                                  key={item.name}
+                                  className="flex items-center justify-between"
+                                >
+                                  <div className="flex items-center gap-3">
+                                    <input
+                                      type="checkbox"
+                                      checked={isSelected}
+                                      onChange={(e) => {
+                                        if (e.target.checked) {
+                                          setSelectedExtraItems((prev) => [
+                                            ...prev,
+                                            { ...item, quantity: 1 },
+                                          ]);
+                                        } else {
+                                          setSelectedExtraItems((prev) =>
+                                            prev.filter((i) => i.name !== item.name)
+                                          );
+                                        }
+                                      }}
+                                      className="w-5 h-5 text-red-600 rounded focus:ring-red-500"
                                     />
-                                </div>
+                                    <span className="text-sm font-medium">{item.name}</span>
+                                    <span className="text-sm text-gray-600">
+                                      ${item.unitPrice.toFixed(2)} each
+                                    </span>
+                                  </div>
 
-                                <div className="flex gap-4 pt-4">
-                                    <button
-                                        type="submit"
-                                        disabled={creating}
-                                        className="flex-1 px-6 py-3 bg-red-800 text-white rounded-lg font-medium hover:bg-red-700 disabled:opacity-70 
-                                                    transition-all">
-                                    
-                                            {creating ? "Creating..." : "Create Booking"}
-
-                                    </button>
-
-                                    <button
+                                  {isSelected && (
+                                    <div className="flex items-center gap-2">
+                                      <button
                                         type="button"
-                                        onClick={() => setIsCreateModalOpen(false)}
-                                        className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-100 transition-all">
-                                    
-                                            Cancel
-                                    </button>
+                                        onClick={() =>
+                                          setSelectedExtraItems((prev) =>
+                                            prev.map((i) =>
+                                              i.name === item.name
+                                                ? { ...i, quantity: Math.max(1, qty - 1) }
+                                                : i
+                                            )
+                                          )
+                                        }
+                                        className="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                      >
+                                        −
+                                      </button>
+                                      <span className="w-12 text-center font-medium">{qty}</span>
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          setSelectedExtraItems((prev) =>
+                                            prev.map((i) =>
+                                              i.name === item.name ? { ...i, quantity: qty + 1 } : i
+                                            )
+                                          )
+                                        }
+                                        className="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
+                                      >
+                                        +
+                                      </button>
+                                    </div>
+                                  )}
                                 </div>
-                            </form>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Price Summary */}
+                      <div className="border-t pt-6 -mx-8 px-8 bg-gray-50">
+                        <div className="space-y-3">
+                          <div className="flex justify-between text-sm">
+                            <span>Base Price</span>
+                            <span className="font-medium">
+                              ${selectedEvent.basePrice.toFixed(2)}
+                            </span>
+                          </div>
+                          {extraTotal > 0 && (
+                            <div className="flex justify-between text-sm">
+                              <span>Extra Items</span>
+                              <span className="font-medium">${extraTotal.toFixed(2)}</span>
+                            </div>
+                          )}
+                          <div className="flex justify-between text-xl font-bold text-red-800 pt-4 border-t">
+                            <span>Total Estimated Cost</span>
+                            <span>${totalPrice.toFixed(2)}</span>
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-3">
+                          Final amount will be confirmed by the vendor.
+                        </p>
+                      </div>
+                    </>
+                  );
+                })()}
+
+                {/* Notes */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Notes (Optional)
+                  </label>
+                  <textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    rows={4}
+                    placeholder="Special requests, timing, setup details..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  />
+                </div>
+
+                {/* Submit Buttons */}
+                <div className="flex gap-4 pt-4">
+                  <button
+                    type="submit"
+                    disabled={creating || !selectedEventId || !selectedVendorId}
+                    className="flex-1 px-6 py-3 bg-red-800 text-white rounded-lg font-medium hover:bg-red-700 disabled:opacity-70 transition-all"
+                  >
+                    {creating ? "Creating..." : "Create Booking"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsCreateModalOpen(false)}
+                    className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-100 transition-all"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
                         )}
                     </div>
                 </div>

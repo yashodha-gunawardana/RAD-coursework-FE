@@ -565,11 +565,11 @@ const UsersPage: React.FC = () => {
 
                                         <div className="p-5">
 
-                                            <h3 className="text-lg font-semibold text-gray-900 mb-2 capitalize">
+                                            <h3 className="text-lg font-semibold text-[#0A0A0A]/90 mb-2 capitalize">
                                                 {user.fullname}
                                             </h3>
 
-                                            <p className="text-sm text-gray-600 mb-4">
+                                            <p className="text-sm text-[#0A0A0A]/60 mb-4">
                                                 {user.email}
                                             </p>
 

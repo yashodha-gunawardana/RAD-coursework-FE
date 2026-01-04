@@ -1,6 +1,7 @@
-import React, { act } from "react";
+import React from "react";
 import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings, Menu, ChevronLeft, ChevronRight, LogOut } from "react-feather";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 
 interface SidebarProps {
@@ -15,17 +16,31 @@ const Sidebar: React.FC<SidebarProps> = ({
     isMobileOpen,
     onToggleCollapse,
     onToggleMobile
+
+    
 }) => {
 
+    const { user, loading } = useAuth()
+
+  
+    if (loading) return null;
+
+  
+    const roles: string[] = user?.roles || []
+    const isAdmin = roles.includes("ADMIN")
+    const isVendor = roles.includes("VENDOR")
+    const isUser = roles.includes("USER")
+
+
     const mainMenuItems = [
-        { id: "dashboard", icon: Clipboard, label: "Dashboard", path: "/dashboard" },
-        { id: "users", icon: Users, label: "Users", path: "/dashboard/users" },
-        { id: "events", icon: Calendar, label: "Events", path: "/dashboard/events" },
-        { id: "vendors", icon: Home, label: "vendors", path: "/dashboard/vendors" }
+        { id: "dashboard", icon: Clipboard, label: "Dashboard", path: "/dashboard", show: true },
+        { id: "users", icon: Users, label: "Users", path: "/dashboard/users", show: isAdmin },
+        { id: "events", icon: Calendar, label: "Events", path: "/dashboard/events", show: isAdmin || isVendor },
+        { id: "vendors", icon: Home, label: "vendors", path: "/dashboard/vendors", show: isAdmin }
     ];
 
     const managementItems = [
-        { id: "booking", icon: Bookmark, label: "Booking", path: "/dashboard/booking" },
+        { id: "booking", icon: Bookmark, label: "Booking", path: "/dashboard/booking", show: true },
         { id: "budgets", icon: DollarSign, label: "Budgets", path: "/dashboard/budgets" },
         { id: "guests", icon: Users, label: "Guests", path: "/dashboard/guests" }
     ];
@@ -135,7 +150,9 @@ const Sidebar: React.FC<SidebarProps> = ({
 
                     <ul className="space-y-2">
 
-                        {mainMenuItems.map((item) => (
+                        {mainMenuItems
+                        .filter(item => item.id !== "users" || isAdmin)
+                        .map((item) => (
                             <li
                                 key={item.id}>
                                 <NavLink

@@ -18,6 +18,7 @@ import {
     DollarSign
 } from "react-feather";
 import { getAllVendors, deleteVendor } from "../../services/vendor";
+import { useAuth } from "../../context/authContext"; 
 
 
 export const VendorCategory = {
@@ -42,6 +43,7 @@ interface Vendor {
     description?: string;
     image?: string;
     isAvailable: boolean;
+    addedBy?: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -79,6 +81,10 @@ const getAvailabilityClass = (isAvailable: boolean): string => {
 
 const VendorPage: React.FC = () => {
     const navigate = useNavigate()
+
+    const { user } = useAuth()
+    const isAdmin = user?.roles.includes("ADMIN")
+    const isVendor = user?.roles.includes("VENDOR")
 
     const [vendors, setVendors] = useState<Vendor[]>([])
     const [allVendors, setAllVendors] = useState<Vendor[]>([]);
@@ -124,7 +130,7 @@ const VendorPage: React.FC = () => {
         
         } catch (err : any) {
             console.error("Error loading vendors: ", err)
-            showToast("Failed to load vendors", err)
+            showToast("Failed to load vendors", "error")
         
         } finally {
             setLoading(false)
@@ -263,17 +269,19 @@ const VendorPage: React.FC = () => {
                         </p>
                     </div>
 
-                    <div className="flex gap-3">
-                        <button
-                            onClick={() => navigate("/dashboard/vendors/create")}
-                            className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
-                                        hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-0.5">
-                                                
-                                <Plus size={18} />
+                    {isAdmin && (
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => navigate("/dashboard/vendors/create")}
+                                className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
+                                            hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-0.5">
                                                     
-                                    Add Vendor
-                        </button>
-                    </div>
+                                    <Plus size={18} />
+                                                        
+                                        Add Vendor
+                            </button>
+                        </div>
+                    )}
                 </header>
 
                 {/* stats cards */}
@@ -441,15 +449,17 @@ const VendorPage: React.FC = () => {
                                         : 'Get started by adding your first vendor to the directory.'}
                                 </p>
 
-                                <button
-                                    onClick={() => navigate("/dashboard/vendors/create")}
-                                    className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold
-                                                hover:shadow-lg transition-all inline-flex items-center gap-2">
-                  
-                                        <Plus size={18} />
-                  
-                                            Add Your First Vendor
-                                </button>
+                                {isAdmin && (
+                                    <button
+                                        onClick={() => navigate("/dashboard/vendors/create")}
+                                        className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold
+                                                    hover:shadow-lg transition-all inline-flex items-center gap-2">
+                    
+                                            <Plus size={18} />
+                    
+                                                Add Your First Vendor
+                                    </button>
+                                )}
                             </div>
                         ) : (
                             <>
@@ -466,7 +476,7 @@ const VendorPage: React.FC = () => {
                                                 <div className="h-40 relative overflow-hidden">
                                                     {vendor.image ? (
                                                         <div
-                                                            className="w-full h-full bg-cover bg-center"
+                                                            className="w-full h-full bg-cover bg-center opacity-80"
                                                             style={{ backgroundImage: `url(${vendor.image})` }}
                                                         />
                                                     ) : (
@@ -513,7 +523,7 @@ const VendorPage: React.FC = () => {
 
                                                 {/* content */}
                                                 <div className="p-5">
-                                                    <h3 className="text-lg font-bold mb-4 line-clamp-2 font-serif capitalize">
+                                                    <h3 className="text-lg font-semibold mb-4 line-clamp-2 capitalize">
 
                                                         {/* {vendor.name.charAt(0).toUpperCase() + vendor.name.slice(1)} */}
                                                         {vendor.name}
@@ -526,7 +536,7 @@ const VendorPage: React.FC = () => {
                                                             <Calendar size={16} className="mt-1.5 flex-shrink-0 text-red-800" />
 
                                                             <div>
-                                                                <div className="font-medium">
+                                                                <div className="font-lg">
                                         
                                                                     {new Date(vendor.createdAt).toLocaleDateString()}
                                                                 
@@ -537,7 +547,7 @@ const VendorPage: React.FC = () => {
                                                         <div className="flex items-start gap-3">
 
                                                             <Eye size={16} className="mt-1 flex-shrink-0 text-red-800" />
-                                                            <span className="line-clamp-1 font-medium">{vendor.contact}</span>
+                                                            <span className="line-clamp-1 font-lg">{vendor.contact}</span>
 
                                                         </div>
 
@@ -545,7 +555,7 @@ const VendorPage: React.FC = () => {
                                                             <div className="flex items-start gap-3">
                                                                 
                                                                 <AlertCircle size={16} className="mt-1 flex-shrink-0 text-red-800" />
-                                                                <span className="line-clamp-2 font-medium">{vendor.description}</span>
+                                                                <span className="line-clamp-2 font-lg">{vendor.description}</span>
 
                                                             </div>
                                                         )}
@@ -563,15 +573,17 @@ const VendorPage: React.FC = () => {
 
                                                     {/* action button */}
                                                     <div className="flex gap-2 mt-5">
-                                                        <button
-                                                            onClick={() => navigate(`/dashboard/vendors/edit/${vendor._id}`)}
-                                                            className="flex-1 px-3 py-2 bg-yellow-100 border border-yellow-300 text-yellow-700 rounded-lg font-medium
-                                                                        hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
+                                                        {(isAdmin || (isVendor && vendor.addedBy === user?._id)) && (
+                                                            <button
+                                                                onClick={() => navigate(`/dashboard/vendors/edit/${vendor._id}`)}
+                                                                className="flex-1 px-3 py-2 bg-yellow-100 border border-yellow-300 text-yellow-700 rounded-lg font-medium
+                                                                            hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
 
-                                                                <Edit size={16} />
-                                                                    
-                                                                    Edit
-                                                        </button>
+                                                                    <Edit size={16} />
+                                                                        
+                                                                        Edit
+                                                            </button>
+                                                        )}
 
                                                         <button
                                                             onClick={() => viewVendorDetails(vendor)}
@@ -582,16 +594,18 @@ const VendorPage: React.FC = () => {
                                                             
                                                                     View
                                                         </button>
-
-                                                        <button
-                                                            onClick={() => handleDeleteVendor(vendor._id, vendor.name)}
-                                                            className="flex-1 px-3 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg font-medium hover:bg-red-50
-                                                                        hover:text-red transition-all flex items-center justify-center gap-1">
-                                                            
-                                                                <Trash2 size={16} />
-                                                            
-                                                                    Delete
-                                                        </button>
+                                                        
+                                                        {isAdmin && (
+                                                            <button
+                                                                onClick={() => handleDeleteVendor(vendor._id, vendor.name)}
+                                                                className="flex-1 px-3 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg font-medium hover:bg-red-50
+                                                                            hover:text-red transition-all flex items-center justify-center gap-1">
+                                                                
+                                                                    <Trash2 size={16} />
+                                                                
+                                                                        Delete
+                                                            </button>
+                                                        )}
                                                     </div>
                                                 </div>
                                         </div>

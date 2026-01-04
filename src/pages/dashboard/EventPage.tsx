@@ -17,7 +17,8 @@ import {
   ArrowLeft,
   ArrowRight,
 } from "react-feather";
-import { deleteEvent, getAllEvents } from "../../services/events";
+import { deleteEvent, getAllEvents, getMyEvents } from "../../services/events";
+import { useAuth } from "../../context/authContext";
 
 
 const formatDate = (dateString: string): string => {
@@ -68,6 +69,9 @@ interface Event {
     updatedAt: string;
 }
 
+
+type UserRole = "ADMIN" | "USER" | "VENDOR" | null
+
 interface ToastState {
     show: boolean
     message: string
@@ -94,6 +98,13 @@ const EventStatus = {
 const EventsPage: React.FC = () => {
     const navigate = useNavigate()
 
+    const { user } = useAuth()
+
+    const isAdmin = user?.roles?.includes("ADMIN")
+    const isVendor = user?.roles?.includes("VENDOR")
+    const isUser = user?.roles?.includes("USER")
+
+
     const [events, setEvents] = useState<Event[]>([])
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState<ToastState>({ show: false, message: " ", type: "success" })
@@ -108,11 +119,12 @@ const EventsPage: React.FC = () => {
     const [totalItems, setTotalItems] = useState(0)
     const limit = 6
 
-    const [isAdmin, setIsAdmin] = useState(true)
+    // const [isAdmin, setIsAdmin] = useState(true)
+ // const [role, setRole] = useState<UserRole>(null)
 
 
     // check if user is admin 
-    useEffect(() => {
+   /* useEffect(() => {
         const userData = localStorage.getItem("user")
 
         if (userData) {
@@ -125,7 +137,19 @@ const EventsPage: React.FC = () => {
                 setIsAdmin(false)
             }
         }
-    })
+    })*/
+   /* useEffect(() => {
+        const userData = localStorage.getItem("user")
+        if (!userData) return
+
+        try {
+            const user = JSON.parse(userData)
+            setRole(user?.roles?.[0] || null)
+
+        } catch {
+            setRole(null)
+        }
+    }, [])*/
    
 
     // calculate total price
@@ -177,9 +201,9 @@ const EventsPage: React.FC = () => {
 
 
     // load events with pagination - always get all events
-    const loadEvents = useCallback(async (pageNumber: number = 1) => {
+    /*const loadEvents = useCallback(async (pageNumber: number = 1) => {
         try {
-            setLoading(true);
+            setLoading(true) 
             console.log("Loading ALL events...")
             
             const response = await getAllEvents(
@@ -217,11 +241,62 @@ const EventsPage: React.FC = () => {
         } finally {
             setLoading(false)
         }
-    }, [searchTerm, typeFilter, statusFilter, showToast])
+    }, [searchTerm, typeFilter, statusFilter, showToast])*/
+    const loadEvents = useCallback(async (pageNumber: number = 1) => {
+  try {
+    if (!user)
+        return
+
+    setLoading(true);
+
+    let response;
+
+    if (isAdmin) {
+      // ADMIN → ALL EVENTS
+      response = await getAllEvents(
+        pageNumber,
+        limit,
+        searchTerm.trim() || undefined,
+        typeFilter || undefined,
+        statusFilter || undefined
+      );
+    } else {
+      // USER / VENDOR → OWN EVENTS
+      response = await getMyEvents(pageNumber, limit);
+    }
+
+    if (!response || !response.data) {
+      setEvents([]);
+      setTotalPages(1);
+      setTotalItems(0);
+      return;
+    }
+
+    setEvents(response.data);
+    setTotalPages(response.totalPages || 1);
+    setTotalItems(response.totalItems || response.data.length);
+    setPage(pageNumber);
+
+  } catch (err) {
+    console.error("Error loading events:", err);
+    showToast("Failed to load events", "error");
+    setEvents([]);
+  } finally {
+    setLoading(false);
+  }
+}, [user, isAdmin, searchTerm, typeFilter, statusFilter, showToast]);
+
+
+// load pagination events when page or filter change
+    useEffect(() => {
+        console.log("Page or filters changed, loading events...")
+
+        loadEvents(page)
+    }, [page, loadEvents])
 
 
     // load all event for stats
-    const loadAllEvents = useCallback(async () => {
+    /*const loadAllEvents = useCallback(async () => {
         try {
             console.log("Loading ALL events for stats...")
 
@@ -240,8 +315,30 @@ const EventsPage: React.FC = () => {
             console.error("Error loading all events for stats:", err)
             setAllEvents([])
         }
-    }, [])
+    }, [])*/
+    const loadAllEvents = useCallback(async () => {
+  if (!isAdmin) {
+    setAllEvents([]); // no stats for non-admin
+    return;
+  }
 
+  try {
+    const response = await getAllEvents(1, 1000);
+    setAllEvents(response?.data || []);
+  } catch (err) {
+    console.error("Error loading all events for stats:", err);
+    setAllEvents([]);
+  }
+}, [isAdmin]);
+
+
+    
+    
+    // load all events once for stats
+    useEffect(() => {
+            console.log("User role changed, loading all events for stats...")
+        loadAllEvents();
+    }, [loadAllEvents])
 
     // delete handler
     const handleDeleteEvent = useCallback(async (id: string, title: string) => {
@@ -332,24 +429,12 @@ const EventsPage: React.FC = () => {
 
 
 
-    // load pagination events when page or filter change
-    useEffect(() => {
-        console.log("Page or filters changed, loading events...");
-
-        loadEvents(page)
-    }, [page, loadEvents])
-
     
-    // load all events once for stats
-    useEffect(() => {
-            console.log("User role changed, loading all events for stats...");
-        loadAllEvents();
-    }, [loadAllEvents])
 
 
     // reset page when filters change
-    useEffect(() => {
-                console.log("Filters changed, resetting page to 1");
+   /* useEffect(() => {
+                console.log("Filters changed, resetting page to 1")
 
         setPage(1);
     }, [searchTerm, typeFilter, statusFilter])
@@ -361,7 +446,7 @@ const EventsPage: React.FC = () => {
             loadEvents(1);
             loadAllEvents();
         }
-    }, [isAdmin, loadEvents, loadAllEvents]);
+    }, [isAdmin, loadEvents, loadAllEvents]);*/
 
 
     return (
@@ -403,15 +488,17 @@ const EventsPage: React.FC = () => {
                     </div>
 
                     <div className="flex gap-3">
-                        <button
-                            onClick={() => navigate("/dashboard/events/create")}
-                            className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
-                                        hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-0.5">
-                            
-                                <Plus size={18} />
+                        {isAdmin && (
+                            <button
+                                onClick={() => navigate("/dashboard/events/create")}
+                                className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
+                                            hover:shadow-lg transition-all flex items-center gap-2 hover:-translate-y-0.5">
                                 
-                                    Create Event
-                        </button>
+                                    <Plus size={18} />
+                                    
+                                        Create Event
+                            </button>
+                        )}
                     </div>
                 </header>
 
@@ -602,16 +689,18 @@ const EventsPage: React.FC = () => {
                                         : 'Get started by creating your first event. Plan, organize, and manage everything in one place.'
                                     }
                                 </p>
+                                
+                                {isAdmin && (
+                                    <button
+                                        onClick={() => navigate("/dashboard/events/create")}
+                                        className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
+                                                    hover:shadow-lg transition-all inline-flex items-center gap-2">
 
-                                <button
-                                    onClick={() => navigate("/dashboard/events/create")}
-                                    className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
-                                                hover:shadow-lg transition-all inline-flex items-center gap-2">
+                                            <Plus size={18} />
 
-                                        <Plus size={18} />
-
-                                            Create Your First Event
-                                </button>
+                                                Create Your First Event
+                                    </button>
+                                )}
                             </div>
                         ) : (
                             <>
@@ -630,7 +719,7 @@ const EventsPage: React.FC = () => {
                                                 <div className="h-40 relative overflow-hidden">
                                                     {event.image ? (
                                                         <div
-                                                            className="w-full h-full bg-cover bg-center"
+                                                            className="w-full h-full bg-cover bg-center opacity-80"
                                                             style={{ backgroundImage: `url(${event.image})` }}
                                                         />
                                                     ) : (
@@ -676,7 +765,7 @@ const EventsPage: React.FC = () => {
                                                 </div>
 
                                                 <div className="p-5">
-                                                    <h3 className="text-lg font-bold mb-4 line-clamp-2 font-serif">
+                                                    <h3 className="text-lg font-semibold mb-4 line-clamp-2">
                                 
                                                         {event.title.charAt(0).toUpperCase() + event.title.slice(1)}
                                                     </h3>
@@ -687,7 +776,7 @@ const EventsPage: React.FC = () => {
                                                             <Calendar size={16} className="mt-1.5 flex-shrink-0 text-red-800" />
 
                                                             <div>
-                                                                <div className="font-medium">{formatDate(event.date)}</div>
+                                                                <div className="font-lg">{formatDate(event.date)}</div>
                                                                 
                                                                 {event.time && (
                                                                     <div className="text-sm">{event.time}</div>
@@ -698,14 +787,14 @@ const EventsPage: React.FC = () => {
                                                         <div className="flex items-start gap-3">
                                         
                                                             <Eye size={16} className="mt-1 flex-shrink-0 text-red-800" />
-                                                            <span className="line-clamp-1 font-medium">{event.location}</span>
+                                                            <span className="line-clamp-1 font-lg">{event.location}</span>
                                                         </div>
 
                                                         {event.description && (
                                                             <div className="flex items-start gap-3">
                                 
                                                                 <AlertCircle size={16} className="mt-1 flex-shrink-0 text-red-800" />
-                                                                <span className="line-clamp-2 font-medium">{event.description}</span>
+                                                                <span className="line-clamp-2 font-lg">{event.description}</span>
                                                             </div>
                                                         )}
 
@@ -729,15 +818,29 @@ const EventsPage: React.FC = () => {
                                                     </div>
 
                                                     <div className="flex gap-2">
-                                                        <button
-                                                            onClick={() => navigate(`/dashboard/events/create?edit=${event._id}`)}
-                                                            className="flex-1 px-3 py-2 bg-yellow-100 border border-yellow-300 text-yellow-700 rounded-lg font-medium 
-                                                                        hover:bg-yellow-50 transition-all flex items-center justify-center gap-1">
-                                                            
-                                                                <Edit size={16} />
+                                                        {isAdmin && (
+                                                            <>
+                                                            <button
+                                                                onClick={() => navigate(`/dashboard/events/create?edit=${event._id}`)}
+                                                                className="flex-1 px-3 py-2 bg-yellow-100 border border-yellow-300 text-yellow-700 rounded-lg font-medium 
+                                                                            hover:bg-yellow-50 transition-all flex items-center justify-center gap-1">
                                                                 
-                                                                    Edit
-                                                        </button>
+                                                                    <Edit size={16} />
+                                                                    
+                                                                        Edit
+                                                            </button>
+
+                                                            <button
+                                                                onClick={() => handleDeleteEvent(event._id, event.title)}
+                                                                className="flex-1 px-3 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg font-medium hover:bg-red-50 
+                                                                            hover:text-red transition-all flex items-center justify-center gap-1">
+                                                                
+                                                                    <Trash2 size={16} />
+
+                                                                        Delete
+                                                            </button>
+                                                            </>
+                                                        )}
 
                                                         <button
                                                             onClick={() => viewEventDetails(event)}
@@ -747,16 +850,6 @@ const EventsPage: React.FC = () => {
                                                                 <Eye size={16} />
 
                                                                     View
-                                                        </button>
-
-                                                        <button
-                                                            onClick={() => handleDeleteEvent(event._id, event.title)}
-                                                            className="flex-1 px-3 py-2 bg-red-100 border border-red-300 text-red-800 rounded-lg font-medium hover:bg-red-50 
-                                                                        hover:text-red transition-all flex items-center justify-center gap-1">
-                                                            
-                                                                <Trash2 size={16} />
-
-                                                                    Delete
                                                         </button>
                                                     </div>
 
@@ -791,8 +884,8 @@ const EventsPage: React.FC = () => {
                                         {/* Navigation buttons */}
                                         <div className="flex items-center gap-2">
                                             <button
-                                                onClick={() => setPage(prev => Math.max(1, prev - 1))}
                                                 disabled={page === 1}
+                                                onClick={() => setPage(prev => Math.max(1, prev - 1))}
                                                 className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
                                                             bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
                                                             hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
@@ -817,8 +910,8 @@ const EventsPage: React.FC = () => {
                                             </span>
 
                                             <button
-                                                onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
                                                 disabled={page === totalPages}
+                                                onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
                                                 className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
                                                             bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
                                                             hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
