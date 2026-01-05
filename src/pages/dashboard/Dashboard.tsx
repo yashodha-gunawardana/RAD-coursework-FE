@@ -201,28 +201,28 @@ const Dashboard: React.FC = () => {
     {
       label: "Add Booking",        
       icon: Bookmark,                     
-      onClick: handleCreateNewEvent,    
+      onClick: handleAddBooking,    
       primary: false  
     },
 
     {
       label: "Invite Guests",        
       icon: User,                     
-      onClick: handleCreateNewEvent,    
+      onClick: handleInviteGuests,    
       primary: false  
     },
 
     {
       label: "Add Vendor",        
       icon: Home,                     
-      onClick: handleCreateNewEvent,    
+      onClick: handleAddVendor,    
       primary: false  
     },
 
     {
       label: "Create Budget",        
       icon: DollarSign,                     
-      onClick: handleCreateNewEvent,    
+      onClick: handleCreateBudget,    
       primary: false  
     },
   ];

@@ -22,17 +22,6 @@ const DashBoardLayout: React.FC = () => {
     }, [])
 
 
-    // Toggle sidebar collapse
-    const handleToggleCollapse = () => {  
-        setIsSidebarCollapsed(!isSidebarCollapsed);  
-    };
-
-    // Toggle mobile menu
-    const handleToggleMobile = () => {    
-        setIsMobileMenuOpen(!isMobileMenuOpen);      
-    };
-
-
     return (
         <div className="flex h-screen overflow-hidden">
         

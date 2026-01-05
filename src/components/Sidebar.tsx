@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     const roles: string[] = user?.roles || []
     const isAdmin = roles.includes("ADMIN")
     const isVendor = roles.includes("VENDOR")
-    const isUser = roles.includes("USER")
+    // const isUser = roles.includes("USER")
 
 
     const mainMenuItems = [

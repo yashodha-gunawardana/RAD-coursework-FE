@@ -1,5 +1,6 @@
 import api from "./api";
 
+
 // create vendor (admin)
 export const createVendor = async (data: FormData) => {
     const res = await api.post("/vendors", data, {
@@ -9,6 +10,7 @@ export const createVendor = async (data: FormData) => {
     })
     return res.data
 }
+
 
 // get all vendors (public)
 export const getAllVendors = async (params: {
@@ -22,11 +24,24 @@ export const getAllVendors = async (params: {
         return res.data
 }
 
+
 // get vendor by id (public)
 export const getvendorById = async (id: string) => {
     const res = await api.get(`/vendors/${id}`)
     return res.data.data
 }
+
+
+export const getVendorByUserId = async () => {
+    try {
+        // Remove the leading slash since baseURL already includes /api/v1
+        const response = await api.get("/vendors/by-user");
+        return response.data.data;
+    } catch (err: any) {
+        return null;
+    }
+};
+
 
 // update vendor (admin)
 export const updateVendor = async (id: string, data: FormData) => {
@@ -44,15 +59,16 @@ export const updateVendor = async (id: string, data: FormData) => {
   }
 }
 
-// delete vendor (admin)
-export const deleteVendor = async (id: string) => {
-    const res = await api.delete(`/vendors/${id}`)
+
+export const getAllVendorsForSelect = async () => {
+    const res = await api.get("/vendors/dropdown")
     return res.data
 }
 
 
-export const getAllVendorsForSelect = async () => {
-    const res = await api.get("/vendors/dropdown")
+// delete vendor (admin)
+export const deleteVendor = async (id: string) => {
+    const res = await api.delete(`/vendors/${id}`)
     return res.data
 }
 

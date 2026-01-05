@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import {
   ChevronLeft,
   Clipboard,
@@ -9,7 +9,7 @@ import {
   Trash2,
   Check,
 } from "react-feather";
-import { createVendor, updateVendor, getvendorById } from "../services/vendor";
+import { createVendor, updateVendor, getvendorById, getVendorByUserId } from "../services/vendor";
 
 
 export const VendorCategory = {
@@ -26,6 +26,7 @@ export const VendorCategory = {
 export type VendorCategory = typeof VendorCategory[keyof typeof VendorCategory]
 
 interface VendorFormData {
+    userId?: string;
     name: string;
     category: VendorCategory | "";
     contact: string;
@@ -33,6 +34,8 @@ interface VendorFormData {
     description?: string;
     image: File | null;
     isAvailable: boolean;
+      addedByName?: string; // admin name who added this vendor
+
 }
 
 interface ToastState {
@@ -42,6 +45,12 @@ interface ToastState {
 }
 
 const VendorForm: React.FC = () => {
+
+    // Inside component
+    const location = useLocation();
+    const passedUserId = location.state?.userId;
+    const passedUserName = location.state?.userFullname;
+
     const { id: editId } = useParams<{ id: string }>()
     const navigate = useNavigate()
 
@@ -52,13 +61,17 @@ const VendorForm: React.FC = () => {
         priceRange: "",
         description: "",
         image: null,
-        isAvailable: true
+        isAvailable: true,
+            addedByName: ""
+
     })
 
     const [preview, setPreview] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
     const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success" })
     const [imageRemoved, setImageRemoved] = useState(false)
+
+    const [currentAdminName, setCurrentAdminName] = useState("");
 
 
     // toast notifi
@@ -104,6 +117,10 @@ const VendorForm: React.FC = () => {
         setImageRemoved(true)
     }
 
+    useEffect(() => {
+    const admin = JSON.parse(localStorage.getItem("user") || "{}");
+    setCurrentAdminName(admin?.fullname || admin?.username || "Admin");
+  }, []);
     // loading data on edit mode
     /*useEffect(() => {
         if (editId) {
@@ -142,7 +159,7 @@ const VendorForm: React.FC = () => {
     }, [editId])*/
     // In VendorForm.tsx, fix the useEffect:
 
-useEffect(() => {
+/*useEffect(() => {
     const loadVendorData = async () => {
         if (editId) {
             try {
@@ -175,7 +192,65 @@ useEffect(() => {
     };
 
     loadVendorData();
+}, [editId]);*/
+
+ useEffect(() => {
+    const loadVendorData = async () => {
+        try {
+            setLoading(true);
+            let vendor = null;
+
+            if (editId) {
+    // Only validate if we're in edit mode
+    if (!/^[0-9a-fA-F]{24}$/.test(editId)) {
+        showToast("Invalid vendor ID", "error");
+        return;
+    }
+    const res = await getvendorById(editId);
+    vendor = res;
+} else {
+    vendor = await getVendorByUserId(); // may be null
+}
+
+            // If no vendor and not editing → normal (creating new)
+            if (!vendor && !editId) {
+                setLoading(false);
+                return;
+            }
+
+            if (!vendor) {
+                showToast("Vendor not found", "error");
+                return;
+            }
+
+            setVendorData({
+                name: vendor.name || "",
+                category: vendor.category || "",
+                contact: vendor.contact || "",
+                priceRange: vendor.priceRange || "",
+                description: vendor.description || "",
+                image: null,
+                isAvailable: vendor.isAvailable ?? true,
+                addedByName: vendor.addedBy?.fullname || ""
+            });
+
+            if (vendor.image) {
+                setPreview(vendor.image);
+            }
+
+            setImageRemoved(false);
+        } catch (err: any) {
+            console.error("Failed to load vendor:", err);
+            showToast(err?.response?.data?.message || "Failed to load vendor details", "error");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    loadVendorData();
 }, [editId]);
+
+
 
 
     // handle submit form
@@ -193,8 +268,24 @@ useEffect(() => {
         formData.append("contact", vendorData.contact);
         formData.append("priceRange", vendorData.priceRange);
         if (vendorData.description) formData.append("description", vendorData.description);
-        if (vendorData.image) formData.append("image", vendorData.image);
+        // if (vendorData.image) formData.append("image", vendorData.image);
         formData.append("isAvailable", String(vendorData.isAvailable));
+
+        /*const loggedInUserId = localStorage.getItem("userId"); 
+        if (loggedInUserId) {
+            formData.append("addedBy", loggedInUserId);
+        }
+
+        if (!editId) {
+        formData.append("userId", loggedInUserId || ""); // vendor is the logged-in user
+    }*/
+                if (!editId) {
+            if (!passedUserId) {
+                showToast("User ID missing - cannot create vendor", "error");
+                return;
+            }
+            formData.append("userId", passedUserId);
+        }
 
         if(editId) {
             formData.append("imageRemoved", imageRemoved.toString())
@@ -215,6 +306,8 @@ useEffect(() => {
                 showToast("Vendor created successfully..")
             }
 
+            resetForm()
+
             setTimeout(() => {
                 navigate("/dashboard/vendors");
             }, 1200)
@@ -225,9 +318,9 @@ useEffect(() => {
         } finally {
             setLoading(false)
         }
-    }
 
-    const resetForm = () => {
+    }
+     const resetForm = () => {
         setVendorData({
             name: "",
             category: "",
@@ -238,8 +331,11 @@ useEffect(() => {
             isAvailable: true,
         })
         setPreview(null);
+        setImageRemoved(false)
+
     }
 
+    
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0A0A0A] p-5 md:p-10">
@@ -271,6 +367,19 @@ useEffect(() => {
                             {editId ? "Edit Vendor Details" : "Add New Vendor"}
 
                         </h1>
+                        {/* Show who created this vendor (only in edit mode) */}
+        {vendorData.addedByName && (
+            <p className="text-sm mt-1 text-[#0A0A0A]/80">
+                Created by Admin: <span className="font-semibold">{vendorData.addedByName}</span>
+            </p>
+        )}
+
+        {/* NEW: Show for which user we are creating a vendor profile */}
+        {!editId && passedUserName && (
+            <p className="text-sm mt-2 text-gray-600">
+                Creating vendor profile for: <strong>{passedUserName}</strong>
+            </p>
+        )}
                     </div>
 
                     <button
@@ -312,6 +421,19 @@ useEffect(() => {
                                 </span>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="md:col-span-2">
+                    <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
+                      Created By
+                    </label>
+                    <input
+                      type="text"
+                      value={currentAdminName}
+                      readOnly
+                      className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#F3F4F6] text-[#121212] text-sm
+                                 focus:outline-none focus:border-[#C5A059] focus:bg-[#F3F4F6] focus:ring-4 focus:ring-[#C5A059]/10
+                                 transition-all cursor-not-allowed"
+                    />
+                  </div>
 
                                     {/* vendor name */}
                                     <div className="md:col-span-2">

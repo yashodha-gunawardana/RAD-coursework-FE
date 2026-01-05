@@ -1,12 +1,5 @@
 import api from "./api";
 
-
-export interface ExtraItem {
-  name: string;
-  unitPrice: number;
-  quantity: number;
-}
-
 // get current user's booking
 export const getMyBooking = async () => {
     const res = await api.get("/bookings")
@@ -18,7 +11,7 @@ export const createBooking = async (data: {
     eventId: string
     vendorId: string
     notes?: string
-extraItems?: ExtraItem[]
+    extraItems?: { name: string, quantity: number }[]
 }) => {
 
     const res = await api.post("/bookings", data)

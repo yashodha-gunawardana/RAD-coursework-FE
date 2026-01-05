@@ -11,6 +11,7 @@ import {
   Clipboard
 } from "react-feather";
 import { createEvent, getEventById, updateEvent } from "../services/events";
+import { useAuth } from "../context/authContext";
 
 
 interface ExtraItem {
@@ -32,6 +33,7 @@ interface EventData {
     status: string;
     extraItems?: ExtraItem[];
     image?: File | null;
+    isPackage: boolean
 }
 
 interface ToastState {
@@ -44,6 +46,9 @@ interface ToastState {
 const EventForm: React.FC = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
+
+    const { user } = useAuth()
+    const isAdmin = user?.roles?.includes("ADMIN")
 
     // get edit id from url params
     const editId = searchParams.get("edit") 
@@ -58,7 +63,8 @@ const EventForm: React.FC = () => {
         basePrice: 0,
         status: "PLANNING",
         extraItems: [],
-        image: null
+        image: null,
+        isPackage: false
     });
 
     const [extraItems, setExtraItems] = useState<ExtraItem[]>([]);
@@ -78,6 +84,14 @@ const EventForm: React.FC = () => {
             [id]: id === "basePrice" ? Number(value) || 0 : value
         }));
     }
+
+    const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { id, checked } = e.target;
+        setEventData(prev => ({
+            ...prev,
+            [id]: checked,
+        }));
+    };
 
 
     // extra items management
@@ -151,6 +165,7 @@ const EventForm: React.FC = () => {
                     basePrice: eventData.basePrice || 0,
                     status: eventData.status || "PLANNING",
                     image: null,
+                    isPackage: eventData.isPackage || false
                     // extraItems: eventData.extraItems || []
                 })
 
@@ -184,7 +199,8 @@ const EventForm: React.FC = () => {
                 description: "",
                 basePrice: 0,
                 status: "PLANNING",
-                image: null
+                image: null,
+                isPackage: false
             })
              setExtraItems([]);
             setPreview(null);
@@ -214,6 +230,9 @@ const EventForm: React.FC = () => {
         if (eventData.description) formData.append("description", eventData.description)
         formData.append("basePrice", eventData.basePrice.toString());
         formData.append("status", eventData.status);
+        if (isAdmin && eventData.isPackage) {
+        formData.append("isPackage", "true");
+    }
       
         if (editId) {
             formData.append("imageRemoved", imageRemoved.toString());
@@ -478,6 +497,22 @@ const EventForm: React.FC = () => {
                                             rows={4}
                                         />
                                     </div>
+
+                                    {/* isPackage */}
+                                    {isAdmin && (  
+                                        <div className="md:col-span-2 flex items-center gap-2">
+                                            <input
+                                                type="checkbox"
+                                                id="isPackage"
+                                                checked={eventData.isPackage}
+                                                onChange={handleCheckboxChange}
+                                                className="w-4 h-4 text-[#C5A059] bg-gray-100 border-gray-300 rounded focus:ring-[#C5A059] focus:ring-2"
+                                            />
+                                            <label htmlFor="isPackage" className="text-[15px] font-semibold text-[#0A0A0A]">
+                                                Mark as Package (Admin Only)
+                                            </label>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* pricing */}
@@ -658,6 +693,7 @@ const EventForm: React.FC = () => {
                                                 status: "PLANNING",
                                                 extraItems: [],
                                                 image: null,
+                                                isPackage: false
                                             });
                                                 setExtraItems([]);
                                                 setPreview(null);

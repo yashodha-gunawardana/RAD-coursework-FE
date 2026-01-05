@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Calendar,
   CheckCircle,
@@ -58,11 +57,6 @@ interface Event {
     title: string
     date: string
     location: string
-    basePrice: number
-    extraItems?: Array<{
-        name: string
-        unitPrice: number
-    }>
 }
 
 interface Vendor {
@@ -114,12 +108,12 @@ const formatDate = (dateString: string): string => {
 
 
 const BookingPage: React.FC = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const { user } = useAuth()
     const isAdmin = user?.roles.includes("ADMIN")
     const isVendor = user?.roles.includes("VENDOR")
-    const isUser  = user?.roles.includes("USER")
+    // const isUser  = user?.roles.includes("USER")
     const currentUserId = user?._id
 
     const [bookings, setBookings] = useState<Booking[]>([])
@@ -141,7 +135,7 @@ const BookingPage: React.FC = () => {
     const [notes, setNotes] = useState("")
     const [creating, setCreating] = useState(false)
 
-    const [selectedExtraItems, setSelectedExtraItems] = useState<{ name: string; unitPrice: number; quantity: number }[]>([])
+    // const [selectedExtraItems, setSelectedExtraItems] = useState<{ name: string; unitPrice: number; quantity: number }[]>([])
 
 
     const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
@@ -204,7 +198,7 @@ const BookingPage: React.FC = () => {
         setSelectedEventId("")
         setSelectedVendorId("")
         setNotes("")
-        setSelectedExtraItems([])
+        // setExtraItems([])
 
         await loadResources()
     }
@@ -225,7 +219,6 @@ const BookingPage: React.FC = () => {
                 eventId: selectedEventId,
                 vendorId: selectedVendorId,
                 notes: notes || undefined,
-                extraItems: selectedExtraItems.length > 0 ? selectedExtraItems : undefined
                 
             })
 
@@ -336,7 +329,7 @@ const BookingPage: React.FC = () => {
     const resetFilters = useCallback(() => {
         setSearchTerm("")
         setStatusFilter("")
-        showToast("Filters cleared")
+        showToast("Filteres cleared")
     }, [showToast])
 
 
@@ -736,203 +729,80 @@ const BookingPage: React.FC = () => {
                         ) : (
 
                             <form onSubmit={handleCreateBooking} className="space-y-5">
-                {/* Event Select */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Your Event
-                  </label>
-                  <select
-                    value={selectedEventId}
-                    onChange={(e) => {
-                      setSelectedEventId(e.target.value);
-                      setSelectedExtraItems([]); // Reset extras when event changes
-                    }}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  >
-                    <option value="">Select an event</option>
-                    {events.map((event) => (
-                      <option key={event._id} value={event._id}>
-                        {event.title} — {formatDate(event.date)} ({event.location})
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Your Event</label>
 
-                {/* Vendor Select */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Vendor
-                  </label>
-                  <select
-                    value={selectedVendorId}
-                    onChange={(e) => setSelectedVendorId(e.target.value)}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  >
-                    <option value="">Select a vendor</option>
-                    {vendors.map((vendor) => (
-                      <option key={vendor._id} value={vendor._id}>
-                        {vendor.name} ({vendor.category})
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                                    <select
+                                        value={selectedEventId}
+                                        onChange={(e) => setSelectedEventId(e.target.value)}
+                                        required
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 
+                                                    focus:border-transparent">
+                                    
+                                        <option value="">Select an event</option>
+                                            
+                                        {events.map((event) => (
+                                            <option key={event._id} value={event._id}>
 
-                {/* Extra Items + Total Price */}
-                {selectedEventId && (() => {
-                  const selectedEvent = events.find((e) => e._id === selectedEventId);
-                  if (!selectedEvent) return null;
-
-                  const extraTotal = selectedExtraItems.reduce(
-                    (sum, item) => sum + item.unitPrice * item.quantity,
-                    0
-                  );
-                  const totalPrice = selectedEvent.basePrice + extraTotal;
-
-                  return (
-                    <>
-                      {/* Extra Items */}
-                      {selectedEvent.extraItems && selectedEvent.extraItems.length > 0 && (
-                        <div className="space-y-4">
-                          <label className="block text-sm font-medium text-gray-700">
-                            Extra Items (Optional)
-                          </label>
-                          <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-                            {selectedEvent.extraItems.map((item) => {
-                              const isSelected = selectedExtraItems.some((i) => i.name === item.name);
-                              const qty =
-                                selectedExtraItems.find((i) => i.name === item.name)?.quantity || 1;
-
-                              return (
-                                <div
-                                  key={item.name}
-                                  className="flex items-center justify-between"
-                                >
-                                  <div className="flex items-center gap-3">
-                                    <input
-                                      type="checkbox"
-                                      checked={isSelected}
-                                      onChange={(e) => {
-                                        if (e.target.checked) {
-                                          setSelectedExtraItems((prev) => [
-                                            ...prev,
-                                            { ...item, quantity: 1 },
-                                          ]);
-                                        } else {
-                                          setSelectedExtraItems((prev) =>
-                                            prev.filter((i) => i.name !== item.name)
-                                          );
-                                        }
-                                      }}
-                                      className="w-5 h-5 text-red-600 rounded focus:ring-red-500"
-                                    />
-                                    <span className="text-sm font-medium">{item.name}</span>
-                                    <span className="text-sm text-gray-600">
-                                      ${item.unitPrice.toFixed(2)} each
-                                    </span>
-                                  </div>
-
-                                  {isSelected && (
-                                    <div className="flex items-center gap-2">
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          setSelectedExtraItems((prev) =>
-                                            prev.map((i) =>
-                                              i.name === item.name
-                                                ? { ...i, quantity: Math.max(1, qty - 1) }
-                                                : i
-                                            )
-                                          )
-                                        }
-                                        className="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
-                                      >
-                                        −
-                                      </button>
-                                      <span className="w-12 text-center font-medium">{qty}</span>
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          setSelectedExtraItems((prev) =>
-                                            prev.map((i) =>
-                                              i.name === item.name ? { ...i, quantity: qty + 1 } : i
-                                            )
-                                          )
-                                        }
-                                        className="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300 flex items-center justify-center"
-                                      >
-                                        +
-                                      </button>
-                                    </div>
-                                  )}
+                                                {event.title} — {formatDate(event.date)} ({event.location})
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
 
-                      {/* Price Summary */}
-                      <div className="border-t pt-6 -mx-8 px-8 bg-gray-50">
-                        <div className="space-y-3">
-                          <div className="flex justify-between text-sm">
-                            <span>Base Price</span>
-                            <span className="font-medium">
-                              ${selectedEvent.basePrice.toFixed(2)}
-                            </span>
-                          </div>
-                          {extraTotal > 0 && (
-                            <div className="flex justify-between text-sm">
-                              <span>Extra Items</span>
-                              <span className="font-medium">${extraTotal.toFixed(2)}</span>
-                            </div>
-                          )}
-                          <div className="flex justify-between text-xl font-bold text-red-800 pt-4 border-t">
-                            <span>Total Estimated Cost</span>
-                            <span>${totalPrice.toFixed(2)}</span>
-                          </div>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-3">
-                          Final amount will be confirmed by the vendor.
-                        </p>
-                      </div>
-                    </>
-                  );
-                })()}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Vendor</label>
 
-                {/* Notes */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Notes (Optional)
-                  </label>
-                  <textarea
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    rows={4}
-                    placeholder="Special requests, timing, setup details..."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  />
-                </div>
+                                    <select
+                                        value={selectedVendorId}
+                                        onChange={(e) => setSelectedVendorId(e.target.value)}
+                                        required
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 
+                                                    focus:border-transparent">
+                                    
+                                        <option value="">Select a vendor</option>
 
-                {/* Submit Buttons */}
-                <div className="flex gap-4 pt-4">
-                  <button
-                    type="submit"
-                    disabled={creating || !selectedEventId || !selectedVendorId}
-                    className="flex-1 px-6 py-3 bg-red-800 text-white rounded-lg font-medium hover:bg-red-700 disabled:opacity-70 transition-all"
-                  >
-                    {creating ? "Creating..." : "Create Booking"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setIsCreateModalOpen(false)}
-                    className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-100 transition-all"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
+                                        {vendors.map((vendor) => (
+                                            <option key={vendor._id} value={vendor._id}>
+                                                {vendor.name} ({vendor.category})
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Notes (Optional)</label>
+
+                                    <textarea
+                                        value={notes}
+                                        onChange={(e) => setNotes(e.target.value)}
+                                        rows={4}
+                                        placeholder="Special requests, timing, setup details..."
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 
+                                                    focus:border-transparent"
+                                    />
+                                </div>
+  
+                                <div className="flex gap-4 pt-4">
+                                    <button
+                                        type="submit"
+                                        disabled={creating}
+                                        className="flex-1 px-6 py-3 bg-red-800 text-white rounded-lg font-medium hover:bg-red-700 disabled:opacity-70 
+                                                    transition-all">
+                                    
+                                            {creating ? "Creating..." : "Create Booking"}
+
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsCreateModalOpen(false)}
+                                        className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-100 transition-all">
+                                    
+                                            Cancel
+                                    </button>
+                                </div>
+                            </form>
                         )}
                     </div>
                 </div>

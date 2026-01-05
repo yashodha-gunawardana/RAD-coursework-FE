@@ -1,5 +1,5 @@
-import { lazy, Suspense, type ReactNode } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
 import EventPage from "../pages/dashboard/EventPage";

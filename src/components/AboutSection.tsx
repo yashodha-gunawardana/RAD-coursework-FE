@@ -6,10 +6,7 @@ import {
   Heart, 
   Star, 
   Globe, 
-  Check, 
-  Users, 
-  Clock, 
-  Shield } from 'react-feather';
+ } from 'react-feather';
 
 
 const AboutSection: React.FC = () => {

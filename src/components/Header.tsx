@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, UserPlus, Menu, X as XIcon } from 'react-feather';
+import { Search, UserPlus, X as XIcon } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
 
 

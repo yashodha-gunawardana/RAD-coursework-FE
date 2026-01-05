@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { 
     Plus,
     Calendar,
@@ -94,7 +94,7 @@ const VendorPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [categoryFilter, setCategoryFilter] = useState("")
     const [availabilityFilter, setAvailabilityFilter] = useState("")
-    const [loadingStats, setLoadingStats] = useState(false)
+    // const [loadingStats, setLoadingStats] = useState(false)
     
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
@@ -138,7 +138,7 @@ const VendorPage: React.FC = () => {
     }, [searchTerm, categoryFilter, availabilityFilter, showToast])
 
 
-    const loadAllVendorsForStats = useCallback(async () => {
+    /*const loadAllVendorsForStats = useCallback(async () => {
         try {
             setLoadingStats(true)
             const response = await getAllVendors({  limit: 1000 }); // large limit to get all
@@ -148,6 +148,14 @@ const VendorPage: React.FC = () => {
         
         } finally {
             setLoadingStats(false)
+        }
+    }, [])*/
+    const loadAllVendorsForStats = useCallback(async () => {
+        try {
+            const response = await getAllVendors({ limit: 1000 }); // large limit to get all
+            setAllVendors(response.data || []);
+        } catch (err) {
+            console.error("Error loading all vendors:", err);
         }
     }, [])
         

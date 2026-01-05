@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback} from "react";
+import { useNavigate } from "react-router-dom";
 import {
   User,
   CheckCircle,
@@ -11,7 +12,7 @@ import {
   Shield,
   Clock,
 } from "react-feather";
-import { getAllUsers, approveVendorRequest, rejectVendorRequest, deleteUserAccount } from "../../services/auth";
+import { getAllUsers, rejectVendorRequest, deleteUserAccount } from "../../services/auth";
 
 
 export const Role = {
@@ -111,6 +112,8 @@ const getStatusLabel = (status: VendorStatusType): string => {
 
 
 const UsersPage: React.FC = () => {
+    const navigate = useNavigate();
+
     const [users, setUsers] = useState<AppUser[]>([])
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success"})
@@ -155,7 +158,7 @@ const UsersPage: React.FC = () => {
 
 
     // approve vendor req
-    const handleApprove = useCallback(async (userId: string) => {
+   /* const handleApprove = useCallback(async (userId: string) => {
         try {
             await approveVendorRequest(userId);
             
@@ -167,8 +170,22 @@ const UsersPage: React.FC = () => {
             const message = err.response?.data?.message || "Failed to approve vendor";
             showToast(message, "error");
         }
-    }, [showToast, loadUsers]);
+    }, [showToast, loadUsers]);*/
+    
+    const handleApprove = useCallback((user: AppUser) => {
+    if (!user?._id) {
+        showToast("Cannot approve: User ID missing", "error");
+        return;
+    }
 
+    // CORRECT: Pass via state
+    navigate("/dashboard/vendors/create", { 
+        state: { 
+            userId: user._id,
+            userFullname: user.fullname 
+        } 
+    });
+}, [navigate, showToast]);
 
     // reject vendor req
     const handleReject = useCallback(async (userId: string) => {
@@ -578,7 +595,7 @@ const UsersPage: React.FC = () => {
                                             {user.vendorStatus === "PENDING" && (
                                                 <div className="flex flex-wrap gap-2 mb-4">
                                                     <button
-                                                        onClick={() => handleApprove(user._id)}
+                                                        onClick={() => handleApprove(user)}
                                                         className="flex-1 px-3 py-2 bg-green-100 text-green-800 rounded-lg font-medium hover:bg-green-200 
                                                                     transition-all flex items-center justify-center gap-1">
                                                     
@@ -602,19 +619,21 @@ const UsersPage: React.FC = () => {
                                             {/* delete button*/}
                                             <button
                                                 type="button"
-                                                 onClick={() => {
-                                                    if (!user._id) {
-            showToast("Cannot delete: User ID missing", "error");
-            console.error("User missing _id:", user);
-            return;
-        }
-        console.log("Delete clicked for user ID:", user._id); // Add this
-        setDeleteModal({ 
-            show: true, 
-            userId: user._id, 
-            fullname: user.fullname 
-        });
-    }}
+                                                // Inside the delete button onClick, before opening modal
+onClick={() => {
+    const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+    if (user._id === currentUser._id) {
+        showToast("You cannot delete your own account!", "error");
+        return;
+    }
+
+    console.log("Delete clicked for user ID:", user._id);
+    setDeleteModal({
+        show: true,
+        userId: user._id,
+        fullname: user.fullname
+    });
+}}
                                                 className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-700 hover:text-white 
                                                             transition-all flex items-center justify-center gap-1">
                                                 

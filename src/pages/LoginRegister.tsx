@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { getMyDetails, loginUser, registerUser } from "../services/auth";
-import { Form, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import morningImg from "../assets/images/loginImage.png";
 import dayImg from "../assets/images/loginimage2.png";

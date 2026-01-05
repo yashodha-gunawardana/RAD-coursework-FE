@@ -2,14 +2,14 @@
 import api from "./api";
 
 // defines the shape of data the frontend sends to the backend when registering
-type RegisterDataType = {
+/*type RegisterDataType = {
     fullname: string
     email: string
     password: string
     // address?: string
     // phone?: string
     role: string
-}
+}*/
 
 // register function
 export const registerUser = async (fullname: string, email: string, password: string) => {

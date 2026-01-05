@@ -70,7 +70,7 @@ interface Event {
 }
 
 
-type UserRole = "ADMIN" | "USER" | "VENDOR" | null
+// type UserRole = "ADMIN" | "USER" | "VENDOR" | null
 
 interface ToastState {
     show: boolean
@@ -78,14 +78,14 @@ interface ToastState {
     type: "success" | "error"
 }
 
-const EventType = {
+/*const EventType = {
     WEDDING: "WEDDING",
     BIRTHDAY: "BIRTHDAY",
     CONFERENCE: "CONFERENCE",
     CORPORATE: "CORPORATE",
     PARTY: "PARTY",
     OTHER: "OTHER"
-} as const;
+} as const;*/
 
 const EventStatus = {
     PLANNING: "PLANNING",
@@ -101,7 +101,7 @@ const EventsPage: React.FC = () => {
     const { user } = useAuth()
 
     const isAdmin = user?.roles?.includes("ADMIN")
-    const isVendor = user?.roles?.includes("VENDOR")
+    // const isVendor = user?.roles?.includes("VENDOR")
     const isUser = user?.roles?.includes("USER")
 
 
@@ -153,6 +153,16 @@ const EventsPage: React.FC = () => {
    
 
     // calculate total price
+    /*const calculateTotalPrice = useCallback((event: Event) => {
+        let total = event.basePrice || 0
+
+        if (event.extraItems && event.extraItems.length > 0) {
+            event.extraItems.forEach(item => {
+                total += (item.unitPrice || 0) * (item.quantity || 1)
+            })
+        }
+        return total
+    }, []);*/
     const calculateTotalPrice = useCallback((event: Event) => {
         let total = event.basePrice || 0
 
@@ -163,6 +173,7 @@ const EventsPage: React.FC = () => {
         }
         return total
     }, []);
+
 
 
     const getEventTypeLabel = useCallback((type: string) => {
@@ -262,7 +273,14 @@ const EventsPage: React.FC = () => {
       );
     } else {
       // USER / VENDOR → OWN EVENTS
-      response = await getMyEvents(pageNumber, limit);
+    //   response = await getMyEvents(pageNumber, limit);
+    response = await getMyEvents(
+        pageNumber,
+        limit,
+        searchTerm.trim() || undefined,
+        typeFilter || undefined,
+        statusFilter || undefined
+      );
     }
 
     if (!response || !response.data) {
@@ -488,7 +506,7 @@ const EventsPage: React.FC = () => {
                     </div>
 
                     <div className="flex gap-3">
-                        {isAdmin && (
+                        {(isAdmin || isUser) && (
                             <button
                                 onClick={() => navigate("/dashboard/events/create")}
                                 className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
@@ -690,7 +708,7 @@ const EventsPage: React.FC = () => {
                                     }
                                 </p>
                                 
-                                {isAdmin && (
+                                {(isAdmin || isUser) && (
                                     <button
                                         onClick={() => navigate("/dashboard/events/create")}
                                         className="px-6 py-3 bg-gradient-to-r from-red-800 to-red-600 text-white rounded-lg font-semibold 
