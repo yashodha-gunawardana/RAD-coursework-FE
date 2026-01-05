@@ -3,7 +3,7 @@ import { getMyDetails, loginUser, registerUser } from "../services/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import morningImg from "../assets/images/loginImage.png";
-import dayImg from "../assets/images/loginimage2.png";
+import dayImg from "../assets/images/loginImage2.png";
 import eveningImg from "../assets/images/loginImage3.png";
 import nightImg from "../assets/images/loginImage4.png";
 import { ArrowRight, Facebook, Twitter, Youtube, Linkedin, Lock, AlertCircle, CheckCircle } from "react-feather";
