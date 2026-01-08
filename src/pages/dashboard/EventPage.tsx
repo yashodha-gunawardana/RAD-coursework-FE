@@ -113,6 +113,12 @@ const EventsPage: React.FC = () => {
     const [totalItems, setTotalItems] = useState(0)
     const limit = 6
 
+    const [showAIChat, setShowAIChat] = useState(false)
+    const [aiMessages, setAiMessages] = useState<AIMessage[]>([])
+    const [aiInput, setAiInput] = useState("")
+    const [aiLoading, setAiLoading] = useState(false)
+    const [selectedEventForAI, setSelectedEventForAI] = useState<Event | null>(null)
+    
     
     // calculate total price
     const calculateTotalPrice = useCallback((event: Event) => {
