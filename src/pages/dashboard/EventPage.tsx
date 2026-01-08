@@ -137,6 +137,13 @@ const EventsPage: React.FC = () => {
                     "${event.title}" (${getEventTypeLabel(event.type)}). What would you like to know 
                     about this event or need suggestions for?`
             })
+        
+        } else {
+            initialMessages.push({
+                id: 1,
+                type: "ai",
+                text: "Hi! I'm your AI Event Assistant. I can help you with event planning, budgeting, timeline suggestions, and more. How can I assist you today?"
+            })
         }
     })
 
