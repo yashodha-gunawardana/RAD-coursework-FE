@@ -167,11 +167,16 @@ const EventsPage: React.FC = () => {
             return
         }
 
+        // user message obj
         const userMessage: AIMessage = {
             id: Date.now(),
             type: "user",
             text: aiInput.trim()
         }
+
+        setAiMessages(prev => [...prev, userMessage])
+        setAiInput("")
+        setAiLoading(true)
     }
 
 
