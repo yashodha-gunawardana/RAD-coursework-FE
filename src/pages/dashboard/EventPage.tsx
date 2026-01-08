@@ -120,6 +120,13 @@ const EventsPage: React.FC = () => {
     const [selectedEventForAI, setSelectedEventForAI] = useState<Event | null>(null)
     
     
+    // open ai chat
+    const openAIChat = useCallback((event?: Event) => {
+        setSelectedEventForAI(event || null)
+        setShowAIChat(true)
+    })
+
+
     // calculate total price
     const calculateTotalPrice = useCallback((event: Event) => {
         let total = event.basePrice || 0
