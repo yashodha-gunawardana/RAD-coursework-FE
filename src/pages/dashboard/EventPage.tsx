@@ -161,6 +161,14 @@ const EventsPage: React.FC = () => {
     }, [])
 
 
+    const handleAISend = async () => {
+        
+        if (!aiInput.trim() || aiLoading) {
+            return
+        }
+    }
+
+
     // calculate total price
     const calculateTotalPrice = useCallback((event: Event) => {
         let total = event.basePrice || 0
