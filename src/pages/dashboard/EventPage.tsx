@@ -215,13 +215,19 @@ const EventsPage: React.FC = () => {
         }
     }
 
-    
+
     // handle enter key press
     const handleAIKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             handleAISend();
         }
+    }
+
+
+    // rest ai chat
+    const handleAIReset = () => {
+        openAIChat(selectedEventForAI || undefined);
     }
 
 
