@@ -147,7 +147,18 @@ const EventsPage: React.FC = () => {
         }
         setAiMessages(initialMessages)
         setAiInput("")
-    })
+
+    }, [getEventTypeLabel])
+
+
+    // close ai chat and reset
+    const closeAIChat = useCallback(() => {
+        setShowAIChat(false)
+        setAiMessages([])
+        setAiInput("")
+        setSelectedEventForAI(null)
+        setAiLoading(false)
+    }, [])
 
 
     // calculate total price
