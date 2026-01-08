@@ -180,6 +180,8 @@ const EventsPage: React.FC = () => {
         setAiLoading(true)
 
         try {
+
+            // prompt with event context if available
             let prompt = aiInput.trim()
             if (selectedEventForAI) {
                 prompt = `For event "${selectedEventForAI.title}" 
@@ -189,6 +191,13 @@ const EventsPage: React.FC = () => {
                             ${aiInput.trim()}`
             }
 
+            const aiResponse = await getAIRecommendation(selectedEventForAI?.type || "GENERAL", prompt)
+
+            const aiMessage: AIMessage = {
+                id: Date.now() + 1,
+                type: "ai",
+                text: aiResponse || "I couldn't generate a response. Please try again."
+            }
         } catch (err) {
 
         }
