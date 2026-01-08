@@ -162,9 +162,15 @@ const EventsPage: React.FC = () => {
 
 
     const handleAISend = async () => {
-        
+
         if (!aiInput.trim() || aiLoading) {
             return
+        }
+
+        const userMessage: AIMessage = {
+            id: Date.now(),
+            type: "user",
+            text: aiInput.trim()
         }
     }
 
