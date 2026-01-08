@@ -122,8 +122,22 @@ const EventsPage: React.FC = () => {
     
     // open ai chat
     const openAIChat = useCallback((event?: Event) => {
+
+        // set the selected event for context
         setSelectedEventForAI(event || null)
         setShowAIChat(true)
+
+        const initialMessages: AIMessage[] = []
+
+        if (event) {
+            initialMessages.push({
+                id: 1,
+                type: "ai",
+                text: `Hi! I'm your AI Event Assistant. I can help you with planning 
+                    "${event.title}" (${getEventTypeLabel(event.type)}). What would you like to know 
+                    about this event or need suggestions for?`
+            })
+        }
     })
 
 
