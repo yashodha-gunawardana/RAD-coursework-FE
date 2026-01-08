@@ -19,7 +19,7 @@ import {
 } from "react-feather";
 import { deleteEvent, getAllEvents, getMyEvents } from "../../services/events";
 import { useAuth } from "../../context/authContext";
-
+import { getAIRecommendation } from "../../services/ai";
 
 
 const formatDate = (dateString: string): string => {
@@ -83,6 +83,12 @@ const EventStatus = {
     CANCELLED: "CANCELLED"
 } as const;
 
+
+interface AIMessage {
+    id: number
+    type: "user" | "ai"
+    text: string
+}
 
 const EventsPage: React.FC = () => {
     const navigate = useNavigate()

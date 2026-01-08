@@ -17,9 +17,10 @@ export const getAIRecommendation = async (eventType: string, prompt: string) => 
             },
             { headers: { Authorization: `Bearer ${token}` } }
         )
-        return response.data.aiResponse || Response.data.message
+        return response.data.aiResponse || response.data.message
 
     } catch (err) {
+        
         console.log("AI service error: ", err)
         return "Sorry, I couldn't process your request, Please try again"
     }
