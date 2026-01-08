@@ -174,9 +174,24 @@ const EventsPage: React.FC = () => {
             text: aiInput.trim()
         }
 
+        // user messages chat history
         setAiMessages(prev => [...prev, userMessage])
         setAiInput("")
         setAiLoading(true)
+
+        try {
+            let prompt = aiInput.trim()
+            if (selectedEventForAI) {
+                prompt = `For event "${selectedEventForAI.title}" 
+                            (Type: ${selectedEventForAI.type}, 
+                            Date: ${formatDate(selectedEventForAI.date)}, 
+                            Location: ${selectedEventForAI.location}): 
+                            ${aiInput.trim()}`
+            }
+
+        } catch (err) {
+
+        }
     }
 
 
