@@ -9,8 +9,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
 
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const searchRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
 
   const navItems = [
@@ -21,11 +21,11 @@ const Header: React.FC<HeaderProps> = ({ isScrolled = false }) => {
     { name: 'GALLERY', sectionId: 'gallery' },
     { name: 'CONTACT US', sectionId: 'contact' },
 
-  ];
+  ]
 
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
+    const element = document.getElementById(sectionId)
 
     if (element) {
       const headerHeight = 96;

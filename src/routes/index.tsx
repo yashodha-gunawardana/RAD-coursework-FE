@@ -6,8 +6,9 @@ import EventPage from "../pages/dashboard/EventPage";
 import EventForm from "../components/EventForm";
 import VendorPage from "../pages/dashboard/VendorPage";
 import VendorForm from "../components/VendorForm";
-import UsersPage from "../pages/dashboard/UsersPage";
+import UsersPage from "../pages/dashboard/AdminPage";
 import BookingPage from "../pages/dashboard/BookingPage";
+import AdminPage from "../pages/dashboard/AdminPage";
 
 
 const LandingPage = lazy(() => import("../pages/LandingPage"))
@@ -30,11 +31,10 @@ export default function Router() {
                 <Route index element={<Dashboard />} />          
                 <Route path="events" element={<EventPage />} />
                 <Route path="events/create" element={<EventForm />} /> 
-                {/* <Route path="events/edit" element={<EventForm />} />  */}
                 <Route path="vendors" element={<VendorPage />} />
                 <Route path="vendors/create" element={<VendorForm />} />
                 <Route path="vendors/edit/:id" element={<VendorForm />} />      
-                <Route path="users" element={<UsersPage />} /> 
+                <Route path="admin" element={<AdminPage />} /> 
                 <Route path="booking" element={<BookingPage />} />
 
             </Route>

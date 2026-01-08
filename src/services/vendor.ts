@@ -34,13 +34,12 @@ export const getvendorById = async (id: string) => {
 
 export const getVendorByUserId = async () => {
     try {
-        // Remove the leading slash since baseURL already includes /api/v1
         const response = await api.get("/vendors/by-user");
         return response.data.data;
     } catch (err: any) {
         return null;
     }
-};
+}
 
 
 // update vendor (admin)

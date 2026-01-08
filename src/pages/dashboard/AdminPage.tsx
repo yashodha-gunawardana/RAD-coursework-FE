@@ -11,6 +11,8 @@ import {
   Users,
   Shield,
   Clock,
+  ArrowRight,
+  ArrowLeft,
 } from "react-feather";
 import { getAllUsers, rejectVendorRequest, deleteUserAccount } from "../../services/auth";
 
@@ -111,13 +113,17 @@ const getStatusLabel = (status: VendorStatusType): string => {
 }
 
 
-const UsersPage: React.FC = () => {
+const AdminPage: React.FC = () => {
     const navigate = useNavigate();
 
     const [users, setUsers] = useState<AppUser[]>([])
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "success"})
 
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(6);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalUsers, setTotalUsers] = useState(0)
     const [searchTerm, setSearchTerm] = useState("")
     const [roleFilter, setRoleFilter] = useState<RoleType | "">("")
     const [statusFilter, setStatusFilter] = useState<VendorStatusType | "">("")
@@ -127,6 +133,13 @@ const UsersPage: React.FC = () => {
         userId: null,
         fullname: ""
     })
+
+        const [stats, setStats] = useState({
+        totalUsers: 0,
+        admins: 0,
+        vendors: 0,
+        pending: 0
+    });
 
 
     const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
@@ -143,9 +156,17 @@ const UsersPage: React.FC = () => {
     const loadUsers = useCallback(async () => {
         try {
             setLoading(true)
-            const response = await getAllUsers()
+            const response = await getAllUsers({ page, limit, search: searchTerm || undefined })
             
             setUsers(response.data || [])
+            setTotalPages(response.totalPages || 1)
+                    
+            setTotalUsers(response.totalItems || 0)
+
+            if (response.stats) {
+                setStats(response.stats)
+            }
+
 
         } catch (err: any) {
             console.error("Error loading users:", err)
@@ -154,38 +175,26 @@ const UsersPage: React.FC = () => {
         } finally {
             setLoading(false)
         }
-    }, [showToast])
+
+    }, [page, limit, searchTerm, showToast])
 
 
-    // approve vendor req
-   /* const handleApprove = useCallback(async (userId: string) => {
-        try {
-            await approveVendorRequest(userId);
-            
-            await loadUsers();
-            
-            showToast("Vendor approved successfully", "success");
-        } catch (err: any) {
-            // Show actual backend message
-            const message = err.response?.data?.message || "Failed to approve vendor";
-            showToast(message, "error");
-        }
-    }, [showToast, loadUsers]);*/
-    
+    // vendor approve
     const handleApprove = useCallback((user: AppUser) => {
-    if (!user?._id) {
-        showToast("Cannot approve: User ID missing", "error");
-        return;
-    }
+        if (!user?._id) {
+            showToast("Cannot approve: User ID missing", "error");
+            return;
+        }
 
-    // CORRECT: Pass via state
-    navigate("/dashboard/vendors/create", { 
-        state: { 
-            userId: user._id,
-            userFullname: user.fullname 
-        } 
-    });
-}, [navigate, showToast]);
+        navigate("/dashboard/vendors/create", { 
+            state: { 
+                userId: user._id,
+                userFullname: user.fullname 
+            } 
+        })
+
+    }, [navigate, showToast]);
+
 
     // reject vendor req
     const handleReject = useCallback(async (userId: string) => {
@@ -199,7 +208,9 @@ const UsersPage: React.FC = () => {
             const message = err.response?.data?.message || "Failed to reject vendor";
             showToast(message, "error");
         }
+
     }, [showToast, loadUsers]);
+
 
     // delete user
     const handleDelete = useCallback(async () => {
@@ -226,23 +237,8 @@ const UsersPage: React.FC = () => {
         } finally {
             setDeleteModal({ show: false, userId: null, fullname: "" })
         }
+
     }, [showToast, deleteModal])
-
-
-    // stats cards
-    const stats = React.useMemo(() => {
-        const totalUsers = users.length
-        const admins = users.filter(u => u.roles.includes("ADMIN")).length
-        const vendors = users.filter(u => u.roles.includes("VENDOR")).length
-        const pending = users.filter(u => u.vendorStatus.includes("PENDING")).length
-
-        return {
-            totalUsers,
-            admins,
-            vendors,
-            pending
-        }
-    }, [users])
 
 
     // filters
@@ -276,7 +272,9 @@ const UsersPage: React.FC = () => {
         setSearchTerm("")
         setRoleFilter("")
         setStatusFilter("")
+        setPage(1)
         showToast("Filters cleared")
+
     }, [showToast])
 
 
@@ -463,7 +461,10 @@ const UsersPage: React.FC = () => {
                                 <input
                                     type="text"
                                     value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    onChange={(e) => {
+                                        setSearchTerm(e.target.value)
+                                        setPage(1) 
+                                    }}
                                     placeholder="Search by name or email..."
                                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 
                                             focus:ring-red-500 focus:border-transparent transition-all"
@@ -474,7 +475,10 @@ const UsersPage: React.FC = () => {
                         <div className="flex gap-3 w-full md:w-auto">
                             <select
                                 value={roleFilter}
-                                onChange={(e) => setRoleFilter(e.target.value as RoleType | "")}
+                                onChange={(e) => {
+                                    setRoleFilter(e.target.value as RoleType | "")
+                                    setPage(1)
+                                }}
                                 className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 
                                             focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
                             
@@ -486,7 +490,10 @@ const UsersPage: React.FC = () => {
 
                             <select
                                 value={statusFilter}
-                                onChange={(e) => setStatusFilter(e.target.value as VendorStatusType | "")}
+                                onChange={(e) => {
+                                    setStatusFilter(e.target.value as VendorStatusType | "")
+                                    setPage(1)
+                                }}
                                 className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 
                                             focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
                             
@@ -528,123 +535,188 @@ const UsersPage: React.FC = () => {
 
                         ) : (
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                                {filteredUsers.map((user, index) => (
-                                    <div
-                                        key={user._id || `user-${index}`}
-                                        className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
-                                                    transition-all hover:-translate-y-1">
+                                    {filteredUsers.map((user, index) => (
+                                        <div
+                                            key={user._id || `user-${index}`}
+                                            className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
+                                                        transition-all hover:-translate-y-1">
 
-                                        
-                                        <div className="relative h-50 w-98 bg-[#C2A886] rounded-xl overflow-hidden shadow-lg">
+                                            
+                                                <div className="relative h-50 w-98 bg-[#C2A886] rounded-xl overflow-hidden shadow-lg">
   
   
-                                            <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
-                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
-                                            <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
+                                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
+                                                    <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
 
-                                            {/* role badges */}
-                                            <div className="absolute top-3 left-3 flex gap-2">
-                                                {user.roles.map((role, roleIndex) => (
-                                                        
-                                                    <span
-                                                        key={`${user._id}-${role}-${roleIndex}`}
-                                                        className={`px-2 py-1 rounded-full text-xs font-semibold uppercase 
-                                                                        ${getRoleBadgeClass(role)}
+                                                    {/* role badges */}
+                                                    <div className="absolute top-3 left-3 flex gap-2">
+                                                        {user.roles.map((role, roleIndex) => (
+                                                                
+                                                            <span
+                                                                key={`${user._id}-${role}-${roleIndex}`}
+                                                                className={`px-2 py-1 rounded-full text-xs font-semibold uppercase 
+                                                                                ${getRoleBadgeClass(role)}
+                                                                            `}>
+                                                                    
+                                                                    {getRoleLabel(role)}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+
+                                                    {/* status badge */}
+                                                    <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold uppercase z-10 
+                                                                        ${getStatusBadgeClass(user.vendorStatus)}
                                                                     `}>
+
+                                                            {getStatusLabel(user.vendorStatus)}
+                                                    </div>
+
+                                                    <div className="relative flex h-full flex-col items-center justify-center">
+                                                    <div className="text-[#4A0404]/70 drop-shadow-sm">
                                                             
-                                                            {getRoleLabel(role)}
-                                                    </span>
-                                                ))}
+                                                        <User size={60} strokeWidth={1.2} />
+
+                                                    </div>
+
+                                                    <div className="mt-4 flex flex-col items-center">
+                                                        <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#4A0404]/30 to-transparent"></div>
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            {/* status badge */}
-                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold uppercase z-10 
-                                                                ${getStatusBadgeClass(user.vendorStatus)}
-                                                            `}>
+                                            <div className="p-5">
 
-                                                    {getStatusLabel(user.vendorStatus)}
-                                            </div>
+                                                <h3 className="text-lg font-semibold text-[#0A0A0A]/90 mb-2 capitalize">
+                                                    {user.fullname}
+                                                </h3>
 
-                                            <div className="relative flex h-full flex-col items-center justify-center">
-                                                <div className="text-[#4A0404]/70 drop-shadow-sm">
+                                                <p className="text-sm text-[#0A0A0A]/60 mb-4">
+                                                    {user.email}
+                                                </p>
+
+
+                                                {/* approve/reject buttons only for pending */}
+                                                {user.vendorStatus === "PENDING" && (
+                                                    <div className="flex flex-wrap gap-2 mb-4">
+                                                        <button
+                                                            onClick={() => handleApprove(user)}
+                                                            className="flex-1 px-3 py-2 bg-green-100 text-green-800 rounded-lg font-medium hover:bg-green-200 
+                                                                        transition-all flex items-center justify-center gap-1">
                                                         
-                                                    <User size={60} strokeWidth={1.2} />
+                                                                <CheckCircle size={16} />
 
-                                                </div>
+                                                                    Approve
+                                                        </button>
 
-                                                <div className="mt-4 flex flex-col items-center">
-                                                    <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#4A0404]/30 to-transparent"></div>
-                                                </div>
+                                                        <button
+                                                            onClick={() => handleReject(user._id)}
+                                                            className="flex-1 px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-200 
+                                                                        transition-all flex items-center justify-center gap-1">
+                                                        
+                                                                <XCircle size={16} />
+                                                            
+                                                                    Reject
+                                                        </button>
+                                                    </div>
+                                                )}
+
+                                                {/* delete button*/}
+                                                <button
+                                                    type="button"
+                                                    // Inside the delete button onClick, before opening modal
+                                                    onClick={() => {
+                                                        const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+                                                        if (user._id === currentUser._id) {
+                                                            showToast("You cannot delete your own account!", "error");
+                                                            return;
+                                                        }
+
+                                                        console.log("Delete clicked for user ID:", user._id);
+                                                        setDeleteModal({
+                                                            show: true,
+                                                            userId: user._id,
+                                                            fullname: user.fullname
+                                                        });
+                                                    }}
+                                                    className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-700 hover:text-white 
+                                                                transition-all flex items-center justify-center gap-1">
+                                                    
+                                                        <Trash2 size={16} />
+
+                                                            Delete User
+                                                </button>
                                             </div>
                                         </div>
+                                    ))}
+                                </div>
 
-                                        <div className="p-5">
-
-                                            <h3 className="text-lg font-semibold text-[#0A0A0A]/90 mb-2 capitalize">
-                                                {user.fullname}
-                                            </h3>
-
-                                            <p className="text-sm text-[#0A0A0A]/60 mb-4">
-                                                {user.email}
-                                            </p>
-
-
-                                            {/* approve/reject buttons only for pending */}
-                                            {user.vendorStatus === "PENDING" && (
-                                                <div className="flex flex-wrap gap-2 mb-4">
-                                                    <button
-                                                        onClick={() => handleApprove(user)}
-                                                        className="flex-1 px-3 py-2 bg-green-100 text-green-800 rounded-lg font-medium hover:bg-green-200 
-                                                                    transition-all flex items-center justify-center gap-1">
-                                                    
-                                                            <CheckCircle size={16} />
-
-                                                                Approve
-                                                    </button>
-
-                                                    <button
-                                                        onClick={() => handleReject(user._id)}
-                                                        className="flex-1 px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-200 
-                                                                    transition-all flex items-center justify-center gap-1">
-                                                    
-                                                            <XCircle size={16} />
-                                                        
-                                                                Reject
-                                                    </button>
-                                                </div>
-                                            )}
-
-                                            {/* delete button*/}
-                                            <button
-                                                type="button"
-                                                // Inside the delete button onClick, before opening modal
-onClick={() => {
-    const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
-    if (user._id === currentUser._id) {
-        showToast("You cannot delete your own account!", "error");
-        return;
-    }
-
-    console.log("Delete clicked for user ID:", user._id);
-    setDeleteModal({
-        show: true,
-        userId: user._id,
-        fullname: user.fullname
-    });
-}}
-                                                className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-700 hover:text-white 
-                                                            transition-all flex items-center justify-center gap-1">
+                                {/* pagination */}
+                                {totalPages > 1 && (
+                                    <div className="mt-15 flex flex-col sm:flex-col justify-center items-center gap-4 text-sm text-gray-600">
                                                 
-                                                    <Trash2 size={16} />
-
-                                                        Delete User
+                                        <div>
+                                            Showing{' '}
+                                            <span className="font-medium text-gray-900">
+                                                {(page - 1) * limit + 1}–{Math.min(page * limit, totalUsers)}
+                                            </span>{' '}
+                                            of <span className="font-medium text-gray-900">{totalUsers}</span> users
+                                        </div>
+                            
+                                        {/* Navigation buttons */}
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                disabled={page === 1}
+                                                onClick={() => setPage(prev => Math.max(1, prev - 1))}
+                                                className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
+                                                            bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
+                                                            hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
+                                                            active:scale-95
+                                                            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent">
+                                                                                
+                                                    <span className="text-sm font-semibold tracking-widest uppercase">
+                                                                                    
+                                                        Prev
+                                                    </span>
+                                                                            
+                                                    <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-[#4A0404]/10 group-hover:bg-[#F8F4E3]/20">
+                                                                                    
+                                                        <ArrowLeft size={14} strokeWidth={3} className="transition-transform group-hover:translate-x-0.5" />
+                                                    </div>
+                                            </button>
+                                
+                                            <span className="px-4 py-2 font-medium text-gray-900">
+                                                                                
+                                                Page {page} of {totalPages}
+                                
+                                            </span>
+                                
+                                            <button
+                                                disabled={page === totalPages}
+                                                onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
+                                                className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
+                                                            bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
+                                                            hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
+                                                            active:scale-95
+                                                            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent">
+                                                                                
+                                                    <span className="text-sm font-semibold tracking-widest uppercase">
+                                                                                    
+                                                        Next
+                                                    </span>
+                                                                            
+                                                    <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-[#4A0404]/10 group-hover:bg-[#F8F4E3]/20">
+                                                                                    
+                                                        <ArrowRight size={14} strokeWidth={3} className="transition-transform group-hover:translate-x-0.5" />
+                                                    </div>
                                             </button>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>
@@ -700,4 +772,4 @@ onClick={() => {
 }
 
 
-export default UsersPage
+export default AdminPage

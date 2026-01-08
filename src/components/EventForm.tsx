@@ -65,13 +65,13 @@ const EventForm: React.FC = () => {
         extraItems: [],
         image: null,
         isPackage: false
-    });
+    })
 
-    const [extraItems, setExtraItems] = useState<ExtraItem[]>([]);
-    const [preview, setPreview] = useState<string | null>(null);
-    const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
+    const [extraItems, setExtraItems] = useState<ExtraItem[]>([])
+    const [preview, setPreview] = useState<string | null>(null)
+    const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' })
     const [loading, setLoading] = useState(false)
-    const [imageRemoved, setImageRemoved] = useState(false);
+    const [imageRemoved, setImageRemoved] = useState(false)
 
 
     // handle input changes
@@ -137,6 +137,7 @@ const EventForm: React.FC = () => {
         setImageRemoved(true);
     }
 
+
     // toast notifications
     const showToast = (message: string, type: "success" | "error" = "success") => {
         setToast({ show: true, message, type })
@@ -166,7 +167,6 @@ const EventForm: React.FC = () => {
                     status: eventData.status || "PLANNING",
                     image: null,
                     isPackage: eventData.isPackage || false
-                    // extraItems: eventData.extraItems || []
                 })
 
                 setExtraItems(
@@ -228,28 +228,28 @@ const EventForm: React.FC = () => {
         if (eventData.time) formData.append("time", eventData.time)
         formData.append("location", eventData.location)
         if (eventData.description) formData.append("description", eventData.description)
-        formData.append("basePrice", eventData.basePrice.toString());
-        formData.append("status", eventData.status);
+        formData.append("basePrice", eventData.basePrice.toString())
+        formData.append("status", eventData.status)
         if (isAdmin && eventData.isPackage) {
-        formData.append("isPackage", "true");
-    }
+        formData.append("isPackage", "true")
+        }
       
         if (editId) {
-            formData.append("imageRemoved", imageRemoved.toString());
+            formData.append("imageRemoved", imageRemoved.toString())
         }
 
         // append new image if selected
         if (eventData.image instanceof File) {
-            formData.append("image", eventData.image);
+            formData.append("image", eventData.image)
         }
 
         extraItems.forEach((item: ExtraItem, idx: number) => {
             if (item.name && item.name.trim() !== "") {
-                formData.append(`extraItems[${idx}][name]`, item.name.trim());
-                formData.append(`extraItems[${idx}][unitPrice]`, item.unitPrice.toString());
-                formData.append(`extraItems[${idx}][quantity]`, item.quantity.toString());
+                formData.append(`extraItems[${idx}][name]`, item.name.trim())
+                formData.append(`extraItems[${idx}][unitPrice]`, item.unitPrice.toString())
+                formData.append(`extraItems[${idx}][quantity]`, item.quantity.toString())
             }
-        });
+        })
 
         try {
             if (editId) {

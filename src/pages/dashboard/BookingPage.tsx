@@ -13,8 +13,10 @@ import {
   Plus,
   X,
   Bookmark,
+  ArrowLeft,
+  ArrowRight
 } from "react-feather";
-import { createBooking, getMyBooking, updateBooking, deleteBooking, getVendorBookings, updateBookingStatus } from "../../services/booking";
+import { createBooking, getMyBooking, updateBooking, deleteBooking, getVendorBookings, updateBookingStatus, getAllBookings } from "../../services/booking";
 import { getAllEventsForSelect } from "../../services/events";
 import { getAllVendorsForSelect } from "../../services/vendor";
 import { useAuth } from "../../context/authContext";
@@ -108,12 +110,10 @@ const formatDate = (dateString: string): string => {
 
 
 const BookingPage: React.FC = () => {
-    // const navigate = useNavigate()
 
     const { user } = useAuth()
     const isAdmin = user?.roles.includes("ADMIN")
     const isVendor = user?.roles.includes("VENDOR")
-    // const isUser  = user?.roles.includes("USER")
     const currentUserId = user?._id
 
     const [bookings, setBookings] = useState<Booking[]>([])
@@ -128,14 +128,25 @@ const BookingPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [statusFilter, setStatusFilter] = useState("")
 
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [totalItems, setTotalItems] = useState(0)
+    const limit = 6
+
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [selectedEventId, setSelectedEventId] = useState("")
-    // const [extraItems, setExtraItems] = useState<ExtraItem[]>([])
     const [selectedVendorId, setSelectedVendorId] = useState("")
     const [notes, setNotes] = useState("")
     const [creating, setCreating] = useState(false)
 
-    // const [selectedExtraItems, setSelectedExtraItems] = useState<{ name: string; unitPrice: number; quantity: number }[]>([])
+
+    const [stats, setStats] = useState({
+        totalBookings: 0,
+        pending: 0,
+        confirmed: 0,
+        completed: 0,
+        cancelled: 0
+    })
 
 
     const showToast = useCallback((message: string, type: "success" | "error" = "success") => {
@@ -153,21 +164,103 @@ const BookingPage: React.FC = () => {
         try {
             setLoading(true)
 
-            const response = isVendor
-                ? await getVendorBookings()
-                : await getMyBooking()
+            let response;
 
-            // const response = await getMyBooking()
-            setBookings(response.data || [])
+            if (user?.roles.includes("ADMIN")) {
 
-        } catch (err : any) {
-            console.error("Error loading bookings:", err)
-            showToast("Failed to load bookings", "error")
-        
-        } finally {
-            setLoading(false)
+                // admin get all bookings with pagination
+                response = await getAllBookings({ 
+                    page,
+                    limit,
+                    search: searchTerm || undefined,
+                    status: statusFilter || undefined
+                });
+
+                setBookings(response.data || []);
+                setTotalPages(response.totalPages || 1);
+                setTotalItems(response.totalItems || 0)
+
+                if (response.stats) {
+                    setStats(response.stats);
+                }
+
+            } else if (user?.roles.includes("VENDOR")) {
+
+            // vendorget vendor-specific bookings
+            try {
+                console.log("Fetching vendor bookings...");
+                response = await getVendorBookings();
+                console.log("Vendor bookings response:", response);
+
+
+                setBookings(response.data || []);
+                setTotalPages(1);
+                setTotalItems(response.data?.length || 0);
+
+                 const vendorStats = {
+                    totalBookings: response.data?.length || 0,
+                    pending: response.data?.filter((b: Booking) => b.status === "PENDING").length || 0,
+                    confirmed: response.data?.filter((b: Booking) => b.status === "CONFIRMED").length || 0,
+                    completed: response.data?.filter((b: Booking) => b.status === "COMPLETED").length || 0,
+                    cancelled: response.data?.filter((b: Booking) => b.status === "CANCELLED").length || 0
+                };
+                setStats(vendorStats)
+
+            } catch (err: any) {
+                if (err.response?.status === 404) {
+                    console.log("Vendor bookings endpoint not found, trying regular endpoint");
+
+                    setBookings( []);
+                    setTotalItems(0);
+                    setTotalPages(1);
+
+                } else {
+                    throw err;
+                }
+            }
+            
+        } else {
+
+            // user get their own bookings
+            response = await getMyBooking();
+            setBookings(response.data || []);
+            setTotalPages(1);
+            setTotalItems(response.data?.length || 0);
+
+            const userStats = {
+                totalBookings: response.data?.length || 0,
+                pending: response.data?.filter((b: Booking) => b.status === "PENDING").length || 0,
+                confirmed: response.data?.filter((b: Booking) => b.status === "CONFIRMED").length || 0,
+                completed: response.data?.filter((b: Booking) => b.status === "COMPLETED").length || 0,
+                cancelled: response.data?.filter((b: Booking) => b.status === "CANCELLED").length || 0
+            };
+            setStats(userStats);
         }
-    }, [isVendor, showToast])
+        
+
+        } catch (err: any) {
+            console.error("Error loading bookings:", err);
+            showToast("Failed to load bookings", "error");
+            
+        } finally {
+            setLoading(false);
+        }
+
+    }, [user, page, limit, statusFilter, searchTerm, showToast]); 
+
+
+    useEffect(() => {
+        loadBookings();  
+
+        if (!isVendor) {
+            const interval = setInterval(() => {
+                loadBookings();
+            }, 15000);
+
+            return () => clearInterval(interval); 
+        }
+
+    }, [loadBookings, isVendor]);
 
 
     // load events and vendors
@@ -189,16 +282,16 @@ const BookingPage: React.FC = () => {
         } finally {
             setLoadingResources(false)
         }
+
     }, [showToast])
 
 
-    // Open modal → load data
+    // open modal → load data
     const openCreateModal =  async () => {
         setIsCreateModalOpen(true)
         setSelectedEventId("")
         setSelectedVendorId("")
         setNotes("")
-        // setExtraItems([])
 
         await loadResources()
     }
@@ -224,7 +317,8 @@ const BookingPage: React.FC = () => {
 
             showToast("Booking created successfully.")
             setIsCreateModalOpen(false)
-            loadBookings() // refresh list
+            setPage(1)
+            loadBookings() 
 
         } catch (err: any) {
             showToast("Failed to create booking", "error")
@@ -236,19 +330,6 @@ const BookingPage: React.FC = () => {
 
 
     // booking status update
-    /*const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
-        try {
-            await updateBooking(id, { status })
-            setBookings((prev) => prev.map((b) => (b._id === id ? { ...b, status } : b)))
-
-            showToast(`Booking ${status.toLocaleLowerCase()} successfully`)
-
-        } catch (err: any) {
-            showToast("Failed to update booking status", "error")
-        }
-    }, [showToast])*/
-
-
     const handleStatusChange = useCallback(async (id: string, status: BookingStatusType) => {
         try {
 
@@ -261,10 +342,12 @@ const BookingPage: React.FC = () => {
 
             setBookings((prev) => prev.map((b) => (b._id === id ? { ...b, status } : b)))
             showToast(`Booking ${status.toLowerCase()} successfully`)
+
         } catch (err: any) {
             showToast("Failed to update booking status", "error")
         }
-    }, [showToast])
+
+    }, [showToast, isAdmin, isVendor])
 
 
     // delete booking
@@ -277,28 +360,19 @@ const BookingPage: React.FC = () => {
             setBookings((prev) => prev.filter((b) => b._id !== id))
 
             showToast("Booking deleted successfully")
+            loadBookings()
 
         } catch (err: any) {
             showToast("Failed to delete booking", "error")
         }
-    }, [showToast])
+
+    }, [showToast, loadBookings])
+
 
 
     useEffect(() => {
         loadBookings()
     }, [loadBookings])
-
-
-
-    // calculate stats
-    const stats = React.useMemo(() => {
-        const totalBookings = bookings.length
-        const pending = bookings.filter((b) => b.status === "PENDING").length
-        const confirmed = bookings.filter((b) => b.status === "CONFIRMED").length
-        const completed = bookings.filter((b) => b.status === "COMPLETED").length
-
-        return { totalBookings, pending, confirmed, completed }
-    }, [bookings])
 
 
     // filters
@@ -329,9 +403,10 @@ const BookingPage: React.FC = () => {
     const resetFilters = useCallback(() => {
         setSearchTerm("")
         setStatusFilter("")
+        setPage(1)
         showToast("Filteres cleared")
-    }, [showToast])
 
+    }, [showToast])
 
     
 
@@ -513,7 +588,10 @@ const BookingPage: React.FC = () => {
                                 <input
                                     type="text"
                                     value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    onChange={(e) => {
+                                        setSearchTerm(e.target.value)
+                                        setPage(1)
+                                    }}
                                     placeholder="Search by event title, vendor, or location..."
                                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none 
                                                 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
@@ -524,7 +602,10 @@ const BookingPage: React.FC = () => {
                         <div className="flex gap-3 w-full md:w-auto">
                             <select
                                 value={statusFilter}
-                                onChange={(e) => setStatusFilter(e.target.value)}
+                                onChange={(e) => {
+                                    setStatusFilter(e.target.value)
+                                    setPage(1)
+                                }}
                                 className="px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 
                                             focus:ring-red-500 focus:border-transparent transition-all min-w-[160px]">
                             
@@ -568,136 +649,203 @@ const BookingPage: React.FC = () => {
                             </div>
                         ) : (
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                                {filteredBookings.map((booking) => (
+                                    {filteredBookings.map((booking) => (
 
-                                    <div
-                                        key={booking._id}
-                                        className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
-                                                    transition-all hover:-translate-y-1">
-                                            
-                                        <div className="h-40 relative overflow-hidden">
-                                            {booking.vendorId.image ? (
-
-                                                <img
-                                                    src={booking.vendorId.image}
-                                                    alt={booking.vendorId.name}
-                                                    className="absolute inset-0 w-full h-full object-cover opacity-80"
-                                                />
-                                            ) : (
-
-                                                <div className="relative h-50 w-98 overflow-hidden rounded-xl bg-[#C2A886] shadow-lg">
-                                                    <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
+                                        <div
+                                            key={booking._id}
+                                            className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
+                                                        transition-all hover:-translate-y-1">
                                                 
-                                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
-                                            
-                                                    <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
+                                            <div className="h-40 relative overflow-hidden">
+                                                {booking.vendorId.image ? (
+
+                                                    <img
+                                                        src={booking.vendorId.image}
+                                                        alt={booking.vendorId.name}
+                                                        className="absolute inset-0 w-full h-full object-cover opacity-80"
+                                                    />
+                                                ) : (
+
+                                                    <div className="relative h-50 w-98 overflow-hidden rounded-xl bg-[#C2A886] shadow-lg">
+                                                        <div className="absolute inset-0 bg-gradient-to-br from-[#4A0404]/40 via-transparent to-[#4A0404]/20"></div>
+                                                    
+                                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,244,227,0.3)_0%,transparent_80%)]"></div>
                                                 
-                                                    <div className="relative flex h-full flex-col items-center justify-center">
-                                                        <div className="text-[#4A0404]/70 drop-shadow-sm">
+                                                        <div className="absolute inset-x-0 top-0 h-px bg-white/20"></div>
+                                                    
+                                                        <div className="relative flex h-full flex-col items-center justify-center">
+                                                            <div className="text-[#4A0404]/70 drop-shadow-sm">
+                                                                                                                        
+                                                                <Bookmark size={60} strokeWidth={1.2} />
+                                                    
+                                                            </div>
                                                                                                                     
-                                                            <Bookmark size={60} strokeWidth={1.2} />
-                                                
-                                                        </div>
-                                                                                                                
-                                                        <div className="mt-4 flex flex-col items-center">
-                                                            <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#4A0404]/30 to-transparent"></div>
-                                                                                                                    
+                                                            <div className="mt-4 flex flex-col items-center">
+                                                                <div className="h-px w-20 bg-gradient-to-r from-transparent via-[#4A0404]/30 to-transparent"></div>
+                                                                                                                        
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            )}
-
-                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold uppercase
-                                                                ${getStatusBadgeClass(booking.status)}
-                                                            `}>
-                                                    
-                                                    {getStatusLabel(booking.status)}
-                                            </div>
-                                        </div>
-
-                                        <div className="p-5">
-                                            <h3 className="text-lg font-semibold text-[#0A0A0A]/90 capitalize mb-4 line-clamp-1">
-                                                
-                                                {booking.eventId.title}
-
-                                            </h3>
-
-                                            <p className="text-sm text-[#0A0A0A]/80 mb-3">
-
-                                                <strong>Vendor:</strong> {booking.vendorId.name}
-                                            </p>
-
-                                            <div className="space-y-3 text-sm text-[#0A0A0A]/80 mb-4">
-
-                                                <p><strong>Date:</strong> {formatDate(booking.eventId.date)}</p>
-                                                <p><strong>Location:</strong> {booking.eventId.location}</p>
-
-                                            </div>
-
-                                            {booking.notes && (
-                                                <p className="text-sm text-[#0A0A0A]/70 italic mb-5 line-clamp-2">
-                                                    "{booking.notes}"
-                                                </p>
-                                            )}
-
-
-                                            <div className="flex flex-wrap gap-2 mb-3">
-                                                {booking.status === "PENDING" &&  (isAdmin || isVendor) && (
-                                                    <>
-                                                        <button
-                                                            onClick={() => handleStatusChange(booking._id, "CONFIRMED")}
-                                                            className="flex-1 px-3 py-2 bg-green-100 text-green-800 rounded-lg font-medium hover:bg-green-200 
-                                                                        transition-all flex items-center justify-center gap-1">
-                                                            
-                                                                
-                                                                <CheckCircle size={16} />
-                                                                    
-                                                                    Confirm
-                                                        </button>
-
-                                                        <button
-                                                            onClick={() => handleStatusChange(booking._id, "CANCELLED")}
-                                                            className="flex-1 px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-200 
-                                                                        transition-all flex items-center justify-center gap-1">
-                                                            
-                                                                <XCircle size={16} />
-
-                                                                    Cancel
-                                                        </button>
-                                                    </>
                                                 )}
 
-                                                {booking.status === "CONFIRMED" && (isVendor || isAdmin) && (
+                                                <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold uppercase
+                                                                    ${getStatusBadgeClass(booking.status)}
+                                                                `}>
+                                                        
+                                                        {getStatusLabel(booking.status)}
+                                                </div>
+                                            </div>
+
+                                            <div className="p-5">
+                                                <h3 className="text-lg font-semibold text-[#0A0A0A]/90 capitalize mb-4 line-clamp-1">
+                                                    
+                                                    {booking.eventId.title}
+
+                                                </h3>
+
+                                                <p className="text-sm text-[#0A0A0A]/80 mb-3">
+
+                                                    <strong>Vendor:</strong> {booking.vendorId.name}
+                                                </p>
+
+                                                <div className="space-y-3 text-sm text-[#0A0A0A]/80 mb-4">
+
+                                                    <p><strong>Date:</strong> {formatDate(booking.eventId.date)}</p>
+                                                    <p><strong>Location:</strong> {booking.eventId.location}</p>
+
+                                                </div>
+
+                                                {booking.notes && (
+                                                    <p className="text-sm text-[#0A0A0A]/70 italic mb-5 line-clamp-2">
+                                                        "{booking.notes}"
+                                                    </p>
+                                                )}
+
+
+                                                <div className="flex flex-wrap gap-2 mb-3">
+                                                    {booking.status === "PENDING" &&  (isAdmin || isVendor) && (
+                                                        <>
+                                                            <button
+                                                                onClick={() => handleStatusChange(booking._id, "CONFIRMED")}
+                                                                className="flex-1 px-3 py-2 bg-green-100 text-green-800 rounded-lg font-medium hover:bg-green-200 
+                                                                            transition-all flex items-center justify-center gap-1">
+                                                                
+                                                                    
+                                                                    <CheckCircle size={16} />
+                                                                        
+                                                                        Confirm
+                                                            </button>
+
+                                                            <button
+                                                                onClick={() => handleStatusChange(booking._id, "CANCELLED")}
+                                                                className="flex-1 px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-200 
+                                                                            transition-all flex items-center justify-center gap-1">
+                                                                
+                                                                    <XCircle size={16} />
+
+                                                                        Cancel
+                                                            </button>
+                                                        </>
+                                                    )}
+
+                                                    {booking.status === "CONFIRMED" && (isVendor || isAdmin) && (
+                                                        <button
+                                                            onClick={() => handleStatusChange(booking._id, "COMPLETED")}
+                                                            className="flex-1 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg font-medium hover:bg-blue-200 
+                                                                        transition-all flex items-center justify-center gap-1">
+                                                        
+                                                                <CheckCircle size={16} />
+
+                                                                    Mark Complete
+                                                        </button>
+                                                    )}
+                                                </div>
+
+                                                {/* delete button */}
+                                                {(isAdmin || booking.userId === currentUserId) && !isVendor && (
                                                     <button
-                                                        onClick={() => handleStatusChange(booking._id, "COMPLETED")}
-                                                        className="flex-1 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg font-medium hover:bg-blue-200 
+                                                        onClick={() => handleDeleteBooking(booking._id, booking.eventId.title)}
+                                                        className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-800 hover:text-white 
                                                                     transition-all flex items-center justify-center gap-1">
                                                     
-                                                            <CheckCircle size={16} />
+                                                            <Trash2 size={16} />
 
-                                                                Mark Complete
+                                                                Delete Booking
                                                     </button>
                                                 )}
-                                            </div>
 
-                                            {/* delete button */}
-                                            {(isAdmin || booking.userId === currentUserId) && !isVendor && (
-                                                <button
-                                                    onClick={() => handleDeleteBooking(booking._id, booking.eventId.title)}
-                                                    className="w-full px-3 py-2 bg-red-100 text-red-800 rounded-lg font-medium hover:bg-red-800 hover:text-white 
-                                                                transition-all flex items-center justify-center gap-1">
                                                 
-                                                        <Trash2 size={16} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
 
-                                                            Delete Booking
-                                                </button>
-                                            )}
+                                {/* pagination */}
+                                {isAdmin && totalPages > 1 && (
+                                    <div className="mt-15 flex flex-col sm:flex-col justify-center items-center gap-4 text-sm text-gray-600">
+                                                
+                                        <div>
+                                            Showing{' '}
+                                            <span className="font-medium text-gray-900">
+                                                {(page - 1) * limit + 1}–{Math.min(page * limit, totalItems)}
+                                            </span>{' '}
+                                            of <span className="font-medium text-gray-900">{totalItems}</span> bookings
+                                        </div>
+                            
+                                        {/* Navigation buttons */}
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                disabled={page === 1}
+                                                onClick={() => setPage(prev => Math.max(1, prev - 1))}
+                                                className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
+                                                            bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
+                                                            hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
+                                                            active:scale-95
+                                                            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent">
+                                                                            
+                                                    <span className="text-sm font-semibold tracking-widest uppercase">
+                                                                                
+                                                        Prev
+                                                    </span>
+                                                                        
+                                                    <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-[#4A0404]/10 group-hover:bg-[#F8F4E3]/20">
+                                                                                
+                                                        <ArrowLeft size={14} strokeWidth={3} className="transition-transform group-hover:translate-x-0.5" />
+                                                    </div>
+                                            </button>
+                            
+                                            <span className="px-4 py-2 font-medium text-gray-900">
+                                                                            
+                                                Page {page} of {totalPages}
+                            
+                                            </span>
+                            
+                                            <button
+                                                disabled={page === totalPages}
+                                                onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
+                                                className="group flex items-center gap-2 rounded-full border border-[#D9B99B]/50 
+                                                            bg-[#4A0404]/5 px-6 py-2 text-[#4A0404] transition-all duration-300
+                                                            hover:bg-[#4A0404] hover:text-[#F8F4E3] hover:shadow-[0_0_20px_rgba(74,4,4,0.2)]
+                                                            active:scale-95
+                                                            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent">
+                                                                            
+                                                    <span className="text-sm font-semibold tracking-widest uppercase">
+                                                                                
+                                                        Next
+                                                    </span>
+                                                                        
+                                                    <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-[#4A0404]/10 group-hover:bg-[#F8F4E3]/20">
+                                                                                
+                                                        <ArrowRight size={14} strokeWidth={3} className="transition-transform group-hover:translate-x-0.5" />
+                                                    </div>
+                                            </button>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>

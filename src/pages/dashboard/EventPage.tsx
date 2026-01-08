@@ -21,6 +21,7 @@ import { deleteEvent, getAllEvents, getMyEvents } from "../../services/events";
 import { useAuth } from "../../context/authContext";
 
 
+
 const formatDate = (dateString: string): string => {
 
     // convert string to date object
@@ -69,23 +70,11 @@ interface Event {
     updatedAt: string;
 }
 
-
-// type UserRole = "ADMIN" | "USER" | "VENDOR" | null
-
 interface ToastState {
     show: boolean
     message: string
     type: "success" | "error"
 }
-
-/*const EventType = {
-    WEDDING: "WEDDING",
-    BIRTHDAY: "BIRTHDAY",
-    CONFERENCE: "CONFERENCE",
-    CORPORATE: "CORPORATE",
-    PARTY: "PARTY",
-    OTHER: "OTHER"
-} as const;*/
 
 const EventStatus = {
     PLANNING: "PLANNING",
@@ -101,7 +90,6 @@ const EventsPage: React.FC = () => {
     const { user } = useAuth()
 
     const isAdmin = user?.roles?.includes("ADMIN")
-    // const isVendor = user?.roles?.includes("VENDOR")
     const isUser = user?.roles?.includes("USER")
 
 
@@ -119,50 +107,8 @@ const EventsPage: React.FC = () => {
     const [totalItems, setTotalItems] = useState(0)
     const limit = 6
 
-    // const [isAdmin, setIsAdmin] = useState(true)
- // const [role, setRole] = useState<UserRole>(null)
-
-
-    // check if user is admin 
-   /* useEffect(() => {
-        const userData = localStorage.getItem("user")
-
-        if (userData) {
-            try {
-                const user = JSON.parse(userData)
-                setIsAdmin(user?.roles?.includes("ADMIN") || false)
-
-            } catch (err) {
-                console.log("Error parsing user data: ", err)
-                setIsAdmin(false)
-            }
-        }
-    })*/
-   /* useEffect(() => {
-        const userData = localStorage.getItem("user")
-        if (!userData) return
-
-        try {
-            const user = JSON.parse(userData)
-            setRole(user?.roles?.[0] || null)
-
-        } catch {
-            setRole(null)
-        }
-    }, [])*/
-   
-
+    
     // calculate total price
-    /*const calculateTotalPrice = useCallback((event: Event) => {
-        let total = event.basePrice || 0
-
-        if (event.extraItems && event.extraItems.length > 0) {
-            event.extraItems.forEach(item => {
-                total += (item.unitPrice || 0) * (item.quantity || 1)
-            })
-        }
-        return total
-    }, []);*/
     const calculateTotalPrice = useCallback((event: Event) => {
         let total = event.basePrice || 0
 
@@ -212,100 +158,62 @@ const EventsPage: React.FC = () => {
 
 
     // load events with pagination - always get all events
-    /*const loadEvents = useCallback(async (pageNumber: number = 1) => {
+    const loadEvents = useCallback(async (pageNumber: number = 1) => {
         try {
-            setLoading(true) 
-            console.log("Loading ALL events...")
-            
-            const response = await getAllEvents(
-                pageNumber,
-                limit,
-                searchTerm.trim() || undefined,
-                typeFilter || undefined,
-                statusFilter || undefined
-            );
-
-            // Handle response
-            if (!response || !response.data) {
-                console.log("No data in response")
-
-                setEvents([])
-                setTotalPages(1)
-                setTotalItems(0)
-                setPage(pageNumber)
+            if (!user)
                 return
+
+            setLoading(true);
+
+            let response;
+
+            if (isAdmin) {
+        
+                // admin get all events
+                response = await getAllEvents(
+                    pageNumber,
+                    limit,
+                    searchTerm.trim() || undefined,
+                    typeFilter || undefined,
+                    statusFilter || undefined
+                );
+            } else {
+
+                // user / vendor get own events
+            
+                response = await getMyEvents(
+                    pageNumber,
+                    limit,
+                    searchTerm.trim() || undefined,
+                    typeFilter || undefined,
+                    statusFilter || undefined
+                );
             }
 
-            console.log("Loaded events:", response.data.length)
+            if (!response || !response.data) {
+                setEvents([]);
+                setTotalPages(1);
+                setTotalItems(0);
+                return;
+            }
 
-            setEvents(response.data || [])
-            setTotalPages(response.totalPages || 1)
-            setTotalItems(response.totalItems || 0)
-            setPage(pageNumber)
-            
-        } catch (err: any) {
-            console.error("Error loading events: ", err)
+            setEvents(response.data);
+            setTotalPages(response.totalPages || 1);
+            setTotalItems(response.totalItems || response.data.length);
+            setPage(pageNumber);
 
-            showToast("Failed to load events", "error")
-            setEvents([])
+        } catch (err) {
+            console.error("Error loading events:", err);
+            showToast("Failed to load events", "error");
+            setEvents([]);
 
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }, [searchTerm, typeFilter, statusFilter, showToast])*/
-    const loadEvents = useCallback(async (pageNumber: number = 1) => {
-  try {
-    if (!user)
-        return
-
-    setLoading(true);
-
-    let response;
-
-    if (isAdmin) {
-      // ADMIN → ALL EVENTS
-      response = await getAllEvents(
-        pageNumber,
-        limit,
-        searchTerm.trim() || undefined,
-        typeFilter || undefined,
-        statusFilter || undefined
-      );
-    } else {
-      // USER / VENDOR → OWN EVENTS
-    //   response = await getMyEvents(pageNumber, limit);
-    response = await getMyEvents(
-        pageNumber,
-        limit,
-        searchTerm.trim() || undefined,
-        typeFilter || undefined,
-        statusFilter || undefined
-      );
-    }
-
-    if (!response || !response.data) {
-      setEvents([]);
-      setTotalPages(1);
-      setTotalItems(0);
-      return;
-    }
-
-    setEvents(response.data);
-    setTotalPages(response.totalPages || 1);
-    setTotalItems(response.totalItems || response.data.length);
-    setPage(pageNumber);
-
-  } catch (err) {
-    console.error("Error loading events:", err);
-    showToast("Failed to load events", "error");
-    setEvents([]);
-  } finally {
-    setLoading(false);
-  }
-}, [user, isAdmin, searchTerm, typeFilter, statusFilter, showToast]);
+    }, [user, isAdmin, searchTerm, typeFilter, statusFilter, showToast]);
 
 
-// load pagination events when page or filter change
+    // load pagination events when page or filter change
     useEffect(() => {
         console.log("Page or filters changed, loading events...")
 
@@ -314,49 +222,31 @@ const EventsPage: React.FC = () => {
 
 
     // load all event for stats
-    /*const loadAllEvents = useCallback(async () => {
+    const loadAllEvents = useCallback(async () => {
+        if (!isAdmin) {
+            setAllEvents([]); 
+            return;
+        }
+
         try {
-            console.log("Loading ALL events for stats...")
-
-            const response = await getAllEvents(1, 1000)
-            
-            if (response && response.data) {
-                console.log("All events loaded for stats:", response.data.length)
-                setAllEvents(response.data || [])
-
-            } else {
-                console.log("No data for stats")
-                setAllEvents([]);
-            }
+            const response = await getAllEvents(1, 1000);
+            setAllEvents(response?.data || []);
 
         } catch (err) {
-            console.error("Error loading all events for stats:", err)
-            setAllEvents([])
+            console.error("Error loading all events for stats:", err);
+            setAllEvents([]);
         }
-    }, [])*/
-    const loadAllEvents = useCallback(async () => {
-  if (!isAdmin) {
-    setAllEvents([]); // no stats for non-admin
-    return;
-  }
+    }, [isAdmin]);
 
-  try {
-    const response = await getAllEvents(1, 1000);
-    setAllEvents(response?.data || []);
-  } catch (err) {
-    console.error("Error loading all events for stats:", err);
-    setAllEvents([]);
-  }
-}, [isAdmin]);
-
-
-    
     
     // load all events once for stats
     useEffect(() => {
-            console.log("User role changed, loading all events for stats...")
+        console.log("User role changed, loading all events for stats...")
+        
         loadAllEvents();
     }, [loadAllEvents])
+
+
 
     // delete handler
     const handleDeleteEvent = useCallback(async (id: string, title: string) => {
@@ -445,26 +335,6 @@ const EventsPage: React.FC = () => {
         alert(details)
     }, [calculateTotalPrice, getEventTypeLabel])
 
-
-
-    
-
-
-    // reset page when filters change
-   /* useEffect(() => {
-                console.log("Filters changed, resetting page to 1")
-
-        setPage(1);
-    }, [searchTerm, typeFilter, statusFilter])
-
-
-    useEffect(() => {
-        if (isAdmin !== null) {
-            console.log("Admin status changed to:", isAdmin);
-            loadEvents(1);
-            loadAllEvents();
-        }
-    }, [isAdmin, loadEvents, loadAllEvents]);*/
 
 
     return (
@@ -870,18 +740,7 @@ const EventsPage: React.FC = () => {
                                                                     View
                                                         </button>
                                                     </div>
-
-                                                    {/* <ConfirmDialog
-                                                        isOpen={deleteDialog.open}
-                                                        title="Delete Event?"
-                                                        message={`Are you sure you want to delete "${deleteDialog.title || 'this event'}"? This action cannot be undone.`}
-                                                        confirmText="Delete"
-                                                        cancelText="Cancel"
-                                                        danger={true}
-                                                        onConfirm={confirmDelete}
-                                                        onCancel={() => setDeleteDialog({ open: false })}
-                                                    /> */}
-                                                 </div>
+                                                </div>
                                             </div>
                                         )
                                     })}

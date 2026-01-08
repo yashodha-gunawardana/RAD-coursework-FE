@@ -94,7 +94,6 @@ const VendorPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [categoryFilter, setCategoryFilter] = useState("")
     const [availabilityFilter, setAvailabilityFilter] = useState("")
-    // const [loadingStats, setLoadingStats] = useState(false)
     
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
@@ -138,18 +137,7 @@ const VendorPage: React.FC = () => {
     }, [searchTerm, categoryFilter, availabilityFilter, showToast])
 
 
-    /*const loadAllVendorsForStats = useCallback(async () => {
-        try {
-            setLoadingStats(true)
-            const response = await getAllVendors({  limit: 1000 }); // large limit to get all
-            setAllVendors(response.data || []);
-        } catch (err) {
-            console.error("Error loading all vendors:", err);
-        
-        } finally {
-            setLoadingStats(false)
-        }
-    }, [])*/
+    // load vendrors for stats card
     const loadAllVendorsForStats = useCallback(async () => {
         try {
             const response = await getAllVendors({ limit: 1000 }); // large limit to get all

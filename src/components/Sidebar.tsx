@@ -1,5 +1,5 @@
 import React from "react";
-import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Settings, Menu, ChevronLeft, ChevronRight, LogOut } from "react-feather";
+import { Users, Calendar, Clipboard, Home, Bookmark, DollarSign, User, Menu, ChevronLeft, ChevronRight, LogOut } from "react-feather";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
@@ -34,7 +34,6 @@ const Sidebar: React.FC<SidebarProps> = ({
 
     const mainMenuItems = [
         { id: "dashboard", icon: Clipboard, label: "Dashboard", path: "/dashboard", show: true },
-        { id: "users", icon: Users, label: "Users", path: "/dashboard/users", show: isAdmin },
         { id: "events", icon: Calendar, label: "Events", path: "/dashboard/events", show: isAdmin || isVendor },
         { id: "vendors", icon: Home, label: "vendors", path: "/dashboard/vendors", show: isAdmin }
     ];
@@ -46,8 +45,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     ];
 
     const settingsItems = [
-        { id: "settings", icon: Settings, label: "Settings", path: "/dashboard/settings" },
-        { id: "admin", icon: User, label: "Admin", path: "/dashboard/admin" }
+        { id: "admin", icon: User, label: "Admin", path: "/dashboard/admin", show: isAdmin }
     ];
 
 

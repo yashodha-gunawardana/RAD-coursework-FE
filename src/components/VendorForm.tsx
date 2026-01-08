@@ -34,7 +34,7 @@ interface VendorFormData {
     description?: string;
     image: File | null;
     isAvailable: boolean;
-      addedByName?: string; // admin name who added this vendor
+    addedByName?: string; // admin name who added this vendor
 
 }
 
@@ -46,7 +46,6 @@ interface ToastState {
 
 const VendorForm: React.FC = () => {
 
-    // Inside component
     const location = useLocation();
     const passedUserId = location.state?.userId;
     const passedUserName = location.state?.userFullname;
@@ -118,56 +117,40 @@ const VendorForm: React.FC = () => {
     }
 
     useEffect(() => {
-    const admin = JSON.parse(localStorage.getItem("user") || "{}");
-    setCurrentAdminName(admin?.fullname || admin?.username || "Admin");
-  }, []);
+        const admin = JSON.parse(localStorage.getItem("user") || "{}");
+        setCurrentAdminName(admin?.fullname || admin?.username || "Admin");
+    }, [])
+    
+    
     // loading data on edit mode
-    /*useEffect(() => {
-        if (editId) {
-
-            const loadVendor = async () => {
-                try {
-                    setLoading(true)
-                    const vendor = await getvendorById(editId)
-
-                                console.log("EDIT VENDOR DATA:", vendor); // 🔍 DEBUG (IMPORTANT)
-
-
-                    setVendorData({
-                        name: vendor.name || "",
-                        category: vendor.category || "",
-                        contact: vendor.contact || "",
-                        priceRange: vendor.priceRange || "",
-                        description: vendor.description || "",
-                        image: null,
-                        isAvailable: vendor.isAvailable ?? true
-                    })
-
-                    if (vendor.image) {
-                        setPreview(vendor.image)
-                    }
-
-                } catch (err: any) {
-                    showToast("Failed to load vendor details", "error")
-                
-                } finally {
-                    setLoading(false)
-                }
-            } 
-            loadVendor()
-        } 
-    }, [editId])*/
-    // In VendorForm.tsx, fix the useEffect:
-
-/*useEffect(() => {
-    const loadVendorData = async () => {
-        if (editId) {
+    useEffect(() => {
+        const loadVendorData = async () => {
             try {
                 setLoading(true);
-                const vendor = await getvendorById(editId);
-                
-                console.log("Loaded vendor data:", vendor); // Debug log
-                
+                let vendor = null;
+
+                if (editId) {
+                    if (!/^[0-9a-fA-F]{24}$/.test(editId)) {
+                        showToast("Invalid vendor ID", "error");
+                        return;
+                    }
+                    const res = await getvendorById(editId);
+                    vendor = res;
+
+                } else {
+                    vendor = await getVendorByUserId()
+                }
+
+                if (!vendor && !editId) {
+                    setLoading(false);
+                    return;
+                }
+
+                if (!vendor) {
+                    showToast("Vendor not found", "error");
+                    return;
+                }
+
                 setVendorData({
                     name: vendor.name || "",
                     category: vendor.category || "",
@@ -175,82 +158,28 @@ const VendorForm: React.FC = () => {
                     priceRange: vendor.priceRange || "",
                     description: vendor.description || "",
                     image: null,
-                    isAvailable: vendor.isAvailable ?? true
+                    isAvailable: vendor.isAvailable ?? true,
+                    addedByName: vendor.addedBy?.fullname || "",
+                    
                 });
 
                 if (vendor.image) {
                     setPreview(vendor.image);
                 }
-                setImageRemoved(false)
+
+                setImageRemoved(false);
+
             } catch (err: any) {
                 console.error("Failed to load vendor:", err);
-                showToast("Failed to load vendor details", "error");
+                showToast(err?.response?.data?.message || "Failed to load vendor details", "error");
+            
             } finally {
                 setLoading(false);
             }
-        }
-    };
+        };
+        loadVendorData()
 
-    loadVendorData();
-}, [editId]);*/
-
- useEffect(() => {
-    const loadVendorData = async () => {
-        try {
-            setLoading(true);
-            let vendor = null;
-
-            if (editId) {
-    // Only validate if we're in edit mode
-    if (!/^[0-9a-fA-F]{24}$/.test(editId)) {
-        showToast("Invalid vendor ID", "error");
-        return;
-    }
-    const res = await getvendorById(editId);
-    vendor = res;
-} else {
-    vendor = await getVendorByUserId(); // may be null
-}
-
-            // If no vendor and not editing → normal (creating new)
-            if (!vendor && !editId) {
-                setLoading(false);
-                return;
-            }
-
-            if (!vendor) {
-                showToast("Vendor not found", "error");
-                return;
-            }
-
-            setVendorData({
-                name: vendor.name || "",
-                category: vendor.category || "",
-                contact: vendor.contact || "",
-                priceRange: vendor.priceRange || "",
-                description: vendor.description || "",
-                image: null,
-                isAvailable: vendor.isAvailable ?? true,
-                addedByName: vendor.addedBy?.fullname || ""
-            });
-
-            if (vendor.image) {
-                setPreview(vendor.image);
-            }
-
-            setImageRemoved(false);
-        } catch (err: any) {
-            console.error("Failed to load vendor:", err);
-            showToast(err?.response?.data?.message || "Failed to load vendor details", "error");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    loadVendorData();
-}, [editId]);
-
-
+    }, [editId]);
 
 
     // handle submit form
@@ -268,18 +197,10 @@ const VendorForm: React.FC = () => {
         formData.append("contact", vendorData.contact);
         formData.append("priceRange", vendorData.priceRange);
         if (vendorData.description) formData.append("description", vendorData.description);
-        // if (vendorData.image) formData.append("image", vendorData.image);
         formData.append("isAvailable", String(vendorData.isAvailable));
-
-        /*const loggedInUserId = localStorage.getItem("userId"); 
-        if (loggedInUserId) {
-            formData.append("addedBy", loggedInUserId);
-        }
+        
 
         if (!editId) {
-        formData.append("userId", loggedInUserId || ""); // vendor is the logged-in user
-    }*/
-                if (!editId) {
             if (!passedUserId) {
                 showToast("User ID missing - cannot create vendor", "error");
                 return;
@@ -336,7 +257,6 @@ const VendorForm: React.FC = () => {
     }
 
     
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F5F0] to-[#E8E3D8] text-[#0A0A0A] p-5 md:p-10">
 
@@ -367,19 +287,19 @@ const VendorForm: React.FC = () => {
                             {editId ? "Edit Vendor Details" : "Add New Vendor"}
 
                         </h1>
-                        {/* Show who created this vendor (only in edit mode) */}
-        {vendorData.addedByName && (
-            <p className="text-sm mt-1 text-[#0A0A0A]/80">
-                Created by Admin: <span className="font-semibold">{vendorData.addedByName}</span>
-            </p>
-        )}
 
-        {/* NEW: Show for which user we are creating a vendor profile */}
-        {!editId && passedUserName && (
-            <p className="text-sm mt-2 text-gray-600">
-                Creating vendor profile for: <strong>{passedUserName}</strong>
-            </p>
-        )}
+                        {/* show who created this vendor*/}
+                        {vendorData.addedByName && (
+                            <p className="text-sm mt-1 text-[#0A0A0A]/80">
+                                Created by Admin: <span className="font-semibold">{vendorData.addedByName}</span>
+                            </p>
+                        )}
+
+                        {!editId && passedUserName && (
+                            <p className="text-sm mt-2 text-gray-600">
+                                Creating vendor profile for: <strong>{passedUserName}</strong>
+                            </p>
+                        )}
                     </div>
 
                     <button
@@ -422,18 +342,18 @@ const VendorForm: React.FC = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="md:col-span-2">
-                    <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
-                      Created By
-                    </label>
-                    <input
-                      type="text"
-                      value={currentAdminName}
-                      readOnly
-                      className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#F3F4F6] text-[#121212] text-sm
-                                 focus:outline-none focus:border-[#C5A059] focus:bg-[#F3F4F6] focus:ring-4 focus:ring-[#C5A059]/10
-                                 transition-all cursor-not-allowed"
-                    />
-                  </div>
+                                        <label className="block text-[15px] font-semibold text-[#0A0A0A] mb-2">
+                                        Created By
+                                        </label>
+                                        <input
+                                        type="text"
+                                        value={currentAdminName}
+                                        readOnly
+                                        className="w-full px-4 py-3 border border-[#E5E7EB] rounded-xl bg-[#F3F4F6] text-[#121212] text-sm
+                                                    focus:outline-none focus:border-[#C5A059] focus:bg-[#F3F4F6] focus:ring-4 focus:ring-[#C5A059]/10
+                                                    transition-all cursor-not-allowed"
+                                        />
+                                    </div>
 
                                     {/* vendor name */}
                                     <div className="md:col-span-2">
@@ -565,9 +485,8 @@ const VendorForm: React.FC = () => {
 
                                         <label htmlFor="isAvailable" className="text-base font-medium text-[#0A0A0A] cursor-pointer">
                                             
-                                            {/* Vendor is currently available for bookings */}
-                                                    Vendor is currently {vendorData.isAvailable ? "available" : "unavailable"} for bookings
-
+                                            
+                                             Vendor is currently {vendorData.isAvailable ? "available" : "unavailable"} for bookings
 
                                         </label>
                                     </div>

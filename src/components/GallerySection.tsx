@@ -212,17 +212,86 @@ const GallerySection: React.FC = () => {
 
 
     const galleryItems: GalleryItemType[] = [
-        { id: 1, category: 'photo', image: 'https://i.pinimg.com/736x/02/b2/82/02b28276f08e31c440e05dad99854db4.jpg', title: 'John & Sarah Wedding', date: 'Wedding • 12 Oct 2024' },
-        { id: 2, category: 'photo', image: 'https://i.pinimg.com/1200x/39/1f/52/391f520e652a821484f4e94fd0c4e07f.jpg', title: 'Corporate Gala Dubai', date: 'Corporate • 5 Nov 2024' },
-        { id: 3, category: 'photo', image: 'https://i.pinimg.com/736x/6c/b4/4e/6cb44e54c96383e2d0c7ec687a4afc60.jpg', title: 'Annual Awards Night', date: 'Event • 20 Dec 2024' },
-        { id: 4, category: 'video', image:  '/videos/event1.mp4', title: 'Event Highlight Reel', date: 'Video • 8 Sep 2024' },
-        { id: 5, category: 'photo', image: 'https://i.pinimg.com/736x/2e/2c/a4/2e2ca48e55adb6feda83b73da0512c0f.jpg', title: 'Live Music Festival', date: 'Music • 15 Jan 2025' },
-        { id: 6, category: 'video', image: '/videos/event2.mp4', title: 'Product Launch Film', date: 'Video • 22 Aug 2024' },
-        { id: 7, category: 'photo', image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop', title: 'Charity Gala Night', date: 'Charity • 1 Dec 2024' },
-        { id: 8, category: 'video', image: '/videos/event3.mp4', title: 'Birthday Celebration', date: 'Birthday • 15 Jul 2024' },
-        { id: 9, category: 'photo', image: 'https://i.pinimg.com/1200x/14/8d/7d/148d7d672646bfd5b22e3ab4c4bbe29b.jpg', title: 'Stage Performance', date: 'Video • 22 Feb 2025' },
-        { id: 10, category: 'photo', image: 'https://i.pinimg.com/1200x/e7/83/da/e783daa0f4efe826ec7bbdb416a93392.jpg', title: 'Grand Opening Crowd', date: 'Event • 30 Mar 2025' },
-    ];
+        { 
+            id: 1, 
+            category: 'photo', 
+            image: 'https://i.pinimg.com/736x/02/b2/82/02b28276f08e31c440e05dad99854db4.jpg', 
+            title: 'John & Sarah Wedding', 
+            date: 'Wedding • 12 Oct 2024' 
+        },
+
+        { 
+            id: 2, 
+            category: 'photo', 
+            image: 'https://i.pinimg.com/1200x/39/1f/52/391f520e652a821484f4e94fd0c4e07f.jpg', 
+            title: 'Corporate Gala Dubai', 
+            date: 'Corporate • 5 Nov 2024' 
+        },
+
+        { 
+            id: 3, 
+            category: 'photo', 
+            image: 'https://i.pinimg.com/736x/6c/b4/4e/6cb44e54c96383e2d0c7ec687a4afc60.jpg', 
+            title: 'Annual Awards Night', 
+            date: 'Event • 20 Dec 2024' 
+        },
+
+        { 
+            id: 4, 
+            category: 'video', 
+            image:  '/videos/event1.mp4', 
+            title: 'Event Highlight Reel', 
+            date: 'Video • 8 Sep 2024' 
+        },
+
+        { 
+            id: 5, 
+            category: 'photo', 
+            image: 'https://i.pinimg.com/736x/2e/2c/a4/2e2ca48e55adb6feda83b73da0512c0f.jpg', 
+            title: 'Live Music Festival', 
+            date: 'Music • 15 Jan 2025' 
+        },
+
+        { 
+            id: 6, 
+            category: 'video', 
+            image: '/videos/event2.mp4', 
+            title: 'Product Launch Film', 
+            date: 'Video • 22 Aug 2024' 
+        },
+
+        { 
+            id: 7, 
+            category: 'photo', 
+            image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop', 
+            title: 'Charity Gala Night', 
+            date: 'Charity • 1 Dec 2024' 
+        },
+
+        { 
+            id: 8, 
+            category: 'video', 
+            image: '/videos/event3.mp4', 
+            title: 'Birthday Celebration', 
+            date: 'Birthday • 15 Jul 2024' 
+        },
+
+        { 
+            id: 9, 
+            category: 'photo', 
+            image: 'https://i.pinimg.com/1200x/14/8d/7d/148d7d672646bfd5b22e3ab4c4bbe29b.jpg', 
+            title: 'Stage Performance', 
+            date: 'Video • 22 Feb 2025' 
+        },
+
+        { 
+            id: 10, 
+            category: 'photo', 
+            image: 'https://i.pinimg.com/1200x/e7/83/da/e783daa0f4efe826ec7bbdb416a93392.jpg', 
+            title: 'Grand Opening Crowd', 
+            date: 'Event • 30 Mar 2025' 
+        },
+    ]
 
 
     const handleFilterChange = (filter: FilterType) => {
@@ -311,7 +380,6 @@ const GallerySection: React.FC = () => {
             </div>
         </section>
     )
-
-};
+}
 
 export default GallerySection

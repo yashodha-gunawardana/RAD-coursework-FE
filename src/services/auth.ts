@@ -1,29 +1,19 @@
-// This allows us to send HTTP requests to the backend easily
 import api from "./api";
 
-// defines the shape of data the frontend sends to the backend when registering
-/*type RegisterDataType = {
-    fullname: string
-    email: string
-    password: string
-    // address?: string
-    // phone?: string
-    role: string
-}*/
 
 // register function
 export const registerUser = async (fullname: string, email: string, password: string) => {
     const res = await api.post("/auth/register", {fullname, email, password})
-    // return only the response data to the called function
     return res.data
 }
+
 
 // login function
 export const loginUser = async (email: string, password: string) => {
     const res = await api.post("/auth/login", { email, password })
-    // returns backend response (token, user info, etc.)
     return res.data
 }
+
 
 // get my details function
 export const getMyDetails = async () => {
@@ -31,40 +21,60 @@ export const getMyDetails = async () => {
     return res.data
 }
 
+
 // request to become a vendor
 export const requestVendor = async () => {
     const res = await api.post("/auth/request/vendor")
     return res.data
-};
+}
+
 
 // admin get all users (for admin panel)
-export const getAllUsers = async () => {
-    const res = await api.get("/auth/users")
-    return res.data
+export const getAllUsers = async (params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+}) => {
+    try {
+        console.log("Calling getAllUsers with params:", params);
+
+        const res = await api.get("/auth/admin", { params });
+
+        console.log("getAllUsers response:", res.data);
+        return res.data;
+
+    } catch (error: any) {
+        console.error("getAllUsers error:", error.response?.data || error.message);
+        throw error;
+    }
 }
+
 
 // admin approve vendor request
 export const approveVendorRequest = async (userId: string) => {
-    const res = await api.post(`/auth/users/approve/${userId}`)
+    const res = await api.post(`/auth/admin/approve/${userId}`)
     return res.data
 }
+
 
 // admin reject vendor request
 export const rejectVendorRequest = async (userId: string) => {
-    const res = await api.post(`/auth/users/reject/${userId}`)
+    const res = await api.post(`/auth/admin/reject/${userId}`)
     return res.data
 }
 
-// admin delete user
+
 // admin delete user
 export const deleteUserAccount = async (userId: string) => {
   try {
-    const res = await api.delete(`/auth/users/${userId}`); // ← Removed /auth
+
+    const res = await api.delete(`/auth/admin/${userId}`); 
     return res.data;
+
   } catch (err: any) {
     console.error("Delete user error:", err);
     
-    // Extract server message if available
+   
     const errorMessage = 
       err.response?.data?.message || 
       err.message || 
@@ -73,11 +83,11 @@ export const deleteUserAccount = async (userId: string) => {
     // Re-throw so frontend can catch and show error toast
     throw new Error(errorMessage);
   }
-};
+}
+
 
 // refresh access token using refresh token
 export const refreshTokens = async (refreshToken: string) => {
   const res = await api.post("/auth/refresh", { token: refreshToken })
-  // return the response data, which contains the new access token
   return res.data
 }
