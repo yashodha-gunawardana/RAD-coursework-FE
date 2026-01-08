@@ -198,8 +198,20 @@ const EventsPage: React.FC = () => {
                 type: "ai",
                 text: aiResponse || "I couldn't generate a response. Please try again."
             }
-        } catch (err) {
 
+            setAiMessages(prev => [...prev, aiMessage])
+
+        } catch (err) {
+            console.log("AI Error: ", err)
+            const errorMessage: AIMessage = {
+                id: Date.now() + 2,
+                type: "ai",
+                text: "Failed to get AI response. Please try again."
+            }
+            setAiMessages(prev => [...prev, errorMessage])
+        
+        } finally {
+            setAiLoading(false)
         }
     }
 
