@@ -145,6 +145,8 @@ const EventsPage: React.FC = () => {
                 text: "Hi! I'm your AI Event Assistant. I can help you with event planning, budgeting, timeline suggestions, and more. How can I assist you today?"
             })
         }
+        setAiMessages(initialMessages)
+        setAiInput("")
     })
 
 
